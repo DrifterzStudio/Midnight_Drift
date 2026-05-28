@@ -5,11 +5,14 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/deplacement test.unity
     guid: 829d441301dcbff4eb77ab972490dc5c
+  - enabled: 1
+    path: Assets/Scenes/Tom_Scene.unity
+    guid: 9f2f5ac8d79bf554d9e1f3a4a37d9a6f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
