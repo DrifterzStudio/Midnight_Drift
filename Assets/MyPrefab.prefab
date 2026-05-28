@@ -21532,8 +21532,8 @@ GameObject:
   - component: {fileID: 7039974021762241076}
   - component: {fileID: 7039974021762241079}
   - component: {fileID: 7039974021762241078}
-  - component: {fileID: -3094313357212048350}
-  - component: {fileID: -4580330173624696845}
+  - component: {fileID: -2387075276143465581}
+  - component: {fileID: 8342685663851006886}
   m_Layer: 8
   m_Name: MyPrefab
   m_TagString: Untagged
@@ -21666,7 +21666,7 @@ MonoBehaviour:
   indicatorsLeftLights: 0
   indicatorsRightLights: 0
   indicatorsAllLights: 0
---- !u!114 &-3094313357212048350
+--- !u!114 &-2387075276143465581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21683,7 +21683,7 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &-4580330173624696845
+--- !u!114 &8342685663851006886
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
