@@ -824,24 +824,24 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: BCG_RCCP;BCG_URP
-    EmbeddedLinux: BCG_RCCP;BCG_URP
-    GameCoreScarlett: BCG_RCCP;BCG_URP
-    GameCoreXboxOne: BCG_RCCP;BCG_URP
-    Kepler: BCG_RCCP;BCG_URP
-    LinuxHeadlessSimulation: BCG_RCCP;BCG_URP
-    Nintendo Switch: BCG_RCCP;BCG_URP
-    Nintendo Switch 2: BCG_RCCP;BCG_URP
-    PS4: BCG_RCCP;BCG_URP
-    PS5: BCG_RCCP;BCG_URP
-    QNX: BCG_RCCP;BCG_URP
-    Standalone: BCG_RCCP;BCG_URP
-    VisionOS: BCG_RCCP;BCG_URP
-    WebGL: BCG_RCCP;BCG_URP
-    Windows Store Apps: BCG_RCCP;BCG_URP
-    XboxOne: BCG_RCCP;BCG_URP
-    iPhone: BCG_RCCP;BCG_URP
-    tvOS: BCG_RCCP;BCG_URP
+    Android: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    EmbeddedLinux: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    GameCoreScarlett: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    GameCoreXboxOne: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Kepler: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    LinuxHeadlessSimulation: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Nintendo Switch: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Nintendo Switch 2: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    PS4: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    PS5: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    QNX: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Standalone: BCG_RCCP;BCG_URP;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;EDGEGAP_PLUGIN_SERVERS;RCCP_MIRROR
+    VisionOS: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    WebGL: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Windows Store Apps: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    XboxOne: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    iPhone: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    tvOS: BCG_RCCP;BCG_URP;RCCP_MIRROR
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
