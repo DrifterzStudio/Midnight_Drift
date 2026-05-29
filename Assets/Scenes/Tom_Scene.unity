@@ -1347,8 +1347,8 @@ GameObject:
   - component: {fileID: 1994361772}
   - component: {fileID: 1994361775}
   - component: {fileID: 1994361774}
-  - component: {fileID: 1994361773}
   - component: {fileID: 1994361776}
+  - component: {fileID: 1994361777}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1371,18 +1371,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1994361773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994361767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d1b440d78fbec40b6e07f2bfffed73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SteamManager
 --- !u!114 &1994361774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1459,6 +1447,18 @@ MonoBehaviour:
   currentLobbyID: 0
   HostButton: {fileID: 648338845}
   LobbyNameText: {fileID: 1622842558}
+--- !u!114 &1994361777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994361767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SteamManager
 --- !u!1 &2006463253
 GameObject:
   m_ObjectHideFlags: 0
