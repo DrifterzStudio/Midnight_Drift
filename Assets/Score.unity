@@ -306,7 +306,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Score
+  m_Text: 'Score: '
 --- !u!222 &305924592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2103,30 +2103,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5931298226572917323, guid: e06159deea2e788438af7ed9956c660c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 394928802}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5931298226553231135, guid: e06159deea2e788438af7ed9956c660c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1343418572}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e06159deea2e788438af7ed9956c660c, type: 3}
---- !u!1 &1343418571 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5931298226553231135, guid: e06159deea2e788438af7ed9956c660c, type: 3}
-  m_PrefabInstance: {fileID: 1311546295}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1343418572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343418571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Score
-  isEnd: 0
-  scoreText: {fileID: 305924591}
 --- !u!224 &1343418577 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5931298226572917323, guid: e06159deea2e788438af7ed9956c660c, type: 3}
@@ -2279,20 +2257,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7039974021762241076, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1999425643}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1387132951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387132947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Score
-  isEnd: 0
-  scoreText: {fileID: 305924591}
 --- !u!136 &1387132955
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2316,7 +2280,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1387132956
+--- !u!114 &1387132959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2325,10 +2289,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1387132947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e457452a3cfa02641bacecbdcb2fc510, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarInteraction
-  currentTarget: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Score
+  scoreText: {fileID: 305924591}
+--- !u!114 &1387132960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387132947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa13acf9ecf5764eb83fe1c2928087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::End_Line
+  stopScore: 0
 --- !u!1 &1412675016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,10 +2547,9 @@ GameObject:
   - component: {fileID: 1762591317}
   - component: {fileID: 1762591316}
   - component: {fileID: 1762591315}
-  - component: {fileID: 1762591320}
   m_Layer: 0
   m_Name: End_Line
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2671,20 +2647,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 130, z: 0}
---- !u!114 &1762591320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762591314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff95a31e02af68488b2201cbd910e24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Interactable
-  objectName: End_Line
-  score: {fileID: 0}
 --- !u!1 &1785587841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,6 +2820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RCCP_PrototypeVehicle_Skyline
       objectReference: {fileID: 0}
+    - target: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7039974021762241076, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: m_LocalPosition.x
       value: -95
@@ -2915,13 +2881,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1387132951}
-    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1387132955}
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1387132956}
+      addedObject: {fileID: 1387132959}
+    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1387132960}
     - targetCorrespondingSourceObject: {fileID: 7039974021320586373, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3421062}
