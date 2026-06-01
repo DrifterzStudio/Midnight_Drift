@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instanceId: 0
   vehicles:
+  - {fileID: 7039974021762241078, guid: 8998c0732a4c2324282f566d8d9a392b, type: 3}
   - {fileID: 7039974021762241078, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
