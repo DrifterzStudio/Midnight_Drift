@@ -14,19 +14,43 @@ public class PlayerName : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        nameTag = SteamFriends.GetPersonaName();
         if (isLocalPlayer)
         {
             nameTagGui.gameObject.SetActive(false);
+            Debug.Log("krok a rejoins");
         }
         else
         {
-            nameTagGui.SetText(nameTag);
+            CmdSetName(SteamFriends.GetPersonaName());
+            Debug.Log("tom a rejoins");
         }
 
     }
 
-    // Update is called once per frame
+
+    [SyncVar(hook = nameof(OnNameReceived))]
+    private string steamName;
+
+    // Appelé sur le joueur LOCAL uniquement
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+        CmdSetName(SteamFriends.GetPersonaName());
+    }
+
+ 
+    [Command]
+    private void CmdSetName(string name)
+    {
+        steamName = name;
+    }
+    private void OnNameReceived(string oldName, string newName)
+    {
+        nameTag = newName;
+        nameTagGui.SetText(nameTag);
+    }
+
+ 
     void Update()
     {
         
