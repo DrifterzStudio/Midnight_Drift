@@ -10,12 +10,15 @@ public class SteamLobby : MonoBehaviour
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
     protected Callback<LobbyEnter_t> lobbyEntered;
+    protected Callback<LobbyChatUpdate_t> lobbyChatUpdate;
 
     //variables
     public ulong currentLobbyID;
     private const string HostAddressKey = "HostAddress";
-    private NetWorkManager manager;
+    [SerializeField] private NetWorkManager manager;
+    [SerializeField] private int maxSize = 4;
     public static SteamLobby Instance;
+    bool isInit = false;
 
     //GameObject
     public GameObject HostButton;
@@ -25,22 +28,69 @@ public class SteamLobby : MonoBehaviour
     private void Start()
     {
         Instance = this;
+        TryInit();
+    }
 
+    private void TryInit()
+    {
         Debug.Log("Start");
-        if (!SteamManager.Initialized)
+        if (!SteamManager.Initialized || isInit)
             return;
 
-        manager = GetComponent<NetWorkManager>();
-
+        isInit = true;
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        lobbyChatUpdate =
+           Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
+    }
+
+    private void OnLobbyChatUpdate(LobbyChatUpdate_t callback)
+    {
+        Debug.Log("Lobby mis à jour");
+
+        SteamLobby lobbyList =
+            FindAnyObjectByType<SteamLobby>();
+
+        if (lobbyList != null)
+        {
+            lobbyList.RefreshLobby();
+        }
+
+        EChatMemberStateChange state =
+            (EChatMemberStateChange)callback.m_rgfChatMemberStateChange;
+
+        if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
+        {
+            Debug.Log("Un joueur a rejoint");
+        }
+
+        if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
+        {
+            Debug.Log("Un joueur a quitté");
+        }
+    }
+
+    private void OnEnterServer()
+    {
+
+    }
+
+    private void OnExitServer()
+    {
+
+    }
+
+    private void Update()
+    {
+        if(!isInit)
+            TryInit();
     }
 
     public void HostLobby()
     {
        Debug.Log("Button appuyer");
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxSize);
     }
 
 
