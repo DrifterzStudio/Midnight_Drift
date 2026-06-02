@@ -72,23 +72,23 @@ MonoBehaviour:
     angularDragHelper: 1
     driftMode: 1
     driftAngleLimiter: 1
-    driftAngleLimit: 25
-    driftAngleCorrectionFactor: 5
-    driftYawTorqueMultiplier: 0.5
-    driftForwardForceMultiplier: 1000
+    driftAngleLimit: 30
+    driftAngleCorrectionFactor: 3
+    driftYawTorqueMultiplier: 2
+    driftForwardForceMultiplier: 2500
     driftSidewaysForceMultiplier: 1000
     driftMinSpeed: 25
     driftFullForceSpeed: 80
-    driftThrottleYawFactor: 0.8
+    driftThrottleYawFactor: 0.2
     driftRearSidewaysStiffnessMin: 0.5
-    driftRearForwardStiffnessMin: 0.95
+    driftRearForwardStiffnessMin: 1
     driftFrontSidewaysStiffnessMin: 0.55
     driftFrictionResponseSpeed: 12
-    driftFrictionRecoverySpeed: 12
-    driftMaxAngularVelocity: 65
+    driftFrictionRecoverySpeed: 15
+    driftMaxAngularVelocity: 50
     driftCounterSteerRecoveryBoost: 1.5
     driftMomentumMaintenanceForce: 3000
-    driftForceSmoothing: 17
+    driftForceSmoothing: 18
     steeringCurve:
       serializedVersion: 2
       m_Curve:
