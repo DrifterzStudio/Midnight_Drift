@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 305924593}
   - component: {fileID: 305924592}
   - component: {fileID: 305924591}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 394928805}
   - component: {fileID: 394928804}
   - component: {fileID: 394928803}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: 'Image '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1790,6 +1790,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RCCP_Telemetry
       objectReference: {fileID: 0}
+    - target: {fileID: 5931298226553231135, guid: e06159deea2e788438af7ed9956c660c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5931298226572917320, guid: e06159deea2e788438af7ed9956c660c, type: 3}
       propertyPath: ABS
       value: 
@@ -2296,7 +2300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Score
-  isEnd: 0
   scoreText: {fileID: 305924591}
 --- !u!1 &1412675016
 GameObject:
@@ -2632,9 +2635,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762591314}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9063079, z: 0, w: 0.42261827}
+  m_LocalRotation: {x: -0, y: 0.9063079, z: -0, w: 0.42261827}
   m_LocalPosition: {x: 52.93, y: 0.00253, z: 35.25}
-  m_LocalScale: {x: 15, y: 0.3, z: 5.737}
+  m_LocalScale: {x: 15, y: 0.3, z: 17.601702}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2958,5 +2961,5 @@ SceneRoots:
   - {fileID: 1999425643}
   - {fileID: 1785587843}
   - {fileID: 1412675019}
-  - {fileID: 396347854}
   - {fileID: 1762591318}
+  - {fileID: 396347854}
