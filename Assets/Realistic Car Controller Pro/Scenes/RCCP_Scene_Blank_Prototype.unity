@@ -3529,7 +3529,7 @@ MonoBehaviour:
   turboChargerCoEfficient: 1.25
   turboBlowOut: 0
   engineFriction: 0.2
-  engineInertia: 0.2
+  engineInertia: 0.01
   engineLoad: 0
   producedTorqueAsNM: 0
   fuelInput: 0
@@ -3813,7 +3813,7 @@ MonoBehaviour:
   overrideDifferential: 0
   differentialType: 1
   limitedSlipRatio: 80
-  finalDriveRatio: 3.6468294
+  finalDriveRatio: 3.6489437
   receivedTorqueAsNM: 0
   producedTorqueAsNM: 0
   leftWheelRPM: 0
@@ -7787,7 +7787,7 @@ MonoBehaviour:
   turboChargerCoEfficient: 1.25
   turboBlowOut: 0
   engineFriction: 0.2
-  engineInertia: 0.2
+  engineInertia: 0.01
   engineLoad: 0
   producedTorqueAsNM: 0
   fuelInput: 0
@@ -9480,7 +9480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1744694911
 MonoBehaviour:
   m_ObjectHideFlags: 0
