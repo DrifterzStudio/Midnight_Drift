@@ -17,12 +17,10 @@ public class PlayerName : NetworkBehaviour
         if (isLocalPlayer)
         {
             nameTagGui.gameObject.SetActive(false);
-            Debug.Log("krok a rejoins");
         }
         else
         {
             CmdSetName(SteamFriends.GetPersonaName());
-            Debug.Log("tom a rejoins");
         }
 
     }

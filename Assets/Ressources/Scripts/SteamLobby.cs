@@ -15,21 +15,23 @@ public class SteamLobby : MonoBehaviour
     public ulong currentLobbyID;
     private const string HostAddressKey = "HostAddress";
     private NetWorkManager manager;
+    public static SteamLobby Instance;
 
     //GameObject
     public GameObject HostButton;
     public TMP_Text LobbyNameText;
 
 
-    private void Start()  
+    private void Start()
     {
+        Instance = this;
+
         Debug.Log("Start");
         if (!SteamManager.Initialized)
-        {
             return;
-        }
 
         manager = GetComponent<NetWorkManager>();
+
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
@@ -72,8 +74,33 @@ public class SteamLobby : MonoBehaviour
 
         //client
         if (NetworkServer.active)
+        {
             return;
+        }
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         manager.StartClient();
+    }
+    public void RefreshLobby()
+    {
+        if (SteamLobby.Instance == null)
+        {
+            Debug.Log("Pas de lobby instance");
+            return;
+        }
+
+        CSteamID lobbyID = new CSteamID(SteamLobby.Instance.currentLobbyID);
+
+        int count = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
+
+        Debug.Log("Joueurs dans le lobby : " + count);
+
+        for (int i = 0; i < count; i++)
+        {
+            CSteamID member = SteamMatchmaking.GetLobbyMemberByIndex(lobbyID, i);
+
+            string name = SteamFriends.GetFriendPersonaName(member);
+
+            Debug.Log(name);
+        }
     }
 }
