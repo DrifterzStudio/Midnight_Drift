@@ -1411,6 +1411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81b8d5869fa1b046b217f837fb00095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerListContainer: {fileID: 0}
+  playerEntryPrefab: {fileID: 0}
 --- !u!4 &1981898875
 Transform:
   m_ObjectHideFlags: 0
@@ -1443,6 +1445,7 @@ MonoBehaviour:
   maxSize: 4
   HostButton: {fileID: 648338845}
   LobbyNameText: {fileID: 1622842558}
+  StartGameButton: {fileID: 0}
 --- !u!1 &1994361767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,9 +1523,10 @@ MonoBehaviour:
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 7039974021762241073, guid: da8d07545a0eb0a4cbe537b60e0911cd, type: 3}
-  autoCreatePlayer: 1
+  autoCreatePlayer: 0
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 0}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2

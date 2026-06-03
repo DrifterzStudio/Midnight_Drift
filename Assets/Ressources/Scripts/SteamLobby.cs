@@ -3,6 +3,8 @@ using Mirror;
 using Steamworks;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+
 
 public class SteamLobby : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class SteamLobby : MonoBehaviour
     //GameObject
     public GameObject HostButton;
     public TMP_Text LobbyNameText;
+    public GameObject StartGameButton; // à assigner dans l'Inspector
 
 
     private void Start()
@@ -81,8 +84,13 @@ public class SteamLobby : MonoBehaviour
 
     private void Update()
     {
-        if(!isInit)
+        if (!isInit)
             TryInit();
+
+        if (NetworkServer.active && currentLobbyID != 0 && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            StartGame();
+        }
     }
 
     public void HostLobby()
@@ -122,10 +130,25 @@ public class SteamLobby : MonoBehaviour
         //client
         if (NetworkServer.active)
         {
+            StartGameButton.SetActive(true);
+        }
+        if (NetworkServer.active)
+        {
             return;
         }
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         manager.StartClient();
+    }
+    public void StartGame()
+    {
+        if (!NetworkServer.active) return; // sécurité : host seulement
+
+        foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
+        {
+            manager.SpawnPlayer(conn);
+        }
+
+        Debug.Log("[Server] Tous les joueurs ont été spawnés !");
     }
     public void RefreshLobby()
     {
