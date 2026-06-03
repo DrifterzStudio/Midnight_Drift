@@ -13,8 +13,6 @@ public class LobbyManager : MonoBehaviour
 
     private void OnLobbyChatUpdate(LobbyChatUpdate_t callback)
     {
-        Debug.Log("Lobby mis à jour");
-
         SteamLobby lobbyList =
             FindAnyObjectByType<SteamLobby>();
 
@@ -28,12 +26,12 @@ public class LobbyManager : MonoBehaviour
 
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
-            Debug.Log("Un joueur a rejoint");
+            Debug.Log("New Player Joined");
         }
 
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
         {
-            Debug.Log("Un joueur a quitté");
+            Debug.Log("Player Left");
         }
     }
 }

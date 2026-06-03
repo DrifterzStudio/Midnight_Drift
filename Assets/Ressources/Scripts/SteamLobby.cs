@@ -47,8 +47,6 @@ public class SteamLobby : MonoBehaviour
 
     private void OnLobbyChatUpdate(LobbyChatUpdate_t callback)
     {
-        Debug.Log("Lobby mis à jour");
-
         SteamLobby lobbyList =
             FindAnyObjectByType<SteamLobby>();
 
@@ -62,12 +60,12 @@ public class SteamLobby : MonoBehaviour
 
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
         {
-            Debug.Log("Un joueur a rejoint");
+            Debug.Log("New Player");
         }
 
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
         {
-            Debug.Log("Un joueur a quitté");
+            Debug.Log("A Player Left");
         }
     }
 
@@ -89,7 +87,6 @@ public class SteamLobby : MonoBehaviour
 
     public void HostLobby()
     {
-       Debug.Log("Button appuyer");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxSize);
     }
 
@@ -134,7 +131,7 @@ public class SteamLobby : MonoBehaviour
     {
         if (SteamLobby.Instance == null)
         {
-            Debug.Log("Pas de lobby instance");
+            Debug.Log("No Lobby");
             return;
         }
 
@@ -142,7 +139,7 @@ public class SteamLobby : MonoBehaviour
 
         int count = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
 
-        Debug.Log("Joueurs dans le lobby : " + count);
+        Debug.Log("Lobby Player : " + count);
 
         for (int i = 0; i < count; i++)
         {

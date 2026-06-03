@@ -19,7 +19,6 @@ public class SteamOverlay : MonoBehaviour
         {
             SteamAPICall_t handle = SteamUserStats.GetNumberOfCurrentPlayers();
             m_NumberOfCurrentPlayers.Set(handle);
-            Debug.Log("Called GetNumberOfCurrentPlayers()");
         }
     }
 
@@ -31,7 +30,7 @@ public class SteamOverlay : MonoBehaviour
         }
         else
         {
-            Debug.Log("The number of players playing your game: " + pCallback.m_cPlayers);
+            Debug.Log("Player Number: " + pCallback.m_cPlayers);
         }
     }
     void Start()
