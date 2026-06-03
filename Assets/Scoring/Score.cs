@@ -9,8 +9,10 @@ public class Score : RCCP_GenericComponent  {
     private RCCP_CarController carController;
 
     private float metters = 0; private float distDrift = 0;
+    private float timer = 0;
 
-    private float multiplierModifier = 1; private float score = 0; private float scoreUpdate = 0;
+    private float score = 0; private float scoreUpdate = 0;
+    private float distMultiplierModifier = 1; private float scoreMultiplierModifier = 1; 
     private float multiplier = 1; private float challengeMultiplier = 1;
 
     private bool[] scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
@@ -23,7 +25,7 @@ public class Score : RCCP_GenericComponent  {
     [Tooltip("Text showing the current score.")]
     [Space()]
     public Text scoreText;
-    [Tooltip("Text showing the current score.")]
+    [Tooltip("Text showing the points that will add to the score.")]
     [Space()]
     public Text scoreUpdateText;
     
@@ -40,28 +42,30 @@ public class Score : RCCP_GenericComponent  {
             if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f) {
 
                 metters += (Math.Abs(carController.speed) / 3.6f ) * Time.deltaTime;
+                timer = 0;
+                distDrift += metters;
 
                 // Calculate the score achievements multiplier.
                 if (score >= 10000 && !scoreAchievements[0]) {
-                    multiplier += 2;
+                    multiplier += 3;
                     scoreAchievements[0] = true;
                 }
                 if (score >= 5000 && !scoreAchievements[1]) {
-                    multiplier += 1.5f;
+                    multiplier += 2.5f;
                     scoreAchievements[1] = true;
                 }
                 if (score >= 1000 && !scoreAchievements[2]) {
-                    multiplier += 1;
+                    multiplier += 2;
                     scoreAchievements[2] = true;
                 }
 
                 // Calculate the distance achievements multiplier.
                 if (metters >= 200 && !distAchievements[0]) {
-                    multiplier += 1.8f;
+                    multiplier += 2;
                     distAchievements[0] = true;
                 }
                 if (metters >= 100 && !distAchievements[1]) {
-                    multiplier += 1.2f;
+                    multiplier += 1.5f;
                     distAchievements[1] = true;
                 }
                 if (metters >= 50 && !distAchievements[2]) {
@@ -79,22 +83,33 @@ public class Score : RCCP_GenericComponent  {
                     parkingChallenge[1] = true;
                 }
 
-                distDrift += metters;
-                // Calculate the score multiplier.
-                if (multiplierModifier < distDrift) {
-                    if (multiplierModifier + 100 <= distDrift) {
-                        multiplierModifier += 100;
-                        multiplier += multiplierModifier / 500;
+                // Calculate the score multiplier with distance.
+                if (distMultiplierModifier < distDrift) {
+                    if (distMultiplierModifier + 100 <= distDrift) {
+                        distMultiplierModifier += 100;
+                        multiplier += distMultiplierModifier / 100;
+                    }
+                }
+
+                // calculate the score multiplier with score.
+                if (scoreMultiplierModifier < score) {
+                    if (scoreMultiplierModifier + 150 <= score) {
+                        scoreMultiplierModifier += 150;
+                        multiplier += scoreMultiplierModifier / 150;
                     }
                 }
                 scoreUpdate = (int)distDrift;
                 metters = 0;
             }
             else {
-                scoreUpdate = 0;
-                score += (int)distDrift;
-                distDrift = 0;
-                multiplierModifier = 0;
+                timer += Time.deltaTime;
+                if (timer >= 2f) {
+                    score += (int)distDrift;
+                    scoreUpdate = 0;
+                    distDrift = 0;
+                    distMultiplierModifier = 0;
+                    timer = 0;
+                }
             }
 
         }
@@ -108,7 +123,6 @@ public class Score : RCCP_GenericComponent  {
         }
         scoreText.text = "Score: " + score;
         scoreUpdateText.text = " " + scoreUpdate;
-
     }
 
     private void OnTriggerEnter(Collider collider) {
