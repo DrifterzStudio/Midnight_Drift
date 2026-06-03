@@ -19,7 +19,7 @@ public class DriftScore : NetworkBehaviour
             return;
 
         // Ton calcul de drift ici
-        currentScore += 5;
+        currentScore += 2;
 
         if (currentScore - lastSentScore >= 100)
         {

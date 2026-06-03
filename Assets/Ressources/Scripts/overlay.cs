@@ -1,9 +1,11 @@
-using UnityEngine;
+using Mirror;
 using Steamworks;
+using UnityEngine;
 
 public class SteamOverlay : MonoBehaviour
 {
     private CallResult<NumberOfCurrentPlayers_t> m_NumberOfCurrentPlayers;
+    public GameObject playerPrefab;
 
     private void OnEnable()
     {
@@ -15,12 +17,22 @@ public class SteamOverlay : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SteamAPICall_t handle = SteamUserStats.GetNumberOfCurrentPlayers();
-            m_NumberOfCurrentPlayers.Set(handle);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!NetworkServer.active) return;
+
+                var manager = FindAnyObjectByType<NetWorkManager>();
+
+                foreach (var conn in NetworkServer.connections.Values)
+                {
+                    if (conn.identity != null) continue;
+
+                    GameObject player = Instantiate(manager.playerPrefab);
+                    NetworkServer.AddPlayerForConnection(conn, player);
+                }
+            }
         }
-    }
+    
 
     private void OnNumberOfCurrentPlayers(NumberOfCurrentPlayers_t pCallback, bool bIOFailure)
     {
