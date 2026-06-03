@@ -12,8 +12,9 @@ public class Score : RCCP_GenericComponent  {
     private float timer = 0;
 
     private float score = 0; private float scoreUpdate = 0;
-    private float distMultiplierModifier = 1; private float scoreMultiplierModifier = 1; 
+    private float distMultiplierModifier = 0; private float scoreMultiplierModifier = 0; 
     private float multiplier = 1; private float challengeMultiplier = 1;
+    private float scoreMultiplier = 1;
 
     private bool[] scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
     private bool[] distAchievements = { false, false, false }; // 200 / 100 / 50
@@ -61,11 +62,11 @@ public class Score : RCCP_GenericComponent  {
 
                 // Calculate the distance achievements multiplier.
                 if (metters >= 200 && !distAchievements[0]) {
-                    multiplier += 2;
+                    multiplier += 1.8f;
                     distAchievements[0] = true;
                 }
                 if (metters >= 100 && !distAchievements[1]) {
-                    multiplier += 1.5f;
+                    multiplier += 1.2f;
                     distAchievements[1] = true;
                 }
                 if (metters >= 50 && !distAchievements[2]) {
@@ -87,7 +88,7 @@ public class Score : RCCP_GenericComponent  {
                 if (distMultiplierModifier < distDrift) {
                     if (distMultiplierModifier + 100 <= distDrift) {
                         distMultiplierModifier += 100;
-                        multiplier += distMultiplierModifier / 100;
+                        multiplier += distMultiplierModifier / 200;
                     }
                 }
 
@@ -95,7 +96,7 @@ public class Score : RCCP_GenericComponent  {
                 if (scoreMultiplierModifier < score) {
                     if (scoreMultiplierModifier + 150 <= score) {
                         scoreMultiplierModifier += 150;
-                        multiplier += scoreMultiplierModifier / 150;
+                        scoreMultiplier += scoreMultiplierModifier / 300;
                     }
                 }
                 scoreUpdate = (int)distDrift;
@@ -104,7 +105,8 @@ public class Score : RCCP_GenericComponent  {
             else {
                 timer += Time.deltaTime;
                 if (timer >= 2f) {
-                    score += (int)distDrift;
+                    score += (int)scoreUpdate;
+                    score *= scoreMultiplier;
                     scoreUpdate = 0;
                     distDrift = 0;
                     distMultiplierModifier = 0;
@@ -114,9 +116,6 @@ public class Score : RCCP_GenericComponent  {
 
         }
         else if (isEnd && !isChallengeMultAply) {
-            if (distDrift != 0) {
-                score += (int)distDrift;
-            }
             score *= multiplier;
             score *= challengeMultiplier;
             isChallengeMultAply = true;
