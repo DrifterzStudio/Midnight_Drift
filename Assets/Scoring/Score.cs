@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class Score : RCCP_GenericComponent  {
     private RCCP_CarController carController;
 
-    private int metters = 0; private float score = 0;
-    private int multiplierModifier = 1; private int distDrift = 0;
+    private float metters = 0; private float distDrift = 0;
 
+    private float multiplierModifier = 1; private float score = 0; private float scoreUpdate = 0;
     private float multiplier = 1; private float challengeMultiplier = 1;
 
     private bool[] scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
@@ -23,7 +23,10 @@ public class Score : RCCP_GenericComponent  {
     [Tooltip("Text showing the current score.")]
     [Space()]
     public Text scoreText;
-
+    [Tooltip("Text showing the current score.")]
+    [Space()]
+    public Text scoreUpdateText;
+    
     private void Update() {
         // Getting active player car controller on the scene.
         carController = RCCPSceneManager.activePlayerVehicle;
@@ -34,22 +37,21 @@ public class Score : RCCP_GenericComponent  {
 
         if (!isEnd) {
             // Calculate the score when drifting.
-            if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f && 
-                carController.GetVehicleBehaviorType().driftMode) {
+            if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f) {
 
-                metters += ((int)Math.Abs(carController.speed) * 100 / 3600);
+                metters += (Math.Abs(carController.speed) / 3.6f ) * Time.deltaTime;
 
                 // Calculate the score achievements multiplier.
                 if (score >= 10000 && !scoreAchievements[0]) {
-                    multiplier += 2.5f;
+                    multiplier += 2;
                     scoreAchievements[0] = true;
                 }
                 if (score >= 5000 && !scoreAchievements[1]) {
-                    multiplier += 2;
+                    multiplier += 1.5f;
                     scoreAchievements[1] = true;
                 }
                 if (score >= 1000 && !scoreAchievements[2]) {
-                    multiplier += 1.5f;
+                    multiplier += 1;
                     scoreAchievements[2] = true;
                 }
 
@@ -68,14 +70,14 @@ public class Score : RCCP_GenericComponent  {
                 }
 
                 // Calculate the parking challenge multiplier.
-                 if (metters >= 30 && !parkingChallenge[0]) {
-                     challengeMultiplier *= 1.5f;
-                     parkingChallenge[0] = true;
-                 }
-                 if (score >= 5000 && !parkingChallenge[1]) {
-                     challengeMultiplier *= 2;
-                     parkingChallenge[1] = true;
-                 }
+                if (metters >= 30 && !parkingChallenge[0]) {
+                    challengeMultiplier *= 1.5f;
+                    parkingChallenge[0] = true;
+                }
+                if (score >= 5000 && !parkingChallenge[1]) {
+                    challengeMultiplier *= 2;
+                    parkingChallenge[1] = true;
+                }
 
                 distDrift += metters;
                 // Calculate the score multiplier.
@@ -85,20 +87,27 @@ public class Score : RCCP_GenericComponent  {
                         multiplier += multiplierModifier / 500;
                     }
                 }
-                score += metters * multiplier;
+                scoreUpdate = (int)distDrift;
                 metters = 0;
             }
             else {
+                scoreUpdate = 0;
+                score += (int)distDrift;
                 distDrift = 0;
                 multiplierModifier = 0;
             }
 
         }
         else if (isEnd && !isChallengeMultAply) {
+            if (distDrift != 0) {
+                score += (int)distDrift;
+            }
+            score *= multiplier;
             score *= challengeMultiplier;
             isChallengeMultAply = true;
         }
         scoreText.text = "Score: " + score;
+        scoreUpdateText.text = " " + scoreUpdate;
 
     }
 
