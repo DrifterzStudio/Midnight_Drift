@@ -17,19 +17,7 @@ public class NetWorkManager : NetworkManager
     }
     public override void ServerChangeScene(string newSceneName)
     {
-        // Tu notifies Mirror que la scène change SANS qu'il la charge lui-même
-        Debug.Log("CHANGEEEEEE");
-        if (NetworkServer.active)
-        {
-            // notify all clients about the new scene
-            NetworkServer.SendToAll(new SceneMessage
-            {
-                sceneName = GameScene
-            });
-        }
-
-        startPositionIndex = 0;
-        startPositions.Clear();
+       
     }
     public override void OnClientConnect()
     {
@@ -91,6 +79,18 @@ public class NetWorkManager : NetworkManager
             .Execute();
         // ServerChangeScene can be called when stopping the server
         // when this happens the server is not active so does not need to tell clients about the change
-       
+        // Tu notifies Mirror que la scène change SANS qu'il la charge lui-même
+        Debug.Log("CHANGEEEEEE");
+        if (NetworkServer.active)
+        {
+            // notify all clients about the new scene
+            NetworkServer.SendToAll(new SceneMessage
+            {
+                sceneName = GameScene
+            });
+        }
+
+        startPositionIndex = 0;
+        startPositions.Clear();
     }
 }
