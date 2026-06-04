@@ -73,7 +73,12 @@ public class Score : RCCP_GenericComponent  {
         UpdateMultiplier();
         scoreTotal = score;
         scoreText.text = "Score: " + scoreTotal;
-        scoreUpdateText.text = " " + (int)distDrift;
+        if (scoreMultiplier > 1) {
+            scoreUpdateText.text = " " + (int)distDrift + " * " + scoreMultiplier;
+        }
+        else {
+            scoreUpdateText.text = " " + (int)distDrift;
+        }
     }
 
     private void OnTriggerEnter(Collider collider) {
