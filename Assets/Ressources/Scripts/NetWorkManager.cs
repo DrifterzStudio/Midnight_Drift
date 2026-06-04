@@ -3,6 +3,10 @@ using Mirror;
 
 public class NetWorkManager : NetworkManager
 {
+    [Header("Scenes")]
+    [Scene] public string lobbyScene;
+    [Scene] public string gameScene;
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         Debug.Log($"[Server] OnServerAddPlayer — conn: {conn.connectionId}");
@@ -19,6 +23,18 @@ public class NetWorkManager : NetworkManager
     {
         base.OnServerConnect(conn);
         Debug.Log($"[Server] Client connecté — conn: {conn.connectionId}");
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if (sceneName == gameScene)
+        {
+            Debug.Log("[Server] Scène Game chargée, spawn des joueurs...");
+            foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
+            {
+                SpawnPlayer(conn);
+            }
+        }
     }
 
     [Server]
@@ -39,5 +55,12 @@ public class NetWorkManager : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player);
 
         Debug.Log($"[Server] Joueur spawné !");
+    }
+
+    [Server]
+    public void StartGame()
+    {
+        Debug.Log("[Server] Changement vers la scène Game...");
+        ServerChangeScene(gameScene);
     }
 }
