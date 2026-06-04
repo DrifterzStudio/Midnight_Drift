@@ -30,9 +30,6 @@ public class Score : RCCP_GenericComponent  {
     [Tooltip("Text showing the points that will add to the score.")]
     [Space()]
     public Text scoreUpdateText;
-    [Tooltip("Text showing the points that will add to the score.")]
-    [Space()]
-    public Text scoreMulti;
     
     private void Update() {
         // Getting active player car controller on the scene.
@@ -61,6 +58,8 @@ public class Score : RCCP_GenericComponent  {
                     scoreUpdate = 0;
                     distDrift = 0;
                     distMultiplierModifier = 0;
+                    scoreMultiplierModifier = 0;
+                    scoreMultiplier = 1;
                     timer = 0;
                 }
             }
@@ -74,7 +73,7 @@ public class Score : RCCP_GenericComponent  {
         UpdateMultiplier();
         scoreTotal = score;
         scoreText.text = "Score: " + scoreTotal;
-        scoreUpdateText.text = " " + scoreUpdate;
+        scoreUpdateText.text = " " + (int)distDrift;
     }
 
     private void OnTriggerEnter(Collider collider) {
@@ -137,13 +136,12 @@ public class Score : RCCP_GenericComponent  {
         }
 
         // calculate the score multiplier with score.
-        if (scoreMultiplierModifier < score) {
-            if (scoreMultiplierModifier + 150 <= score) {
+        if (scoreMultiplierModifier < distDrift) {
+            if (scoreMultiplierModifier + 150 <= distDrift) {
                 scoreMultiplierModifier += 150;
                 scoreMultiplier = 1 + scoreMultiplierModifier / 300;
             }
         }
-        scoreMulti.text = "Multiplier " + scoreMultiplier;
     }
 
 }
