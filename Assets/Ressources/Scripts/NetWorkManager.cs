@@ -27,21 +27,26 @@ public class NetWorkManager : NetworkManager
 
     public override void OnServerSceneChanged(string sceneName)
     {
-        if (sceneName == gameScene)
+        // On ne spawne plus ici
+        Debug.Log($"[Server] Scène chargée : {sceneName}");
+    }
+
+    // Appelé quand UN client a fini de charger la scène et est prêt
+    public override void OnServerReady(NetworkConnectionToClient conn)
+    {
+        base.OnServerReady(conn);
+
+        Debug.Log($"[Server] Client ready : {conn.connectionId}");
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == gameScene)
         {
-            Debug.Log("[Server] Scène Game chargée, spawn des joueurs...");
-            foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
-            {
-                SpawnPlayer(conn);
-            }
+            SpawnPlayer(conn);
         }
     }
 
     [Server]
     public void SpawnPlayer(NetworkConnectionToClient conn)
     {
-        Debug.Log($"[Server] SpawnPlayer appelé pour conn: {conn.connectionId}");
-
         if (conn.identity != null)
         {
             Debug.LogWarning($"[Server] Déjà spawné !");
@@ -54,7 +59,7 @@ public class NetWorkManager : NetworkManager
         GameObject player = Instantiate(playerPrefab, spawnPos, spawnRot);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        Debug.Log($"[Server] Joueur spawné !");
+        Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
     }
 
     [Server]
