@@ -1,7 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VectorGraphics;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 public class Scene_Controller : MonoBehaviour
 {
@@ -59,7 +60,13 @@ public class Scene_Controller : MonoBehaviour
             {
                 yield return UnloadSceneRoutine(key.Key);
             }
-            yield return LoadAdditiveRoutine(key.Key,key.Value,transition.ActiveSceneName == key.Value);
+
+            if (transition.AsyncOpp.ContainsKey(key.Key))
+            {
+                yield return LoadAdditiveRoutineWitHLoadOpp(key.Key, key.Value, transition.AsyncOpp[key.Key], transition.ActiveSceneName == key.Value);
+            }
+            else 
+                yield return LoadAdditiveRoutine(key.Key, key.Value, transition.ActiveSceneName == key.Value);
         }
         if (transition.Overlay)
         {
@@ -68,6 +75,31 @@ public class Scene_Controller : MonoBehaviour
         isBusy = false;
     }
 
+    private IEnumerator LoadAdditiveRoutineWitHLoadOpp(string key, string sceneName, SceneLoadOperation opp, bool isActive)
+    {
+         opp.Op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+         opp.OnOpCreated?.Invoke(opp.Op);
+        if (opp.Op == null) yield break;
+        opp.Op.allowSceneActivation = false;
+        while (opp.Op.progress < 0.9f)
+        {
+            yield return null;
+        }
+        opp.Op.allowSceneActivation = true;
+        while (!opp.Op.isDone)
+        {
+            yield return null;
+        }
+        if (isActive)
+        {
+            UnityEngine.SceneManagement.Scene newScene = SceneManager.GetSceneByName(sceneName);
+            if (newScene.IsValid() && newScene.isLoaded)
+            {
+                SceneManager.SetActiveScene(newScene);
+            }
+        }
+        loadedSceneBySlot[key] = sceneName;
+    }
     private IEnumerator LoadAdditiveRoutine(string key,string sceneName,bool isActive)
     {
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Additive);
@@ -117,9 +149,16 @@ public class Scene_Controller : MonoBehaviour
         }
     }
 
+    public class SceneLoadOperation
+    {
+        public AsyncOperation Op;
+        public Action<AsyncOperation> OnOpCreated;
+    }
+
     public class SceneTransition
     {
         public Dictionary<string, string> ScenesToLoad { get; } = new Dictionary<string, string>();
+        public Dictionary<string, SceneLoadOperation> AsyncOpp { get; } = new Dictionary<string, SceneLoadOperation>();
         public List<string> ScenesToUnload { get; } = new List<string>();
         public string ActiveSceneName { get; private set; } = "";
         public bool ClearUnusedAssets { get; private set; } = false;
@@ -129,6 +168,13 @@ public class Scene_Controller : MonoBehaviour
         {
             ScenesToLoad[key] = sceneName;
             if(setActive) ActiveSceneName = sceneName;
+            return this;
+        }
+        public SceneTransition Load(string key, string sceneName, SceneLoadOperation opp, bool setActive = false)
+        {
+            AsyncOpp[key] = opp;
+            ScenesToLoad[key] = sceneName;
+            if (setActive) ActiveSceneName = sceneName;
             return this;
         }
 

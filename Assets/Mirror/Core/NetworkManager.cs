@@ -950,6 +950,16 @@ namespace Mirror
 
         void UpdateScene()
         {
+            Debug.Log("update ");
+            if (loadingSceneAsync == null)
+            {
+                Debug.Log("null");
+            }
+            else
+            {
+                Debug.Log("pas null");
+            }
+
             if (loadingSceneAsync != null && loadingSceneAsync.isDone)
             {
                 //Debug.Log($"ClientChangeScene done readyConn {clientReadyConnection}");
@@ -958,6 +968,7 @@ namespace Mirror
                 // fixes https://github.com/vis2k/Mirror/issues/2517 where if
                 // FinishLoadScene throws an exception, loadingSceneAsync would
                 // never be cleared and this code would run every Update.
+                Debug.Log("Scene Refresh .....");
                 try
                 {
                     FinishLoadScene();

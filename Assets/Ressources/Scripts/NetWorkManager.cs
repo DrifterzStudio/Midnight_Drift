@@ -1,5 +1,7 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static Scene_Controller;
 
 public class NetWorkManager : NetworkManager
 {
@@ -13,7 +15,22 @@ public class NetWorkManager : NetworkManager
     {
         // volontairement vide
     }
+    public override void ServerChangeScene(string newSceneName)
+    {
+        // Tu notifies Mirror que la scène change SANS qu'il la charge lui-même
+        Debug.Log("CHANGEEEEEE");
+        if (NetworkServer.active)
+        {
+            // notify all clients about the new scene
+            NetworkServer.SendToAll(new SceneMessage
+            {
+                sceneName = GameScene
+            });
+        }
 
+        startPositionIndex = 0;
+        startPositions.Clear();
+    }
     public override void OnClientConnect()
     {
         base.OnClientConnect();
@@ -56,6 +73,24 @@ public class NetWorkManager : NetworkManager
     {
         shouldSpawn = true;
         Debug.Log("[Server] Changement vers la scène Game...");
-        ServerChangeScene(GameScene);
+        NetworkServer.SetAllClientsNotReady();
+        networkSceneName = GameScene;
+
+        // Let server prepare for scene change
+        OnServerChangeScene(GameScene);
+
+        // set server flag to stop processing messages while changing scenes
+        // it will be re-enabled in FinishLoadScene.
+        NetworkServer.isLoadingScene = true;
+        SceneLoadOperation op = new SceneLoadOperation();
+        op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
+        //loadingSceneAsync = SceneManager.LoadSceneAsync(GameScene);
+        Scene_Controller.Instance.NewTransition()
+            .Load("Game", GameScene, op, true)
+            .EnableOverlay(true)
+            .Execute();
+        // ServerChangeScene can be called when stopping the server
+        // when this happens the server is not active so does not need to tell clients about the change
+       
     }
 }
