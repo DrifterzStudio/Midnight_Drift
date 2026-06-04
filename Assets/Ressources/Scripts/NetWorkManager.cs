@@ -1,15 +1,16 @@
-using UnityEngine;
 using Mirror;
+using UnityEngine;
 
 public class NetWorkManager : NetworkManager
 {
     [Header("Scenes")]
-    [Scene] public string lobbyScene;
-    [Scene] public string gameScene;
+    [Scene] public string LobbyScene;
+    [Scene] public string GameScene;
+
+    private bool shouldSpawn = false;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        Debug.Log($"[Server] OnServerAddPlayer — conn: {conn.connectionId}");
         // volontairement vide
     }
 
@@ -25,20 +26,12 @@ public class NetWorkManager : NetworkManager
         Debug.Log($"[Server] Client connecté — conn: {conn.connectionId}");
     }
 
-    public override void OnServerSceneChanged(string sceneName)
-    {
-        // On ne spawne plus ici
-        Debug.Log($"[Server] Scène chargée : {sceneName}");
-    }
-
-    // Appelé quand UN client a fini de charger la scène et est prêt
     public override void OnServerReady(NetworkConnectionToClient conn)
     {
         base.OnServerReady(conn);
-
         Debug.Log($"[Server] Client ready : {conn.connectionId}");
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == gameScene)
+        if (shouldSpawn)
         {
             SpawnPlayer(conn);
         }
@@ -47,11 +40,7 @@ public class NetWorkManager : NetworkManager
     [Server]
     public void SpawnPlayer(NetworkConnectionToClient conn)
     {
-        if (conn.identity != null)
-        {
-            Debug.LogWarning($"[Server] Déjà spawné !");
-            return;
-        }
+        if (conn.identity != null) return;
 
         Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
         Quaternion spawnRot = GetStartPosition()?.rotation ?? Quaternion.identity;
@@ -65,7 +54,8 @@ public class NetWorkManager : NetworkManager
     [Server]
     public void StartGame()
     {
+        shouldSpawn = true;
         Debug.Log("[Server] Changement vers la scène Game...");
-        ServerChangeScene(gameScene);
+        ServerChangeScene(GameScene);
     }
 }

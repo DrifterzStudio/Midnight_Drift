@@ -1234,8 +1234,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  lobbyScene: Assets/Scenes/LobbyScene.unity
-  gameScene: Assets/Scenes/GameScene.unity
+  LobbyScene: Assets/Scenes/LobbyScene.unity
+  GameScene: Assets/Scenes/GameScene.unity
 --- !u!114 &1994361777
 MonoBehaviour:
   m_ObjectHideFlags: 0
