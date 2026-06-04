@@ -3,7 +3,37 @@ guid: 5610ddcbbc3c792488e93c33167d110f
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bat_01
+    second: {fileID: 2100000, guid: 00a21b37efae42a4bae09a2742914fa9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bat_02_window
+    second: {fileID: 2100000, guid: 581124a9957379e4eb05974ead30d022, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default_Material
+    second: {fileID: 2100000, guid: e6d23614b5429b7439894d979acf5945, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 61645db1e99a4e24aa396f2ce5c377a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3
+    second: {fileID: 2100000, guid: ca5838903e0bc864e9bc23a6ede68939, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1
+    second: {fileID: 2100000, guid: 9d64e1fe6ce9e89448292e5bb4f0e099, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
