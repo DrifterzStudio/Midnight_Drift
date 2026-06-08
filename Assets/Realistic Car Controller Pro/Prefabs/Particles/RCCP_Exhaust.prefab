@@ -4736,7 +4736,7 @@ GameObject:
   - component: {fileID: 19821812}
   - component: {fileID: 19948406}
   - component: {fileID: 10840862}
-  - component: {fileID: 278044189980166602}
+  - component: {fileID: 7139500652339483050}
   m_Layer: 0
   m_Name: RCCExhaustFlame
   m_TagString: Untagged
@@ -9495,7 +9495,7 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!114 &278044189980166602
+--- !u!114 &7139500652339483050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

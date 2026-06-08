@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multithreading: 0
   behaviorSelectedIndex: 0
-  overrideFPS: 0
-  overrideFixedTimeStep: 0
+  overrideFPS: 1
+  overrideFixedTimeStep: 1
   fixedTimeStep: 0.02
   maxAngularVelocity: 6
-  maxFPS: 300
+  maxFPS: 120
   defaultSteeringCurve:
     serializedVersion: 2
     m_Curve:
@@ -72,23 +72,23 @@ MonoBehaviour:
     angularDragHelper: 1
     driftMode: 1
     driftAngleLimiter: 1
-    driftAngleLimit: 35
-    driftAngleCorrectionFactor: 3.5
-    driftYawTorqueMultiplier: 0.5
-    driftForwardForceMultiplier: 1000
-    driftSidewaysForceMultiplier: 2250
-    driftMinSpeed: 15
+    driftAngleLimit: 30
+    driftAngleCorrectionFactor: 3
+    driftYawTorqueMultiplier: 2
+    driftForwardForceMultiplier: 2500
+    driftSidewaysForceMultiplier: 1000
+    driftMinSpeed: 25
     driftFullForceSpeed: 80
-    driftThrottleYawFactor: 0.8
+    driftThrottleYawFactor: 0.2
     driftRearSidewaysStiffnessMin: 0.5
-    driftRearForwardStiffnessMin: 0.95
+    driftRearForwardStiffnessMin: 1
     driftFrontSidewaysStiffnessMin: 0.55
     driftFrictionResponseSpeed: 12
-    driftFrictionRecoverySpeed: 12
-    driftMaxAngularVelocity: 65
-    driftCounterSteerRecoveryBoost: 3
+    driftFrictionRecoverySpeed: 15
+    driftMaxAngularVelocity: 50
+    driftCounterSteerRecoveryBoost: 1.5
     driftMomentumMaintenanceForce: 3000
-    driftForceSmoothing: 17
+    driftForceSmoothing: 18
     steeringCurve:
       serializedVersion: 2
       m_Curve:
@@ -130,7 +130,7 @@ MonoBehaviour:
     angularDragHelperMaximum: 0.35
     suspensionSpringMultiplier: 1
     suspensionDamperMultiplier: 1
-    wheelSubstepProfile: 0
+    wheelSubstepProfile: 1
     antiRollMinimum: 600
     gearShiftingThreshold: 0.8
     gearShiftingDelayMinimum: 0.15

@@ -1,0 +1,375 @@
+# Blender MTL File: 'GTRGTblend.blend'
+# Material Count: 33
+
+newmtl Nissan_GTRTNR0_2017BadgeA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_BadgeA_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_BadgeA_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_BadgeA_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017Base_Material
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl Nissan_GTRTNR0_2017Carbon1_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.341000 0.341000 0.341000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Nissan_GTRTNR0_2017Coloured_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 1.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Global_Texture_Coloured_Diffuse.png
+
+newmtl Nissan_GTRTNR0_2017EngineA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_EngineA_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_EngineA_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_EngineA_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017Grille1A_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Hood0a_Grille1_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Hood0a_Grille1_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Hood0a_Grille1_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017Grille7A_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille7A_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille7A_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille7A_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017Grille8A_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille8A_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille8A_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille8A_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017Grille9A_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille9A_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille9A_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_Grille9A_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017InteriorA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_InteriorA_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_InteriorA_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_InteriorA_DiffuseAOSO.png
+
+newmtl Nissan_GTRTNR0_2017InteriorTillingColourZoneA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.120417 0.013915
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_InteriorTillingColourZoneA_Normal.png
+
+newmtl Nissan_GTRTNR0_2017LicensePlateTNRA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\plat2.png
+
+newmtl Nissan_GTRTNR0_2017LightA_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_LightA_Diffuse.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA\\Nissan_GTRTNR_2017_LightA_Diffuse.png
+
+newmtl Nissan_GTRTNR0_2017PaintTNR_Material
+Ns 355.051809
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.099847 0.015316
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\tex new\\gtrgt_remapbodylivery.png
+
+newmtl Nissan_GTRTNR0_2017SeatBelt_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.018850 0.018850 0.018850
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Nissan_GTRTNR0_2017WindowInside_Material
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.700000
+illum 6
+
+newmtl Nissan_GTRTNR0_2017Window_Material
+Ns 809.999997
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.900000
+illum 6
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\tex new\\gtrgt_mapwindows.png
+
+newmtl Nissan_GTRTNR3_2017Carbon1_Material
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.341000 0.341000 0.341000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\carbon1.png
+
+newmtl Nissan_GTRTNR3_2017Grille1D_Material.001
+Ns 199.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA (3)\\Nissan_GTRTNR_2017_Grille1D_Normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA (3)\\Nissan_GTRTNR_2017_Grille1D_DiffuseAOSO.png
+map_d C:\\Users\\ACER\\Desktop\\Mods\\CSR2 Model\\Nissan GTR 2017 [Elite Tuners]\\Body_lodA (3)\\Nissan_GTRTNR_2017_Grille1D_DiffuseAOSO.png
+
+newmtl coloured_glass
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Global_Texture_Coloured_Diffuse.png
+
+newmtl gril_exhaust
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.137681 0.137681 0.137681
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\grill_dark.png
+
+newmtl intercooler_gray
+Ns 474.981747
+Ka 0.864865 0.864865 0.864865
+Kd 0.141263 0.141263 0.141263
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl intercooler_remap
+Ns 250.000000
+Ka 0.716216 0.716216 0.716216
+Kd 0.141263 0.141263 0.141263
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\intercooler_diif.png
+
+newmtl plastic
+Ns 250.000000
+Ka 0.852273 0.852273 0.852273
+Kd 0.011088 0.011088 0.011088
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl redlight
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 5.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl rim
+Ns 809.999997
+Ka 1.000000 1.000000 1.000000
+Kd 0.637597 0.485150 0.165132
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl rotor
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\3D Models\\Rims\\BBS_BBS-LM\\maps\\BrakeDisc_ForgedDrilled_diff.png
+
+newmtl sidewall
+Ns 39.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.300000 0.300000 0.300000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -bm 2.000000 C:\\Users\\ACER\\Desktop\\Mods\\3D Models\\Rims\\LD97 Forged Remake\\sidewall_normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\3D Models\\Rims\\LD97 Forged Remake\\sidewall.png
+
+newmtl spoiler
+Ns 250.000000
+Ka 0.753623 0.753623 0.753623
+Kd 0.013411 0.013411 0.013411
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\tex new\\gtrgt_spoilermap.png
+
+newmtl spoke
+Ns 809.999997
+Ka 1.000000 1.000000 1.000000
+Kd 0.123726 0.123726 0.123726
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl sticker
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\tex new\\gtrgt_sticker.png
+
+newmtl sticker_depan
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\Already Modded\\Nissan GTR GT\\tex new\\gtrgt_stickerdepan.png
+
+newmtl tread
+Ns 39.999995
+Ka 0.300000 0.300000 0.300000
+Kd 0.800000 0.800000 0.800000
+Ks 0.014493 0.014493 0.014493
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump -bm 2.000000 C:\\Users\\ACER\\Desktop\\Mods\\3D Models\\Rims\\LD97 Forged Remake\\tread_normal.png
+map_Kd C:\\Users\\ACER\\Desktop\\Mods\\3D Models\\Rims\\LD97 Forged Remake\\tread.png
