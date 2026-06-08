@@ -3,13 +3,13 @@ using Mirror;
 using static RCCP;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Score : NetworkBehaviour
 {
-    [Header("UI")]
-    public Text scoreText;
-    public Text scoreUpdateText;
-
+    private TMP_Text scoreText;
+    private TMP_Text scoreUpdateText;
+ 
     [SyncVar]
     private float score = 0;
 
@@ -42,10 +42,18 @@ public class Score : NetworkBehaviour
             carController = GetComponentInParent<RCCP_CarController>();
     }
 
+    private void Start()
+    {
+        scoreText = UI_Manager.Instance.score;
+        scoreText.gameObject.SetActive(true);
+        scoreUpdateText = UI_Manager.Instance.Upd_score;
+        scoreUpdateText.gameObject.SetActive(true);
+    }
+
     [ServerCallback]
     private void Update()
     {
-        if (carController == null)
+        if (carController == null )
             return;
 
         if (!isEnd)
