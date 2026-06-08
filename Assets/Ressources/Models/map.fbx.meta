@@ -8,32 +8,32 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Bat_01
-    second: {fileID: 2100000, guid: 00a21b37efae42a4bae09a2742914fa9, type: 2}
+    second: {fileID: 2100000, guid: 885816645f3d2e54da0c0d7e598d6cdc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Bat_02_window
-    second: {fileID: 2100000, guid: 581124a9957379e4eb05974ead30d022, type: 2}
+    second: {fileID: 2100000, guid: ba92c02e88dc74a4f8f72456cc37b554, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Default_Material
-    second: {fileID: 2100000, guid: e6d23614b5429b7439894d979acf5945, type: 2}
+    second: {fileID: 2100000, guid: 26fdfb93299fe484babcc1f8c29c033d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: lambert2
-    second: {fileID: 2100000, guid: 61645db1e99a4e24aa396f2ce5c377a8, type: 2}
+    second: {fileID: 2100000, guid: 49b8c131a3b629b49ada680adc60388c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: lambert3
-    second: {fileID: 2100000, guid: ca5838903e0bc864e9bc23a6ede68939, type: 2}
+    second: {fileID: 2100000, guid: 411b0a2e290c53a43bcd3d4527e3609a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: standardSurface1
-    second: {fileID: 2100000, guid: 9d64e1fe6ce9e89448292e5bb4f0e099, type: 2}
+    second: {fileID: 2100000, guid: 7a7718d59b0d4c34d9f405645305b4de, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
