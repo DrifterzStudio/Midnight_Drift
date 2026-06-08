@@ -389,9 +389,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1296162397}
     - targetCorrespondingSourceObject: {fileID: 7039974021320586373, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1025778569}
@@ -900,20 +897,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1533513811}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &471683445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471683441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Score
-  scoreText: {fileID: 655255350}
-  scoreUpdateText: {fileID: 395986835}
 --- !u!1 &611222971 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7039974022012886055, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
@@ -1428,6 +1411,7 @@ GameObject:
   - component: {fileID: 1292064413}
   - component: {fileID: 1292064412}
   - component: {fileID: 1292064411}
+  - component: {fileID: 1292064414}
   m_Layer: 8
   m_Name: Score_Panel
   m_TagString: Untagged
@@ -1520,18 +1504,13 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1296162396 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-  m_PrefabInstance: {fileID: 162679308}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1296162397
+--- !u!114 &1292064414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296162396}
+  m_GameObject: {fileID: 1292064409}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cbeaaf67d48c4a4c9ade39114e1d083, type: 3}
@@ -1539,6 +1518,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Score
   scoreText: {fileID: 655255350}
   scoreUpdateText: {fileID: 395986835}
+--- !u!1 &1296162396 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+  m_PrefabInstance: {fileID: 162679308}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337519351 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7039974022401066706, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
@@ -1886,9 +1870,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 471683445}
     - targetCorrespondingSourceObject: {fileID: 7039974021320586373, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1191127997}
