@@ -1,201 +1,186 @@
-
-
 using System;
 using Mirror;
+using Telepathy;
 using TMPro;
-using Unity.Netcode;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.UI;
 
-
-public class Score : Mirror.NetworkBehaviour
+public class Score : NetworkBehaviour
 {
     private RCCP_CarController carController;
 
-    private float metters = 0;
-    private float distDrift = 0;
-    private float timer = 0;
+    // --- SyncVars : mis à jour par le serveur, lus par tous les clients ---
+    [SyncVar(hook = nameof(OnScoreChanged))]
+    private float syncScore = 0f;
 
+    [SyncVar(hook = nameof(OnScoreUpdateChanged))]
+    private float syncScoreUpdate = 0f;
 
-    [SyncVar] private float score = 0;
-    [SyncVar] private float scoreUpdate = 0;
-    [SyncVar] private float scoreTotal = 0;
-    private float distMultiplierModifier = 0;
-    private float scoreMultiplierModifier = 0;
-    private float multiplier = 1;
-    private float challengeMultiplier = 1;
-    private float scoreMultiplier = 1;
+    [SyncVar(hook = nameof(OnMultiplierChanged))]
+    private float syncScoreMultiplier = 1f;
 
-    private bool[] scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
-    private bool[] distAchievements = { false, false, false }; // 200 / 100 / 50
-    private bool[] parkingChallenge = { false, false }; // dist 30m / 5000 pts
-
-    private bool isChallengeMultAply = false;
+    // --- État côté serveur uniquement ---
+    private float meters = 0f;
+    private float distDrift = 0f;
+    private float timer = 0f;
+    private float score = 0f;
+    private float multiplier = 1f;
+    private float challengeMultiplier = 1f;
+    private float scoreMultiplier = 1f;
+    private float distMultiplierModifier = 0f;
+    private float scoreMultiplierModifier = 0f;
     private bool isEnd = false;
+    private bool isChallengeMultApplied = false;
 
+    private bool[] scoreAchievements = { false, false, false };
+    private bool[] distAchievements = { false, false, false };
+    private bool[] parkingChallenge = { false, false };
 
+    // --- UI : locale uniquement ---
     private TMP_Text scoreText;
     private TMP_Text scoreUpdateText;
 
     private void Start()
     {
+        // L'UI est initialisée sur tous les clients, mais seul le joueur local l'affiche
         scoreText = UI_Manager.Instance.score;
-        scoreText.gameObject.SetActive(true);
         scoreUpdateText = UI_Manager.Instance.Upd_score;
-        scoreUpdateText.gameObject.SetActive(true);
+
+        if (isLocalPlayer)
+        {
+            scoreText.gameObject.SetActive(true);
+            scoreUpdateText.gameObject.SetActive(true);
+        }
+
         carController = GetComponent<RCCP_CarController>();
     }
 
     private void Update()
     {
-        // Getting active player car controller on the scene.
-        if (isServer)
+        // Seul le client local envoie les données brutes au serveur
+        if (!isLocalPlayer) return;
+        if (!carController) return;
+
+        float sidewaysSlip = (float)Math.Abs(
+            carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip);
+        float speed = Math.Abs(carController.speed) ;
+        float deltaTime = Time.deltaTime;
+        CmdUpdateDrift(sidewaysSlip, speed ,deltaTime);
+    }
+
+    /// <summary>
+    /// Le client envoie uniquement les données brutes du physique.
+    /// Toute la logique de score tourne sur le serveur.
+    /// </summary>
+    [Command]
+    private void CmdUpdateDrift(float sidewaysSlip, float speed,float dt)
+    {
+        if (isEnd)
         {
-            //if (isClient)
-            //    Debug.Log("error why is this running on client?");
-            // If no active player car found, return.
-            if (!carController)
-                return;
-
-            if (!isEnd)
-            {
-                // Calculate the score when drifting.
-                if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f)
-                {
-
-                    metters += (Math.Abs(carController.speed) / 3.6f) * Time.deltaTime;
-                    timer = 0;
-                    distDrift += metters;
-
-
-                    scoreUpdate = (int)distDrift * scoreMultiplier;
-                    metters = 0;
-                }
-                else
-                {
-                    timer += Time.deltaTime;
-                    if (timer >= 2f)
-                    {
-                        score += (int)distDrift * scoreMultiplier;
-                        scoreUpdate = 0;
-                        distDrift = 0;
-                        distMultiplierModifier = 0;
-                        scoreMultiplierModifier = 0;
-                        scoreMultiplier = 1;
-                        timer = 0;
-                    }
-                }
-
-            }
-            else if (isEnd && !isChallengeMultAply)
+            if (!isChallengeMultApplied)
             {
                 score *= multiplier;
                 score *= challengeMultiplier;
-                isChallengeMultAply = true;
+                isChallengeMultApplied = true;
+                syncScore = score;
             }
-            UpdateMultiplier();
-            scoreTotal = score;
+            return;
         }
-        if (isClient)
-        {
-            scoreText.text = "Score: " + scoreTotal;
-            if (scoreMultiplier > 1)
-            {
-                scoreUpdateText.text = " " + (int)distDrift + " * " + scoreMultiplier;
-            }
-            else
-            {
-                scoreUpdateText.text = " " + (int)distDrift;
-            }
-        }
-}
 
-private void OnTriggerEnter(Collider collider)
- {
-    if (collider.CompareTag("Finish"))
+        if (sidewaysSlip >= 0.25f)
         {
-            isEnd = true;
+            meters += (speed / 3.6f) *dt;
+            timer = 0f;
+            distDrift += meters;
+
+            syncScoreUpdate = (int)distDrift * scoreMultiplier;
+            meters = 0f;
         }
+        else
+        {
+            timer += dt;
+            if (timer >= 2f)
+            {
+                score += (int)distDrift * scoreMultiplier;
+                syncScore = score;
+                syncScoreUpdate = 0f;
+
+                distDrift = 0f;
+                distMultiplierModifier = 0f;
+                scoreMultiplierModifier = 0f;
+                scoreMultiplier = 1f;
+                syncScoreMultiplier = 1f;
+                timer = 0f;
+            }
+        }
+
+        UpdateMultiplier();
     }
 
-    private void OnTriggerStay(Collider collider)
+    /// <summary>
+    /// Appelé par le serveur uniquement via OnTriggerEnter/Stay.
+    /// </summary>
+    [ServerCallback]
+    private void OnTriggerEnter(Collider col)
     {
-        if (collider.CompareTag("Finish"))
-        {
+        if (col.CompareTag("Finish"))
             isEnd = true;
-        }
     }
 
+    [ServerCallback]
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.CompareTag("Finish"))
+            isEnd = true;
+    }
+
+    // Toute la logique tourne sur le serveur — pas de [Command] supplémentaire nécessaire
     private void UpdateMultiplier()
     {
-        // Calculate the score achievements multiplier.
-        if (score >= 10000 && !scoreAchievements[0])
+        // Score achievements
+        if (score >= 10000 && !scoreAchievements[0]) { multiplier += 3f; scoreAchievements[0] = true; }
+        if (score >= 5000 && !scoreAchievements[1]) { multiplier += 2.5f; scoreAchievements[1] = true; }
+        if (score >= 1000 && !scoreAchievements[2]) { multiplier += 2f; scoreAchievements[2] = true; }
+
+        // Distance achievements — utilise distDrift, pas meters (réinitialisé chaque frame)
+        if (distDrift >= 200 && !distAchievements[0]) { multiplier += 1.8f; distAchievements[0] = true; }
+        if (distDrift >= 100 && !distAchievements[1]) { multiplier += 1.2f; distAchievements[1] = true; }
+        if (distDrift >= 50 && !distAchievements[2]) { multiplier += 1f; distAchievements[2] = true; }
+
+        // Parking challenge
+        if (distDrift >= 30 && !parkingChallenge[0]) { challengeMultiplier *= 1.5f; parkingChallenge[0] = true; }
+        if (score >= 5000 && !parkingChallenge[1]) { challengeMultiplier *= 2f; parkingChallenge[1] = true; }
+
+        // Score multiplier progressif (distance)
+        if (distMultiplierModifier + 100 <= distDrift)
         {
-            multiplier += 3;
-            scoreAchievements[0] = true;
-        }
-        if (score >= 5000 && !scoreAchievements[1])
-        {
-            multiplier += 2.5f;
-            scoreAchievements[1] = true;
-        }
-        if (score >= 1000 && !scoreAchievements[2])
-        {
-            multiplier += 2;
-            scoreAchievements[2] = true;
+            distMultiplierModifier += 100;
+            multiplier += distMultiplierModifier / 200f;
         }
 
-        // Calculate the distance achievements multiplier.
-        if (metters >= 200 && !distAchievements[0])
+        // Score multiplier progressif (score en cours de drift)
+        if (scoreMultiplierModifier + 150 <= distDrift)
         {
-            multiplier += 1.8f;
-            distAchievements[0] = true;
-        }
-        if (metters >= 100 && !distAchievements[1])
-        {
-            multiplier += 1.2f;
-            distAchievements[1] = true;
-        }
-        if (metters >= 50 && !distAchievements[2])
-        {
-            multiplier += 1;
-            distAchievements[2] = true;
-        }
-
-        // Calculate the parking challenge multiplier.
-        if (metters >= 30 && !parkingChallenge[0])
-        {
-            challengeMultiplier *= 1.5f;
-            parkingChallenge[0] = true;
-        }
-        if (score >= 5000 && !parkingChallenge[1])
-        {
-            challengeMultiplier *= 2;
-            parkingChallenge[1] = true;
-        }
-
-        // Calculate the score multiplier with distance.
-        if (distMultiplierModifier < distDrift)
-        {
-            if (distMultiplierModifier + 100 <= distDrift)
-            {
-                distMultiplierModifier += 100;
-                multiplier += distMultiplierModifier / 200;
-            }
-        }
-
-        // calculate the score multiplier with score.
-        if (scoreMultiplierModifier < distDrift)
-        {
-            if (scoreMultiplierModifier + 150 <= distDrift)
-            {
-                scoreMultiplierModifier += 150;
-                scoreMultiplier = 1 + scoreMultiplierModifier / 300;
-            }
+            scoreMultiplierModifier += 150;
+            scoreMultiplier = 1f + scoreMultiplierModifier / 300f;
+            syncScoreMultiplier = scoreMultiplier;
         }
     }
 
+    // --- Hooks SyncVar : s'exécutent sur tous les clients à chaque changement ---
+
+    private void OnScoreChanged(float _, float newScore)
+    {
+        if (!isLocalPlayer) return;
+        scoreText.text = "Score: " + (int)newScore;
+    }
+
+    private void OnScoreUpdateChanged(float _, float newUpdate)
+    {
+        if (!isLocalPlayer) return;
+        scoreUpdateText.text = newUpdate > 0
+            ? $" {(int)newUpdate} * {syncScoreMultiplier:F1}"
+            : $" {(int)newUpdate}";
+    }
+
+    private void OnMultiplierChanged(float _, float __) { } // déclenche OnScoreUpdateChanged
 }
