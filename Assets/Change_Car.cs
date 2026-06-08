@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class ChangeCar : MonoBehaviour {
     public List<GameObject> cars;
     public GameObject activeCar = null;
-    public int whichCar;
+    public int whichCar = 0;
 
     private void Start() {
         if (activeCar == null && cars.Count >= 1) {
@@ -21,8 +21,8 @@ public class ChangeCar : MonoBehaviour {
             else {
                 whichCar--;
             }
+            SwitchCar();
         }
-        SwitchCar();
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
             if (whichCar == cars.Count - 1) {
                 whichCar = 0;
@@ -30,12 +30,11 @@ public class ChangeCar : MonoBehaviour {
             else {
                 whichCar++;
             }
+            SwitchCar();
         }
-        SwitchCar();
     }
 
     void SwitchCar() {
-        Debug.Log("Switch");
         activeCar = cars[whichCar];
         activeCar.SetActive(true);
         for (int i = 0; i < cars.Count; i++) {
