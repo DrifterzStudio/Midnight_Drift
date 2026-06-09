@@ -14,7 +14,7 @@ public class ChangeCar : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             if (whichCar == 0) {
                 whichCar = cars.Count - 1;
             }
@@ -23,7 +23,7 @@ public class ChangeCar : MonoBehaviour {
             }
             SwitchCar();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
             if (whichCar == cars.Count - 1) {
                 whichCar = 0;
             }

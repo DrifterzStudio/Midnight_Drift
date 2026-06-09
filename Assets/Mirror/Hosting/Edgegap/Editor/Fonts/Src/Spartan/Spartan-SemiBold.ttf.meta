@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52c456e5bd94b2b4b9045a79143694e9
+guid: 31eff7aa481c3f7469b0e56722d7e742
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -19,10 +19,3 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 129321
-  packageName: Mirror
-  packageVersion: 96.0.1
-  assetPath: Assets/Mirror/Hosting/Edgegap/Editor/Fonts/Src/Spartan/Spartan-SemiBold.ttf
-  uploadId: 736421

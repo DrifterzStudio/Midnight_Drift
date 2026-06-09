@@ -41,7 +41,8 @@ public class Score : RCCP_GenericComponent  {
 
         if (!isEnd) {
             // Calculate the score when drifting.
-            if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f) {
+            if ((float)Math.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= 0.25f &&
+                carController.speed >= 0) {
 
                 metters += (Math.Abs(carController.speed) / 3.6f ) * Time.deltaTime;
                 timer = 0;
