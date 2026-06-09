@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Switch car with a key.
+/// </summary>
 public class ChangeCar : MonoBehaviour {
 
     [Tooltip("The list of the different cars that the player can play.")]
