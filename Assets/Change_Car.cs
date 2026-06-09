@@ -2,9 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class ChangeCar : MonoBehaviour {
+
+    [Tooltip("The list of the different cars that the player can play.")]
+    [Space()]
     public List<GameObject> cars;
-    public GameObject activeCar = null;
-    public int whichCar = 0;
+
+    private GameObject activeCar = null;
+    private int whichCar = 0;
 
     private void Start() {
         if (activeCar == null && cars.Count >= 1) {
