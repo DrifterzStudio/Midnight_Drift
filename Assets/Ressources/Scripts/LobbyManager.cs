@@ -3,6 +3,7 @@ using Steamworks;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -90,27 +91,46 @@ public class LobbyManager : MonoBehaviour
 
     public void RefreshPlayerListUI()
     {
+        if (playerRowPrefab == null || SteamLobby.Instance == null) return;
+
+        // Trouve le canvas (ton approche qui marchait)
         GameObject canvasObj = GameObject.Find("RCCP_Canvas");
-        if (canvasObj == null)
+        if (canvasObj == null) { Debug.LogError("[Lobby] RCCP_Canvas introuvable !"); return; }
+
+        // Trouve ou crée le container de liste à l'intérieur du canvas
+        Transform container = canvasObj.transform.Find("PlayerList");
+        if (container == null)
         {
-            Debug.LogError("RCCP_Canvas introuvable !");
-            return;
+            GameObject listObj = new GameObject("PlayerList");
+            listObj.transform.SetParent(canvasObj.transform, false);
+            RectTransform rt = listObj.AddComponent<RectTransform>();
+            // Position en haut à gauche — ajuste ces valeurs selon ton layout
+            rt.anchorMin = new Vector2(0f, 0.6f);
+            rt.anchorMax = new Vector2(0.35f, 0.95f);
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            container = listObj.transform;
         }
 
-        Transform canvas = canvasObj.transform;
+        // VerticalLayoutGroup — childControlHeight = true pour qu'il positionne vraiment les lignes
+        VerticalLayoutGroup vGroup = container.GetComponent<VerticalLayoutGroup>();
+        if (vGroup == null) vGroup = container.gameObject.AddComponent<VerticalLayoutGroup>();
+        vGroup.spacing = 6;
+        vGroup.padding = new RectOffset(6, 6, 6, 6);
+        vGroup.childControlWidth = true;
+        vGroup.childForceExpandWidth = true;
+        vGroup.childControlHeight = true;  // ← VLG gère la hauteur via LayoutElement
+        vGroup.childForceExpandHeight = false;
 
-        // 💡 CLEAN UNIQUEMENT les rows du lobby (PAS tout le canvas)
-        foreach (Transform child in canvas)
-        {
-            if (child.GetComponent<LobbyPlayerRowUI>() != null)
-            {
-                Destroy(child.gameObject);
-            }
-        }
+        ContentSizeFitter csf = container.GetComponent<ContentSizeFitter>();
+        if (csf == null) csf = container.gameObject.AddComponent<ContentSizeFitter>();
+        csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        if (playerRowPrefab == null || SteamLobby.Instance == null)
-            return;
+        // Nettoie
+        foreach (Transform child in container)
+            Destroy(child.gameObject);
 
+        // Spawn des lignes
         CSteamID lobbyID = GetLobbyID();
         int count = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
         bool isHost = NetworkServer.active;
@@ -118,16 +138,21 @@ public class LobbyManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             CSteamID member = SteamMatchmaking.GetLobbyMemberByIndex(lobbyID, i);
-
             ulong memberId = member.m_SteamID;
             string name = SteamFriends.GetFriendPersonaName(member);
             bool isActive = ActivePlayerSteamIds.Contains(memberId);
 
-            // Spawn
-            var row = Instantiate(playerRowPrefab);
-            row.transform.SetParent(canvas, false);
+            var row = Instantiate(playerRowPrefab, container);
+
+            // Force une hauteur si le prefab n'a pas de LayoutElement
+            LayoutElement le = row.GetComponent<LayoutElement>();
+            if (le == null) le = row.gameObject.AddComponent<LayoutElement>();
+            if (le.preferredHeight <= 0) le.preferredHeight = 60f;
 
             row.Setup(name, memberId, isActive, isHost, TogglePlayer);
         }
+
+        // Force Unity à recalculer le layout immédiatement
+        LayoutRebuilder.ForceRebuildLayoutImmediate(container.GetComponent<RectTransform>());
     }
 }

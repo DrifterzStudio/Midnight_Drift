@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81b8d5869fa1b046b217f837fb00095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  rccp_canvas: {fileID: 0}
+  rccp_canvas: {fileID: 8231931289714951356}
   playerListContainer: {fileID: 1272200392}
   playerRowPrefab: {fileID: 5374726805034271664, guid: b9a2d845ea36f0145b8db4ad52ec42d3, type: 3}
   IsPlaying: 1
@@ -2031,6 +2031,11 @@ PrefabInstance:
       addedObject: {fileID: 208834718}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679e140928b0c964c92a4fd6d73669c7, type: 3}
+--- !u!223 &8231931289714951356 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7242563728492524845, guid: 679e140928b0c964c92a4fd6d73669c7, type: 3}
+  m_PrefabInstance: {fileID: 8231931289714951355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
