@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarPlayState : NetworkBehaviour
 {
@@ -32,7 +33,7 @@ public class CarPlayState : NetworkBehaviour
 
     private void ApplyState(bool active)
     {
-        if (isLocalPlayer && _car != null)
+        if (Keyboard.current.eKey.wasPressedThisFrame)
             _car.canControl = active;
 
         if (_engine != null)
