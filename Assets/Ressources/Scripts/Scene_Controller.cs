@@ -4,8 +4,21 @@ using System.Collections.Generic;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class Scene_Controller : MonoSingleton<Scene_Controller>
+public class Scene_Controller : MonoBehaviour
 {
+    #region Singleton
+    public static Scene_Controller Instance;
+    private void Awake()
+    {
+       
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+    #endregion
 
     [SerializeField] private Loading_Overlay overlay;
     [SerializeField] private float waitingTime = 0.5f;
