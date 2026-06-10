@@ -1,6 +1,7 @@
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Radio : MonoBehaviour {
 
@@ -10,10 +11,17 @@ public class Radio : MonoBehaviour {
     [Tooltip("The list of the songs for the second track.")]
     [Space()]
     public AudioSource[] track2;
+    [Tooltip("Text showing the current track.")]
+    [Space()]
+    public Text playlist;
+    [Tooltip("Text showing the volume.")]
+    [Space()]
+    public Text vol;
 
     private AudioSource[][] tracks = { null, null };
     private AudioSource audioSource;
     private int currentTrack = 0;
+    private float volume = 1.0f;
     private bool isOn = false;
     private bool toggleChange = false;
 
@@ -35,11 +43,14 @@ public class Radio : MonoBehaviour {
             }
         }
         if (Input.GetKeyDown(KeyCode.I)) {
-            audioSource.volume += 0.1f;
+            volume += 0.1f;
+            if (volume > 1) volume = 1;
         }
         if (Input.GetKeyDown(KeyCode.O)) {
-            audioSource.volume -= 0.1f;
+            volume -= 0.0999f;
+            if (volume < 0) volume = 0;
         }
+        audioSource.volume = volume;
 
         if (isOn) {
             if (!audioSource.isPlaying) {
@@ -57,7 +68,20 @@ public class Radio : MonoBehaviour {
                 toggleChange = false;
             }
         }
-        
+        if (!isOn) {
+            playlist.text = "Radio off.";
+            vol.text = " ";
+        }
+        else {
+            vol.text = "Volume: " + (int)(volume * 100);
+            if (currentTrack == 0) {
+                playlist.text = "Current Track: Rock";
+            }
+            else {
+                playlist.text = "Current Track: Chill";
+            }
+        }
+
     }
 
    private void NextTrack() {
