@@ -36,15 +36,20 @@
 //        }
 //    }
 //}
-using Mirror;
 using Steamworks;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class LobbyManager : MonoBehaviour
 {
+    public bool IsPlaying = true;
+
+    // CanPlayerPlay() supprimée → logique déplacée dans NetworkManager
+    // Si plus tard tu veux un système de vote/sélection depuis l'UI du lobby,
+    // tu pourras repasser les IDs ici et les lire dans NetworkManager.
+
     [SerializeField] private Transform playerListContainer;
-    [SerializeField] private TMP_Text playerEntryPrefab; // prefab texte simple
+    [SerializeField] private TMP_Text playerEntryPrefab;
 
     private Callback<LobbyChatUpdate_t> lobbyChatUpdate;
 
@@ -55,12 +60,10 @@ public class LobbyManager : MonoBehaviour
 
     private void OnLobbyChatUpdate(LobbyChatUpdate_t callback)
     {
-        EChatMemberStateChange state =
-            (EChatMemberStateChange)callback.m_rgfChatMemberStateChange;
+        EChatMemberStateChange state = (EChatMemberStateChange)callback.m_rgfChatMemberStateChange;
 
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
             Debug.Log("New Player Joined");
-
         if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
             Debug.Log("Player Left");
 
@@ -74,17 +77,19 @@ public class LobbyManager : MonoBehaviour
         CSteamID lobbyID = new CSteamID(SteamLobby.Instance.currentLobbyID);
         int count = SteamMatchmaking.GetNumLobbyMembers(lobbyID);
 
-        // Nettoyer l'ancienne liste
         foreach (Transform child in playerListContainer)
             Destroy(child.gameObject);
 
         for (int i = 0; i < count; i++)
         {
             CSteamID member = SteamMatchmaking.GetLobbyMemberByIndex(lobbyID, i);
-            string name = SteamFriends.GetFriendPersonaName(member);
+            string playerName = SteamFriends.GetFriendPersonaName(member);
 
             TMP_Text entry = Instantiate(playerEntryPrefab, playerListContainer);
-            entry.text = name;
+            // Indique visuellement qui peut jouer
+            entry.text = i < ((NetWorkManager)NetWorkManager.singleton).MaxActivePlayers
+                ? $"🎮 {playerName}"
+                : $"👁 {playerName} (spectateur)";
         }
     }
 }
