@@ -9,15 +9,20 @@ public class NetWorkManager : NetworkManager
     [Scene] public string LobbyScene;
     [Scene] public string GameScene;
 
-    [Header("Game Rules")]
-    [Tooltip("Combien de joueurs peuvent réellement contrôler leur voiture")]
-    public int MaxActivePlayers = 2;
+    // _spawnedCount et MaxActivePlayers supprimés
+    // → la logique canPlay est maintenant dans CarPlayState.CmdRegisterSteamID
 
     private bool shouldSpawn = false;
-    private int _spawnedCount = 0; // ← compteur de spawns, reset à chaque partie
 
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn) { }
-    public override void ServerChangeScene(string newSceneName) { }
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        // volontairement vide
+    }
+
+    public override void ServerChangeScene(string newSceneName)
+    {
+        // volontairement vide
+    }
 
     public override void OnClientConnect()
     {
@@ -51,36 +56,22 @@ public class NetWorkManager : NetworkManager
         GameObject player = Instantiate(playerPrefab, spawnPos, spawnRot);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        // ← canPlay déclaré ICI, avant le if, pour être accessible partout
-        _spawnedCount++;
-        bool canPlay = _spawnedCount <= MaxActivePlayers;
-
-        CarPlayState carState = player.GetComponent<CarPlayState>();
-        if (carState != null)
-        {
-            carState.SetCanPlay(canPlay);
-        }
-        else
-        {
-            Debug.LogWarning("[Server] CarPlayState manquant sur le prefab !");
-        }
-
-        Debug.Log($"[Server] Joueur spawné : {conn.connectionId} | canPlay: {canPlay} ({_spawnedCount}/{MaxActivePlayers})");
+        // canPlay sera assigné automatiquement par CarPlayState.CmdRegisterSteamID
+        // dès que le client aura fini son OnStartLocalPlayer()
+        Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
     }
 
     [Server]
     public void StartGame()
     {
         shouldSpawn = true;
-        _spawnedCount = 0; // ← reset pour une nouvelle partie
-
         Debug.Log("[Server] Changement vers la scène Game...");
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = GameScene;
 
         OnServerChangeScene(GameScene);
-        NetworkServer.isLoadingScene = true;
 
+        NetworkServer.isLoadingScene = true;
         SceneLoadOperation op = new SceneLoadOperation();
         op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
 
@@ -95,10 +86,8 @@ public class NetWorkManager : NetworkManager
         }
 
         LobbyManager lobbymana = Object.FindAnyObjectByType<LobbyManager>();
-        if (lobbymana != null && lobbymana.IsPlaying)
-        {
-            startPositionIndex = 0;
-            startPositions.Clear();
-        }
+        
+        startPositionIndex = 0;
+        startPositions.Clear();
     }
 }

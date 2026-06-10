@@ -890,7 +890,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1272200392}
-  m_Layer: 0
+  - component: {fileID: 1272200393}
+  m_Layer: 5
   m_Name: PlayerListContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,6 +913,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272200393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272200391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 869bea85db7211b408ed9a24550d7583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1598971081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1265,7 @@ GameObject:
   - component: {fileID: 1981898875}
   - component: {fileID: 1981898874}
   - component: {fileID: 1981898876}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LobbyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,8 +1284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81b8d5869fa1b046b217f837fb00095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  rccp_canvas: {fileID: 0}
   playerListContainer: {fileID: 1272200392}
-  playerEntryPrefab: {fileID: 208834719}
+  playerRowPrefab: {fileID: 5374726805034271664, guid: b9a2d845ea36f0145b8db4ad52ec42d3, type: 3}
+  IsPlaying: 1
 --- !u!4 &1981898875
 Transform:
   m_ObjectHideFlags: 0
