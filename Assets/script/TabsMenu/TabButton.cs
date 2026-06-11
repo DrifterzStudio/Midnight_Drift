@@ -4,10 +4,10 @@ public class TabButton : MonoBehaviour
 {
     public TabGroup tabGroup;
     
-    void Start()
-    {
-        tabGroup.addTab(this);
-    }
+    //void Start()
+    //{
+    //    tabGroup.addTab(this);
+    //}
     public void Onclick()
     {
         tabGroup.Onclick(this);
