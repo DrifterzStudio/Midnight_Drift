@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &31332154
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &219163932
 GameObject:
   m_ObjectHideFlags: 0
@@ -4633,7 +4633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &373766192
 GameObject:
   m_ObjectHideFlags: 0
@@ -5280,9 +5280,9 @@ RectTransform:
   - {fileID: 977921388}
   m_Father: {fileID: 1059645646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.035, y: -536.4159}
   m_SizeDelta: {x: 283.2026, y: 67.5474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &425654021
@@ -5449,9 +5449,9 @@ RectTransform:
   - {fileID: 219163933}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 148, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &458689579
@@ -5466,7 +5466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &458689580
 Animator:
   serializedVersion: 7
@@ -6374,9 +6374,9 @@ RectTransform:
   - {fileID: 991005227}
   m_Father: {fileID: 1059645646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.035, y: -301.3211}
   m_SizeDelta: {x: 283.2026, y: 67.5474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &534931831
@@ -6457,10 +6457,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1015281365}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1015281370}
+        m_TargetAssemblyTypeName: TabGroup, Assembly-CSharp
+        m_MethodName: onEnter
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9152,9 +9152,9 @@ RectTransform:
   - {fileID: 1288610385}
   m_Father: {fileID: 1059645646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.035, y: -418.8685}
   m_SizeDelta: {x: 283.2026, y: 67.5474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &741667338
@@ -10639,9 +10639,9 @@ RectTransform:
   - {fileID: 514065063}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 968, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887425205
@@ -10656,7 +10656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &887425206
 Animator:
   serializedVersion: 7
@@ -11837,13 +11837,14 @@ GameObject:
   - component: {fileID: 1015281368}
   - component: {fileID: 1015281367}
   - component: {fileID: 1015281366}
+  - component: {fileID: 1015281370}
   m_Layer: 5
   m_Name: CarModificationsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1015281366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11932,6 +11933,35 @@ RectTransform:
   m_AnchoredPosition: {x: 619, y: 271}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1015281370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015281365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db929c8092f6e8842b22acdc78386f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabGroup
+  tabButtons:
+  - {fileID: 458689579}
+  - {fileID: 1036944448}
+  - {fileID: 1088078184}
+  - {fileID: 1211661793}
+  - {fileID: 1779161515}
+  - {fileID: 887425205}
+  - {fileID: 2031042017}
+  tabsContent:
+  - {fileID: 216888355}
+  - {fileID: 1024298917}
+  - {fileID: 373062454}
+  - {fileID: 23731460}
+  - {fileID: 2142883104}
+  - {fileID: 1476369582}
+  - {fileID: 1979467710}
+  currentButton: {fileID: 0}
 --- !u!1 &1021660416
 GameObject:
   m_ObjectHideFlags: 0
@@ -12113,7 +12143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &1024933152
 GameObject:
   m_ObjectHideFlags: 0
@@ -12486,9 +12516,9 @@ RectTransform:
   - {fileID: 915653047}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1036944448
@@ -12503,7 +12533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &1036944449
 Animator:
   serializedVersion: 7
@@ -13138,9 +13168,9 @@ RectTransform:
   - {fileID: 1948817628}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 476, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088078184
@@ -13155,7 +13185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &1088078185
 Animator:
   serializedVersion: 7
@@ -15291,9 +15321,9 @@ RectTransform:
   - {fileID: 1409570685}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 640, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211661793
@@ -15308,7 +15338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &1211661794
 Animator:
   serializedVersion: 7
@@ -18864,7 +18894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &1480625733
 GameObject:
   m_ObjectHideFlags: 0
@@ -21023,9 +21053,9 @@ RectTransform:
   - {fileID: 1793775812}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 804, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779161515
@@ -21040,7 +21070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!95 &1779161516
 Animator:
   serializedVersion: 7
@@ -22129,7 +22159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1828466907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23014,7 +23044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &1991497515
 GameObject:
   m_ObjectHideFlags: 0
@@ -23637,9 +23667,9 @@ RectTransform:
   - {fileID: 682545148}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1132, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2031042013
@@ -23770,7 +23800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &2046472572
 GameObject:
   m_ObjectHideFlags: 0
@@ -24018,9 +24048,9 @@ RectTransform:
   - {fileID: 654715588}
   m_Father: {fileID: 1059645646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 220.035, y: -183.7737}
   m_SizeDelta: {x: 283.2026, y: 67.5474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066812571
@@ -24328,7 +24358,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2070479265}
-  - component: {fileID: 2070479266}
   m_Layer: 0
   m_Name: CarSettings
   m_TagString: Untagged
@@ -24358,35 +24387,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2070479266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2070479264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db929c8092f6e8842b22acdc78386f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabGroup
-  tabButtons:
-  - {fileID: 458689579}
-  - {fileID: 1036944448}
-  - {fileID: 1088078184}
-  - {fileID: 1211661793}
-  - {fileID: 1779161515}
-  - {fileID: 887425205}
-  - {fileID: 2031042017}
-  tabsContent:
-  - {fileID: 216888355}
-  - {fileID: 1024298917}
-  - {fileID: 373062454}
-  - {fileID: 23731460}
-  - {fileID: 2142883104}
-  - {fileID: 1476369582}
-  - {fileID: 1979467710}
-  currentButton: {fileID: 0}
 --- !u!1 &2075003352
 GameObject:
   m_ObjectHideFlags: 0
@@ -25483,7 +25483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 2070479266}
+  tabGroup: {fileID: 1015281370}
 --- !u!1 &2143647644
 GameObject:
   m_ObjectHideFlags: 0
