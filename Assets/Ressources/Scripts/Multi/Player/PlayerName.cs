@@ -6,13 +6,11 @@ using UnityEngine;
 public class PlayerName : NetworkBehaviour
 {
     [SerializeField] private TMP_Text nameTagGui;
-    private string nameTag = string.Empty;
+
+    private string _nameTag = string.Empty;
 
     [SyncVar(hook = nameof(OnNameReceived))]
-    private string steamName;
-
-    [SyncVar(hook = nameof(OnScoreReceived))]
-    private int networkScore;
+    private string _steamName;
 
     public override void OnStartClient()
     {
@@ -34,34 +32,13 @@ public class PlayerName : NetworkBehaviour
     [Command]
     private void CmdSetName(string name)
     {
-        steamName = name;
-    }
-
-    [Command]
-    public void CmdSetScore(int newScore)
-    {
-        networkScore = newScore;
+        _steamName = name;
     }
 
     private void OnNameReceived(string oldName, string newName)
     {
-        nameTag = newName;
-        nameTagGui.SetText(nameTag);
-    }
-
-    private void OnScoreReceived(int oldScore, int newScore)
-    {
-        networkScore = newScore;
-
-        Debug.Log($"Score de {steamName} : {newScore}");
-
-        // Si tu veux afficher le score dans un TMP_Text,
-        // fais-le ici.
-    }
-
-    public int GetScore()
-    {
-        return networkScore;
+        _nameTag = newName;
+        nameTagGui.SetText(_nameTag);
     }
 
     private void LateUpdate()

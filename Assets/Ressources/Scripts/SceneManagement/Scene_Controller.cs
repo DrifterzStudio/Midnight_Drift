@@ -4,26 +4,12 @@ using System.Collections.Generic;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class Scene_Controller : MonoBehaviour
+public class Scene_Controller : Singleton_Obj<Scene_Controller>
 {
-    #region Singleton
-    public static Scene_Controller Instance;
-    private void Awake()
-    {
-       
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
-    #endregion
-
     [SerializeField] private Loading_Overlay overlay;
     [SerializeField] private float waitingTime = 0.5f;
-    private Dictionary<string, string> loadedSceneBySlot = new Dictionary<string, string>();
-    private bool isBusy = false;
+    private Dictionary<string, string> _loadedSceneBySlot = new Dictionary<string, string>();
+    private bool _isBusy = false;
 
     public SceneTransition NewTransition()
     {
@@ -31,12 +17,12 @@ public class Scene_Controller : MonoBehaviour
     }
     private Coroutine ExecutePlan(SceneTransition transition)
     {
-        if(isBusy)
+        if(_isBusy)
         {
             Debug.LogWarning("already in transition");
             return null;
         }
-        isBusy = true;
+        _isBusy = true;
         return StartCoroutine(ChangeSceneRoutine(transition));
     }
     private IEnumerator ChangeSceneRoutine(SceneTransition transition)
@@ -56,7 +42,7 @@ public class Scene_Controller : MonoBehaviour
         }
         foreach (var key in transition.ScenesToLoad)
         {
-            if (loadedSceneBySlot.ContainsKey(key.Key))
+            if (_loadedSceneBySlot.ContainsKey(key.Key))
             {
                 yield return UnloadSceneRoutine(key.Key);
             }
@@ -72,7 +58,7 @@ public class Scene_Controller : MonoBehaviour
         {
             yield return overlay.FadeOutBlack();
         }
-        isBusy = false;
+        _isBusy = false;
     }
 
     private IEnumerator LoadAdditiveRoutineWitHLoadOpp(string key, string sceneName, SceneLoadOperation opp, bool isActive)
@@ -98,7 +84,7 @@ public class Scene_Controller : MonoBehaviour
                 SceneManager.SetActiveScene(newScene);
             }
         }
-        loadedSceneBySlot[key] = sceneName;
+        _loadedSceneBySlot[key] = sceneName;
     }
     private IEnumerator LoadAdditiveRoutine(string key,string sceneName,bool isActive)
     {
@@ -122,12 +108,12 @@ public class Scene_Controller : MonoBehaviour
                 SceneManager.SetActiveScene(newScene);
             }
         }
-        loadedSceneBySlot[key] = sceneName;
+        _loadedSceneBySlot[key] = sceneName;
     }
 
     private IEnumerator UnloadSceneRoutine(string key)
     {
-        if (!loadedSceneBySlot.TryGetValue(key, out string sceneName)) yield break;
+        if (!_loadedSceneBySlot.TryGetValue(key, out string sceneName)) yield break;
         if(string.IsNullOrEmpty(sceneName)) yield break;
         AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(sceneName);
         if (unloadOp != null)
@@ -137,7 +123,7 @@ public class Scene_Controller : MonoBehaviour
                 yield return null;
             }
         }
-        loadedSceneBySlot.Remove(key);
+        _loadedSceneBySlot.Remove(key);
     }
 
     private IEnumerator CleanUnusedAssetsRoutine()

@@ -8,10 +8,10 @@ using UnityEngine.InputSystem;
 public class SteamLobby : MonoBehaviour
 {
     // callbacks
-    protected Callback<LobbyCreated_t> lobbyCreated;
-    protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
-    protected Callback<LobbyEnter_t> lobbyEntered;
-    protected Callback<LobbyChatUpdate_t> lobbyChatUpdate;
+    protected Callback<LobbyCreated_t> LobbyCreated;
+    protected Callback<GameLobbyJoinRequested_t> GameLobbyJoinRequested;
+    protected Callback<LobbyEnter_t> LobbyEntered;
+    protected Callback<LobbyChatUpdate_t> LobbyChatUpdate;
 
     // variables
     public ulong currentLobbyID;
@@ -39,10 +39,10 @@ public class SteamLobby : MonoBehaviour
             return;
 
         isInit = true;
-        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
-        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-        lobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
+        LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+        GameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
+        LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        LobbyChatUpdate = Callback<LobbyChatUpdate_t>.Create(OnLobbyChatUpdate);
 
         // Steam prêt → on affiche le bouton Host
         HostButton.SetActive(true);

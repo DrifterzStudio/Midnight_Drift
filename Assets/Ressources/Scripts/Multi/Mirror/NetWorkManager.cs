@@ -56,8 +56,6 @@ public class NetWorkManager : NetworkManager
         GameObject player = Instantiate(playerPrefab, spawnPos, spawnRot);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        // canPlay sera assigné automatiquement par CarPlayState.CmdRegisterSteamID
-        // dès que le client aura fini son OnStartLocalPlayer()
         Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
     }
 

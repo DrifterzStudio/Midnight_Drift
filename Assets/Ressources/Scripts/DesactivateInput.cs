@@ -10,21 +10,18 @@ public class CarPlayState : NetworkBehaviour
     private RCCP_CarController _car;
     private RCCP_Engine _engine;
 
-    private void Awake()
+    private void Start()
     {
         _car = GetComponent<RCCP_CarController>();
         _engine = GetComponentInChildren<RCCP_Engine>();
     }
 
-    // OnStartClient → tous les clients, applique l'état initial reçu du serveur
     public override void OnStartClient()
     {
         base.OnStartClient();
         ApplyState(canPlay);
     }
 
-    // OnStartLocalPlayer → uniquement le propriétaire du prefab
-    // Envoie le Steam ID au serveur pour qu'il détermine canPlay
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
@@ -51,11 +48,7 @@ public class CarPlayState : NetworkBehaviour
     [Server]
     public void SetCanPlay(bool value) => canPlay = value;
 
-    // =============================================
-    // ÉTAT
-    // =============================================
-
-    // Hook Mirror : déclenché sur tous les clients quand canPlay change
+   
     private void OnCanPlayChanged(bool _, bool next) => ApplyState(next);
 
     private void ApplyState(bool active)
