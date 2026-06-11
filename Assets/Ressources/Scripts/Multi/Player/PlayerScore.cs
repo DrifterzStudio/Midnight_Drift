@@ -14,6 +14,7 @@ using UnityEngine;
         private float _syncScore = 0f;
         [SyncVar(hook = nameof(OnScoreUpdateChanged))]
         private float _syncScoreUpdate = 0f;
+        [SyncVar]
         private float _syncScoreMultiplier = 1f;
 
         // private variable 
@@ -60,7 +61,8 @@ using UnityEngine;
             //seul le client local envoie ses données 
             if (!isLocalPlayer) return;
             if (!_carController) return;
-
+            if(_carController.PoweredAxles.Count <= 0) return;
+            
             float sidewaysSlip = (float)Math.Abs(_carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip);
             float speed = _carController.speed;
             float deltaTime = Time.deltaTime;
