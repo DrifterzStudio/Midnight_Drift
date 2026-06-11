@@ -49,6 +49,8 @@ using UnityEngine;
                 _scoreUpdateText = Game_UI_Manager.Instance.updScore;
                 _scoreText.gameObject.SetActive(true);
                 _scoreUpdateText.gameObject.SetActive(true);
+                _scoreText.text = "Score: " + 0;
+                _scoreUpdateText.text = " " + 0;
                 _carController = GetComponent<RCCP_CarController>();
             }
         }
