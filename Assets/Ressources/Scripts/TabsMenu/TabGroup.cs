@@ -41,15 +41,19 @@ public class TabGroup : MonoBehaviour
             }
         }
     }
-    public void onEnter() {
+    public void onEnter()
+    {
         gameObject.SetActive(true);
         currentButton = tabButtons[0];
         int index = 0;
-        for (int i = 0; i < tabsContent.Count; i++) {
-            if (i == index) {
+        for (int i = 0; i < tabsContent.Count; i++)
+        {
+            if (i == index)
+            {
                 tabsContent[i].gameObject.SetActive(true);
             }
-            else {
+            else
+            {
                 tabsContent[i].gameObject.SetActive(false);
             }
         }
