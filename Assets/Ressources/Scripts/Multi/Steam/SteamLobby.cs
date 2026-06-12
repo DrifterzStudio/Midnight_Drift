@@ -114,7 +114,6 @@ public class SteamLobby : MonoBehaviour
         // On passe par le NetworkManager qui gère le changement de scène
         // Le spawn se fait automatiquement dans OnServerSceneChanged()
         manager.StartGame();
-
         Debug.Log("[Server] Lancement de la partie !");
     }
 

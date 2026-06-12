@@ -3,11 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Scene_Controller;
 
+
+
+
 public class NetWorkManager : NetworkManager
 {
     [Header("Scenes")]
     [Scene] public string LobbyScene;
     [Scene] public string GameScene;
+
+    private string _nextSlot = "";
 
     // _spawnedCount et MaxActivePlayers supprimés
     // → la logique canPlay est maintenant dans CarPlayState.CmdRegisterSteamID
@@ -59,6 +64,21 @@ public class NetWorkManager : NetworkManager
         Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
     }
 
+
+    public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
+    {
+        customHandling = true;
+
+        SceneLoadOperation op = new SceneLoadOperation();
+        op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
+
+        Scene_Controller.Instance.NewTransition()
+            .Load(_nextSlot, newSceneName, op, true)
+            .EnableOverlay(true)
+            .Execute();
+    }
+
+
     [Server]
     public void StartGame()
     {
@@ -66,17 +86,17 @@ public class NetWorkManager : NetworkManager
         Debug.Log("[Server] Changement vers la scène Game...");
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = GameScene;
-
+        _nextSlot = "Game";
         OnServerChangeScene(GameScene);
 
-        NetworkServer.isLoadingScene = true;
-        SceneLoadOperation op = new SceneLoadOperation();
-        op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
+        //NetworkServer.isLoadingScene = true;
+        //SceneLoadOperation op = new SceneLoadOperation();
+        //op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
 
-        Scene_Controller.Instance.NewTransition()
-            .Load("Game", GameScene, op, true)
-            .EnableOverlay(true)
-            .Execute();
+        //Scene_Controller.Instance.NewTransition()
+        //    .Load("Game", GameScene, op, true)
+        //    .EnableOverlay(true)
+        //    .Execute();
 
         if (NetworkServer.active)
         {
