@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using static Scene_Controller;
 
@@ -11,13 +13,20 @@ public class NetWorkManager : NetworkManager
     [Header("Scenes")]
     [Scene] public string LobbyScene;
     [Scene] public string GameScene;
+    private Dictionary<string, GameObject> _prefabForScene  = new Dictionary<string, GameObject>();
+    private string _nextSlot = " ";
 
-    private string _nextSlot = "";
-
+    private string _activeScene = " ";
     // _spawnedCount et MaxActivePlayers supprimés
     // → la logique canPlay est maintenant dans CarPlayState.CmdRegisterSteamID
 
     private bool shouldSpawn = false;
+
+    private void Start()
+    {
+        base.Start();
+        _prefabForScene[GameScene] = playerPrefab;
+    }
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
@@ -43,22 +52,27 @@ public class NetWorkManager : NetworkManager
 
     public override void OnServerReady(NetworkConnectionToClient conn)
     {
+        
         base.OnServerReady(conn);
+       
         Debug.Log($"[Server] Client ready : {conn.connectionId}");
 
-        if (shouldSpawn)
-            SpawnPlayer(conn);
+        if (_prefabForScene.TryGetValue(_activeScene, out GameObject prefab))
+        {
+            if (prefab != null) 
+                SpawnPlayer(conn, playerPrefab);
+        }
     }
 
     [Server]
-    public void SpawnPlayer(NetworkConnectionToClient conn)
+    public void SpawnPlayer(NetworkConnectionToClient conn,GameObject prefab)
     {
         if (conn.identity != null) return;
 
         Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
         Quaternion spawnRot = GetStartPosition()?.rotation ?? Quaternion.identity;
 
-        GameObject player = Instantiate(playerPrefab, spawnPos, spawnRot);
+        GameObject player = Instantiate(prefab, spawnPos, spawnRot);
         NetworkServer.AddPlayerForConnection(conn, player);
 
         Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
@@ -87,6 +101,7 @@ public class NetWorkManager : NetworkManager
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = GameScene;
         _nextSlot = "Game";
+        _activeScene = GameScene;
         OnServerChangeScene(GameScene);
 
         //NetworkServer.isLoadingScene = true;

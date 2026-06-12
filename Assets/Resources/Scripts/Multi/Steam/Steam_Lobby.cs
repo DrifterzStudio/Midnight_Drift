@@ -25,7 +25,10 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     private void Start()
     {
         if (!SteamManager.Initialized)
+        {
+            Debug.LogWarning("ERRORR");
             return;
+        }
 
         
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
@@ -62,8 +65,7 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
             Debug.Log("Lobby creation failed");
             return;
         }
-
-        //manager.StartHost();
+        Mirror_Manager.Instance.StartHost();
         LobbyID = new CSteamID(callback.m_ulSteamIDLobby);
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby");
@@ -82,9 +84,14 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     // lobby Enter
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
-        //currentLobbyID = callback.m_ulSteamIDLobby;
-        //manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
-        //manager.StartClient();
+        LobbyID = new CSteamID(callback.m_ulSteamIDLobby);
+
+
+        if (NetworkServer.active)
+            return;
+
+        Mirror_Manager.Instance.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
+        Mirror_Manager.Instance.StartClient();
     }
 
     // here the lobbyData
