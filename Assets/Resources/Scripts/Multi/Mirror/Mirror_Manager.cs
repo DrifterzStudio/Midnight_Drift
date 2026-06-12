@@ -11,7 +11,7 @@ public class CustomSceneData
 }
 public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 {
-    private CustomSceneData _sceneData = new CustomSceneData();
+    public CustomSceneData SceneData { get; private set; } = new CustomSceneData();
     private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
 
     public void RegisterPrefab(string scene, GameObject prefabObject)
@@ -51,7 +51,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
         base.OnServerReady(conn);
         Debug.Log($"[Server] Client ready : {conn.connectionId}");
 
-        if (_prefabs.TryGetValue(_sceneData.Scene, out GameObject prefab))
+        if (_prefabs.TryGetValue(SceneData.Scene, out GameObject prefab))
         {
             if (prefab != null)
                 SpawnPlayer(conn, prefab);
@@ -72,7 +72,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
             return;
         }
 
-        Debug.Log($"Scene : {_sceneData.Scene}");
+        Debug.Log($"Scene : {SceneData.Scene}");
         Debug.Log($"Prefab : {prefab.name}");
 
         Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
@@ -86,6 +86,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
+        CustomSceneData _sceneData = Mirror_Manager.Instance.SceneData;
         customHandling = true;
         if(newSceneName != _sceneData.Scene)
             Debug.LogWarning($"scene not valid");
@@ -104,8 +105,8 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
     {
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = scene;
-        _sceneData.Slot = slot;
-        _sceneData.Scene = scene;
+        SceneData.Slot = slot;
+        SceneData.Scene = scene;
         OnServerChangeScene(scene);
         if (NetworkServer.active)
         {
