@@ -3,7 +3,7 @@ using UnityEngine;
 public class SaveSettings : MonoBehaviour {
 
     // Suspenssions Settings 
-    public Suspenssion suspenssionSettings;
+    public Suspension suspenssionSettings;
 
     // Absorbers Settings
     public Absorbers absorbersSettings;

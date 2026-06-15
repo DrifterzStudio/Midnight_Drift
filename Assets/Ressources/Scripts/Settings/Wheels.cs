@@ -27,7 +27,7 @@ public class Wheels : RCCP_GenericComponent {
     public Button steeringCurveButton;
 
     [Tooltip("Text showing the current value of steering sensitivity.")]
-    public Text sterringsensitivityText;
+    public Text sterringSensitivityText;
 
     private float sensitivityValue = 1f;
 
@@ -40,7 +40,10 @@ public class Wheels : RCCP_GenericComponent {
         gripButton.onClick.AddListener(OnGripButtonClicked);
     }
     private void Update() {
-        
+        controller = RCCPSceneManager.activePlayerVehicle;
+
+        sterringSensitivityText.text = "" + sensitivityValue;   
+
     }
 
     private void OnCamberButtonClicked() {

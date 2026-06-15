@@ -3451,6 +3451,14 @@ PrefabInstance:
       propertyPath: loadout.customizationData.cambersFront
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8256320515208030974, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+      propertyPath: loadout.customizationData.suspensionTargetFront
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256320515208030974, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+      propertyPath: loadout.customizationData.suspensionDistanceFront
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8598428459416514831, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
