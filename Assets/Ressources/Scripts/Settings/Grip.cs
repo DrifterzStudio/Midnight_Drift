@@ -48,20 +48,20 @@ public class Grip : RCCP_GenericComponent {
     }
 
     private void OnForwardButtonClicked() {
-        if (forwardValue + 0.5f > 2) forwardValue = 0;
-        else forwardValue += 0.5f;
+        if (forwardValue + 0.1f > 1) forwardValue = 0;
+        else forwardValue += 0.1f;
         stability.driftRearForwardStiffnessMin = forwardValue;
     }
 
     private void OnRearSidewaysButtonClicked() {
-        if (rearSidewaysValue + 0.5f > 2) rearSidewaysValue = 0;
-        else rearSidewaysValue += 0.5f;
+        if (rearSidewaysValue + 0.1f > 1) rearSidewaysValue = 0;
+        else rearSidewaysValue += 0.1f;
         stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
     }
 
     private void OnFrontSidewaysButtonClicked() {
-        if (frontSidewaysValue + 0.5f > 2) frontSidewaysValue = 0;
-        else frontSidewaysValue += 0.5f;
+        if (frontSidewaysValue + 0.1f > 1) frontSidewaysValue = 0;
+        else frontSidewaysValue += 0.1f;
         stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
     }
 
