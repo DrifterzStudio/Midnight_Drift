@@ -23,7 +23,7 @@ public class Host_Script : MonoBehaviour
     private void Update()
     {
         if(isReady && Keyboard.current.spaceKey.wasPressedThisFrame)
-            Mirror_Manager.Instance.ChangeScene("Game","GameScene");
+            Mirror_Manager.Instance.ChangeScene("Game","GameLobbyScene");
 
     }
 }
