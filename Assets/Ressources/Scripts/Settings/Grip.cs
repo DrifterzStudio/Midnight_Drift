@@ -69,4 +69,18 @@ public class Grip : RCCP_GenericComponent {
         gameObject.SetActive(false);
         back.SetActive(true);
     }
+    private void OnDestroy() {
+        if (forwardButton != null) {
+            forwardButton.onClick.RemoveListener(OnForwardButtonClicked);
+        }
+        if (rearSidewaysButton != null) {
+            rearSidewaysButton.onClick.RemoveListener(OnRearSidewaysButtonClicked);
+        }
+        if (frontSidewaysButton != null) {
+            frontSidewaysButton.onClick.RemoveListener(OnFrontSidewaysButtonClicked);
+        }
+        if (backButton != null) {
+            backButton.onClick.RemoveListener(OnBackButtonClicked);
+        }
+    }
 }

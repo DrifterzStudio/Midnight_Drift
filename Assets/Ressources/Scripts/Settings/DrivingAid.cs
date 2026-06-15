@@ -23,10 +23,31 @@ public class DrivingAid : RCCP_GenericComponent {
     [Tooltip("Text showing the current state of the ESP.")]
     public Text ESPText;
 
+    [Header("SH")]
+    [Tooltip("The button that change sterring helper state.")]
+    public Button SHButton;
+    [Tooltip("Text showing the current state of the steering helper.")]
+    public Text SHText;
+
+    [Header("TH")]
+    [Tooltip("The button that change traction helper state.")]
+    public Button THButton;
+    [Tooltip("Text showing the current state of the traction helper.")]
+    public Text THText;
+
+    [Header("ASP")]
+    [Tooltip("The button that change arcade speed preservation state.")]
+    public Button ASPButton;
+    [Tooltip("Text showing the current state of the arcade speed preservation.")]
+    public Text ASPText;
+
     private void Awake() {
         ABSButton.onClick.AddListener(OnABSButtonClicked);
         TCSButton.onClick.AddListener(OnTCSButtonClicked);
         ESPButton.onClick.AddListener(OnESPButtonClicked);
+        SHButton.onClick.AddListener(OnSHButtonClicked);
+        THButton.onClick.AddListener(OnTHButtonClicked);
+        ASPButton.onClick.AddListener(OnASPButtonClicked);
     }
 
     private void Update() {
@@ -43,6 +64,18 @@ public class DrivingAid : RCCP_GenericComponent {
         ESPText.text = "ESP: ";
         if (carController.GetVehicleBehaviorType().ESP == true) ESPText.text += "On";
         else ESPText.text += "Off";
+
+        SHText.text = "SH: ";
+        if (carController.GetVehicleBehaviorType().steeringHelper == true) SHText.text += "On";
+        else SHText.text += "Off";
+
+        THText.text = "TH: ";
+        if (carController.GetVehicleBehaviorType().tractionHelper == true) THText.text += "On";
+        else THText.text += "Off";
+
+        /*ASPText.text = "ASP: ";
+        if (carController.GetVehicleBehaviorType().ABS == true) ASPText.text += "On";
+        else ASPText.text += "Off";*/
     }
     private void OnABSButtonClicked() {
         carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;
@@ -54,6 +87,18 @@ public class DrivingAid : RCCP_GenericComponent {
         carController.GetVehicleBehaviorType().ESP = !carController.GetVehicleBehaviorType().ESP;
     }
 
+    private void OnSHButtonClicked() {
+        carController.GetVehicleBehaviorType().steeringHelper = !carController.GetVehicleBehaviorType().steeringHelper;
+    }
+
+    private void OnTHButtonClicked() {
+        carController.GetVehicleBehaviorType().tractionHelper = !carController.GetVehicleBehaviorType().tractionHelper;
+    }
+
+    private void OnASPButtonClicked() {
+        
+    }
+
     private void OnDestroy() {
         if (ABSButton != null) {
             ABSButton.onClick.RemoveListener(OnABSButtonClicked);
@@ -63,6 +108,15 @@ public class DrivingAid : RCCP_GenericComponent {
         }
         if (ESPButton != null) {
             ESPButton.onClick.RemoveListener(OnESPButtonClicked);
+        }
+        if (SHButton != null) {
+            SHButton.onClick.RemoveListener(OnSHButtonClicked);
+        }
+        if (THButton != null) {
+            THButton.onClick.RemoveListener(OnTHButtonClicked);
+        }
+        if (ASPButton != null) {
+            ASPButton.onClick.RemoveListener(OnASPButtonClicked);
         }
     }
 

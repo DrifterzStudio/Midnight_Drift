@@ -41,8 +41,8 @@ public class Wheels : MonoBehaviour {
         gameObject.SetActive(false);
         camber.SetActive(true);
     }
-    private void OnSteerSensitivityButtonClicked() { }
-    private void OnSteerCurveButtonClicked() { }
+    private void OnSteerSensitivityButtonClicked() { } // carcontroller
+    private void OnSteerCurveButtonClicked() { } // carcontroller
     private void OnGripButtonClicked() {
         gameObject.SetActive(false);
         camber.SetActive(true);

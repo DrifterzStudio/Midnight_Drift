@@ -52,4 +52,15 @@ public class Camber : MonoBehaviour {
         gameObject.SetActive(false);
         back.SetActive(true);
     }
+    private void OnDestroy() {
+        if (frontButton != null) {
+            frontButton.onClick.RemoveListener(OnFrontButtonClicked);
+        }
+        if (rearButton != null) {
+            rearButton.onClick.RemoveListener(OnRearButtonClicked);
+        }
+        if (backButton != null) {
+            backButton.onClick.RemoveListener(OnBackButtonClicked);
+        }
+    }
 }
