@@ -1,7 +1,7 @@
 using System.ComponentModel.Design;
 using UnityEngine;
 
-public class SpeedRatio : RCCP_GenericComponent {
+public class Gearbox : RCCP_GenericComponent {
     private RCCP_CarController carController;
 
     private void Start() {

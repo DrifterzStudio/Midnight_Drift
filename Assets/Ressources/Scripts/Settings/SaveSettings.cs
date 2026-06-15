@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class SaveSettings : MonoBehaviour {
 
-    // Driving Aid Settings
-    public DrivingAid drivingAidSettings;
-
-    // Camber Settings
-    public Camber camberSettings;
-
-    // Toe Settings
-    public Toe toeSettings;
-
     // Suspenssions Settings 
     public Suspenssion suspenssionSettings;
+
+    // Absorbers Settings
+    public Absorbers absorbersSettings;
+
+    // Wheels Settings
+    public Wheels wheelsSettings;
 
     // Braking Settings
     public Braking BrakingSettings;
 
-    // Speed Ratio Settings 
-    public SpeedRatio SpeedRatioSettings;
+    // Gearbox Ratio Settings 
+    public Gearbox gearboxSettings;
 
-    // Diferential Settings
-    public Diferential DiferentialSettings;
+    // Propulsion Type Settings
+    public PropulsionType propulsionTypeSettings;
+
+    // Driving Aid Settings
+    public DrivingAid drivingAidSettings;
 }
