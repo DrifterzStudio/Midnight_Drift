@@ -4,16 +4,11 @@ using UnityEngine;
 using static Scene_Controller;
 
 
-public class CustomSceneData
-{
-    public string Slot = " ";
-    public string Scene= " ";
-}
+
 public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 {
-    public CustomSceneData SceneData { get; private set; } = new CustomSceneData();
     private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
-
+    [SerializeField] private Server_Data dataObj;
     public void RegisterPrefab(string scene, GameObject prefabObject)
     {
         if (!NetworkClient.prefabs.ContainsValue(prefabObject))
@@ -51,7 +46,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
         base.OnServerReady(conn);
         Debug.Log($"[Server] Client ready : {conn.connectionId}");
 
-        if (_prefabs.TryGetValue(SceneData.Scene, out GameObject prefab))
+        if (_prefabs.TryGetValue(dataObj.GetSceneName(), out GameObject prefab))
         {
             if (prefab != null)
                 SpawnPlayer(conn, prefab);
@@ -72,7 +67,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
             return;
         }
 
-        Debug.Log($"Scene : {SceneData.Scene}");
+        Debug.Log($"Scene : {dataObj.GetSceneName()}");
         Debug.Log($"Prefab : {prefab.name}");
 
         Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
@@ -86,16 +81,20 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
-        CustomSceneData _sceneData = Mirror_Manager.Instance.SceneData;
+
+        Debug.Log($"scene slot :{dataObj.GetSceneSlot()}");
+        Debug.Log($"scene name :{dataObj.GetSceneName()}");
+
+    
         customHandling = true;
-        if(newSceneName != _sceneData.Scene)
-            Debug.LogWarning($"scene not valid");
+        if(newSceneName != dataObj.GetSceneName())
+            Debug.LogWarning($"scene not valid");   
 
         SceneLoadOperation op = new SceneLoadOperation();
         op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
 
         Scene_Controller.Instance.NewTransition()
-            .Load(_sceneData.Slot , newSceneName, op, true)
+            .Load(dataObj.GetSceneSlot(), newSceneName, op, true)
             .EnableOverlay(true)
             .Execute();
     }
@@ -105,8 +104,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
     {
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = scene;
-        SceneData.Slot = slot;
-        SceneData.Scene = scene;
+        dataObj.SetSceneData(slot,scene);
         OnServerChangeScene(scene);
         if (NetworkServer.active)
         {
