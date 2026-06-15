@@ -4,6 +4,13 @@ using UnityEngine;
 using static Scene_Controller;
 
 
+public struct custom_change_scene : NetworkMessage
+{
+    public string Slot;
+    public string Scene;
+}
+
+
 
 public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 {
@@ -81,23 +88,10 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
     
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
-
-        Debug.LogWarning($"scene slot :{dataObj.GetSceneSlot()}");
-        Debug.LogWarning($"scene name :{dataObj.GetSceneName()}");
-
-    
         customHandling = true;
-        if(newSceneName != dataObj.GetSceneName())
-            Debug.LogWarning($"scene not valid");   
-
-        SceneLoadOperation op = new SceneLoadOperation();
-        op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
-
-        Scene_Controller.Instance.NewTransition()
-            .Load(dataObj.GetSceneSlot(), newSceneName, op, true)
-            .EnableOverlay(true)
-            .Execute();
     }
+
+   
 
     [Server]
     public void ChangeScene(string slot, string scene)
@@ -107,11 +101,12 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
         networkSceneName = scene;
         dataObj.SetSceneData(slot,scene);
         OnServerChangeScene(scene);
+
         if (NetworkServer.active)
         {
-            NetworkServer.SendToAll(new SceneMessage { sceneName = scene , sceneOperation = SceneOperation.LoadAdditive,customHandling =  true});
+            NetworkServer.SendToAll(new custom_change_scene { Slot = slot,Scene  = scene});
         }
-
+       
         startPositionIndex = 0;
         startPositions.Clear();
     }

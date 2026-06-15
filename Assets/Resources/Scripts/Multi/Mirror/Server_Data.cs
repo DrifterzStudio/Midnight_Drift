@@ -1,11 +1,11 @@
-using System;
 using Mirror;
+using System;
 using UnityEngine;
     public class Server_Data : NetworkBehaviour
     {
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
         }
 
         [SyncVar(hook = nameof(OnSlotChanged))] private string _slot = " ";
@@ -15,15 +15,22 @@ using UnityEngine;
         private void OnNameChanged(string oldVal, string newVal) => _name = newVal;
         [Server] public void SetSceneData(string slot, string name)
         {
-        _slot = slot;
-        _name = name;
+            _slot = slot;
+            _name = name;
         }
-
-        private void Update()
+    private void OnSceneChangeMessage(custom_change_scene msg)
         {
-            Debug.Log($"slot : {_slot}" + $" name : {_name}");
+            Debug.LogWarning($"Message reçu slot:{msg.Slot} scene:{msg.Scene}");
+
+            Scene_Controller.SceneLoadOperation op = new Scene_Controller.SceneLoadOperation();
+            op.OnOpCreated = (asyncOp) => NetworkManager.loadingSceneAsync = asyncOp;
+
+            Scene_Controller.Instance.NewTransition()
+                .Load(msg.Slot, msg.Scene, op, true)
+                .EnableOverlay(true)
+                .Execute();
         }
 
-        public string GetSceneSlot() => _slot;
+    public string GetSceneSlot() => _slot;
         public string GetSceneName() => _name;
     }
