@@ -1,31 +1,29 @@
+using System;
 using Mirror;
 using UnityEngine;
-
-public class CustomSceneData
-{
-    public string Slot = " ";
-    public string Name = " ";
-}
-
-public class Server_Data : NetworkBehaviour
-{
-    [SyncVar] private CustomSceneData _data = new CustomSceneData();
-
-    [Server]
-    public void SetSceneData(string slot, string name)
+    public class Server_Data : NetworkBehaviour
     {
-        _data.Slot = slot;
-        _data.Name = name;
-    }
-    [Client]
-    public string GetSceneSlot()
-    {
-        return _data.Slot;
-    }
-    [Client]
-    public string GetSceneName()
-    {
-        return _data.Name;
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
 
-}
+        [SyncVar(hook = nameof(OnSlotChanged))] private string _slot = " ";
+        [SyncVar(hook = nameof(OnNameChanged))] private string _name = " ";
+
+        private void OnSlotChanged(string oldVal, string newVal) => _slot = newVal;
+        private void OnNameChanged(string oldVal, string newVal) => _name = newVal;
+        [Server] public void SetSceneData(string slot, string name)
+        {
+        _slot = slot;
+        _name = name;
+        }
+
+        private void Update()
+        {
+            Debug.Log($"slot : {_slot}" + $" name : {_name}");
+        }
+
+        public string GetSceneSlot() => _slot;
+        public string GetSceneName() => _name;
+    }

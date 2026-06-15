@@ -78,12 +78,12 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 
         Debug.Log($"[Server] Player spawn : {conn.connectionId}");
     }
-
+    
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
 
-        Debug.Log($"scene slot :{dataObj.GetSceneSlot()}");
-        Debug.Log($"scene name :{dataObj.GetSceneName()}");
+        Debug.LogWarning($"scene slot :{dataObj.GetSceneSlot()}");
+        Debug.LogWarning($"scene name :{dataObj.GetSceneName()}");
 
     
         customHandling = true;
@@ -102,13 +102,14 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
     [Server]
     public void ChangeScene(string slot, string scene)
     {
+      
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = scene;
         dataObj.SetSceneData(slot,scene);
         OnServerChangeScene(scene);
         if (NetworkServer.active)
         {
-            NetworkServer.SendToAll(new SceneMessage { sceneName = scene });
+            NetworkServer.SendToAll(new SceneMessage { sceneName = scene , sceneOperation = SceneOperation.LoadAdditive,customHandling =  true});
         }
 
         startPositionIndex = 0;
