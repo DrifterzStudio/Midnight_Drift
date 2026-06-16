@@ -99,12 +99,18 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
       
         NetworkServer.SetAllClientsNotReady();
         networkSceneName = scene;
+        NetworkServer.isLoadingScene = true;
+
         dataObj.SetSceneData(slot,scene);
         OnServerChangeScene(scene);
 
         if (NetworkServer.active)
         {
             NetworkServer.SendToAll(new custom_change_scene { Slot = slot,Scene  = scene});
+            NetworkServer.SendToAll(new SceneMessage
+            {
+                sceneName = scene
+            });
         }
        
         startPositionIndex = 0;

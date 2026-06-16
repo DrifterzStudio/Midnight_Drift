@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Mirror;
 /// <summary>
 /// Zone de changement de scène — utilise Scene_Controller.
 /// Attacher ce script à un GameObject avec un Collider.
 /// Le joueur doit avoir le tag "Player".
 /// </summary>
-[RequireComponent(typeof(Collider))]
-public class ZoneChangementScene : MonoBehaviour
+//[RequireComponent(typeof(Collider))]
+public class ZoneChangementScene : NetworkBehaviour
 {
     // ──────────────────────────────────────────
     // PARAMÈTRES ÉDITEUR
@@ -25,7 +25,7 @@ public class ZoneChangementScene : MonoBehaviour
     // ──────────────────────────────────────────
 
     private Renderer zoneRenderer;
-    private bool enTransition = false;
+    //private bool enTransition = false;
 
     // ──────────────────────────────────────────
     // INITIALISATION
@@ -102,7 +102,9 @@ public class ZoneChangementScene : MonoBehaviour
     {
         //if (enTransition) return;
         //if (!other.CompareTag("Player")) return;
-
+        //Debug.Log(other.name);
+        if (other.name == "Plane")
+            return;
         SetCouleur(couleurActivee);
         LancerTransition();
     }
@@ -121,7 +123,6 @@ public class ZoneChangementScene : MonoBehaviour
 
     void LancerTransition()
     {
-        Debug.Log("hit");
         //if (Scene_Controller.Instance == null)
         //{
         //    Debug.LogError("[ZoneChangementScene] Scene_Controller.Instance est null !");

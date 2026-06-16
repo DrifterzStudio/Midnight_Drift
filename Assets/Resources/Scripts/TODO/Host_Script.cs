@@ -10,6 +10,8 @@ public class Host_Script : MonoBehaviour
     private void Start()
     {
         Mirror_Manager.Instance.RegisterPrefab("GameScene", Resources.Load<GameObject>("Prefabs/MyPrefab"));
+        Mirror_Manager.Instance.RegisterPrefab("GameLobbyScene", Resources.Load<GameObject>("Prefabs/Player"));
+
     }
     public void OnClick()
     {

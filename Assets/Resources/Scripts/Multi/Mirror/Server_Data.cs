@@ -19,7 +19,7 @@ using UnityEngine;
             _name = name;
         }
     private void OnSceneChangeMessage(custom_change_scene msg)
-        {
+    {
             Debug.LogWarning($"Message reçu slot:{msg.Slot} scene:{msg.Scene}");
 
             Scene_Controller.SceneLoadOperation op = new Scene_Controller.SceneLoadOperation();
@@ -29,7 +29,8 @@ using UnityEngine;
                 .Load(msg.Slot, msg.Scene, op, true)
                 .EnableOverlay(true)
                 .Execute();
-        }
+
+    }
 
     public string GetSceneSlot() => _slot;
         public string GetSceneName() => _name;
