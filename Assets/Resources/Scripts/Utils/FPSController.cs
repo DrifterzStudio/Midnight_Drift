@@ -23,6 +23,7 @@ public class FPSController : NetworkBehaviour
     //private CharacterController controller;
     private Rigidbody Rigidbody;
     private float pitch;
+    private float yaw;
 
     //hook 
     private Vector2 _input = new Vector2();
@@ -30,7 +31,7 @@ public class FPSController : NetworkBehaviour
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
-
+       
     }
 
     private void Start()
@@ -61,12 +62,13 @@ public class FPSController : NetworkBehaviour
     {
 
         // Rotation gauche/droite (yaw) sur le corps du joueur
-        transform.Rotate(Vector3.up * (_look.x * lookSensitivity));
+       // transform.Rotate(Vector3.up * (_look.x * lookSensitivity));
 
         // Rotation haut/bas (pitch) sur la caméra uniquement
+        yaw += _look.x * lookSensitivity;
         pitch -= _look.y * lookSensitivity;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-        cameraHolder.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+        cameraHolder.localRotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 
     [Command]
@@ -84,11 +86,16 @@ public class FPSController : NetworkBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!isLocalPlayer)
+            return;
         _input = context.ReadValue<Vector2>();
+
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        if (!isLocalPlayer)
+            return;
         _look = context.ReadValue<Vector2>();
     }
 }

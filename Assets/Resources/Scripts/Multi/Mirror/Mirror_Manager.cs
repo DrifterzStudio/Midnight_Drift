@@ -107,10 +107,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
         if (NetworkServer.active)
         {
             NetworkServer.SendToAll(new custom_change_scene { Slot = slot,Scene  = scene});
-            NetworkServer.SendToAll(new SceneMessage
-            {
-                sceneName = scene
-            });
+           
         }
        
         startPositionIndex = 0;
