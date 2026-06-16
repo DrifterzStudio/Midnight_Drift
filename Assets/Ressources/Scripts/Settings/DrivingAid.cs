@@ -41,6 +41,8 @@ public class DrivingAid : RCCP_GenericComponent {
     [Tooltip("Text showing the current state of the arcade speed preservation.")]
     public Text ASPText;
 
+    private float ASPValue = 1f;
+
     private void Awake() {
         ABSButton.onClick.AddListener(OnABSButtonClicked);
         TCSButton.onClick.AddListener(OnTCSButtonClicked);
@@ -53,29 +55,22 @@ public class DrivingAid : RCCP_GenericComponent {
     private void Update() {
         carController = RCCPSceneManager.activePlayerVehicle;
 
-        ABSText.text = "ABS: ";
-        if (carController.GetVehicleBehaviorType().ABS == true) ABSText.text += "On";
-        else ABSText.text += "Off";
+        if (carController.GetVehicleBehaviorType().ABS == true) ABSText.text = "On";
+        else ABSText.text = "Off";
 
-        TCSText.text = "TCS: ";
-        if (carController.GetVehicleBehaviorType().TCS == true) TCSText.text += "On";
-        else TCSText.text += "Off";
+        if (carController.GetVehicleBehaviorType().TCS == true) TCSText.text = "On";
+        else TCSText.text = "Off";
 
-        ESPText.text = "ESP: ";
-        if (carController.GetVehicleBehaviorType().ESP == true) ESPText.text += "On";
-        else ESPText.text += "Off";
+        if (carController.GetVehicleBehaviorType().ESP == true) ESPText.text = "On";
+        else ESPText.text = "Off";
 
-        SHText.text = "SH: ";
-        if (carController.GetVehicleBehaviorType().steeringHelper == true) SHText.text += "On";
-        else SHText.text += "Off";
+        if (carController.GetVehicleBehaviorType().steeringHelper == true) SHText.text = "On";
+        else SHText.text = "Off";
 
-        THText.text = "TH: ";
-        if (carController.GetVehicleBehaviorType().tractionHelper == true) THText.text += "On";
-        else THText.text += "Off";
+        if (carController.GetVehicleBehaviorType().tractionHelper == true) THText.text = "On";
+        else THText.text = "Off";
 
-        /*ASPText.text = "ASP: ";
-        if (carController.GetVehicleBehaviorType().ABS == true) ASPText.text += "On";
-        else ASPText.text += "Off";*/
+        ASPText.text = ASPValue.ToString();
     }
     private void OnABSButtonClicked() {
         carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;
@@ -96,7 +91,9 @@ public class DrivingAid : RCCP_GenericComponent {
     }
 
     private void OnASPButtonClicked() {
-        
+        if (ASPValue + .2f > 1f) ASPValue = 0f;
+        else ASPValue += .2f;
+        carController.Stability.preserveSpeedFactor = ASPValue;
     }
 
     private void OnDestroy() {

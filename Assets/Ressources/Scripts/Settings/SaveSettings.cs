@@ -5,8 +5,8 @@ public class SaveSettings : MonoBehaviour {
     // Suspenssions Settings 
     public Suspension suspenssionSettings;
 
-    // Absorbers Settings
-    public Absorbers absorbersSettings;
+    // Driving Aid Settings
+    public DrivingAid drivingAidSettings;
 
     // Wheels Settings
     public Wheels wheelsSettings;
@@ -20,6 +20,6 @@ public class SaveSettings : MonoBehaviour {
     // Propulsion Type Settings
     public PropulsionType propulsionTypeSettings;
 
-    // Driving Aid Settings
-    public DrivingAid drivingAidSettings;
+    // Others Settings
+    public Others OthersSettings;
 }

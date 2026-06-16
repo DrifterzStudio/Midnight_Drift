@@ -20,6 +20,7 @@ public class Gearbox : RCCP_GenericComponent {
     [Tooltip("Text showing the current Type of gearbox.")]
     public Text gearboxTypeText;
 
+    [Header("Parameters for Automatic gearbox")]
     [Tooltip("Other parameters.")]
     public GameObject otherParam;
 
@@ -35,6 +36,14 @@ public class Gearbox : RCCP_GenericComponent {
     [Tooltip("Text showing the current value of the shifting delay.")]
     public Text shiftingDelayText;
 
+    [Header("Cut throttle when shifting")]
+    [Tooltip("CTWS force button.")]
+    public Button CTWSButton;
+
+    [Tooltip("Text showing the current state of the CTWS.")]
+    public Text CTWSText;
+
+    [Header("Anti roll force")]
     [Tooltip("Anti roll force button.")]
     public Button ARFButton;
 
@@ -52,6 +61,7 @@ public class Gearbox : RCCP_GenericComponent {
         gearboxButton.onClick.AddListener(OnGearboxButtonClicked);
         GSTButton.onClick.AddListener(OnGSTButtonClicked);
         shiftingDelayButton.onClick.AddListener(OnShiftingDelayButtonClicked);
+        CTWSButton.onClick.AddListener(OnCTWSButtonClicked);
         ARFButton.onClick.AddListener(OnARFButtonClicked);
     }
 
@@ -82,6 +92,9 @@ public class Gearbox : RCCP_GenericComponent {
         if (isReverse) autoReverseText.text = "On";
         else autoReverseText.text = "Off";
 
+        if (carController.Inputs.cutThrottleWhenShifting) CTWSText.text = "On";
+        else CTWSText.text = "Off";
+
         ARFText.text = ARFValue.ToString();
     }
 
@@ -108,6 +121,10 @@ public class Gearbox : RCCP_GenericComponent {
             else GSTValue += .1f;
             carController.Gearbox.shiftingTime = shiftingDelay;
         }
+    }
+
+    private void OnCTWSButtonClicked() {
+        carController.Inputs.cutThrottleWhenShifting = !carController.Inputs.cutThrottleWhenShifting;
     }
     private void OnARFButtonClicked() {
         if (ARFValue + 500 > 1500) ARFValue = 500;
