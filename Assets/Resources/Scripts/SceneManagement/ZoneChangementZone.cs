@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
-/// <summary>
-/// Zone de changement de scène — utilise Scene_Controller.
-/// Attacher ce script à un GameObject avec un Collider.
-/// Le joueur doit avoir le tag "Player".
-/// </summary>
-//[RequireComponent(typeof(Collider))]
+using NUnit.Framework;
+using System.Collections.Generic;
+using Steamworks;
+
+
 public class ZoneChangementScene : NetworkBehaviour
 {
     // ──────────────────────────────────────────
@@ -20,11 +19,15 @@ public class ZoneChangementScene : NetworkBehaviour
     [Tooltip("Couleur quand le joueur entre dans la zone")]
     public Color couleurActivee = new Color(1f, 0.6f, 0f, 0.45f);
 
+
+
+
     // ──────────────────────────────────────────
     // VARIABLES PRIVÉES
     // ──────────────────────────────────────────
 
     private Renderer zoneRenderer;
+    public List<string> PlayerIdSteam;
     //private bool enTransition = false;
 
     // ──────────────────────────────────────────
@@ -100,38 +103,49 @@ public class ZoneChangementScene : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //if (enTransition) return;
-        //if (!other.CompareTag("Player")) return;
-        //Debug.Log(other.name);
         if (other.name == "Plane")
             return;
-        SetCouleur(couleurActivee);
-        LancerTransition();
+        PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
+        AddPLayer(other, instantiate); // foncton for find the id of the player 
+        Debug.Log(PlayerIdSteam.Count);
+        if (PlayerIdSteam.Count >= 2)
+        {
+            SetCouleur(couleurActivee);
+            LancerTransition();
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        //if (enTransition) return;
-        //if (!other.CompareTag("Player")) return;
+        PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
 
         SetCouleur(couleurNormale);
+        RemovePlayer(other, instantiate);
     }
 
+
+    private void AddPLayer(Collider other, PlayerInfos instantiate)
+    {
+        //if (!NetworkServer.active) return; // seul le serveur traite la logique
+        string name = instantiate.SteamName;
+        Debug.Log(name);
+        PlayerIdSteam.Add(name);
+    }
+
+    private void RemovePlayer(Collider other, PlayerInfos instantiate)
+    {
+        //if (!NetworkServer.active) return;
+        string name = instantiate.SteamName;
+        PlayerIdSteam.Remove(name);
+
+    }
     // ──────────────────────────────────────────
     // TRANSITION VIA SCENE_CONTROLLER
     // ──────────────────────────────────────────
 
     void LancerTransition()
     {
-        //if (Scene_Controller.Instance == null)
-        //{
-        //    Debug.LogError("[ZoneChangementScene] Scene_Controller.Instance est null !");
-        //    return;
-        //}
-
-        //string sceneActuelle = SceneManager.GetActiveScene().name;
-
-        // Construire la transition comme le reste du projet
+        // whait two player in the area to change scene 
         Mirror_Manager.Instance.ChangeScene("Game", "GameScene");
     }
 
