@@ -1,5 +1,12 @@
 fileFormatVersion: 2
-guid: dade79b89fe57744cb98b5451689d4e0
+guid: 7bf5087089ac3424a982003c10dda35f
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129321
+  packageName: Mirror
+  packageVersion: 96.0.1
+  assetPath: Assets/Mirror/Examples/_Common/RobotKyle/Textures/Robot_Normal.jpeg
+  uploadId: 736421
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -65,7 +72,7 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform

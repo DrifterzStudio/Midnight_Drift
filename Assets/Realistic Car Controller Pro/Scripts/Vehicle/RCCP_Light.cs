@@ -59,7 +59,7 @@ public class RCCP_Light : RCCP_Component {
     /// </summary>
     [Space()]
     [Tooltip("Target brightness when this light is active; smoothly transitions toward this value")]
-    [Range(.1f, 10f)] public float intensity = 1f;
+    [Range(.1f, 1000f)] public float intensity = 1f;
 
     /// <summary>
     /// A smoothing factor for transitions in the light�s intensity.
