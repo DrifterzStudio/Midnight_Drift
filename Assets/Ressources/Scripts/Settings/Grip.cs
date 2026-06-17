@@ -2,9 +2,9 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Grip : RCCP_GenericComponent {
-    
-    private RCCP_Stability stability;
+public class Grip : MonoBehaviour {
+
+    public RCCP_CarController controller;
 
     [Tooltip("Grip forward button.")]
     public Button forwardButton;
@@ -50,19 +50,22 @@ public class Grip : RCCP_GenericComponent {
     private void OnForwardButtonClicked() {
         if (forwardValue + 0.1f > 1) forwardValue = 0;
         else forwardValue += 0.1f;
-        stability.driftRearForwardStiffnessMin = forwardValue;
+        controller.Stability.driftRearForwardStiffnessMin = forwardValue;
+        SaveSetttings.vehiculeSettings.Stability.driftRearForwardStiffnessMin = forwardValue;
     }
 
     private void OnRearSidewaysButtonClicked() {
         if (rearSidewaysValue + 0.1f > 1) rearSidewaysValue = 0;
         else rearSidewaysValue += 0.1f;
-        stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
+        controller.Stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
+        SaveSetttings.vehiculeSettings.Stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
     }
 
     private void OnFrontSidewaysButtonClicked() {
         if (frontSidewaysValue + 0.1f > 1) frontSidewaysValue = 0;
         else frontSidewaysValue += 0.1f;
-        stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
+        controller.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
+        SaveSetttings.vehiculeSettings.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
     }
 
     private void OnBackButtonClicked() {

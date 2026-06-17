@@ -2,69 +2,72 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Braking : RCCP_GenericComponent {
+public class Braking : MonoBehaviour {
 
-    private RCCP_CarController controller;
+    public RCCP_CarController controller;
 
-    [Tooltip("Button that switch the state of the handbreak.")]
-    public Button handbreakButton;
+    [Tooltip("Button that switch the state of the handbrake.")]
+    public Button handbrakeButton;
 
-    [Tooltip("Text showing the state of the handbreak.")]
-    public Text handbreakText;
+    [Tooltip("Text showing the state of the handbrake.")]
+    public Text handbrakeText;
 
-    [Tooltip("Button that change the valiue of the handbreak multiplier.")]
-    public Button handbreakMultiplierButton;
+    [Tooltip("Button that change the valiue of the handbrake multiplier.")]
+    public Button handbrakeMultiplierButton;
 
-    [Tooltip("Text showing the value of the handbreak multiplier.")]
-    public Text handbreakMultiplierText;
+    [Tooltip("Text showing the value of the handbrake multiplier.")]
+    public Text handbrakeMultiplierText;
 
-    [Tooltip("Button that change the valiue of the break multiplier.")]
-    public Button breakMultiplierButton;
+    [Tooltip("Button that change the valiue of the brake multiplier.")]
+    public Button brakeMultiplierButton;
 
-    [Tooltip("Text showing the value of the break multiplier.")]
-    public Text breakMultiplierText;
+    [Tooltip("Text showing the value of the brake multiplier.")]
+    public Text brakeMultiplierText;
 
-    private float handbreakMultiplier = .6f;
-    private float breakMultiplier = 1f;
+    private float handbrakeMultiplier = .6f;
+    private float brakeMultiplier = 1f;
 
 
     private void Awake() {
-        handbreakButton.onClick.AddListener(OnHandbreakButtonClicked);
-        handbreakMultiplierButton.onClick.AddListener(OnHandbreakMultiplierButtonClicked);
-        breakMultiplierButton.onClick.AddListener(OnBreakMultiplierButtonClicked);
+        handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
+        handbrakeMultiplierButton.onClick.AddListener(OnHandbrakeMultiplierButtonClicked);
+        brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);
     }
 
     private void Update() {
-        controller = RCCPSceneManager.activePlayerVehicle;
 
-        if (controller.RearAxle.isHandbrake) handbreakText.text = "On";
-        else handbreakText.text = "Off";
+        if (controller.RearAxle.isHandbrake) handbrakeText.text = "On";
+        else handbrakeText.text = "Off";
 
-        handbreakMultiplierText.text = handbreakMultiplier.ToString();
-        breakMultiplierText.text = breakMultiplier.ToString();
+        handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
+        brakeMultiplierText.text = brakeMultiplier.ToString();
     }
 
-    private void OnHandbreakButtonClicked() {
+    private void OnHandbrakeButtonClicked() {
         controller.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
+        SaveSetttings.vehiculeSettings.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
     }
 
-    private void OnHandbreakMultiplierButtonClicked() {
-        if (handbreakMultiplier + .1f > 1f) handbreakMultiplier = 0f;
-        else handbreakMultiplier += .1f;
-        controller.RearAxle.handbrakeMultiplier = handbreakMultiplier;
-        controller.FrontAxle.brakeMultiplier = handbreakMultiplier;
+    private void OnHandbrakeMultiplierButtonClicked() {
+        if (handbrakeMultiplier + .1f > 1f) handbrakeMultiplier = 0f;
+        else handbrakeMultiplier += .1f;
+        controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
+        controller.FrontAxle.brakeMultiplier = handbrakeMultiplier;
+        SaveSetttings.vehiculeSettings.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
+        SaveSetttings.vehiculeSettings.FrontAxle.brakeMultiplier = handbrakeMultiplier;
     }
 
-    private void OnBreakMultiplierButtonClicked() {
-        if (breakMultiplier + .1f > 1f) breakMultiplier = 0f;
-        else breakMultiplier += .1f;
-        controller.RearAxle.brakeMultiplier = breakMultiplier;
+    private void OnBrakeMultiplierButtonClicked() {
+        if (brakeMultiplier + .1f > 1f) brakeMultiplier = 0f;
+        else brakeMultiplier += .1f;
+        controller.RearAxle.brakeMultiplier = brakeMultiplier;
+        SaveSetttings.vehiculeSettings.RearAxle.brakeMultiplier = brakeMultiplier;
     }
 
     private void OnDestroy() {
-        if (handbreakButton != null) handbreakButton.onClick.RemoveListener(OnHandbreakButtonClicked);
-        if (handbreakMultiplierButton != null) handbreakMultiplierButton.onClick.RemoveListener(OnHandbreakMultiplierButtonClicked);
-        if (breakMultiplierButton != null) breakMultiplierButton.onClick.RemoveListener(OnBreakMultiplierButtonClicked);
+        if (handbrakeButton != null) handbrakeButton.onClick.RemoveListener(OnHandbrakeButtonClicked);
+        if (handbrakeMultiplierButton != null) handbrakeMultiplierButton.onClick.RemoveListener(OnHandbrakeMultiplierButtonClicked);
+        if (brakeMultiplierButton != null) brakeMultiplierButton.onClick.RemoveListener(OnBrakeMultiplierButtonClicked);
     }
 
 }

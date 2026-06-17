@@ -1,9 +1,11 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class Camber : MonoBehaviour {
-    private RCCP_CustomizationData custom;
+
+    public RCCP_CarController controller;
 
     [Tooltip("Camber front button.")]
     public Button frontButton;
@@ -40,18 +42,22 @@ public class Camber : MonoBehaviour {
     private void OnFrontButtonClicked() {
         if (frontAngle + 5f > 15f) frontAngle = -15f;
         else frontAngle += 5f;
-        custom.cambersFront = frontAngle;
+        controller.Customizer.loadout.customizationData.cambersFront = frontAngle;
+        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.cambersFront = frontAngle;
     }
+
     private void OnRearButtonClicked() {
         if (rearAngle + 5f > 15f) rearAngle = -15f;
         else rearAngle += 5f;
-        custom.cambersRear = rearAngle;
+        controller.Customizer.loadout.customizationData.cambersRear = rearAngle;
+        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.cambersRear = rearAngle;
     }
 
     private void OnBackButtonClicked() {
         gameObject.SetActive(false);
         back.SetActive(true);
     }
+
     private void OnDestroy() {
         if (frontButton != null) {
             frontButton.onClick.RemoveListener(OnFrontButtonClicked);

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Wheels : RCCP_GenericComponent {
+public class Wheels : MonoBehaviour {
 
-    private RCCP_CarController controller;
+    public RCCP_CarController controller;
 
     [Header("Camber")]
     [Tooltip("Camber button.")]
@@ -23,11 +23,11 @@ public class Wheels : RCCP_GenericComponent {
     [Tooltip("Steering sansibily button.")]
     public Button steeringSensitivityButton;
 
-    [Tooltip("Steering curve button.")]
-    public Button steeringCurveButton;
-
     [Tooltip("Text showing the current value of steering sensitivity.")]
     public Text sterringSensitivityText;
+
+    [Tooltip("Steering curve button.")]
+    public Button steeringCurveButton;
 
     private float sensitivityValue = 1f;
 
@@ -40,10 +40,7 @@ public class Wheels : RCCP_GenericComponent {
         gripButton.onClick.AddListener(OnGripButtonClicked);
     }
     private void Update() {
-        controller = RCCPSceneManager.activePlayerVehicle;
-
-        sterringSensitivityText.text = "" + sensitivityValue;   
-
+        sterringSensitivityText.text = "" + sensitivityValue;
     }
 
     private void OnCamberButtonClicked() {
@@ -59,6 +56,7 @@ public class Wheels : RCCP_GenericComponent {
         if (sensitivityValue + 0.5f > 1f) sensitivityValue = 0f;
         else sensitivityValue += 0.5f;
         controller.GetVehicleBehaviorType().steeringSensitivity = sensitivityValue;
+        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().steeringSensitivity = sensitivityValue;
     } 
 
     private void OnSteerCurveButtonClicked() { } // controller.GetVehiculeType().sterringCurve

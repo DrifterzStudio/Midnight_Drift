@@ -1,11 +1,12 @@
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
-public class Gearbox : RCCP_GenericComponent {
-    private RCCP_CarController carController;
+public class Gearbox : MonoBehaviour {
+    public RCCP_CarController carController;
 
     [Header("Gearbox")]
     [Tooltip("Auto reverse button.")]
@@ -50,8 +51,9 @@ public class Gearbox : RCCP_GenericComponent {
     [Tooltip("Text showing the current value of the anti roll force.")]
     public Text ARFText;
 
+    
     private bool isReverse = false;
-    private int gearboxType = 0;
+    private int gearboxType = 1;
     private float GSTValue = .7f;
     private float shiftingDelay = .2f;
     private int ARFValue = 1000;
@@ -66,31 +68,24 @@ public class Gearbox : RCCP_GenericComponent {
     }
 
     private void Update() {
-        carController = RCCPSceneManager.activePlayerVehicle;
 
-        if (isReverse) carController.Gearbox.currentGearState.gearState = GearState.InReverseGear;
-        else carController.Gearbox.currentGearState.gearState = GearState.InForwardGear;
+        if (isReverse) autoReverseText.text = "On";
+        else autoReverseText.text = "Off";
 
         if (gearboxType == 0) {
-            carController.Gearbox.transmissionType = TransmissionType.Automatic;
+            otherParam.SetActive(false);
+            gearboxTypeText.text = "Manual";
+        }
+        else if (gearboxType == 1) {
             otherParam.SetActive(true);
             gearboxTypeText.text = "Automatic";
             GSTText.text = GSTValue.ToString();
             shiftingDelayText.text = shiftingDelay.ToString();
         }
-        else if (gearboxType == 1) {
-            carController.Gearbox.transmissionType = TransmissionType.Manual;
-            otherParam.SetActive(false);
-            gearboxTypeText.text = "Manual";
-        }
         else {
-            carController.Gearbox.transmissionType = TransmissionType.Automatic_DNRP;
             otherParam.SetActive(false);
             gearboxTypeText.text = "Automatic DNRP";
         }
-
-        if (isReverse) autoReverseText.text = "On";
-        else autoReverseText.text = "Off";
 
         if (carController.Inputs.cutThrottleWhenShifting) CTWSText.text = "On";
         else CTWSText.text = "Off";
@@ -100,11 +95,31 @@ public class Gearbox : RCCP_GenericComponent {
 
     private void OnAutoReverseButtonClicked() {
         isReverse = !isReverse;
+        if (isReverse) {
+            carController.Gearbox.currentGearState.gearState = GearState.InReverseGear;
+            SaveSetttings.vehiculeSettings.Gearbox.currentGearState.gearState = GearState.InReverseGear;
+        }
+        else {
+            carController.Gearbox.currentGearState.gearState = GearState.InForwardGear;
+            SaveSetttings.vehiculeSettings.Gearbox.currentGearState.gearState = GearState.InForwardGear;
+        }
     }
 
     private void OnGearboxButtonClicked() {
         if (gearboxType + 1 > 2) gearboxType = 0;
         else gearboxType += 1;
+
+        if (gearboxType == 0) {
+            carController.Gearbox.transmissionType = TransmissionType.Manual;
+        }
+        else if (gearboxType == 1) {
+            carController.Gearbox.transmissionType = TransmissionType.Automatic;
+        }
+        else {
+            carController.Gearbox.transmissionType = TransmissionType.Automatic_DNRP;
+        }
+        SaveSetttings.vehiculeSettings = carController;
+
     }
 
     private void OnGSTButtonClicked() {
@@ -112,6 +127,7 @@ public class Gearbox : RCCP_GenericComponent {
             if (GSTValue + .1f > .9f) GSTValue = .1f;
             else GSTValue += .1f;
             carController.Gearbox.shiftThreshold = GSTValue;
+            SaveSetttings.vehiculeSettings.Gearbox.shiftThreshold = GSTValue;
         }
     }
 
@@ -120,17 +136,19 @@ public class Gearbox : RCCP_GenericComponent {
             if (shiftingDelay + .1f > .5f) GSTValue = .2f;
             else GSTValue += .1f;
             carController.Gearbox.shiftingTime = shiftingDelay;
+            SaveSetttings.vehiculeSettings.Gearbox.shiftingTime = shiftingDelay;
         }
     }
 
     private void OnCTWSButtonClicked() {
         carController.Inputs.cutThrottleWhenShifting = !carController.Inputs.cutThrottleWhenShifting;
+        SaveSetttings.vehiculeSettings.Inputs.cutThrottleWhenShifting = !SaveSetttings.vehiculeSettings.Inputs.cutThrottleWhenShifting;
     }
     private void OnARFButtonClicked() {
         if (ARFValue + 500 > 1500) ARFValue = 500;
         else ARFValue += 500;
         carController.FrontAxle.antirollForce = ARFValue;
-        carController.RearAxle.antirollForce = ARFValue;
+        SaveSetttings.vehiculeSettings.RearAxle.antirollForce = ARFValue;
     }
 
     private void OnDestroy() {

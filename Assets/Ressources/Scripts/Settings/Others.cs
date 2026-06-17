@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
-using static RCCP_Differential;
 
-public class Others : RCCP_GenericComponent {
-    private RCCP_CarController carController;
+public class Others : MonoBehaviour {
+    public RCCP_CarController carController;
 
     [Header("Deadzone")]
     [Tooltip("The button that change the value of the steering deadzone.")]
@@ -37,8 +36,6 @@ public class Others : RCCP_GenericComponent {
     public Button telemetryButton;
     [Tooltip("Text showing the current state of the telemetry.")]
     public Text telemetryText;
-    [Tooltip("The telemetry.")]
-    public GameObject telemetry;
 
     private float steerValue = .05f;
     private float throttleValue = .05f;
@@ -58,16 +55,9 @@ public class Others : RCCP_GenericComponent {
     }
 
     private void Update() {
-        carController = RCCPSceneManager.activePlayerVehicle;
 
-        if (isTelemetry) {
-            telemetry.SetActive(true);
-            telemetryText.text = "On";
-        }
-        else {
-            telemetry.SetActive(false);
-            telemetryText.text = "Off";
-        }
+        if (isTelemetry) telemetryText.text = "On";
+        else telemetryText.text = "Off";
 
         steerText.text = steerValue.ToString();
         throttleText.text = throttleValue.ToString();
@@ -80,34 +70,40 @@ public class Others : RCCP_GenericComponent {
         if (steerValue + .02f > .2f) steerValue = 0f;
         else steerValue += .02f;
         carController.Inputs.steeringDeadzone = steerValue;
+        SaveSetttings.vehiculeSettings.Inputs.steeringDeadzone = steerValue;
     }
 
     private void OnThrottleButtonClicked() {
         if (throttleValue + .02f > .2f) throttleValue = 0f;
         else throttleValue += .02f;
         carController.Inputs.throttleDeadzone = throttleValue;
+        SaveSetttings.vehiculeSettings.Inputs.throttleDeadzone = throttleValue;
     }
 
     private void OnBrakeButtonClicked() {
         if (brakeValue + .02f > .2f) brakeValue = 0f;
         else brakeValue += .02f;
         carController.Inputs.brakeDeadzone = brakeValue;
+        SaveSetttings.vehiculeSettings.Inputs.brakeDeadzone = brakeValue;
     }
 
     private void OnHandbrakeButtonClicked() {
         if (handbrakeValue + .02f > .2f) handbrakeValue = 0f;
         else handbrakeValue += .02f;
         carController.Inputs.handbrakeDeadzone = handbrakeValue;
+        SaveSetttings.vehiculeSettings.Inputs.handbrakeDeadzone = handbrakeValue;
     }
 
     private void OnClutchButtonClicked() {
         if (clutchValue + .02f > .2f) clutchValue = 0f;
         else clutchValue += .02f;
         carController.Inputs.clutchDeadzone = clutchValue;
+        SaveSetttings.vehiculeSettings.Inputs.clutchDeadzone = clutchValue;
     }
 
     private void OnTelemetryButtonClicked() {
         isTelemetry = !isTelemetry;
+        SaveSetttings.telemetrySettings = isTelemetry;
     }
 
     private void OnDestroy() {
