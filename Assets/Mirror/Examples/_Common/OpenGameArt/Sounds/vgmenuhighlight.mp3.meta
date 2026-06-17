@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: b6b3d62d3b279c84787a7b12fdf329be
+guid: f58b89ea4f81e41fcb5c5bec6d134986
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 8
+  serializedVersion: 7
   defaultSettings:
     serializedVersion: 2
     loadType: 0
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129321
+  packageName: Mirror
+  packageVersion: 96.0.1
+  assetPath: Assets/Mirror/Examples/_Common/OpenGameArt/Sounds/vgmenuhighlight.mp3
+  uploadId: 736421
