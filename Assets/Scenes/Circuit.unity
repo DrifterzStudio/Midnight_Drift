@@ -51836,9 +51836,9 @@ MonoBehaviour:
   audioMixer: {fileID: 24300002, guid: 1f184b80a5580734490824e8df462002, type: 2}
   engineSounds:
   - audioSourceOn: {fileID: 0}
-    audioClipOn: {fileID: 8300000, guid: cd879aa0fe04e18478728c5d2777ef89, type: 3}
+    audioClipOn: {fileID: 8300000, guid: 081378786619ae24aba5b065ca489744, type: 3}
     audioSourceOff: {fileID: 0}
-    audioClipOff: {fileID: 8300000, guid: 9cc20a291fb4d3e44ad9684aa575e0a4, type: 3}
+    audioClipOff: {fileID: 8300000, guid: 7d9b37fba8ff6bc4dadbb6b17ae16f37, type: 3}
     localPosition: {x: 0, y: 0, z: 1.5}
     minPitch: 0.85
     maxPitch: 1.45
@@ -51848,33 +51848,21 @@ MonoBehaviour:
     maxDistance: 120
     maxVolume: 0.6
   - audioSourceOn: {fileID: 0}
-    audioClipOn: {fileID: 8300000, guid: 11b8d68de272edd428b21db3ab991f36, type: 3}
+    audioClipOn: {fileID: 8300000, guid: 2993f79ac63e82c4fa6ff9e3acd476d7, type: 3}
     audioSourceOff: {fileID: 0}
-    audioClipOff: {fileID: 8300000, guid: e36a638ec1a8cb641840c735ffd4750b, type: 3}
+    audioClipOff: {fileID: 8300000, guid: 931ce9a03dcd9ab4b9dbbc87021eb7d5, type: 3}
     localPosition: {x: 0, y: 0, z: 1.5}
     minPitch: 0.85
     maxPitch: 1.75
     minRPM: 2000
-    maxRPM: 7000
+    maxRPM: 8000
     minDistance: 10
     maxDistance: 120
     maxVolume: 0.65
   - audioSourceOn: {fileID: 0}
-    audioClipOn: {fileID: 8300000, guid: 09992d57ed272e241954ca186b66de71, type: 3}
+    audioClipOn: {fileID: 8300000, guid: cdb750e225743e94aad48732a2293179, type: 3}
     audioSourceOff: {fileID: 0}
-    audioClipOff: {fileID: 8300000, guid: dd31934351e19ce49a9953b1e10de387, type: 3}
-    localPosition: {x: 0, y: 0, z: 1.5}
-    minPitch: 0.9
-    maxPitch: 1.3
-    minRPM: 5000
-    maxRPM: 8000
-    minDistance: 10
-    maxDistance: 120
-    maxVolume: 0.7
-  - audioSourceOn: {fileID: 0}
-    audioClipOn: {fileID: 8300000, guid: 3bf3833d4b5c3a341aed92089f471bcd, type: 3}
-    audioSourceOff: {fileID: 0}
-    audioClipOff: {fileID: 8300000, guid: 3bf3833d4b5c3a341aed92089f471bcd, type: 3}
+    audioClipOff: {fileID: 8300000, guid: cdb750e225743e94aad48732a2293179, type: 3}
     localPosition: {x: 0, y: 0, z: 1.5}
     minPitch: 0.55
     maxPitch: 1.55
@@ -51882,10 +51870,10 @@ MonoBehaviour:
     maxRPM: 1200
     minDistance: 10
     maxDistance: 120
-    maxVolume: 0.6
+    maxVolume: 1
   engineStart:
     audioSource: {fileID: 0}
-    audioClips: {fileID: 8300000, guid: 8d3ddfbc69660b342b48f88b496dedee, type: 3}
+    audioClips: {fileID: 8300000, guid: 99077207653a74846877ef5dc69cc8f0, type: 3}
     localPosition: {x: 0, y: 0, z: 1.5}
     minDistance: 5
     maxDistance: 65
