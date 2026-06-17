@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadSceneButton : MonoBehaviour
 {
+    public Button button;
+
     public string sceneName;
     public bool isAdditive;
+
+    private void Awake() {
+        button.onClick.AddListener(OnButtonClicked);
+    }
 
     public void ChangeScene()
     {
@@ -16,5 +23,9 @@ public class LoadSceneButton : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName,LoadSceneMode.Single);
         }
+    }
+
+    private void OnButtonClicked() {
+        ChangeScene();
     }
 }

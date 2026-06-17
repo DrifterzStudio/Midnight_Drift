@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 12508883}
   - component: {fileID: 12508882}
   - component: {fileID: 12508881}
-  - component: {fileID: 12508880}
   m_Layer: 5
   m_Name: ClutchThresholdButton
   m_TagString: Untagged
@@ -239,19 +238,6 @@ RectTransform:
   m_AnchoredPosition: {x: 525, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &12508880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12508878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &12508881
 Animator:
   serializedVersion: 7
@@ -318,7 +304,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 12508880}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -368,6 +354,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12508878}
   m_CullTransparentMesh: 1
+--- !u!1 &21232266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21232267}
+  m_Layer: 5
+  m_Name: SaveCarModification
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &21232267
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21232266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1015281369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &23731458
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &40819456
@@ -704,7 +725,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2877,7 +2898,6 @@ GameObject:
   - component: {fileID: 146902229}
   - component: {fileID: 146902228}
   - component: {fileID: 146902227}
-  - component: {fileID: 146902226}
   m_Layer: 5
   m_Name: SuspensionsTargetButton
   m_TagString: Untagged
@@ -2905,19 +2925,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &146902226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146902224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &146902227
 Animator:
   serializedVersion: 7
@@ -2984,7 +2991,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 146902226}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -3354,7 +3361,6 @@ GameObject:
   - component: {fileID: 193354393}
   - component: {fileID: 193354395}
   - component: {fileID: 193354392}
-  - component: {fileID: 193354391}
   m_Layer: 5
   m_Name: SteeringDeadzoneButton
   m_TagString: Untagged
@@ -3382,19 +3388,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25.000175}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &193354391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193354389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &193354392
 Animator:
   serializedVersion: 7
@@ -3499,7 +3492,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 193354391}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -3545,7 +3538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &200201929
@@ -3575,7 +3568,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -3619,13 +3612,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1247619, y: 1.1322856, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 349496815}
+  m_Children: []
   m_Father: {fileID: 1056900187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 29.999998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213610444
@@ -3655,7 +3647,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -4500,7 +4492,6 @@ GameObject:
   - component: {fileID: 232468495}
   - component: {fileID: 232468494}
   - component: {fileID: 232468493}
-  - component: {fileID: 232468492}
   m_Layer: 5
   m_Name: ForwardButton
   m_TagString: Untagged
@@ -4525,22 +4516,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 250, y: 25}
+  m_AnchoredPosition: {x: 350, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &232468492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 232468490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &232468493
 Animator:
   serializedVersion: 7
@@ -4607,7 +4585,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 232468492}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -5036,7 +5014,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -5067,7 +5045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &254434318
@@ -5115,7 +5093,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -5146,7 +5124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &260376450
@@ -5882,7 +5860,6 @@ GameObject:
   - component: {fileID: 335081163}
   - component: {fileID: 335081162}
   - component: {fileID: 335081161}
-  - component: {fileID: 335081160}
   m_Layer: 5
   m_Name: ASPButton
   m_TagString: Untagged
@@ -5910,19 +5887,6 @@ RectTransform:
   m_AnchoredPosition: {x: 575, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &335081160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335081158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &335081161
 Animator:
   serializedVersion: 7
@@ -5989,7 +5953,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 335081160}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -6370,16 +6334,16 @@ RectTransform:
   m_GameObject: {fileID: 349496814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0500001, y: 1.0500001, z: 1}
+  m_LocalScale: {x: 1.2400501, y: 1.2483449, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 719722675}
   - {fileID: 1688950005}
-  m_Father: {fileID: 213610443}
+  m_Father: {fileID: 1564404404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -480, y: 150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &349496816
@@ -6394,8 +6358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0e4ee295a613b74cb85e6811e720496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camber
-  frontButton: {fileID: 0}
-  rearButton: {fileID: 0}
+  frontButton: {fileID: 1794126450}
+  rearButton: {fileID: 1060418739}
   frontAngleText: {fileID: 2009986883}
   rearAngleText: {fileID: 2032814845}
   backButton: {fileID: 843493183}
@@ -6434,7 +6398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &350299561
@@ -6464,7 +6428,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -6524,7 +6488,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -7321,7 +7285,6 @@ GameObject:
   - component: {fileID: 396874655}
   - component: {fileID: 396874657}
   - component: {fileID: 396874654}
-  - component: {fileID: 396874653}
   m_Layer: 5
   m_Name: TelemetryButton
   m_TagString: Untagged
@@ -7349,19 +7312,6 @@ RectTransform:
   m_AnchoredPosition: {x: 280, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &396874653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 396874651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &396874654
 Animator:
   serializedVersion: 7
@@ -7466,7 +7416,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 396874653}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -7542,7 +7492,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -8044,7 +7994,6 @@ GameObject:
   - component: {fileID: 454022489}
   - component: {fileID: 454022488}
   - component: {fileID: 454022487}
-  - component: {fileID: 454022486}
   m_Layer: 5
   m_Name: ARFButton
   m_TagString: Untagged
@@ -8072,19 +8021,6 @@ RectTransform:
   m_AnchoredPosition: {x: 525, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &454022486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454022484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &454022487
 Animator:
   serializedVersion: 7
@@ -8151,7 +8087,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 454022486}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -8237,9 +8173,9 @@ RectTransform:
   - {fileID: 219163933}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 148, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &458689579
@@ -8406,7 +8342,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.519961, y: 0.000044323147}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 29.999998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &485799437
@@ -8436,7 +8372,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -9221,7 +9157,6 @@ GameObject:
   - component: {fileID: 532003982}
   - component: {fileID: 532003981}
   - component: {fileID: 532003980}
-  - component: {fileID: 532003979}
   m_Layer: 5
   m_Name: GSTButton
   m_TagString: Untagged
@@ -9249,19 +9184,6 @@ RectTransform:
   m_AnchoredPosition: {x: 475, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &532003979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532003977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &532003980
 Animator:
   serializedVersion: 7
@@ -9328,7 +9250,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 532003979}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -9886,7 +9808,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -100}
+  m_AnchoredPosition: {x: 120, y: -100}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &550912892
@@ -10034,7 +9956,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -10715,7 +10637,6 @@ GameObject:
   - component: {fileID: 610309134}
   - component: {fileID: 610309133}
   - component: {fileID: 610309132}
-  - component: {fileID: 610309131}
   m_Layer: 5
   m_Name: ESPButton
   m_TagString: Untagged
@@ -10743,19 +10664,6 @@ RectTransform:
   m_AnchoredPosition: {x: 180, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &610309131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 610309129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &610309132
 Animator:
   serializedVersion: 7
@@ -10822,7 +10730,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 610309131}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -12011,7 +11919,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -12042,7 +11950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &682545147
@@ -12639,7 +12547,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -13014,7 +12922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 25, y: 0.000061035156}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719722676
@@ -13267,7 +13175,6 @@ GameObject:
   - component: {fileID: 729764518}
   - component: {fileID: 729764517}
   - component: {fileID: 729764516}
-  - component: {fileID: 729764515}
   m_Layer: 5
   m_Name: CTWSButton
   m_TagString: Untagged
@@ -13295,19 +13202,6 @@ RectTransform:
   m_AnchoredPosition: {x: 525, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &729764515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729764513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &729764516
 Animator:
   serializedVersion: 7
@@ -13374,7 +13268,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 729764515}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -13876,7 +13770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &758306126
@@ -13906,7 +13800,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -14555,7 +14449,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -15047,7 +14941,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -15115,7 +15009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817662181
@@ -15145,7 +15039,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -16088,9 +15982,9 @@ RectTransform:
   - {fileID: 514065063}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 968, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887425205
@@ -16286,7 +16180,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -16914,7 +16808,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -16942,7 +16836,6 @@ GameObject:
   - component: {fileID: 942732490}
   - component: {fileID: 942732489}
   - component: {fileID: 942732488}
-  - component: {fileID: 942732487}
   m_Layer: 5
   m_Name: AutoReverseButton
   m_TagString: Untagged
@@ -16970,19 +16863,6 @@ RectTransform:
   m_AnchoredPosition: {x: 325, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &942732487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942732485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &942732488
 Animator:
   serializedVersion: 7
@@ -17049,7 +16929,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 942732487}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -17118,7 +16998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &961739750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17759,7 +17639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1015281366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17836,6 +17716,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 21232267}
   - {fileID: 1588720451}
   - {fileID: 1005897927}
   - {fileID: 1152591876}
@@ -17845,7 +17726,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 619, y: 271}
+  m_AnchoredPosition: {x: 541, y: 234.9}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1015281370
@@ -18303,7 +18184,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -18541,9 +18422,9 @@ RectTransform:
   - {fileID: 915653047}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 312, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1036944448
@@ -18825,7 +18706,6 @@ GameObject:
   - component: {fileID: 1049782025}
   - component: {fileID: 1049782024}
   - component: {fileID: 1049782023}
-  - component: {fileID: 1049782022}
   m_Layer: 5
   m_Name: GripButton
   m_TagString: Untagged
@@ -18853,19 +18733,6 @@ RectTransform:
   m_AnchoredPosition: {x: -480, y: 50}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1049782022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049782020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1049782023
 Animator:
   serializedVersion: 7
@@ -18932,7 +18799,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1049782022}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -18995,7 +18862,6 @@ GameObject:
   - component: {fileID: 1056900191}
   - component: {fileID: 1056900190}
   - component: {fileID: 1056900189}
-  - component: {fileID: 1056900188}
   m_Layer: 5
   m_Name: CamberButton
   m_TagString: Untagged
@@ -19023,19 +18889,6 @@ RectTransform:
   m_AnchoredPosition: {x: -480, y: 150}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1056900188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056900186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1056900189
 Animator:
   serializedVersion: 7
@@ -19102,7 +18955,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1056900188}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -19373,7 +19226,6 @@ GameObject:
   - component: {fileID: 1060418740}
   - component: {fileID: 1060418739}
   - component: {fileID: 1060418738}
-  - component: {fileID: 1060418737}
   m_Layer: 5
   m_Name: RearButton
   m_TagString: Untagged
@@ -19401,19 +19253,6 @@ RectTransform:
   m_AnchoredPosition: {x: 179.99998, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1060418737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060418735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1060418738
 Animator:
   serializedVersion: 7
@@ -19480,7 +19319,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1060418737}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -19841,9 +19680,9 @@ RectTransform:
   - {fileID: 1948817628}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 476, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088078184
@@ -20995,6 +20834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040c499769c339b4895af935529e3c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadSceneButton
+  button: {fileID: 0}
   sceneName: score
   isAdditive: 0
 --- !u!1 &1118796883
@@ -22408,9 +22248,9 @@ RectTransform:
   - {fileID: 1409570685}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 640, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211661793
@@ -22713,7 +22553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1243151747
@@ -22743,7 +22583,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -23096,7 +22936,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -24632,7 +24472,6 @@ GameObject:
   - component: {fileID: 1295180648}
   - component: {fileID: 1295180650}
   - component: {fileID: 1295180647}
-  - component: {fileID: 1295180646}
   m_Layer: 5
   m_Name: ThrottleDeadzoneButton
   m_TagString: Untagged
@@ -24660,19 +24499,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1295180646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295180644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1295180647
 Animator:
   serializedVersion: 7
@@ -24777,7 +24603,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1295180646}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -25399,7 +25225,6 @@ GameObject:
   - component: {fileID: 1355851836}
   - component: {fileID: 1355851835}
   - component: {fileID: 1355851834}
-  - component: {fileID: 1355851833}
   m_Layer: 5
   m_Name: RearSidewaysButton
   m_TagString: Untagged
@@ -25427,19 +25252,6 @@ RectTransform:
   m_AnchoredPosition: {x: 350, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1355851833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355851831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1355851834
 Animator:
   serializedVersion: 7
@@ -25506,7 +25318,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1355851833}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -25737,7 +25549,6 @@ GameObject:
   - component: {fileID: 1368524328}
   - component: {fileID: 1368524327}
   - component: {fileID: 1368524326}
-  - component: {fileID: 1368524325}
   m_Layer: 5
   m_Name: SuspensionsDamperButton
   m_TagString: Untagged
@@ -25765,19 +25576,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1368524325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368524323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1368524326
 Animator:
   serializedVersion: 7
@@ -25844,7 +25642,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1368524325}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -25920,17 +25718,17 @@ RectTransform:
   m_GameObject: {fileID: 1373056293}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0500001, y: 1.0500001, z: 1}
+  m_LocalScale: {x: 1.1766299, y: 1.1996251, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1520700120}
   - {fileID: 1432081507}
   - {fileID: 550912891}
-  m_Father: {fileID: 1790173760}
+  m_Father: {fileID: 1564404404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -480, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1373056295
@@ -25945,9 +25743,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fca327342ec454e97e1c6cd6a16738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grip
-  forwardButton: {fileID: 0}
-  rearSidewaysButton: {fileID: 0}
-  frontSidewaysButton: {fileID: 0}
+  forwardButton: {fileID: 232468494}
+  rearSidewaysButton: {fileID: 1355851835}
+  frontSidewaysButton: {fileID: 2025792270}
   forwardText: {fileID: 1301203516}
   rearSidewaysText: {fileID: 260376452}
   frontSidewaysText: {fileID: 1664275896}
@@ -26495,7 +26293,7 @@ RectTransform:
   m_GameObject: {fileID: 1432081506}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.95238096, y: 0.95238096, z: 1}
+  m_LocalScale: {x: 0.9523809, y: 0.95238096, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1355851832}
@@ -26503,7 +26301,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 0}
+  m_AnchoredPosition: {x: 120.23809, y: 0}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1432081508
@@ -27124,7 +26922,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -27249,7 +27047,6 @@ GameObject:
   - component: {fileID: 1462848760}
   - component: {fileID: 1462848759}
   - component: {fileID: 1462848758}
-  - component: {fileID: 1462848757}
   m_Layer: 5
   m_Name: SteeringCurveButton
   m_TagString: Untagged
@@ -27277,19 +27074,6 @@ RectTransform:
   m_AnchoredPosition: {x: 325, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1462848757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462848755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1462848758
 Animator:
   serializedVersion: 7
@@ -27356,7 +27140,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1462848757}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -27422,7 +27206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1476369581
 Transform:
   m_ObjectHideFlags: 0
@@ -27937,7 +27721,6 @@ GameObject:
   - component: {fileID: 1507545434}
   - component: {fileID: 1507545433}
   - component: {fileID: 1507545432}
-  - component: {fileID: 1507545431}
   m_Layer: 5
   m_Name: SuspensionsDistanceButton
   m_TagString: Untagged
@@ -27965,19 +27748,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1507545431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1507545429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1507545432
 Animator:
   serializedVersion: 7
@@ -28044,7 +27814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1507545431}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -28297,7 +28067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 75}
+  m_AnchoredPosition: {x: 25, y: 75}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1520700121
@@ -28719,7 +28489,6 @@ GameObject:
   - component: {fileID: 1541993007}
   - component: {fileID: 1541993006}
   - component: {fileID: 1541993005}
-  - component: {fileID: 1541993004}
   m_Layer: 5
   m_Name: HandbrakeMultiplierButton
   m_TagString: Untagged
@@ -28747,19 +28516,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1541993004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541993002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1541993005
 Animator:
   serializedVersion: 7
@@ -28826,7 +28582,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541993004}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -29185,7 +28941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555274104
@@ -29215,7 +28971,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -29262,6 +29018,8 @@ Transform:
   - {fileID: 216888354}
   - {fileID: 1024298916}
   - {fileID: 373062453}
+  - {fileID: 349496815}
+  - {fileID: 1373056294}
   - {fileID: 23731459}
   - {fileID: 2142883103}
   - {fileID: 1476369581}
@@ -29768,7 +29526,6 @@ GameObject:
   - component: {fileID: 1614271955}
   - component: {fileID: 1614271957}
   - component: {fileID: 1614271954}
-  - component: {fileID: 1614271953}
   m_Layer: 5
   m_Name: HandbrakeDeadzoneButton
   m_TagString: Untagged
@@ -29796,19 +29553,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1614271953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614271951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1614271954
 Animator:
   serializedVersion: 7
@@ -29913,7 +29657,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1614271953}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -31344,7 +31088,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -31375,7 +31119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1647666433
@@ -31528,7 +31272,6 @@ GameObject:
   - component: {fileID: 1652261325}
   - component: {fileID: 1652261324}
   - component: {fileID: 1652261323}
-  - component: {fileID: 1652261322}
   m_Layer: 5
   m_Name: SHButton
   m_TagString: Untagged
@@ -31556,19 +31299,6 @@ RectTransform:
   m_AnchoredPosition: {x: 375, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1652261322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652261320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1652261323
 Animator:
   serializedVersion: 7
@@ -31635,7 +31365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1652261322}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -32001,7 +31731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1678602189
@@ -32031,7 +31761,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -32134,7 +31864,6 @@ GameObject:
   - component: {fileID: 1683682318}
   - component: {fileID: 1683682317}
   - component: {fileID: 1683682316}
-  - component: {fileID: 1683682315}
   m_Layer: 5
   m_Name: SteeringSensitivityButton
   m_TagString: Untagged
@@ -32162,19 +31891,6 @@ RectTransform:
   m_AnchoredPosition: {x: 400, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1683682315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683682313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1683682316
 Animator:
   serializedVersion: 7
@@ -32241,7 +31957,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1683682315}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -32304,7 +32020,6 @@ GameObject:
   - component: {fileID: 1688264548}
   - component: {fileID: 1688264550}
   - component: {fileID: 1688264547}
-  - component: {fileID: 1688264546}
   m_Layer: 5
   m_Name: BrakeDeadzoneButton
   m_TagString: Untagged
@@ -32332,19 +32047,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1688264546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688264544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1688264547
 Animator:
   serializedVersion: 7
@@ -32449,7 +32151,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1688264546}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -32496,7 +32198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 25, y: -100}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1688950006
@@ -32612,7 +32314,6 @@ GameObject:
   - component: {fileID: 1691566630}
   - component: {fileID: 1691566629}
   - component: {fileID: 1691566628}
-  - component: {fileID: 1691566627}
   m_Layer: 5
   m_Name: ABSButton
   m_TagString: Untagged
@@ -32640,19 +32341,6 @@ RectTransform:
   m_AnchoredPosition: {x: 180, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1691566627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691566625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1691566628
 Animator:
   serializedVersion: 7
@@ -32719,7 +32407,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1691566627}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -32925,7 +32613,6 @@ GameObject:
   - component: {fileID: 1740155781}
   - component: {fileID: 1740155780}
   - component: {fileID: 1740155779}
-  - component: {fileID: 1740155778}
   m_Layer: 5
   m_Name: SuspensionsForceButton
   m_TagString: Untagged
@@ -32953,19 +32640,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1740155778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740155776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1740155779
 Animator:
   serializedVersion: 7
@@ -33032,7 +32706,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1740155778}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -33233,7 +32907,6 @@ GameObject:
   - component: {fileID: 1754799102}
   - component: {fileID: 1754799101}
   - component: {fileID: 1754799100}
-  - component: {fileID: 1754799099}
   m_Layer: 5
   m_Name: HandbrakeButton
   m_TagString: Untagged
@@ -33261,19 +32934,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1754799099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754799097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1754799100
 Animator:
   serializedVersion: 7
@@ -33340,7 +33000,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1754799099}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -33424,7 +33084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759726591
@@ -33454,7 +33114,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -33482,7 +33142,6 @@ GameObject:
   - component: {fileID: 1762347300}
   - component: {fileID: 1762347299}
   - component: {fileID: 1762347298}
-  - component: {fileID: 1762347297}
   m_Layer: 5
   m_Name: GearboxTypeButton
   m_TagString: Untagged
@@ -33510,19 +33169,6 @@ RectTransform:
   m_AnchoredPosition: {x: 350, y: 25}
   m_SizeDelta: {x: 200, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1762347297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762347295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1762347298
 Animator:
   serializedVersion: 7
@@ -33589,7 +33235,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1762347297}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -33853,7 +33499,6 @@ GameObject:
   - component: {fileID: 1770736235}
   - component: {fileID: 1770736234}
   - component: {fileID: 1770736233}
-  - component: {fileID: 1770736232}
   m_Layer: 5
   m_Name: BrakeMultiplierButton
   m_TagString: Untagged
@@ -33881,19 +33526,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1770736232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1770736230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1770736233
 Animator:
   serializedVersion: 7
@@ -33960,7 +33592,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1770736232}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -34074,7 +33706,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -34125,9 +33757,9 @@ RectTransform:
   - {fileID: 1793775812}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 804, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779161515
@@ -34491,13 +34123,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.067238, y: 1.0880953, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1373056294}
+  m_Children: []
   m_Father: {fileID: 1049782021}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 29.999998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1790173761
@@ -34527,7 +34158,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -34829,7 +34460,6 @@ GameObject:
   - component: {fileID: 1794126451}
   - component: {fileID: 1794126450}
   - component: {fileID: 1794126449}
-  - component: {fileID: 1794126448}
   m_Layer: 5
   m_Name: FrontButton
   m_TagString: Untagged
@@ -34857,19 +34487,6 @@ RectTransform:
   m_AnchoredPosition: {x: 180, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1794126448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794126446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1794126449
 Animator:
   serializedVersion: 7
@@ -34936,7 +34553,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1794126448}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -35613,6 +35230,7 @@ GameObject:
   - component: {fileID: 1828466909}
   - component: {fileID: 1828466908}
   - component: {fileID: 1828466907}
+  - component: {fileID: 1828466911}
   m_Layer: 5
   m_Name: TitelScreen
   m_TagString: Untagged
@@ -35706,6 +35324,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1828466911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828466906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040c499769c339b4895af935529e3c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadSceneButton
+  button: {fileID: 2066812571}
+  sceneName: Score
+  isAdditive: 0
 --- !u!1 &1831129588
 GameObject:
   m_ObjectHideFlags: 0
@@ -36090,7 +35723,6 @@ GameObject:
   - component: {fileID: 1891287202}
   - component: {fileID: 1891287201}
   - component: {fileID: 1891287200}
-  - component: {fileID: 1891287199}
   m_Layer: 5
   m_Name: TCSButton
   m_TagString: Untagged
@@ -36118,19 +35750,6 @@ RectTransform:
   m_AnchoredPosition: {x: 180, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1891287199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891287197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1891287200
 Animator:
   serializedVersion: 7
@@ -36197,7 +35816,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1891287199}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -36260,7 +35879,6 @@ GameObject:
   - component: {fileID: 1906768521}
   - component: {fileID: 1906768523}
   - component: {fileID: 1906768520}
-  - component: {fileID: 1906768519}
   m_Layer: 5
   m_Name: ClutchDeadzoneButton
   m_TagString: Untagged
@@ -36288,19 +35906,6 @@ RectTransform:
   m_AnchoredPosition: {x: 425, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1906768519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906768517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &1906768520
 Animator:
   serializedVersion: 7
@@ -36405,7 +36010,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1906768519}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -37696,9 +37301,8 @@ GameObject:
   - component: {fileID: 2025792271}
   - component: {fileID: 2025792270}
   - component: {fileID: 2025792269}
-  - component: {fileID: 2025792268}
   m_Layer: 5
-  m_Name: FrontButton
+  m_Name: FrontSidewaysButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37724,19 +37328,6 @@ RectTransform:
   m_AnchoredPosition: {x: 350, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2025792268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025792266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &2025792269
 Animator:
   serializedVersion: 7
@@ -37803,7 +37394,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2025792268}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -38026,9 +37617,9 @@ RectTransform:
   - {fileID: 682545148}
   m_Father: {fileID: 870445189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1132, y: -73.09955}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2031042013
@@ -38464,7 +38055,6 @@ GameObject:
   - component: {fileID: 2054517739}
   - component: {fileID: 2054517738}
   - component: {fileID: 2054517737}
-  - component: {fileID: 2054517736}
   m_Layer: 5
   m_Name: ShiftingDelayButton
   m_TagString: Untagged
@@ -38492,19 +38082,6 @@ RectTransform:
   m_AnchoredPosition: {x: 325, y: 25}
   m_SizeDelta: {x: 150, y: 46.1991}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2054517736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054517734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 1015281370}
 --- !u!95 &2054517737
 Animator:
   serializedVersion: 7
@@ -38571,7 +38148,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2054517736}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
         m_MethodName: Onclick
         m_Mode: 1
@@ -39639,7 +39216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2107418513
@@ -39669,7 +39246,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -40171,7 +39748,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -40202,7 +39779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2142883102

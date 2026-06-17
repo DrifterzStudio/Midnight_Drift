@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class SaveSettings : MonoBehaviour {
+public static class SaveSetttings {
 
     // Suspenssions Settings 
-    public Suspension suspenssionSettings;
+    public static Suspension suspenssionSettings;
 
     // Driving Aid Settings
-    public DrivingAid drivingAidSettings;
+    public static DrivingAid drivingAidSettings;
 
     // Wheels Settings
-    public Wheels wheelsSettings;
+    public static Wheels wheelsSettings;
 
     // Braking Settings
-    public Braking BrakingSettings;
+    public static Braking BrakingSettings;
 
     // Gearbox Ratio Settings 
-    public Gearbox gearboxSettings;
+    public static Gearbox gearboxSettings;
 
     // Propulsion Type Settings
-    public PropulsionType propulsionTypeSettings;
+    public static PropulsionType propulsionTypeSettings;
 
     // Others Settings
-    public Others OthersSettings;
+    public static Others OthersSettings;
 }
