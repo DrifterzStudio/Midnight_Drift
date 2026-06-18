@@ -45,27 +45,26 @@ public class Grip : MonoBehaviour {
         forwardText.text = "" + forwardValue;
         rearSidewaysText.text = "" + rearSidewaysValue;
         frontSidewaysText.text = "" + frontSidewaysValue;
+
+        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
     }
 
     private void OnForwardButtonClicked() {
         if (forwardValue + 0.1f > 1) forwardValue = 0;
         else forwardValue += 0.1f;
         controller.Stability.driftRearForwardStiffnessMin = forwardValue;
-        SaveSetttings.vehiculeSettings.Stability.driftRearForwardStiffnessMin = forwardValue;
     }
 
     private void OnRearSidewaysButtonClicked() {
         if (rearSidewaysValue + 0.1f > 1) rearSidewaysValue = 0;
         else rearSidewaysValue += 0.1f;
         controller.Stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
-        SaveSetttings.vehiculeSettings.Stability.driftRearSidewaysStiffnessMin = rearSidewaysValue;
     }
 
     private void OnFrontSidewaysButtonClicked() {
         if (frontSidewaysValue + 0.1f > 1) frontSidewaysValue = 0;
         else frontSidewaysValue += 0.1f;
         controller.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
-        SaveSetttings.vehiculeSettings.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
     }
 
     private void OnBackButtonClicked() {

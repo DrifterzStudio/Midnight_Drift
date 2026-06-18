@@ -41,6 +41,7 @@ public class Wheels : MonoBehaviour {
     }
     private void Update() {
         sterringSensitivityText.text = "" + sensitivityValue;
+        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
     }
 
     private void OnCamberButtonClicked() {
@@ -56,7 +57,6 @@ public class Wheels : MonoBehaviour {
         if (sensitivityValue + 0.5f > 1f) sensitivityValue = 0f;
         else sensitivityValue += 0.5f;
         controller.GetVehicleBehaviorType().steeringSensitivity = sensitivityValue;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().steeringSensitivity = sensitivityValue;
     } 
 
     private void OnSteerCurveButtonClicked() { } // controller.GetVehiculeType().sterringCurve

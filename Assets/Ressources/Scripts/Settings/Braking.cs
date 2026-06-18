@@ -41,11 +41,11 @@ public class Braking : MonoBehaviour {
 
         handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
         brakeMultiplierText.text = brakeMultiplier.ToString();
+        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
     }
 
     private void OnHandbrakeButtonClicked() {
         controller.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
-        SaveSetttings.vehiculeSettings.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
     }
 
     private void OnHandbrakeMultiplierButtonClicked() {
@@ -53,15 +53,12 @@ public class Braking : MonoBehaviour {
         else handbrakeMultiplier += .1f;
         controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
         controller.FrontAxle.brakeMultiplier = handbrakeMultiplier;
-        SaveSetttings.vehiculeSettings.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
-        SaveSetttings.vehiculeSettings.FrontAxle.brakeMultiplier = handbrakeMultiplier;
     }
 
     private void OnBrakeMultiplierButtonClicked() {
         if (brakeMultiplier + .1f > 1f) brakeMultiplier = 0f;
         else brakeMultiplier += .1f;
         controller.RearAxle.brakeMultiplier = brakeMultiplier;
-        SaveSetttings.vehiculeSettings.RearAxle.brakeMultiplier = brakeMultiplier;
     }
 
     private void OnDestroy() {

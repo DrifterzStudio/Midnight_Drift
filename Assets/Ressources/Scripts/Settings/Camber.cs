@@ -37,20 +37,19 @@ public class Camber : MonoBehaviour {
     private void Update() {
         frontAngleText.text = "" + (int)frontAngle;
         rearAngleText.text = "" + (int)rearAngle;
+        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
     }
 
     private void OnFrontButtonClicked() {
         if (frontAngle + 5f > 15f) frontAngle = -15f;
         else frontAngle += 5f;
         controller.Customizer.loadout.customizationData.cambersFront = frontAngle;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.cambersFront = frontAngle;
     }
 
     private void OnRearButtonClicked() {
         if (rearAngle + 5f > 15f) rearAngle = -15f;
         else rearAngle += 5f;
         controller.Customizer.loadout.customizationData.cambersRear = rearAngle;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.cambersRear = rearAngle;
     }
 
     private void OnBackButtonClicked() {

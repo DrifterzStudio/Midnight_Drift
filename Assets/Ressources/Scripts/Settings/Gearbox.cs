@@ -91,17 +91,16 @@ public class Gearbox : MonoBehaviour {
         else CTWSText.text = "Off";
 
         ARFText.text = ARFValue.ToString();
+        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
     }
 
     private void OnAutoReverseButtonClicked() {
         isReverse = !isReverse;
         if (isReverse) {
             carController.Gearbox.currentGearState.gearState = GearState.InReverseGear;
-            SaveSetttings.vehiculeSettings.Gearbox.currentGearState.gearState = GearState.InReverseGear;
         }
         else {
             carController.Gearbox.currentGearState.gearState = GearState.InForwardGear;
-            SaveSetttings.vehiculeSettings.Gearbox.currentGearState.gearState = GearState.InForwardGear;
         }
     }
 
@@ -118,7 +117,6 @@ public class Gearbox : MonoBehaviour {
         else {
             carController.Gearbox.transmissionType = TransmissionType.Automatic_DNRP;
         }
-        SaveSetttings.vehiculeSettings = carController;
 
     }
 
@@ -127,7 +125,6 @@ public class Gearbox : MonoBehaviour {
             if (GSTValue + .1f > .9f) GSTValue = .1f;
             else GSTValue += .1f;
             carController.Gearbox.shiftThreshold = GSTValue;
-            SaveSetttings.vehiculeSettings.Gearbox.shiftThreshold = GSTValue;
         }
     }
 
@@ -135,20 +132,17 @@ public class Gearbox : MonoBehaviour {
         if (otherParam.activeSelf) {
             if (shiftingDelay + .1f > .5f) GSTValue = .2f;
             else GSTValue += .1f;
-            carController.Gearbox.shiftingTime = shiftingDelay;
-            SaveSetttings.vehiculeSettings.Gearbox.shiftingTime = shiftingDelay;
+            carController.Gearbox.shiftingTime = shiftingDelay;;
         }
     }
 
     private void OnCTWSButtonClicked() {
         carController.Inputs.cutThrottleWhenShifting = !carController.Inputs.cutThrottleWhenShifting;
-        SaveSetttings.vehiculeSettings.Inputs.cutThrottleWhenShifting = !SaveSetttings.vehiculeSettings.Inputs.cutThrottleWhenShifting;
     }
     private void OnARFButtonClicked() {
         if (ARFValue + 500 > 1500) ARFValue = 500;
         else ARFValue += 500;
         carController.FrontAxle.antirollForce = ARFValue;
-        SaveSetttings.vehiculeSettings.RearAxle.antirollForce = ARFValue;
     }
 
     private void OnDestroy() {

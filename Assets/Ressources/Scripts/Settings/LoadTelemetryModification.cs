@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class LoadTelemetryModification : MonoBehaviour {
 
-    void Update() {
+    public GameObject telemetry;
 
-        if (SaveSetttings.telemetrySettings) gameObject.SetActive(true);
-        else gameObject.SetActive(false);
+    void Start() {
+
+        if (SaveSetttings.telemetrySettings) telemetry.SetActive(true);
+        else telemetry.SetActive(false);
     }
 }

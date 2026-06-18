@@ -64,46 +64,43 @@ public class Others : MonoBehaviour {
         brakeText.text = brakeValue.ToString();
         handbrakeText.text = handbrakeValue.ToString();
         clutchText.text = clutchValue.ToString();
+
+        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
+        if (SaveSetttings.telemetrySettings != isTelemetry) SaveSetttings.telemetrySettings = isTelemetry;
     }
 
     private void OnSteerButtonClicked() {
         if (steerValue + .02f > .2f) steerValue = 0f;
         else steerValue += .02f;
         carController.Inputs.steeringDeadzone = steerValue;
-        SaveSetttings.vehiculeSettings.Inputs.steeringDeadzone = steerValue;
     }
 
     private void OnThrottleButtonClicked() {
         if (throttleValue + .02f > .2f) throttleValue = 0f;
         else throttleValue += .02f;
         carController.Inputs.throttleDeadzone = throttleValue;
-        SaveSetttings.vehiculeSettings.Inputs.throttleDeadzone = throttleValue;
     }
 
     private void OnBrakeButtonClicked() {
         if (brakeValue + .02f > .2f) brakeValue = 0f;
         else brakeValue += .02f;
         carController.Inputs.brakeDeadzone = brakeValue;
-        SaveSetttings.vehiculeSettings.Inputs.brakeDeadzone = brakeValue;
     }
 
     private void OnHandbrakeButtonClicked() {
         if (handbrakeValue + .02f > .2f) handbrakeValue = 0f;
         else handbrakeValue += .02f;
         carController.Inputs.handbrakeDeadzone = handbrakeValue;
-        SaveSetttings.vehiculeSettings.Inputs.handbrakeDeadzone = handbrakeValue;
     }
 
     private void OnClutchButtonClicked() {
         if (clutchValue + .02f > .2f) clutchValue = 0f;
         else clutchValue += .02f;
         carController.Inputs.clutchDeadzone = clutchValue;
-        SaveSetttings.vehiculeSettings.Inputs.clutchDeadzone = clutchValue;
     }
 
     private void OnTelemetryButtonClicked() {
         isTelemetry = !isTelemetry;
-        SaveSetttings.telemetrySettings = isTelemetry;
     }
 
     private void OnDestroy() {

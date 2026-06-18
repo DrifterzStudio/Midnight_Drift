@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class DrivingAid : MonoBehaviour {
@@ -70,35 +71,31 @@ public class DrivingAid : MonoBehaviour {
         else THText.text = "Off";
 
         ASPText.text = ASPValue.ToString();
+
+        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
     }
     private void OnABSButtonClicked() {
         carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;
     }
     private void OnTCSButtonClicked() {
         carController.GetVehicleBehaviorType().TCS = !carController.GetVehicleBehaviorType().TCS;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().TCS = !carController.GetVehicleBehaviorType().TCS;
     }
     private void OnESPButtonClicked() {
         carController.GetVehicleBehaviorType().ESP = !carController.GetVehicleBehaviorType().ESP;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().ESP = !carController.GetVehicleBehaviorType().ESP;
     }
 
     private void OnSHButtonClicked() {
         carController.GetVehicleBehaviorType().steeringHelper = !carController.GetVehicleBehaviorType().steeringHelper;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().steeringHelper = !carController.GetVehicleBehaviorType().steeringHelper;
     }
 
     private void OnTHButtonClicked() {
         carController.GetVehicleBehaviorType().tractionHelper = !carController.GetVehicleBehaviorType().tractionHelper;
-        SaveSetttings.vehiculeSettings.GetVehicleBehaviorType().tractionHelper = !carController.GetVehicleBehaviorType().tractionHelper;
     }
 
     private void OnASPButtonClicked() {
         if (ASPValue + .2f > 1.1f) ASPValue = 0f;
         else ASPValue += .2f;
         carController.Stability.preserveSpeedFactor = ASPValue;
-        SaveSetttings.vehiculeSettings.Stability.preserveSpeedFactor = ASPValue;
     }
 
     private void OnDestroy() {

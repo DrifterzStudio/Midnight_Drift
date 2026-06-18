@@ -43,6 +43,8 @@ public class Suspension : MonoBehaviour {
         forceText.text = forceValue.ToString();
         targetText.text = targetValue.ToString();
         damperText.text = damperValue.ToString();
+
+        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
     }
 
     private void OnDistButtonClicked() {
@@ -50,8 +52,6 @@ public class Suspension : MonoBehaviour {
         else distValue += .5f;
         controller.Customizer.loadout.customizationData.suspensionDistanceFront = distValue;
         controller.Customizer.loadout.customizationData.suspensionDistanceRear = distValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionDistanceFront = distValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionDistanceRear = distValue;
     }
 
     private void OnForceButtonClicked() {
@@ -59,8 +59,6 @@ public class Suspension : MonoBehaviour {
         else forceValue += .5f;
         controller.Customizer.loadout.customizationData.suspensionSpringForceFront = forceValue;
         controller.Customizer.loadout.customizationData.suspensionSpringForceRear = forceValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionSpringForceFront = forceValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionSpringForceRear = forceValue;
     }
 
     private void OnTargetButtonClicked() {
@@ -68,8 +66,6 @@ public class Suspension : MonoBehaviour {
         else targetValue += .5f;
         controller.Customizer.loadout.customizationData.suspensionTargetFront = targetValue;
         controller.Customizer.loadout.customizationData.suspensionTargetRear = targetValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionTargetFront = targetValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionTargetRear = targetValue;
     }
 
     private void OnDamperButtonClicked() {
@@ -77,8 +73,6 @@ public class Suspension : MonoBehaviour {
         else damperValue += 0.5f;
         controller.Customizer.loadout.customizationData.suspensionDamperFront = damperValue;
         controller.Customizer.loadout.customizationData.suspensionDamperRear = damperValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionDamperFront = damperValue;
-        SaveSetttings.vehiculeSettings.Customizer.loadout.customizationData.suspensionDamperRear = damperValue;
     }
 
     private void OnDestroy() {
