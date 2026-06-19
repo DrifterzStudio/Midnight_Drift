@@ -41,7 +41,7 @@ public class Wheels : MonoBehaviour {
     }
     private void Update() {
         sterringSensitivityText.text = "" + sensitivityValue;
-        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
+        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnCamberButtonClicked() {

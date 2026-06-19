@@ -6,12 +6,11 @@ public class LoadCarModification : MonoBehaviour {
 
     public RCCP_CarController controller;
 
-    void Start() {
+    void Update() {
 
-        if (SaveSetttings.vehiculeSettings != controller) {
-            controller = SaveSetttings.vehiculeSettings;
-        } 
-
+        if (controller != SaveSettings.vehiculeSettings) {
+            controller = SaveSettings.vehiculeSettings;
+        }
     }
 
 }

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class Others : MonoBehaviour {
+
     public RCCP_CarController carController;
 
     [Header("Deadzone")]
@@ -43,7 +44,7 @@ public class Others : MonoBehaviour {
     private float handbrakeValue = .05f;
     private float clutchValue = .05f;
 
-    private bool isTelemetry = false;
+    public bool isTelemetry = false;
 
     private void Awake() {
         steerButton.onClick.AddListener(OnSteerButtonClicked);
@@ -65,8 +66,8 @@ public class Others : MonoBehaviour {
         handbrakeText.text = handbrakeValue.ToString();
         clutchText.text = clutchValue.ToString();
 
-        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
-        if (SaveSetttings.telemetrySettings != isTelemetry) SaveSetttings.telemetrySettings = isTelemetry;
+        SaveSettings.vehiculeSettings = carController;
+        SaveSettings.telemetrySettings = isTelemetry;
     }
 
     private void OnSteerButtonClicked() {

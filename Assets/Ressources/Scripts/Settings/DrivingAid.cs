@@ -4,6 +4,7 @@ using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class DrivingAid : MonoBehaviour {
+
     public RCCP_CarController carController;
 
     [Header("ABS")]
@@ -72,7 +73,7 @@ public class DrivingAid : MonoBehaviour {
 
         ASPText.text = ASPValue.ToString();
 
-        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
+        SaveSettings.vehiculeSettings = carController;
     }
     private void OnABSButtonClicked() {
         carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;

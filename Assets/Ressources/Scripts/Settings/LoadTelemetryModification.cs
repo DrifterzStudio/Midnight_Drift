@@ -6,7 +6,7 @@ public class LoadTelemetryModification : MonoBehaviour {
 
     void Start() {
 
-        if (SaveSetttings.telemetrySettings) telemetry.SetActive(true);
+        if (SaveSettings.telemetrySettings) telemetry.SetActive(true);
         else telemetry.SetActive(false);
     }
 }

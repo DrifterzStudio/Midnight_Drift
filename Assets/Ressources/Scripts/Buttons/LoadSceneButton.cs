@@ -13,23 +13,14 @@ public class LoadSceneButton : MonoBehaviour
     public string sceneName;
     public bool isAdditive;
 
-    private bool isTelemetry;
-
     private void Start() {
         button.onClick.AddListener(OnButtonClicked);
-        
 
         if (car != null) {
-            if (SaveSetttings.vehiculeSettings == null) {
-                SaveSetttings.vehiculeSettings = car;
-            }
-
-            else {
-                car = SaveSetttings.vehiculeSettings;
-            }
+            if (SaveSettings.vehiculeSettings == null) SaveSettings.vehiculeSettings = car;
+            else car = SaveSettings.vehiculeSettings;
         }
 
-        isTelemetry = SaveSetttings.telemetrySettings;
     }
 
     public void ChangeScene()
@@ -47,10 +38,6 @@ public class LoadSceneButton : MonoBehaviour
 
     private void OnButtonClicked() {
         ChangeScene();
-    }
-
-    public bool IsTelemetry() {
-        return isTelemetry; 
     }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
@@ -43,8 +44,7 @@ public class Suspension : MonoBehaviour {
         forceText.text = forceValue.ToString();
         targetText.text = targetValue.ToString();
         damperText.text = damperValue.ToString();
-
-        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
+        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnDistButtonClicked() {
@@ -65,7 +65,7 @@ public class Suspension : MonoBehaviour {
         if (targetValue + .2f > 1) targetValue = 0f;
         else targetValue += .5f;
         controller.Customizer.loadout.customizationData.suspensionTargetFront = targetValue;
-        controller.Customizer.loadout.customizationData.suspensionTargetRear = targetValue;
+        controller.Customizer.loadout.customizationData.suspensionTargetRear = targetValue; 
     }
 
     private void OnDamperButtonClicked() {

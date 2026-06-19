@@ -41,7 +41,7 @@ public class Braking : MonoBehaviour {
 
         handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
         brakeMultiplierText.text = brakeMultiplier.ToString();
-        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
+        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnHandbrakeButtonClicked() {

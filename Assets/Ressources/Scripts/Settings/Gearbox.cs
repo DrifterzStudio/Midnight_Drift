@@ -6,6 +6,7 @@ using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
 public class Gearbox : MonoBehaviour {
+
     public RCCP_CarController carController;
 
     [Header("Gearbox")]
@@ -44,6 +45,13 @@ public class Gearbox : MonoBehaviour {
     [Tooltip("Text showing the current state of the CTWS.")]
     public Text CTWSText;
 
+    [Header("Clutch Threshold")]
+    [Tooltip("Clutch threshold force button.")]
+    public Button clutchThresholdButton;
+
+    [Tooltip("Text showing the current state of the clutch threshold.")]
+    public Text clutchThresholdText;
+
     [Header("Anti roll force")]
     [Tooltip("Anti roll force button.")]
     public Button ARFButton;
@@ -56,6 +64,7 @@ public class Gearbox : MonoBehaviour {
     private int gearboxType = 1;
     private float GSTValue = .7f;
     private float shiftingDelay = .2f;
+    private float clutchThreshold = .1f;
     private int ARFValue = 1000;
 
     private void Awake() {
@@ -64,6 +73,7 @@ public class Gearbox : MonoBehaviour {
         GSTButton.onClick.AddListener(OnGSTButtonClicked);
         shiftingDelayButton.onClick.AddListener(OnShiftingDelayButtonClicked);
         CTWSButton.onClick.AddListener(OnCTWSButtonClicked);
+        clutchThresholdButton.onClick.AddListener(OnClutchThresholdButtonClicked);
         ARFButton.onClick.AddListener(OnARFButtonClicked);
     }
 
@@ -90,8 +100,12 @@ public class Gearbox : MonoBehaviour {
         if (carController.Inputs.cutThrottleWhenShifting) CTWSText.text = "On";
         else CTWSText.text = "Off";
 
+        clutchThresholdText.text = clutchThreshold.ToString();
+
         ARFText.text = ARFValue.ToString();
-        if (SaveSetttings.vehiculeSettings != carController) SaveSetttings.vehiculeSettings = carController;
+
+        SaveSettings.vehiculeSettings = carController;
+
     }
 
     private void OnAutoReverseButtonClicked() {
@@ -139,6 +153,13 @@ public class Gearbox : MonoBehaviour {
     private void OnCTWSButtonClicked() {
         carController.Inputs.cutThrottleWhenShifting = !carController.Inputs.cutThrottleWhenShifting;
     }
+
+    private void OnClutchThresholdButtonClicked() {
+        if (clutchThreshold + .2f > 1f) clutchThreshold = 0f;
+        else clutchThreshold += .2f;
+        carController.Customizer.loadout.customizationData.clutchThreshold += clutchThreshold;
+    }
+
     private void OnARFButtonClicked() {
         if (ARFValue + 500 > 1500) ARFValue = 500;
         else ARFValue += 500;
@@ -150,6 +171,8 @@ public class Gearbox : MonoBehaviour {
         if (gearboxButton != null) gearboxButton.onClick.RemoveListener(OnGearboxButtonClicked);
         if (GSTButton != null) GSTButton.onClick.RemoveListener(OnGSTButtonClicked);
         if (shiftingDelayButton != null) shiftingDelayButton.onClick.RemoveListener(OnShiftingDelayButtonClicked);
+        if (CTWSButton != null) CTWSButton.onClick.RemoveListener(OnCTWSButtonClicked);
+        if (clutchThresholdButton != null) clutchThresholdButton.onClick.RemoveListener(OnClutchThresholdButtonClicked);
         if (ARFButton != null) ARFButton.onClick.RemoveListener(OnARFButtonClicked);
     }
 }

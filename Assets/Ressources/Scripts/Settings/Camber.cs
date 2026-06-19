@@ -37,7 +37,7 @@ public class Camber : MonoBehaviour {
     private void Update() {
         frontAngleText.text = "" + (int)frontAngle;
         rearAngleText.text = "" + (int)rearAngle;
-        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
+        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnFrontButtonClicked() {

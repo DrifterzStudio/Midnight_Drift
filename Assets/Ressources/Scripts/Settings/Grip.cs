@@ -46,7 +46,7 @@ public class Grip : MonoBehaviour {
         rearSidewaysText.text = "" + rearSidewaysValue;
         frontSidewaysText.text = "" + frontSidewaysValue;
 
-        if (SaveSetttings.vehiculeSettings != controller) SaveSetttings.vehiculeSettings = controller;
+        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnForwardButtonClicked() {
