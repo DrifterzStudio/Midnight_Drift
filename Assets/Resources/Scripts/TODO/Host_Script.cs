@@ -25,7 +25,10 @@ public class Host_Script : MonoBehaviour
     private void Update()
     {
         if(isReady && Keyboard.current.spaceKey.wasPressedThisFrame)
-            Mirror_Manager.Instance.ChangeScene("Game","GameLobbyScene");
+        {
+            Mirror_Manager.Instance.ChangeScene("Game", "GameLobbyScene");
+            Steam_Lobby.Instance.LockLobby();
+        }
 
     }
 }

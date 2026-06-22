@@ -28,7 +28,7 @@ public class ZoneChangementScene : NetworkBehaviour
     // ──────────────────────────────────────────
 
     private Renderer zoneRenderer;
-    public List<string> PlayerIdSteam;
+   
     //private bool enTransition = false;
 
     // ──────────────────────────────────────────
@@ -121,8 +121,8 @@ public class ZoneChangementScene : NetworkBehaviour
         PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
 
         AddPLayer(other, instantiate);
-        Debug.Log(PlayerIdSteam.Count);
-        if (PlayerIdSteam.Count >= 2 || Keyboard.current.tKey.IsPressed())
+        Debug.Log(ActivePlayer_List.Instance.PlayerIdSteam.Count);
+        if (ActivePlayer_List.Instance.PlayerIdSteam.Count >= 2 || Keyboard.current.tKey.IsPressed())
         {
             instantiate.Isplaying = true;
             SetCouleur(couleurActivee);
@@ -143,14 +143,14 @@ public class ZoneChangementScene : NetworkBehaviour
     {
         string name = instantiate.SteamName;
         Debug.Log(name);
-        PlayerIdSteam.Add(name);
+        ActivePlayer_List.Instance.PlayerIdSteam.Add(name);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
     {
         //if (!NetworkServer.active) return;
         string name = instantiate.SteamName;
-        PlayerIdSteam.Remove(name);
+        ActivePlayer_List.Instance.PlayerIdSteam.Remove(name);
 
     }
     // ──────────────────────────────────────────

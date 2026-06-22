@@ -21896,7 +21896,7 @@ GameObject:
   - component: {fileID: 8342685663851006886}
   - component: {fileID: 2839167150011131257}
   - component: {fileID: 8727201517210583178}
-  - component: {fileID: 1210131797272920118}
+  - component: {fileID: -1253437761399660420}
   m_Layer: 8
   m_Name: MyPrefab
   m_TagString: Untagged
@@ -22106,7 +22106,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &1210131797272920118
+--- !u!114 &-1253437761399660420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22118,6 +22118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d996b2c873be7ec45b8a77f05ea533f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkCamera
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  cam: {fileID: 0}
 --- !u!1 &7039974021990199544
 GameObject:
   m_ObjectHideFlags: 0
