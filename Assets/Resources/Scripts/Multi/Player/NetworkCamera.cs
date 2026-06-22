@@ -3,31 +3,25 @@ using Mirror;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public class NetworkCamera : MonoBehaviour
+public class NetworkCamera : NetworkBehaviour
 {
-    private RCCP_Camera cam;
+    [SerializeField] private RCCP_Camera cam;
 
     private List<RCCP_CarController> vehicles = new();
     private int currentTarget = -1;
 
-
+    public override void OnStartClient()
+    {
+        RefreshVehicles();
+    }
     private void Start()
     {
-        cam = FindAnyObjectByType<RCCP_Camera>();
-
-        if (cam == null)
-        {
-            Debug.LogError("Aucune cam");
-            enabled = false;
-            return;
-        }
-
-        RefreshVehicles();
+      
     }
 
     private void Update()
     {
-        if (Keyboard.current.uKey.wasPressedThisFrame)
+        if (Keyboard.current.uKey.wasPressedThisFrame && NetworkServer.active)
         {
             Debug.Log("changement de tutur");
             SwitchCam();
