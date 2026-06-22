@@ -7,14 +7,15 @@ public class PlayerName : NetworkBehaviour
 {
     [SerializeField] private TMP_Text nameTagGui;
 
-    private string _nameTag = string.Empty;
+    public string _nameTag = string.Empty;
 
     [SyncVar(hook = nameof(OnNameReceived))]
-    private string _steamName;
+    public string _steamName ="";
 
-    public string GetName()
+    [Command]
+    public void GetName(string name)
     {
-        return _steamName;
+        name = _nameTag;
     }
 
     public override void OnStartClient()
@@ -42,6 +43,8 @@ public class PlayerName : NetworkBehaviour
 
     private void OnNameReceived(string oldName, string newName)
     {
+
+        _steamName = newName;
         _nameTag = newName;
         nameTagGui.SetText(_nameTag);
     }

@@ -118,7 +118,7 @@ public class ZoneChangementScene : NetworkBehaviour
     {
         if (other.name == "Plane")
             return;
-        PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
+        PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         AddPLayer(other, instantiate);
         Debug.Log(ActivePlayer_List.Instance.PlayerIdSteam.Count);

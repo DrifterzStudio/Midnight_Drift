@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.XR;
 public class NetworkCamera : NetworkBehaviour
 {
     private static NetworkCamera  _localInstance = null;
-    private static readonly List<RCCP_CarController> _vehicles = new();
+    private static List<RCCP_CarController> _vehicles = new();
 
     private RCCP_Camera cam;
 
@@ -26,35 +26,48 @@ public class NetworkCamera : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        base.OnStartClient();
+
+       // Debug.LogWarning(GetComponent<PlayerName>()._steamName);
         if (isLocalPlayer)
         {
             _localInstance = this;
-            _localInstance._isPlayerActive = ActivePlayer_List.Instance.PlayerIdSteam.Contains(SteamFriends.GetPersonaName());
-            if (_localInstance._isPlayerActive)
+            _isPlayerActive = ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection);
+            if (_isPlayerActive)
             {
+                Debug.LogWarning("pas sensé arriver la ");
                 _vehicles.Clear();
                 cam.SetTarget(GetComponent<RCCP_CarController>());
             }
             return;
         }
-        if(_localInstance != null && _localInstance._isPlayerActive)
+        //if(_localInstance != null && _localInstance._isPlayerActive)
+        //    return;
+      
+        if (!ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection))
             return;
 
-        if(!ActivePlayer_List.Instance.PlayerIdSteam.Contains(GetComponent<PlayerName>().GetName()))
-            return;
 
+        Debug.LogWarning("ADD");
         _vehicles.Add(GetComponent<RCCP_CarController>());
+        
         if (_vehicles.Count == 1)
         {
+            Debug.LogWarning("set Cam");
             cam.SetTarget(_vehicles[0]);
         }
     }
 
     private void Update()
     {
-       if(!isLocalPlayer)
+       
+        if (!isLocalPlayer)
            return;
+        Debug.LogWarning(NetworkClient.connection);
+        Debug.Log(_isPlayerActive);
 
+        
+        
         if (Keyboard.current.uKey.wasPressedThisFrame && !_isPlayerActive)
         {
             Debug.Log("changement de tutur");
