@@ -142,6 +142,7 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
+        Debug.Log($" Add : {SteamUser.GetSteamID().m_SteamID}");
         ActivePlayer_List.Instance.CmdAddId(SteamUser.GetSteamID().m_SteamID);
     }
 

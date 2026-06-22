@@ -8,9 +8,10 @@ using UnityEngine.Serialization;
 public class ActivePlayer_List : Singleton_Obj_Net<ActivePlayer_List>
 { 
 
-    private readonly SyncList<ulong> PlayerSteamId = new SyncList<ulong>();
+    //private readonly SyncList<ulong> PlayerSteamId = new SyncList<ulong>();
+    private readonly List<ulong> PlayerSteamId = new List<ulong>();
 
-    [Command(requiresAuthority = false)]
+    //[Command(requiresAuthority = false)]
     public void CmdAddId(ulong steamId)
     {
         // Sécurité serveur : vérifier que steamId correspond bien à l'appelant
@@ -18,7 +19,7 @@ public class ActivePlayer_List : Singleton_Obj_Net<ActivePlayer_List>
             PlayerSteamId.Add(steamId);
     }
 
-    [Command(requiresAuthority = false)]
+    //[Command(requiresAuthority = false)]
     public void CmdRemove(ulong steamId)
     {
         PlayerSteamId.Remove(steamId);
