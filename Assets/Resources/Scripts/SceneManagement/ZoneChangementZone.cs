@@ -145,7 +145,9 @@ public class ZoneChangementScene : NetworkBehaviour
         Debug.Log(name);
         NetworkConnection myConn = NetworkClient.connection;
         ActivePlayer_List.Instance.PlayerIdSteam.Add(name);
-        ActivePlayer_List.Instance.PlayerIdMirror.Add(myConn.identity);
+        ActivePlayer_List.Instance.PlayerIdMirror.Add(myConn.identity.netId);
+        ActivePlayer_List.Instance.PlayerSteamId.Add(SteamUser.GetSteamID().m_SteamID);
+        Debug.Log(myConn.identity.netId);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
@@ -154,8 +156,8 @@ public class ZoneChangementScene : NetworkBehaviour
         string name = instantiate.SteamName;
         ActivePlayer_List.Instance.PlayerIdSteam.Remove(name);
         NetworkConnection myConn = NetworkClient.connection;
-        ActivePlayer_List.Instance.PlayerIdMirror.Remove(myConn.identity);
-
+        ActivePlayer_List.Instance.PlayerIdMirror.Remove(myConn.identity.netId);
+        ActivePlayer_List.Instance.PlayerSteamId.Remove(SteamUser.GetSteamID().m_SteamID);
     }
     // ──────────────────────────────────────────
     // TRANSITION VIA SCENE_CONTROLLER

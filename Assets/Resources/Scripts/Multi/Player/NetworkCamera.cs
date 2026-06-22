@@ -32,7 +32,7 @@ public class NetworkCamera : NetworkBehaviour
         if (isLocalPlayer)
         {
             _localInstance = this;
-            _isPlayerActive = ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection.identity);
+            _isPlayerActive = ActivePlayer_List.Instance.PlayerSteamId.Contains(SteamUser.GetSteamID().m_SteamID);
             if (_isPlayerActive)
             {
                 Debug.LogWarning("pas sensé arriver la ");
@@ -41,11 +41,11 @@ public class NetworkCamera : NetworkBehaviour
             }
             return;
         }
-        Debug.LogWarning(NetworkClient.connection);
+        Debug.LogWarning(SteamUser.GetSteamID().m_SteamID);
         //if(_localInstance != null && _localInstance._isPlayerActive)
         //    return;
 
-        if (!ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection.identity))
+        if (!ActivePlayer_List.Instance.PlayerSteamId.Contains(SteamUser.GetSteamID().m_SteamID))
             return;
 
     
