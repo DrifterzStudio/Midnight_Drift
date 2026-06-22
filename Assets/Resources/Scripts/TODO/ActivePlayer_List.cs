@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class ActivePlayer_List : Singleton_Obj_Net<ActivePlayer_List>
 { 
 
-    public readonly SyncList<ulong> PlayerSteamId = new SyncList<ulong>();
+    private readonly SyncList<ulong> PlayerSteamId = new SyncList<ulong>();
 
     [Command]
     public void CmdAddId(ulong steamId)

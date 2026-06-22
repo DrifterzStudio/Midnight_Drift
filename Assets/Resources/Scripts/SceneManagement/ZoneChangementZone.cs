@@ -113,11 +113,13 @@ public class ZoneChangementScene : NetworkBehaviour
     // ──────────────────────────────────────────
     // DÉTECTION DU JOUEUR
     // ──────────────────────────────────────────
-
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.name == "Plane")
             return;
+
+
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         AddPLayer(other, instantiate);
@@ -140,13 +142,13 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
-        ActivePlayer_List.Instance.PlayerSteamId.Add(SteamUser.GetSteamID().m_SteamID);
+        ActivePlayer_List.Instance.CmdAddId(SteamUser.GetSteamID().m_SteamID);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
     {
         //if (!NetworkServer.active) return;
-        ActivePlayer_List.Instance.PlayerSteamId.Remove(SteamUser.GetSteamID().m_SteamID);
+        ActivePlayer_List.Instance.CmdRemove(SteamUser.GetSteamID().m_SteamID);
     }
     // ──────────────────────────────────────────
     // TRANSITION VIA SCENE_CONTROLLER

@@ -30,7 +30,7 @@ public class NetworkCamera : NetworkBehaviour
         if (isLocalPlayer)
         {
             _localInstance = this;
-            _isPlayerActive = ActivePlayer_List.Instance.PlayerSteamId.Contains(SteamUser.GetSteamID().m_SteamID);
+            _isPlayerActive = ActivePlayer_List.Instance.Contains(SteamUser.GetSteamID().m_SteamID);
             if (_isPlayerActive)
             {
                 Debug.LogWarning("pas sensé arriver la ");
@@ -44,7 +44,7 @@ public class NetworkCamera : NetworkBehaviour
         if (_localInstance != null && _localInstance._isPlayerActive)
             return;
 
-        if (!ActivePlayer_List.Instance.PlayerSteamId.Contains(SteamUser.GetSteamID().m_SteamID))
+        if (!ActivePlayer_List.Instance.Contains(SteamUser.GetSteamID().m_SteamID))
             return;
 
         _vehicles.Add(GetComponent<RCCP_CarController>());
