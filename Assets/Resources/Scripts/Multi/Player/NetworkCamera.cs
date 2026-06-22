@@ -53,7 +53,7 @@ public class NetworkCamera : NetworkBehaviour
             return;
 
         // si vehicule non actif return
-        if(!ActivePlayer_List.Instance.PlayerIdSteam.Contains(SteamFriends.GetPersonaName()))
+        if(!ActivePlayer_List.Instance.PlayerIdSteam.Contains(GetComponent<PlayerName>().GetName()))
             return;
         // si vehicule actif j'ajoute ca camera + je set si c'est le premier 
         vehicles.Add(GetComponent<RCCP_CarController>());

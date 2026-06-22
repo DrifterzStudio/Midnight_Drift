@@ -12,6 +12,11 @@ public class PlayerName : NetworkBehaviour
     [SyncVar(hook = nameof(OnNameReceived))]
     private string _steamName;
 
+    public string GetName()
+    {
+        return _steamName;
+    }
+
     public override void OnStartClient()
     {
         base.OnStartClient();
