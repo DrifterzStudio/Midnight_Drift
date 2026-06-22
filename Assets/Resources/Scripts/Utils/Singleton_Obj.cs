@@ -1,4 +1,5 @@
 using System;
+using Mirror;
 using UnityEngine;
 
 public class Singleton_Obj<T> : MonoBehaviour where T : MonoBehaviour
@@ -15,6 +16,22 @@ public class Singleton_Obj<T> : MonoBehaviour where T : MonoBehaviour
         Instance = this as T;
     }
 }
+
+public class Singleton_Obj_Net<T> : NetworkBehaviour where T : NetworkBehaviour
+{
+    public static T Instance;
+
+    protected void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this as T;
+    }
+}
+
 
 public class Singleton_Obj_MirrorManager<T> : Mirror.NetworkManager where T : Mirror.NetworkManager
 {

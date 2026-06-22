@@ -27,8 +27,6 @@ public class NetworkCamera : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-
-       // Debug.LogWarning(GetComponent<PlayerName>()._steamName);
         if (isLocalPlayer)
         {
             _localInstance = this;
@@ -41,37 +39,29 @@ public class NetworkCamera : NetworkBehaviour
             }
             return;
         }
-        Debug.LogWarning(SteamUser.GetSteamID().m_SteamID);
-        //if(_localInstance != null && _localInstance._isPlayerActive)
-        //    return;
+
+       
+        if (_localInstance != null && _localInstance._isPlayerActive)
+            return;
 
         if (!ActivePlayer_List.Instance.PlayerSteamId.Contains(SteamUser.GetSteamID().m_SteamID))
             return;
 
-    
-        Debug.LogWarning("ADD");
         _vehicles.Add(GetComponent<RCCP_CarController>());
         
         if (_vehicles.Count == 1)
         {
-            Debug.LogWarning("set Cam");
             cam.SetTarget(_vehicles[0]);
         }
     }
 
     private void Update()
     {
-       
         if (!isLocalPlayer)
            return;
-      
-        Debug.Log(_isPlayerActive);
-
-        
-        
         if (Keyboard.current.uKey.wasPressedThisFrame && !_isPlayerActive)
         {
-            Debug.Log("changement de tutur");
+            Debug.Log("changement de tutut");
             SwitchCam();
         }
     }

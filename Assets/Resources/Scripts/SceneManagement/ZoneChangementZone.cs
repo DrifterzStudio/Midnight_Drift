@@ -121,8 +121,7 @@ public class ZoneChangementScene : NetworkBehaviour
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         AddPLayer(other, instantiate);
-        Debug.Log(ActivePlayer_List.Instance.PlayerIdSteam.Count);
-        if (ActivePlayer_List.Instance.PlayerIdSteam.Count >= 2 || Keyboard.current.tKey.IsPressed())
+        if (ActivePlayer_List.Instance.Count >= 2 || Keyboard.current.tKey.IsPressed())
         {
             instantiate.Isplaying = true;
             SetCouleur(couleurActivee);
@@ -141,22 +140,12 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
-        string name = instantiate.SteamName;
-        Debug.Log(name);
-        NetworkConnection myConn = NetworkClient.connection;
-        ActivePlayer_List.Instance.PlayerIdSteam.Add(name);
-        ActivePlayer_List.Instance.PlayerIdMirror.Add(myConn.identity.netId);
         ActivePlayer_List.Instance.PlayerSteamId.Add(SteamUser.GetSteamID().m_SteamID);
-        Debug.Log(myConn.identity.netId);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
     {
         //if (!NetworkServer.active) return;
-        string name = instantiate.SteamName;
-        ActivePlayer_List.Instance.PlayerIdSteam.Remove(name);
-        NetworkConnection myConn = NetworkClient.connection;
-        ActivePlayer_List.Instance.PlayerIdMirror.Remove(myConn.identity.netId);
         ActivePlayer_List.Instance.PlayerSteamId.Remove(SteamUser.GetSteamID().m_SteamID);
     }
     // ──────────────────────────────────────────

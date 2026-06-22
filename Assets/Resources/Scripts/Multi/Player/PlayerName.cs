@@ -43,7 +43,6 @@ public class PlayerName : NetworkBehaviour
 
     private void OnNameReceived(string oldName, string newName)
     {
-
         _steamName = newName;
         _nameTag = newName;
         nameTagGui.SetText(_nameTag);
