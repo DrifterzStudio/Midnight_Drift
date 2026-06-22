@@ -133,7 +133,7 @@ public class ZoneChangementScene : NetworkBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
+        PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         SetCouleur(couleurNormale);
         RemovePlayer(other, instantiate);
@@ -142,14 +142,14 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
-        Debug.Log($" Add : {SteamUser.GetSteamID().m_SteamID}");
-        ActivePlayer_List.Instance.CmdAddId(SteamUser.GetSteamID().m_SteamID);
+        Debug.LogError($" Add : {SteamUser.GetSteamID().m_SteamID}");
+        ActivePlayer_List.Instance.CmdAddId(instantiate.SteamId);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
     {
-        //if (!NetworkServer.active) return;
-        ActivePlayer_List.Instance.CmdRemove(SteamUser.GetSteamID().m_SteamID);
+        Debug.LogError($" Remove : {SteamUser.GetSteamID().m_SteamID}");
+        ActivePlayer_List.Instance.CmdRemove(instantiate.SteamId);
     }
     // ──────────────────────────────────────────
     // TRANSITION VIA SCENE_CONTROLLER

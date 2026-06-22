@@ -7,10 +7,10 @@ public class PlayerName : NetworkBehaviour
 {
     [SerializeField] private TMP_Text nameTagGui;
 
-    public string _nameTag = string.Empty;
+    private string _nameTag = string.Empty;
 
     [SyncVar(hook = nameof(OnNameReceived))]
-    public string _steamName ="";
+    private string _steamName ="";
 
     [Command]
     public void GetName(string name)

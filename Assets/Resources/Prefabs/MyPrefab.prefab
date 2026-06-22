@@ -583,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 1075933698406959760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7260742, y: -0.24726868, z: -1.2030019}
+  m_LocalPosition: {x: 0.7260742, y: -0.24728394, z: -1.2030019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5602,7 +5602,7 @@ Transform:
   m_GameObject: {fileID: 1075933700159911276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71362305, y: -0.24726868, z: -1.2030019}
+  m_LocalPosition: {x: -0.71362305, y: -0.24728394, z: -1.2030019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21897,6 +21897,7 @@ GameObject:
   - component: {fileID: 2839167150011131257}
   - component: {fileID: 8727201517210583178}
   - component: {fileID: -1253437761399660420}
+  - component: {fileID: 2371419484718353265}
   m_Layer: 8
   m_Name: MyPrefab
   m_TagString: Untagged
@@ -22121,7 +22122,24 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cam: {fileID: 0}
+--- !u!114 &2371419484718353265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7039974021762241073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64b69adbbaa9fe4a8aa887fa40c3d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInfos
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  Isplaying: 0
+  SteamId: 0
+  SteamName: 
 --- !u!1 &7039974021990199544
 GameObject:
   m_ObjectHideFlags: 0

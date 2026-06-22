@@ -5,7 +5,7 @@ using Steamworks;
 public class PlayerInfos : NetworkBehaviour
 {
     public bool Isplaying = false;
-    [SyncVar]
+    [SyncVar(hook = nameof(OnSteamIdReceived))]
     public ulong SteamId = 0;
 
     [SyncVar]
@@ -25,5 +25,9 @@ public class PlayerInfos : NetworkBehaviour
     {
         SteamId = Id;
         SteamName = Name;
+    }
+    private void OnSteamIdReceived(ulong oldId, ulong newId)
+    {
+        GetComponent<NetworkCamera>()?.OnSteamIdReady(newId);
     }
 }

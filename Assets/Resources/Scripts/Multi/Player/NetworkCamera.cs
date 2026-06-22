@@ -8,6 +8,7 @@ using UnityEngine.InputSystem.XR;
 
 public class NetworkCamera : NetworkBehaviour
 {
+    private bool _steamIdProcessed = false;
     private static NetworkCamera  _localInstance = null;
     private static List<RCCP_CarController> _vehicles = new();
 
@@ -26,34 +27,45 @@ public class NetworkCamera : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        
         base.OnStartClient();
+
+        // sécurité si la valeur est déjà là au moment du spawn (ordre favorable)
+        ulong existingId = GetComponent<PlayerInfos>().SteamId;
+        if (existingId != 0)
+            OnSteamIdReady(existingId);
+    
+}
+
+    public void OnSteamIdReady(ulong steamId)
+    {
+        if (_steamIdProcessed) return;
+        _steamIdProcessed = true;
+
         if (isLocalPlayer)
         {
             _localInstance = this;
-            _isPlayerActive = ActivePlayer_List.Instance.Contains(SteamUser.GetSteamID().m_SteamID);
+            _isPlayerActive = ActivePlayer_List.Instance.Contains(steamId);
+
             if (_isPlayerActive)
             {
-                Debug.LogWarning("pas sensé arriver la ");
                 _vehicles.Clear();
                 cam.SetTarget(GetComponent<RCCP_CarController>());
             }
             return;
         }
 
-       
         if (_localInstance != null && _localInstance._isPlayerActive)
             return;
 
-        if (!ActivePlayer_List.Instance.Contains(SteamUser.GetSteamID().m_SteamID))
+        if (!ActivePlayer_List.Instance.Contains(steamId))
             return;
 
         _vehicles.Add(GetComponent<RCCP_CarController>());
-        
         if (_vehicles.Count == 1)
-        {
             cam.SetTarget(_vehicles[0]);
-        }
     }
+
 
     private void Update()
     {
