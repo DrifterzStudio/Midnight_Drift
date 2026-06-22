@@ -143,7 +143,9 @@ public class ZoneChangementScene : NetworkBehaviour
     {
         string name = instantiate.SteamName;
         Debug.Log(name);
+        NetworkConnection myConn = NetworkClient.connection;
         ActivePlayer_List.Instance.PlayerIdSteam.Add(name);
+        ActivePlayer_List.Instance.PlayerIdMirror.Add(myConn.identity);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
@@ -151,6 +153,8 @@ public class ZoneChangementScene : NetworkBehaviour
         //if (!NetworkServer.active) return;
         string name = instantiate.SteamName;
         ActivePlayer_List.Instance.PlayerIdSteam.Remove(name);
+        NetworkConnection myConn = NetworkClient.connection;
+        ActivePlayer_List.Instance.PlayerIdMirror.Remove(myConn.identity);
 
     }
     // ──────────────────────────────────────────

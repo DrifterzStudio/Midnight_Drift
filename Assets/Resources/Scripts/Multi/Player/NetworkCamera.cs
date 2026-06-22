@@ -32,7 +32,7 @@ public class NetworkCamera : NetworkBehaviour
         if (isLocalPlayer)
         {
             _localInstance = this;
-            _isPlayerActive = ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection);
+            _isPlayerActive = ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection.identity);
             if (_isPlayerActive)
             {
                 Debug.LogWarning("pas sensé arriver la ");
@@ -41,13 +41,14 @@ public class NetworkCamera : NetworkBehaviour
             }
             return;
         }
+        Debug.LogWarning(NetworkClient.connection);
         //if(_localInstance != null && _localInstance._isPlayerActive)
         //    return;
-      
-        if (!ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection))
+
+        if (!ActivePlayer_List.Instance.PlayerIdMirror.Contains(NetworkClient.connection.identity))
             return;
 
-
+    
         Debug.LogWarning("ADD");
         _vehicles.Add(GetComponent<RCCP_CarController>());
         
@@ -63,7 +64,7 @@ public class NetworkCamera : NetworkBehaviour
        
         if (!isLocalPlayer)
            return;
-        Debug.LogWarning(NetworkClient.connection);
+      
         Debug.Log(_isPlayerActive);
 
         
