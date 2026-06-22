@@ -10,6 +10,7 @@ using static Scene_Controller;
 
 public class NetWorkManager : NetworkManager
 {
+    PlayerInfos playerInfos = Object.FindAnyObjectByType<PlayerInfos>();
     [Header("Scenes")]
     [Scene] public string LobbyScene;
     [Scene] public string GameScene;
@@ -17,8 +18,7 @@ public class NetWorkManager : NetworkManager
     private string _nextSlot = " ";
 
     private string _activeScene = " ";
-    // _spawnedCount et MaxActivePlayers supprimés
-    // → la logique canPlay est maintenant dans CarPlayState.CmdRegisterSteamID
+
 
     private bool shouldSpawn = false;
 
@@ -59,23 +59,25 @@ public class NetWorkManager : NetworkManager
 
         if (_prefabForScene.TryGetValue(_activeScene, out GameObject prefab))
         {
+            Debug.Log(playerInfos.Isplaying + " haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2");
+
             if (prefab != null) 
                 SpawnPlayer(conn, playerPrefab);
         }
     }
 
     [Server]
-    public void SpawnPlayer(NetworkConnectionToClient conn,GameObject prefab)
+    public void SpawnPlayer(NetworkConnectionToClient conn, GameObject prefab) // faire la condition for spawn only 2 player and the 2 oother only have access to the cameras of the players
     {
         if (conn.identity != null) return;
-
+        Debug.Log(playerInfos.Isplaying + " haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1");
         Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
         Quaternion spawnRot = GetStartPosition()?.rotation ?? Quaternion.identity;
 
         GameObject player = Instantiate(prefab, spawnPos, spawnRot);
         NetworkServer.AddPlayerForConnection(conn, player);
 
-        Debug.Log($"[Server] Joueur spawné : {conn.connectionId}");
+        Debug.Log($"[Server] Joueur spawné : {conn.connectionId}"); 
     }
 
 
@@ -103,15 +105,6 @@ public class NetWorkManager : NetworkManager
         _nextSlot = "Game";
         _activeScene = GameScene;
         OnServerChangeScene(GameScene);
-
-        //NetworkServer.isLoadingScene = true;
-        //SceneLoadOperation op = new SceneLoadOperation();
-        //op.OnOpCreated = (asyncOp) => loadingSceneAsync = asyncOp;
-
-        //Scene_Controller.Instance.NewTransition()
-        //    .Load("Game", GameScene, op, true)
-        //    .EnableOverlay(true)
-        //    .Execute();
 
         if (NetworkServer.active)
         {

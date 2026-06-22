@@ -5941,7 +5941,7 @@ Transform:
   m_GameObject: {fileID: 1583716466100956877}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.71868896, y: -0.20727539, z: 1.1134044}
+  m_LocalPosition: {x: 0.7186279, y: -0.20727539, z: 1.1134044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10960,7 +10960,7 @@ Transform:
   m_GameObject: {fileID: 1583716466495983921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71499634, y: -0.20727539, z: 1.1134043}
+  m_LocalPosition: {x: -0.7149658, y: -0.20727539, z: 1.1134043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21896,7 +21896,7 @@ GameObject:
   - component: {fileID: 8342685663851006886}
   - component: {fileID: 2839167150011131257}
   - component: {fileID: 8727201517210583178}
-  - component: {fileID: 3317078207285301396}
+  - component: {fileID: 1210131797272920118}
   m_Layer: 8
   m_Name: MyPrefab
   m_TagString: Untagged
@@ -22106,7 +22106,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &3317078207285301396
+--- !u!114 &1210131797272920118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22115,13 +22115,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7039974021762241073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f147f4d032afad043a34585c051b70ab, type: 3}
+  m_Script: {fileID: 11500000, guid: d996b2c873be7ec45b8a77f05ea533f1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarPlayState
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  canPlay: 0
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkCamera
 --- !u!1 &7039974021990199544
 GameObject:
   m_ObjectHideFlags: 0

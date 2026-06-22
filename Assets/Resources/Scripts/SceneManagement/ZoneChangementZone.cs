@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using Steamworks;
 
 
@@ -33,6 +34,18 @@ public class ZoneChangementScene : NetworkBehaviour
     // ──────────────────────────────────────────
     // INITIALISATION
     // ──────────────────────────────────────────
+
+    private void Update()
+    {
+        if (Keyboard.current.tKey.wasPressedThisFrame)
+        {
+            PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
+            instantiate.Isplaying = false;
+
+            LancerTransition();
+        }
+
+    }
 
     void Awake()
     {
@@ -106,10 +119,12 @@ public class ZoneChangementScene : NetworkBehaviour
         if (other.name == "Plane")
             return;
         PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
-        AddPLayer(other, instantiate); // foncton for find the id of the player 
+
+        AddPLayer(other, instantiate);
         Debug.Log(PlayerIdSteam.Count);
-        if (PlayerIdSteam.Count >= 2)
+        if (PlayerIdSteam.Count >= 2 || Keyboard.current.tKey.IsPressed())
         {
+            instantiate.Isplaying = true;
             SetCouleur(couleurActivee);
             LancerTransition();
         }
@@ -126,7 +141,6 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
-        //if (!NetworkServer.active) return; // seul le serveur traite la logique
         string name = instantiate.SteamName;
         Debug.Log(name);
         PlayerIdSteam.Add(name);

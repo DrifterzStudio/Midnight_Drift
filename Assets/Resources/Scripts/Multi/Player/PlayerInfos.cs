@@ -4,6 +4,7 @@ using Steamworks;
 
 public class PlayerInfos : NetworkBehaviour
 {
+    public bool Isplaying = false;
     [SyncVar]
     public ulong SteamId = 0;
 

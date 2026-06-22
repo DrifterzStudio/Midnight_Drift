@@ -10,10 +10,9 @@ public struct custom_change_scene : NetworkMessage
     public string Scene;
 }
 
-
-
 public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
 {
+
     private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
     [SerializeField] private Server_Data dataObj;
     public void RegisterPrefab(string scene, GameObject prefabObject)
@@ -63,6 +62,7 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
     [Server]
     public void SpawnPlayer(NetworkConnectionToClient conn, GameObject prefab)
     {
+
         if (conn.identity != null)
         {
             Debug.Log("Already Spawn");
