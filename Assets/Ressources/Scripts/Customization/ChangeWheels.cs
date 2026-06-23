@@ -4,31 +4,34 @@ using UnityEngine.UI;
 
 public class ChangeWheels : MonoBehaviour {
 
-    public RCCP_CarController controller;
+    public List<Material> materials;
 
-    public List<Transform> wheelsSet;
+    public List<MeshRenderer> meshRenderer;
 
     public Button wheelsButton;
 
     public Text wheelsText;
 
-    private int wheelsSetIndex = 0;
+    private int materialIndex = 0;
+
 
     private void Awake() {
         wheelsButton.onClick.AddListener(OnButtonClicked);
     }
 
     void Update() {
-        controller.FrontAxle.leftWheelModel = wheelsSet[wheelsSetIndex];
-        controller.FrontAxle.rightWheelModel = wheelsSet[wheelsSetIndex + 1];
-        controller.RearAxle.leftWheelModel = wheelsSet[wheelsSetIndex + 2];
-        controller.RearAxle.rightWheelModel = wheelsSet[wheelsSetIndex + 3];
 
-        wheelsText.text = "" + wheelsSetIndex / 4;
+        meshRenderer[0].material = materials[materialIndex];
+        meshRenderer[1].material = materials[materialIndex];
+        meshRenderer[2].material = materials[materialIndex];
+        meshRenderer[3].material = materials[materialIndex];
+
+        wheelsText.text = materialIndex.ToString();
+
     }
 
     private void OnButtonClicked() {
-        if (wheelsSetIndex + 4 > wheelsSet.Count) wheelsSetIndex = 0;
-        else wheelsSetIndex += 4;
+        if (materialIndex + 1 > materials.Count - 1) materialIndex = 0;
+        else materialIndex += 1;
     }
 }

@@ -10617,14 +10617,14 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458689577}
   m_CullTransparentMesh: 1
---- !u!4 &464864314 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4564535566764556089, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+--- !u!23 &464864315 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6838392012802572114, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1900771012}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &478118448 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1431184888868623192, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+--- !u!23 &478118449 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2786407380302563372, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1900771012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &485799435
@@ -13573,9 +13573,9 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641595775}
   m_CullTransparentMesh: 1
---- !u!4 &642534065 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4204044471652812202, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+--- !u!23 &642534066 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2780818742493300749, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1900771012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &651448252
@@ -15821,16 +15821,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cb3da6fda6af84ea79d97d1f369c30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeWheels
-  controller: {fileID: 1900771013}
-  wheelsSet:
-  - {fileID: 478118448}
-  - {fileID: 642534065}
-  - {fileID: 1690530587}
-  - {fileID: 464864314}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 2b527868554550948a4a5fa57800c8e9, type: 2}
+  - {fileID: 2100000, guid: c66722ed7c536c044bbac11705d7a82f, type: 2}
+  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  meshRenderer:
+  - {fileID: 478118449}
+  - {fileID: 642534066}
+  - {fileID: 1690530588}
+  - {fileID: 464864315}
   wheelsButton: {fileID: 751980749}
   wheelsText: {fileID: 1086865660}
 --- !u!1 &733076827
@@ -35841,9 +35840,9 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688950004}
   m_CullTransparentMesh: 1
---- !u!4 &1690530587 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1386909846510630064, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+--- !u!23 &1690530588 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8598428459416514831, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
   m_PrefabInstance: {fileID: 1900771012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1691566625
