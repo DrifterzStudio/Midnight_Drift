@@ -24904,6 +24904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1152591876}
   - component: {fileID: 1152591877}
+  - component: {fileID: 1152591878}
   m_Layer: 5
   m_Name: CustomizerMenu
   m_TagString: Untagged
@@ -24940,6 +24941,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152591875}
   m_CullTransparentMesh: 1
+--- !u!114 &1152591878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152591875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b69d2b1f8df1e52418d798e3f795ef83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveCustom
+  dataDirPath: 
+  dataFileName: 
+  useEncryption: 0
+  encryption: 
+  usePrettyPrint: 0
+  materials: []
+  currentMat: 0
+  spoilers: []
+  currentSpoiler: 0
 --- !u!1 &1158983115
 GameObject:
   m_ObjectHideFlags: 0

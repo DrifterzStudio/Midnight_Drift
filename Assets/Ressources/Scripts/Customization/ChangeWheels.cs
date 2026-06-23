@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeWheels : MonoBehaviour {
+public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
+    [Header("Customization")]
     public List<Material> materials;
 
     public List<MeshRenderer> meshRenderer;
@@ -15,8 +16,33 @@ public class ChangeWheels : MonoBehaviour {
     private int materialIndex = 0;
 
 
+
+    public void LoadGame(IGameData data) {
+        Debug.Log("Load wheels");
+        SaveCustom tmp = data as SaveCustom;
+        if (tmp != null) {
+            materials = tmp.materials;
+            materialIndex = tmp.currentMat;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        Debug.Log("Save wheels");
+        SaveCustom tmp = data as SaveCustom;
+        if (tmp != null) {
+            tmp.materials = materials;
+            tmp.currentMat = materialIndex;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
+
+
     private void Awake() {
-        wheelsButton.onClick.AddListener(OnButtonClicked);
+        if (wheelsButton != null) wheelsButton.onClick.AddListener(OnButtonClicked);
     }
 
     void Update() {
@@ -26,12 +52,17 @@ public class ChangeWheels : MonoBehaviour {
         meshRenderer[2].material = materials[materialIndex];
         meshRenderer[3].material = materials[materialIndex];
 
-        wheelsText.text = materialIndex.ToString();
+        if (wheelsText != null) wheelsText.text = materialIndex.ToString();
 
     }
 
     private void OnButtonClicked() {
         if (materialIndex + 1 > materials.Count - 1) materialIndex = 0;
         else materialIndex += 1;
+    }
+
+
+    public int GetMatIndex() {
+        return materialIndex;
     }
 }
