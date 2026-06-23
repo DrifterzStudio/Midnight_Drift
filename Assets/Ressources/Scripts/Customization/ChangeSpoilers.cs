@@ -19,6 +19,7 @@ public class ChangeSpoilers : MonoBehaviour {
     }
 
     void Update() {
+
         if (spoilersIndex != -1) controller.Customizer.SpoilerManager.spoilers[spoilersIndex].gameObject.SetActive(true);
 
         if (spoilersIndex == -1) spoilersText.text = "None";
@@ -27,7 +28,8 @@ public class ChangeSpoilers : MonoBehaviour {
 
     private void OnButtonClicked() {
         if (spoilersIndex != -1) controller.Customizer.SpoilerManager.spoilers[spoilersIndex].gameObject.SetActive(false);
-        if (spoilersIndex + 1 > spoilers.Count) spoilersIndex = -1;
+
+        if (spoilersIndex + 1 > spoilers.Count - 1) spoilersIndex = -1;
         else spoilersIndex += 1;
     }
 }
