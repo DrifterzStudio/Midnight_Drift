@@ -3,12 +3,13 @@ using System;
 using UnityEngine;
     public class Server_Data : NetworkBehaviour
     {
-        private void Awake()
-        {
-            NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
-        }
+    public void Start()
+    {
+        NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
+        Debug.Log("Mirror_Manager start success");
+    }
 
-        [SyncVar(hook = nameof(OnSlotChanged))] private string _slot = " ";
+    [SyncVar(hook = nameof(OnSlotChanged))] private string _slot = " ";
         [SyncVar(hook = nameof(OnNameChanged))] private string _name = " ";
 
         private void OnSlotChanged(string oldVal, string newVal) => _slot = newVal;
