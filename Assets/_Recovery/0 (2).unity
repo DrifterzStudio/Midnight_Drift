@@ -15970,18 +15970,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733076827}
   m_CullTransparentMesh: 1
---- !u!114 &735019117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800059233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c67918a19c9654d945aba988ebe04b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarInstance
 --- !u!1 &735999961
 GameObject:
   m_ObjectHideFlags: 0
@@ -27696,6 +27684,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315859930}
   m_CullTransparentMesh: 1
+--- !u!114 &1318749829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800059233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c67918a19c9654d945aba988ebe04b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarInstance
 --- !u!1 &1320454868
 GameObject:
   m_ObjectHideFlags: 0
@@ -40007,10 +40007,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 5.033086e-24
       objectReference: {fileID: 0}
-    - target: {fileID: 5763045566592956144, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6838392012802572114, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -40021,7 +40017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7039974021762241076, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: m_LocalScale.x
@@ -40112,7 +40108,7 @@ PrefabInstance:
       addedObject: {fileID: 1391989973}
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 735019117}
+      addedObject: {fileID: 1318749829}
     - targetCorrespondingSourceObject: {fileID: 7039974021320586373, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900771030}

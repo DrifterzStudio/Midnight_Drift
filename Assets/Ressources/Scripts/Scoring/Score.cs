@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class Score : RCCP_GenericComponent  {
-    private RCCP_CarController carController;
+    public RCCP_CarController carController;
 
     private float metters = 0; private float distDrift = 0;
     private float timer = 0;
@@ -33,6 +33,7 @@ public class Score : RCCP_GenericComponent  {
     
     private void Update() {
         // Getting active player car controller on the scene.
+
         carController = RCCPSceneManager.activePlayerVehicle;
          
         // If no active player car found, return.

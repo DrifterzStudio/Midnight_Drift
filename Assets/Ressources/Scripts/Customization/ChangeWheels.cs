@@ -15,7 +15,9 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
     private int materialIndex = 0;
 
+    public static ChangeWheels instance;
 
+    public RCCP_CarController controller;
 
     public void LoadGame(IGameData data) {
         Debug.Log("Load wheels");
@@ -42,10 +44,16 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
 
     private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+
         if (wheelsButton != null) wheelsButton.onClick.AddListener(OnButtonClicked);
+        
     }
 
     void Update() {
+        instance = this;
 
         meshRenderer[0].material = materials[materialIndex];
         meshRenderer[1].material = materials[materialIndex];
@@ -64,5 +72,9 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
     public int GetMatIndex() {
         return materialIndex;
+    }
+
+    public Material GetCurrentMat() { 
+        return materials[materialIndex]; 
     }
 }

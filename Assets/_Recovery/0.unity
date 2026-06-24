@@ -12542,6 +12542,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579655126}
   m_CullTransparentMesh: 1
+--- !u!114 &592668944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800059233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ced5e3302ea684caa5622bfa4fc833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &597255332
 GameObject:
   m_ObjectHideFlags: 0
@@ -15785,6 +15797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 733029289}
   - component: {fileID: 733029290}
+  - component: {fileID: 733029291}
   m_Layer: 0
   m_Name: WheelsMenu
   m_TagString: Untagged
@@ -15833,6 +15846,18 @@ MonoBehaviour:
   wheelsButton: {fileID: 751980749}
   wheelsText: {fileID: 1086865660}
   controller: {fileID: 1900771013}
+--- !u!114 &733029291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733029288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ced5e3302ea684caa5622bfa4fc833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &733076827
 GameObject:
   m_ObjectHideFlags: 0
@@ -15970,18 +15995,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733076827}
   m_CullTransparentMesh: 1
---- !u!114 &735019117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800059233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c67918a19c9654d945aba988ebe04b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarInstance
 --- !u!1 &735999961
 GameObject:
   m_ObjectHideFlags: 0
@@ -21727,6 +21740,7 @@ GameObject:
   - component: {fileID: 1015281368}
   - component: {fileID: 1015281367}
   - component: {fileID: 1015281366}
+  - component: {fileID: 1015281370}
   m_Layer: 5
   m_Name: CarModificationsMenu
   m_TagString: Untagged
@@ -21822,6 +21836,18 @@ RectTransform:
   m_AnchoredPosition: {x: 541, y: 234.9}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1015281370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015281365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ced5e3302ea684caa5622bfa4fc833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &1024298915
 GameObject:
   m_ObjectHideFlags: 0
@@ -29537,18 +29563,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389327685}
   m_CullTransparentMesh: 1
---- !u!114 &1391989973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800059233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ced5e3302ea684caa5622bfa4fc833, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &1403060849
 GameObject:
   m_ObjectHideFlags: 0
@@ -40007,10 +40021,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 5.033086e-24
       objectReference: {fileID: 0}
-    - target: {fileID: 5763045566592956144, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6838392012802572114, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -40109,10 +40119,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1391989973}
-    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 735019117}
+      addedObject: {fileID: 592668944}
     - targetCorrespondingSourceObject: {fileID: 7039974021320586373, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1900771030}

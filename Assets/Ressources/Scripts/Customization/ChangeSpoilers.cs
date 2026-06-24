@@ -14,6 +14,8 @@ public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
 
     public List<GameObject> spoilers;
 
+    public static ChangeSpoilers instance;
+
     private int spoilersIndex = -1;
 
 
@@ -46,6 +48,7 @@ public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
     }
 
     void Update() {
+        instance = this;
 
         if (spoilersIndex != -1) controller.Customizer.SpoilerManager.spoilers[spoilersIndex].gameObject.SetActive(true);
 
