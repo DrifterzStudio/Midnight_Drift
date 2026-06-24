@@ -37,6 +37,10 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void Update()
     {
+
+        if(!isLocalPlayer)
+            return;
+
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
             PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
@@ -116,6 +120,9 @@ public class ZoneChangementScene : NetworkBehaviour
     
     void OnTriggerEnter(Collider other)
     {
+        if(!isLocalPlayer)
+            return;
+
         if (other.name == "Plane")
             return;
 
@@ -133,6 +140,9 @@ public class ZoneChangementScene : NetworkBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        if (!isLocalPlayer)
+            return;
+
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         SetCouleur(couleurNormale);
@@ -142,13 +152,12 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void AddPLayer(Collider other, PlayerInfos instantiate)
     {
-        Debug.LogError($" Add : {SteamUser.GetSteamID().m_SteamID}");
+        
         ActivePlayer_List.Instance.CmdAddId(instantiate.SteamId);
     }
 
     private void RemovePlayer(Collider other, PlayerInfos instantiate)
     {
-        Debug.LogError($" Remove : {SteamUser.GetSteamID().m_SteamID}");
         ActivePlayer_List.Instance.CmdRemove(instantiate.SteamId);
     }
     // ──────────────────────────────────────────
