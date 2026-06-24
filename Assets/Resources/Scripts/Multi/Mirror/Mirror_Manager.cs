@@ -32,7 +32,17 @@ public class Mirror_Manager :Singleton_Obj_MirrorManager<Mirror_Manager>
         _prefabs.Add(SceneName, prefab);
     }
 
+    public void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        if (conn.identity != null)
+        {
+            PlayerInfos info = conn.identity.GetComponent<PlayerInfos>();
+            if (info != null && ActivePlayer_List.Instance.Contains(info.SteamId))
+                ActivePlayer_List.Instance.CmdRemove(info.SteamId);
+        }
 
+        base.OnServerDisconnect(conn);
+    }
     public override void Start()
     {
         base.Start();

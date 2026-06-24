@@ -100,6 +100,8 @@ public class NetworkCamera : NetworkBehaviour
         Debug.Log("Caméra maintenant sur : " + targetCar.name);
     }
 
+    
+
     public override void OnStopClient()
     {
         base.OnStopClient();
@@ -107,11 +109,11 @@ public class NetworkCamera : NetworkBehaviour
     }
     private void HandleDisconnect()
     {
+        Debug.Log("disconnect");
+
+
         if (!ActivePlayer_List.Instance.Contains(GetComponent<PlayerInfos>().SteamId))
             return;
-
-        if (isLocalPlayer)
-            ActivePlayer_List.Instance.CmdRemove(GetComponent<PlayerInfos>().SteamId);
 
         if (_localInstance._isPlayerActive)
             return;
@@ -121,8 +123,8 @@ public class NetworkCamera : NetworkBehaviour
 
         if (_vehicles.Count == 0)
         {
-            Debug.Log("Plus aucune voiture");
-            return;
+            Debug.LogError("no player found force set");
+            _localInstance.cam.SetTarget(_localInstance.gameObject.GetComponent<RCCP_CarController>());
         }
 
         if (_localInstance._activeCar == car)
@@ -131,10 +133,6 @@ public class NetworkCamera : NetworkBehaviour
             _localInstance.cam.SetTarget(_vehicles[0]);
             _localInstance._activeCar = _vehicles[0];
         }
-        if(_vehicles.Count == 0)
-        {
-            Debug.LogError("no player found force set");
-            _localInstance.cam.SetTarget(_localInstance.gameObject.GetComponent<RCCP_CarController>());
-        }
+       
     }
 }
