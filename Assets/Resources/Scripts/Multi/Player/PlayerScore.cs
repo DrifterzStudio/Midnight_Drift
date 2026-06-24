@@ -58,17 +58,27 @@ using UnityEngine;
 
         private void Update()
         {
-            //seul le client local envoie ses données 
-            if (!isLocalPlayer) return;
-            if (!_carController) return;
-            if(_carController.PoweredAxles.Count <= 0) return;
-            
-            float sidewaysSlip = (float)Math.Abs(_carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip);
-            float speed = _carController.speed;
-            float deltaTime = Time.deltaTime;
+            NetworkCamera camera = GetComponent<NetworkCamera>();
+            if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.IsPlayerActive && isLocalPlayer)
+            {
+                if (!_carController) return;
+                if (_carController.PoweredAxles.Count <= 0) return;
 
-            // command envoyer au server
-            CmdUpdateDrift(sidewaysSlip, speed, deltaTime);
+                float sidewaysSlip = (float)Math.Abs(_carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip);
+                float speed = _carController.speed;
+                float deltaTime = Time.deltaTime;
+                CmdUpdateDrift(sidewaysSlip, speed, deltaTime);
+            }
+            else if (NetworkCamera.LocalInstance.ActiveCar.gameObject == gameObject)
+            {
+                _scoreText.text =
+                $"Score: {(int)_syncScore}";
+
+                _scoreUpdateText.text =
+                _syncScoreUpdate > 0
+                    ? $"{(int)_syncScoreUpdate} * {_syncScoreMultiplier:F1}"
+                    : $"{(int)_syncScoreUpdate}";
+        }
         }
 
         [Command]

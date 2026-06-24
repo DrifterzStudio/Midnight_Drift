@@ -20,6 +20,7 @@ public class ZoneChangementScene : NetworkBehaviour
     [Tooltip("Couleur quand le joueur entre dans la zone")]
     public Color couleurActivee = new Color(1f, 0.6f, 0f, 0.45f);
 
+    private bool change = false;
 
 
 
@@ -38,14 +39,14 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.tKey.wasPressedThisFrame)
+        Debug.Log($" player count : {ActivePlayer_List.Instance.Count}");
+        if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change )
         {
-            PlayerInfos instantiate = PlayerInfos.FindAnyObjectByType<PlayerInfos>();
-            instantiate.Isplaying = false;
 
+            SetCouleur(couleurActivee);
             LancerTransition();
-        }
 
+        }
     }
 
     void Awake()
@@ -125,12 +126,7 @@ public class ZoneChangementScene : NetworkBehaviour
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
         AddPLayer(other, instantiate);
-        if (ActivePlayer_List.Instance.Count >= 2 || Keyboard.current.tKey.IsPressed())
-        {
-            instantiate.Isplaying = true;
-            SetCouleur(couleurActivee);
-            LancerTransition();
-        }
+     
     }
 
     [ServerCallback]
@@ -164,6 +160,7 @@ public class ZoneChangementScene : NetworkBehaviour
     {
         // whait two player in the area to change scene 
         Mirror_Manager.Instance.ChangeScene("Game", "GameScene");
+        change = true;
     }
 
     // ──────────────────────────────────────────

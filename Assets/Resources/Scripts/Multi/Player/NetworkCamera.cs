@@ -9,13 +9,13 @@ using UnityEngine.InputSystem.XR;
 public class NetworkCamera : NetworkBehaviour
 {
     private bool _steamIdProcessed = false;
-    private static NetworkCamera  _localInstance = null;
+    public static NetworkCamera  LocalInstance = null;
     private static List<RCCP_CarController> _vehicles = new();
 
     private RCCP_Camera cam;
-    private RCCP_CarController _activeCar ;
+    public RCCP_CarController ActiveCar ;
     private int _currentTarget = 0;
-    private bool _isPlayerActive = false;
+    public bool IsPlayerActive = false;
    
     private void Awake() 
     {
@@ -44,10 +44,10 @@ public class NetworkCamera : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-            _localInstance = this;
-            _isPlayerActive = ActivePlayer_List.Instance.Contains(steamId);
+            LocalInstance = this;
+            IsPlayerActive = ActivePlayer_List.Instance.Contains(steamId);
 
-            if (_isPlayerActive)
+            if (IsPlayerActive)
             {
                 _vehicles.Clear();
                 cam.SetTarget(GetComponent<RCCP_CarController>());
@@ -55,7 +55,7 @@ public class NetworkCamera : NetworkBehaviour
             return;
         }
 
-        if (_localInstance != null && _localInstance._isPlayerActive)
+        if (LocalInstance != null && LocalInstance.IsPlayerActive)
             return;
 
         if (!ActivePlayer_List.Instance.Contains(steamId))
@@ -65,7 +65,7 @@ public class NetworkCamera : NetworkBehaviour
         if (_vehicles.Count == 1)
         {
             cam.SetTarget(_vehicles[0]);
-            _activeCar = _vehicles[0];
+            ActiveCar = _vehicles[0];
         }
     }
 
@@ -74,7 +74,7 @@ public class NetworkCamera : NetworkBehaviour
     {
         if (!isLocalPlayer)
            return;
-        if (Keyboard.current.uKey.wasPressedThisFrame && !_isPlayerActive)
+        if (Keyboard.current.uKey.wasPressedThisFrame && !IsPlayerActive)
         {
             Debug.Log("changement de tutut");
             SwitchCam();
@@ -83,7 +83,7 @@ public class NetworkCamera : NetworkBehaviour
 
     private void SwitchCam()
     {
-        if(_isPlayerActive)
+        if(IsPlayerActive)
             Debug.LogWarning("error change cam request on active Player ");
         if(_vehicles.Count == 0)
             Debug.LogWarning("error no cam found ");
@@ -96,7 +96,7 @@ public class NetworkCamera : NetworkBehaviour
 
         RCCP_CarController targetCar = _vehicles[_currentTarget];
         cam.cameraTarget.playerVehicle = targetCar;
-        _activeCar = targetCar;
+        ActiveCar = targetCar;
         Debug.Log("Caméra maintenant sur : " + targetCar.name);
     }
 
@@ -115,7 +115,7 @@ public class NetworkCamera : NetworkBehaviour
         if (!ActivePlayer_List.Instance.Contains(GetComponent<PlayerInfos>().SteamId))
             return;
 
-        if (_localInstance._isPlayerActive)
+        if (LocalInstance.IsPlayerActive)
             return;
 
         var car = GetComponent<RCCP_CarController>();
@@ -124,14 +124,14 @@ public class NetworkCamera : NetworkBehaviour
         if (_vehicles.Count == 0)
         {
             Debug.LogError("no player found force set");
-            _localInstance.cam.SetTarget(_localInstance.gameObject.GetComponent<RCCP_CarController>());
+            LocalInstance.cam.SetTarget(LocalInstance.gameObject.GetComponent<RCCP_CarController>());
         }
 
-        if (_localInstance._activeCar == car)
+        if (LocalInstance.ActiveCar == car)
         {
-            _localInstance._currentTarget = 0;
-            _localInstance.cam.SetTarget(_vehicles[0]);
-            _localInstance._activeCar = _vehicles[0];
+            LocalInstance._currentTarget = 0;
+            LocalInstance.cam.SetTarget(_vehicles[0]);
+            LocalInstance.ActiveCar = _vehicles[0];
         }
        
     }
