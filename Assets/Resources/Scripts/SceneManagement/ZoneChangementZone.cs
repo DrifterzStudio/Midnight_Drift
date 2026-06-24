@@ -39,7 +39,7 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void Update()
     {
-        Debug.Log($" player count : {ActivePlayer_List.Instance.Count}");
+        
         if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change )
         {
 
