@@ -5,8 +5,6 @@ using UnityEngine;
     {
     public void Start()
     {
-        NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
-        Debug.Log("Mirror_Manager start success");
     }
 
     [SyncVar(hook = nameof(OnSlotChanged))] private string _slot = " ";
@@ -19,19 +17,7 @@ using UnityEngine;
             _slot = slot;
             _name = name;
         }
-    private void OnSceneChangeMessage(custom_change_scene msg)
-    {
-            Debug.LogWarning($"Message reçu slot:{msg.Slot} scene:{msg.Scene}");
-
-            Scene_Controller.SceneLoadOperation op = new Scene_Controller.SceneLoadOperation();
-            op.OnOpCreated = (asyncOp) => NetworkManager.loadingSceneAsync = asyncOp;
-
-            Scene_Controller.Instance.NewTransition()
-                .Load(msg.Slot, msg.Scene, op, true)
-                .EnableOverlay(true)
-                .Execute();
-
-    }
+ 
 
     public string GetSceneSlot() => _slot;
         public string GetSceneName() => _name;
