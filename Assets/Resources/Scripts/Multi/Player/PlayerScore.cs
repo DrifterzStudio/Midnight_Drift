@@ -70,7 +70,7 @@ using UnityEngine;
                 float deltaTime = Time.deltaTime;
                 CmdUpdateDrift(sidewaysSlip, speed, deltaTime);
             }
-            else if (NetworkCamera.LocalInstance.ActiveCar.gameObject == gameObject)
+            else if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.ActiveCar != null && NetworkCamera.LocalInstance.ActiveCar.gameObject == gameObject)
             {
                 _localInstance._scoreText.text =
                 $"Score: {(int)_syncScore}";
@@ -79,7 +79,7 @@ using UnityEngine;
                 _syncScoreUpdate > 0
                     ? $"{(int)_syncScoreUpdate} * {_syncScoreMultiplier:F1}"
                     : $"{(int)_syncScoreUpdate}";
-        }
+            }
         }
 
         [Command]

@@ -50,7 +50,7 @@ public class NetworkCamera : NetworkBehaviour
             if (IsPlayerActive)
             {
                 _vehicles.Clear();
-                cam.SetTarget(GetComponent<RCCP_CarController>());
+                LocalInstance.cam.SetTarget(GetComponent<RCCP_CarController>());
             }
             return;
         }
@@ -64,8 +64,8 @@ public class NetworkCamera : NetworkBehaviour
         _vehicles.Add(GetComponent<RCCP_CarController>());
         if (_vehicles.Count == 1)
         {
-            cam.SetTarget(_vehicles[0]);
-            ActiveCar = _vehicles[0];
+            LocalInstance.cam.SetTarget(_vehicles[0]);
+            LocalInstance.ActiveCar = _vehicles[0];
         }
     }
 
@@ -95,8 +95,8 @@ public class NetworkCamera : NetworkBehaviour
         Debug.LogWarning(_vehicles.Count);
 
         RCCP_CarController targetCar = _vehicles[_currentTarget];
-        cam.cameraTarget.playerVehicle = targetCar;
-        ActiveCar = targetCar;
+        LocalInstance.cam.cameraTarget.playerVehicle = targetCar;
+        LocalInstance.ActiveCar = targetCar;
         Debug.Log("Caméra maintenant sur : " + targetCar.name);
     }
 
