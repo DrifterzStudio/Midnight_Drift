@@ -13,7 +13,7 @@ public class NetworkCamera : NetworkBehaviour
     private static List<RCCP_CarController> _vehicles = new();
 
     private RCCP_Camera cam;
-    private RCCP_CarController _activeCar = new();
+    private RCCP_CarController _activeCar ;
     private int _currentTarget = 0;
     private bool _isPlayerActive = false;
    
