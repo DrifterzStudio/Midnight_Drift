@@ -8,7 +8,7 @@ using UnityEngine;
     public class Score : NetworkBehaviour
     {
 
-       
+       static private Score _localInstance = null;
         // variable syncro
         [SyncVar(hook = nameof(OnScoreChanged))]
         private float _syncScore = 0f;
@@ -46,6 +46,7 @@ using UnityEngine;
            // set la ui et la voiture si c'est le player local 
             if (isLocalPlayer)
             {
+                _localInstance = this;
                 _scoreText = Game_UI_Manager.Instance.score;
                 _scoreUpdateText = Game_UI_Manager.Instance.updScore;
                 _scoreText.gameObject.SetActive(true);
@@ -71,10 +72,10 @@ using UnityEngine;
             }
             else if (NetworkCamera.LocalInstance.ActiveCar.gameObject == gameObject)
             {
-                _scoreText.text =
+                _localInstance._scoreText.text =
                 $"Score: {(int)_syncScore}";
 
-                _scoreUpdateText.text =
+                _localInstance._scoreUpdateText.text =
                 _syncScoreUpdate > 0
                     ? $"{(int)_syncScoreUpdate} * {_syncScoreMultiplier:F1}"
                     : $"{(int)_syncScoreUpdate}";
