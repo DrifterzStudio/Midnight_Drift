@@ -2,7 +2,7 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Grip : MonoBehaviour {
+public class Grip : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -30,11 +30,38 @@ public class Grip : MonoBehaviour {
     [Tooltip("Back page.")]
     public GameObject back;
 
-    private float forwardValue = 0.5f;
-    private float rearSidewaysValue = 0.9f;
-    private float frontSidewaysValue = 0.7f;
+    public float forwardValue = 0.5f;
+    public float rearSidewaysValue = 0.9f;
+    public float frontSidewaysValue = 0.7f;
+
+    public static Grip instance;
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            forwardValue = tmp.forwardValue;
+            rearSidewaysValue = tmp.rearSidewaysValue;
+            frontSidewaysValue = tmp.frontSidewaysValue;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.forwardValue = forwardValue;
+            tmp.rearSidewaysValue = rearSidewaysValue;
+            tmp.frontSidewaysValue = frontSidewaysValue;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
 
     private void Awake() {
+        if (instance == null) instance = this;
         forwardButton.onClick.AddListener(OnForwardButtonClicked);
         rearSidewaysButton.onClick.AddListener(OnRearSidewaysButtonClicked);
         frontSidewaysButton.onClick.AddListener(OnFrontSidewaysButtonClicked);
@@ -42,11 +69,11 @@ public class Grip : MonoBehaviour {
     }
 
     void Update() {
+        instance = this;
+
         forwardText.text = "" + forwardValue;
         rearSidewaysText.text = "" + rearSidewaysValue;
         frontSidewaysText.text = "" + frontSidewaysValue;
-
-        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnForwardButtonClicked() {

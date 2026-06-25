@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class LoadSceneButton : MonoBehaviour
 {
-    public RCCP_CarController car;
 
     public Button button;
 
@@ -15,11 +14,6 @@ public class LoadSceneButton : MonoBehaviour
 
     private void Start() {
         button.onClick.AddListener(OnButtonClicked);
-
-        if (car != null) {
-            if (SaveSettings.vehiculeSettings == null) SaveSettings.vehiculeSettings = car;
-            else car = SaveSettings.vehiculeSettings;
-        }
 
     }
 

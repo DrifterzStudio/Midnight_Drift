@@ -4,9 +4,10 @@ public class LoadTelemetryModification : MonoBehaviour {
 
     public GameObject telemetry;
 
-    void Start() {
-
-        if (SaveSettings.telemetrySettings) telemetry.SetActive(true);
-        else telemetry.SetActive(false);
+    void Awake() {
+        if (Others.instance != null) {
+            if (Others.instance.isTelemetry) telemetry.SetActive(true);
+            else telemetry.SetActive(false);
+        }
     }
 }

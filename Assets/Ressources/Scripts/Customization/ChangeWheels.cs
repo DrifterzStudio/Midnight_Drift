@@ -20,7 +20,6 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
     public RCCP_CarController controller;
 
     public void LoadGame(IGameData data) {
-        Debug.Log("Load wheels");
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
             materials = tmp.materials;
@@ -29,7 +28,6 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
     }
 
     public void SaveGame(IGameData data) {
-        Debug.Log("Save wheels");
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
             tmp.materials = materials;

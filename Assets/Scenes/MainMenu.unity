@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &23731461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +727,8 @@ MonoBehaviour:
   handbrakeMultiplierText: {fileID: 758306126}
   brakeMultiplierButton: {fileID: 1770736234}
   brakeMultiplierText: {fileID: 2107418513}
+  handbrakeMultiplier: 0.6
+  brakeMultiplier: 1
 --- !u!1 &24074639
 GameObject:
   m_ObjectHideFlags: 0
@@ -4399,7 +4401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &216888356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4421,6 +4423,10 @@ MonoBehaviour:
   targetText: {fileID: 1759726591}
   damperButton: {fileID: 1368524327}
   damperText: {fileID: 200201929}
+  distValue: 0
+  forceValue: 0
+  targetValue: 0
+  damperValue: 0
 --- !u!1 &219163932
 GameObject:
   m_ObjectHideFlags: 0
@@ -7955,8 +7961,10 @@ MonoBehaviour:
   rearButton: {fileID: 1060418739}
   frontAngleText: {fileID: 2009986883}
   rearAngleText: {fileID: 2032814845}
-  backButton: {fileID: 843493183}
+  backButton: {fileID: 402870833}
   back: {fileID: 373062452}
+  frontAngle: 0
+  rearAngle: 0
 --- !u!1 &350299559
 GameObject:
   m_ObjectHideFlags: 0
@@ -8709,7 +8717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &373062455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8730,6 +8738,7 @@ MonoBehaviour:
   steeringSensitivityButton: {fileID: 1683682317}
   sterringSensitivityText: {fileID: 1243151747}
   steeringCurveButton: {fileID: 1462848759}
+  sensitivityValue: 1
 --- !u!1 &377757621
 GameObject:
   m_ObjectHideFlags: 0
@@ -9370,31 +9379,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 402870834}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 349496814}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 373062452}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &402870834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10500,7 +10485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &458689580
 Animator:
   serializedVersion: 7
@@ -18925,7 +18910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &887425206
 Animator:
   serializedVersion: 7
@@ -21727,6 +21712,7 @@ GameObject:
   - component: {fileID: 1015281368}
   - component: {fileID: 1015281367}
   - component: {fileID: 1015281366}
+  - component: {fileID: 1015281370}
   m_Layer: 5
   m_Name: CarModificationsMenu
   m_TagString: Untagged
@@ -21822,6 +21808,18 @@ RectTransform:
   m_AnchoredPosition: {x: 541, y: 234.9}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1015281370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015281365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ced5e3302ea684caa5622bfa4fc833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DontDestroy
 --- !u!1 &1024298915
 GameObject:
   m_ObjectHideFlags: 0
@@ -21873,7 +21871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &1024298918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21899,6 +21897,7 @@ MonoBehaviour:
   THText: {fileID: 774302597}
   ASPButton: {fileID: 335081162}
   ASPText: {fileID: 359915971}
+  ASPValue: 1
 --- !u!1 &1032213029
 GameObject:
   m_ObjectHideFlags: 0
@@ -22031,7 +22030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &1036944449
 Animator:
   serializedVersion: 7
@@ -23434,7 +23433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &1088078185
 Animator:
   serializedVersion: 7
@@ -24429,7 +24428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040c499769c339b4895af935529e3c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadSceneButton
-  car: {fileID: 1900771013}
   button: {fileID: 1111236867}
   sceneName: Score
   isAdditive: 0
@@ -25705,7 +25703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &1211661794
 Animator:
   serializedVersion: 7
@@ -29345,8 +29343,11 @@ MonoBehaviour:
   forwardText: {fileID: 1301203516}
   rearSidewaysText: {fileID: 260376452}
   frontSidewaysText: {fileID: 1664275896}
-  backButton: {fileID: 843493183}
+  backButton: {fileID: 2066878190}
   back: {fileID: 373062452}
+  forwardValue: 0.5
+  rearSidewaysValue: 0.9
+  frontSidewaysValue: 0.7
 --- !u!1 &1380105089
 GameObject:
   m_ObjectHideFlags: 0
@@ -30753,7 +30754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!1 &1477717896
 GameObject:
   m_ObjectHideFlags: 0
@@ -37915,7 +37916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!95 &1779161516
 Animator:
   serializedVersion: 7
@@ -41844,7 +41845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &1979467711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41870,6 +41871,11 @@ MonoBehaviour:
   clutchText: {fileID: 1644997147}
   telemetryButton: {fileID: 396874657}
   telemetryText: {fileID: 696380315}
+  steerValue: 0.05
+  throttleValue: 0.05
+  brakeValue: 0.05
+  handbrakeValue: 0.05
+  clutchValue: 0.05
   isTelemetry: 0
 --- !u!1 &1989183740
 GameObject:
@@ -42627,7 +42633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8c1079946ba19442a8b1eeecd1b23b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabButton
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!1 &2031449450
 GameObject:
   m_ObjectHideFlags: 0
@@ -43636,31 +43642,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2066878191}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1373056293}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 373062452}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2066878191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43804,6 +43786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2070479265}
   - component: {fileID: 2070479266}
+  - component: {fileID: 2070479267}
   m_Layer: 0
   m_Name: CarSettings
   m_TagString: Untagged
@@ -43861,6 +43844,58 @@ MonoBehaviour:
   - {fileID: 1476369583}
   - {fileID: 1979467710}
   currentButton: {fileID: 0}
+--- !u!114 &2070479267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070479264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1343283dc39ce8499c0c15864808779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveSettings
+  dataDirPath: 
+  dataFileName: 
+  useEncryption: 0
+  encryption: 
+  usePrettyPrint: 0
+  distValue: 0
+  forceValue: 0
+  targetValue: 0
+  damperValue: 0
+  ABS: 0
+  TCS: 0
+  ESP: 0
+  SH: 0
+  TH: 0
+  ASPValue: 0
+  sensitivityValue: 0
+  frontAngle: 0
+  rearAngle: 0
+  forwardValue: 0
+  rearSidewaysValue: 0
+  frontSidewaysValue: 0
+  isHandbrake: 0
+  handbrakeMultiplier: 0
+  brakeMultiplier: 0
+  isReverse: 0
+  transmissionType: 0
+  GSTValue: 0
+  shiftingDelay: 0
+  clutchThreshold: 0
+  ARFValue: 0
+  frontAxleSteer: 0
+  frontAxleHandbrake: 0
+  rearAxleSteer: 0
+  rearAxleHandbrake: 0
+  steerValue: 0
+  throttleValue: 0
+  brakeValue: 0
+  handbrakeValue: 0
+  clutchValue: 0
+  isTelemetry: 0
 --- !u!1 &2076153577
 GameObject:
   m_ObjectHideFlags: 0
@@ -44821,7 +44856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8313a170a4d199c47969032b53539741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabContent
-  tabGroup: {fileID: 0}
+  tabGroup: {fileID: 2070479266}
 --- !u!114 &2142883105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44850,6 +44885,10 @@ MonoBehaviour:
   clutchThresholdText: {fileID: 1262440971}
   ARFButton: {fileID: 454022488}
   ARFText: {fileID: 1555274104}
+  GSTValue: 0.7
+  shiftingDelay: 0.2
+  clutchThreshold: 0.1
+  ARFValue: 1000
 --- !u!1001 &1702167716333528
 PrefabInstance:
   m_ObjectHideFlags: 0

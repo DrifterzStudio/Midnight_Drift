@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Braking : MonoBehaviour {
+public class Braking : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -24,28 +24,57 @@ public class Braking : MonoBehaviour {
     [Tooltip("Text showing the value of the brake multiplier.")]
     public Text brakeMultiplierText;
 
-    private float handbrakeMultiplier = .6f;
-    private float brakeMultiplier = 1f;
+    public bool isHandbrake = true;
+    public float handbrakeMultiplier = .6f;
+    public float brakeMultiplier = 1f;
+
+    public static Braking instance;
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            controller.RearAxle.isHandbrake = tmp.isHandbrake;
+            handbrakeMultiplier = tmp.handbrakeMultiplier;
+            brakeMultiplier = tmp.brakeMultiplier;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.isHandbrake = controller.RearAxle.isHandbrake;
+            tmp.handbrakeMultiplier = handbrakeMultiplier;
+            tmp.brakeMultiplier = brakeMultiplier;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
 
 
     private void Awake() {
+        if (instance == null) instance = this;
         handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
         handbrakeMultiplierButton.onClick.AddListener(OnHandbrakeMultiplierButtonClicked);
         brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);
     }
 
     private void Update() {
+        instance = this;
 
         if (controller.RearAxle.isHandbrake) handbrakeText.text = "On";
         else handbrakeText.text = "Off";
 
         handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
         brakeMultiplierText.text = brakeMultiplier.ToString();
-        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnHandbrakeButtonClicked() {
         controller.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
+        isHandbrake = controller.RearAxle.isHandbrake;
     }
 
     private void OnHandbrakeMultiplierButtonClicked() {

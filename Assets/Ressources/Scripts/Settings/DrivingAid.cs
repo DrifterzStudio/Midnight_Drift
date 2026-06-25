@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class DrivingAid : MonoBehaviour {
+public class DrivingAid : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController carController;
 
@@ -43,9 +43,46 @@ public class DrivingAid : MonoBehaviour {
     [Tooltip("Text showing the current state of the arcade speed preservation.")]
     public Text ASPText;
 
-    private float ASPValue = 1f;
+    public float ASPValue = 1f;
+
+
+    public static DrivingAid instance;
+
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            carController.GetVehicleBehaviorType().ABS = tmp.ABS;
+            carController.GetVehicleBehaviorType().TCS = tmp.TCS;
+            carController.GetVehicleBehaviorType().ESP = tmp.ESP;
+            carController.GetVehicleBehaviorType().steeringHelper = tmp.SH;
+            carController.GetVehicleBehaviorType().tractionHelper = tmp.TH;
+            ASPValue = tmp.ASPValue;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.ABS = carController.GetVehicleBehaviorType().ABS;
+            tmp.TCS = carController.GetVehicleBehaviorType().TCS;
+            tmp.ESP = carController.GetVehicleBehaviorType().ESP;
+            tmp.SH = carController.GetVehicleBehaviorType().steeringHelper;
+            tmp.TH = carController.GetVehicleBehaviorType().tractionHelper;
+            tmp.ASPValue = ASPValue;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
 
     private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+
         ABSButton.onClick.AddListener(OnABSButtonClicked);
         TCSButton.onClick.AddListener(OnTCSButtonClicked);
         ESPButton.onClick.AddListener(OnESPButtonClicked);
@@ -55,6 +92,7 @@ public class DrivingAid : MonoBehaviour {
     }
 
     private void Update() {
+        instance = this;
 
         if (carController.GetVehicleBehaviorType().ABS == true) ABSText.text = "On";
         else ABSText.text = "Off";
@@ -72,8 +110,6 @@ public class DrivingAid : MonoBehaviour {
         else THText.text = "Off";
 
         ASPText.text = ASPValue.ToString();
-
-        SaveSettings.vehiculeSettings = carController;
     }
     private void OnABSButtonClicked() {
         carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;

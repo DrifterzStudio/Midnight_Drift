@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Others : MonoBehaviour {
+public class Others : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController carController;
 
@@ -38,15 +38,51 @@ public class Others : MonoBehaviour {
     [Tooltip("Text showing the current state of the telemetry.")]
     public Text telemetryText;
 
-    private float steerValue = .05f;
-    private float throttleValue = .05f;
-    private float brakeValue = .05f;
-    private float handbrakeValue = .05f;
-    private float clutchValue = .05f;
+    public float steerValue = .05f;
+    public float throttleValue = .05f;
+    public float brakeValue = .05f;
+    public float handbrakeValue = .05f;
+    public float clutchValue = .05f;
 
     public bool isTelemetry = false;
 
+    public static Others instance;
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            steerValue = tmp.steerValue;
+            throttleValue = tmp.throttleValue;
+            brakeValue = tmp.brakeValue;
+            handbrakeValue = tmp.handbrakeValue;
+            clutchValue = tmp.clutchValue;
+            isTelemetry = tmp.isTelemetry;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.steerValue = steerValue;
+            tmp.throttleValue = throttleValue;
+            tmp.brakeValue = brakeValue;
+            tmp.handbrakeValue = handbrakeValue;
+            tmp.clutchValue = clutchValue;
+            tmp.isTelemetry = isTelemetry;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
+
+
+
     private void Awake() {
+        if (instance == null) instance = this;
+
         steerButton.onClick.AddListener(OnSteerButtonClicked);
         throttleButton.onClick.AddListener(OnThrottleButtonClicked);
         brakeButton.onClick.AddListener(OnBrakeButtonClicked);
@@ -56,6 +92,7 @@ public class Others : MonoBehaviour {
     }
 
     private void Update() {
+        instance = this;
 
         if (isTelemetry) telemetryText.text = "On";
         else telemetryText.text = "Off";
@@ -65,9 +102,6 @@ public class Others : MonoBehaviour {
         brakeText.text = brakeValue.ToString();
         handbrakeText.text = handbrakeValue.ToString();
         clutchText.text = clutchValue.ToString();
-
-        SaveSettings.vehiculeSettings = carController;
-        SaveSettings.telemetrySettings = isTelemetry;
     }
 
     private void OnSteerButtonClicked() {

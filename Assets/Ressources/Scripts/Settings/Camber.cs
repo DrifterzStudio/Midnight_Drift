@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Camber : MonoBehaviour {
+public class Camber : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -25,19 +25,46 @@ public class Camber : MonoBehaviour {
     [Tooltip("Back page.")]
     public GameObject back;
 
-    private float frontAngle = 0;
-    private float rearAngle = 0;
+    public float frontAngle = 0;
+    public float rearAngle = 0;
+
+    public static Camber instance;
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            frontAngle = tmp.frontAngle;
+            rearAngle = tmp.rearAngle;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.frontAngle = frontAngle;
+            tmp.rearAngle = rearAngle;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
+
 
     private void Awake() { 
+        if (instance == null) instance = this;
         frontButton.onClick.AddListener(OnFrontButtonClicked);
         rearButton.onClick.AddListener(OnRearButtonClicked);
         backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
     private void Update() {
+        instance = this;
+
         frontAngleText.text = "" + (int)frontAngle;
         rearAngleText.text = "" + (int)rearAngle;
-        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnFrontButtonClicked() {

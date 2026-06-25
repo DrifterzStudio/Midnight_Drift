@@ -14,6 +14,7 @@ public class LoadCustom : MonoBehaviour {
         }
 
         if (ChangeWheels.instance != null) {
+            Debug.Log("wheels custom load");
             wheels[0].material = ChangeWheels.instance.GetCurrentMat();
             wheels[1].material = ChangeWheels.instance.GetCurrentMat();
             wheels[2].material = ChangeWheels.instance.GetCurrentMat();

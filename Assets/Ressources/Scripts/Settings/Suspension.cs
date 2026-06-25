@@ -1,9 +1,10 @@
 using System;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Suspension : MonoBehaviour {
+public class Suspension : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -27,12 +28,45 @@ public class Suspension : MonoBehaviour {
     [Tooltip("Text showing the current value of suspension damper.")]
     public Text damperText;
 
-    private float distValue = 0f;
-    private float forceValue = 0f;
-    private float targetValue = 0f;
-    private float damperValue = 0f;
+    public float distValue = 0f;
+    public float forceValue = 0f;
+    public float targetValue = 0f;
+    public float damperValue = 0f;
+
+    public static Suspension instance;
+
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            distValue = tmp.distValue;
+            forceValue = tmp.forceValue;
+            targetValue = tmp.targetValue;
+            damperValue = tmp.damperValue;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.distValue = distValue;
+            tmp.forceValue = forceValue;
+            tmp.targetValue = targetValue;
+            tmp.damperValue = damperValue;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
 
     private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+
         distButton.onClick.AddListener(OnDistButtonClicked);
         forceButton.onClick.AddListener(OnForceButtonClicked);
         targetButton.onClick.AddListener(OnTargetButtonClicked);
@@ -40,11 +74,12 @@ public class Suspension : MonoBehaviour {
     }
 
     private void Update() {
+        instance = this;
+
         distText.text = distValue.ToString();
         forceText.text = forceValue.ToString();
         targetText.text = targetValue.ToString();
         damperText.text = damperValue.ToString();
-        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnDistButtonClicked() {

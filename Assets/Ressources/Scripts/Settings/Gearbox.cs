@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
-public class Gearbox : MonoBehaviour {
+public class Gearbox : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController carController;
 
@@ -61,13 +61,52 @@ public class Gearbox : MonoBehaviour {
 
     
     private bool isReverse = false;
+    public GearState gearState = GearState.InForwardGear;
     private int gearboxType = 1;
-    private float GSTValue = .7f;
-    private float shiftingDelay = .2f;
-    private float clutchThreshold = .1f;
-    private int ARFValue = 1000;
+    public TransmissionType transmissionType = TransmissionType.Automatic;
+    public float GSTValue = .7f;
+    public float shiftingDelay = .2f;
+    public bool CTWS = true;
+    public float clutchThreshold = .1f;
+    public int ARFValue = 1000;
+
+    public static Gearbox instance;
+
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            gearState = tmp.isReverse;
+            transmissionType = tmp.transmissionType;
+            GSTValue = tmp.GSTValue;
+            shiftingDelay = tmp.shiftingDelay;
+            clutchThreshold = tmp.clutchThreshold;
+            ARFValue = tmp.ARFValue;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            tmp.isReverse = carController.Gearbox.currentGearState.gearState;
+            tmp.transmissionType = carController.Gearbox.transmissionType;
+            tmp.GSTValue = GSTValue;
+            tmp.shiftingDelay = shiftingDelay;
+            tmp.clutchThreshold = clutchThreshold;
+            tmp.ARFValue = ARFValue;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
+
+
+
 
     private void Awake() {
+        if (instance == null) instance = this;
+
         autoReverseButton.onClick.AddListener(OnAutoReverseButtonClicked);
         gearboxButton.onClick.AddListener(OnGearboxButtonClicked);
         GSTButton.onClick.AddListener(OnGSTButtonClicked);
@@ -78,6 +117,7 @@ public class Gearbox : MonoBehaviour {
     }
 
     private void Update() {
+        instance = this;
 
         if (isReverse) autoReverseText.text = "On";
         else autoReverseText.text = "Off";
@@ -104,17 +144,17 @@ public class Gearbox : MonoBehaviour {
 
         ARFText.text = ARFValue.ToString();
 
-        SaveSettings.vehiculeSettings = carController;
-
     }
 
     private void OnAutoReverseButtonClicked() {
         isReverse = !isReverse;
         if (isReverse) {
             carController.Gearbox.currentGearState.gearState = GearState.InReverseGear;
+            gearState = GearState.InReverseGear;
         }
         else {
             carController.Gearbox.currentGearState.gearState = GearState.InForwardGear;
+            gearState = GearState.InForwardGear;
         }
     }
 
@@ -124,12 +164,15 @@ public class Gearbox : MonoBehaviour {
 
         if (gearboxType == 0) {
             carController.Gearbox.transmissionType = TransmissionType.Manual;
+            transmissionType = TransmissionType.Manual;
         }
         else if (gearboxType == 1) {
             carController.Gearbox.transmissionType = TransmissionType.Automatic;
+            transmissionType = TransmissionType.Automatic;
         }
         else {
             carController.Gearbox.transmissionType = TransmissionType.Automatic_DNRP;
+            transmissionType = TransmissionType.Automatic_DNRP;
         }
 
     }
@@ -152,6 +195,7 @@ public class Gearbox : MonoBehaviour {
 
     private void OnCTWSButtonClicked() {
         carController.Inputs.cutThrottleWhenShifting = !carController.Inputs.cutThrottleWhenShifting;
+        CTWS = carController.Inputs.cutThrottleWhenShifting; ;
     }
 
     private void OnClutchThresholdButtonClicked() {

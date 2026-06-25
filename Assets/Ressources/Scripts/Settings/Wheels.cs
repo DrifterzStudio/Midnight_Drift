@@ -1,7 +1,8 @@
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Wheels : MonoBehaviour {
+public class Wheels : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -29,19 +30,49 @@ public class Wheels : MonoBehaviour {
     [Tooltip("Steering curve button.")]
     public Button steeringCurveButton;
 
-    private float sensitivityValue = 1f;
+    //public float steeringCurve;
+
+    public float sensitivityValue = 1f;
+
+    public static Wheels instance;
+
+    public void LoadGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            //steeringCurve = tmp.steeringCurve;
+            sensitivityValue = tmp.sensitivityValue;
+        }
+    }
+
+    public void SaveGame(IGameData data) {
+        SaveSettings tmp = data as SaveSettings;
+        if (tmp != null) {
+            //tmp.steeringCurve = steeringCurve;
+            tmp.sensitivityValue = sensitivityValue;
+        }
+    }
+
+    public string getDataFileName() {
+        return "";
+    }
 
 
 
     private void Awake() {
+        Debug.Log("Load instance");
+        if (instance == null) {
+            instance = this;
+            Debug.Log("Instance loaded");
+        }
         camberButton.onClick.AddListener(OnCamberButtonClicked);
         steeringSensitivityButton.onClick.AddListener(OnSteerSensitivityButtonClicked);
         steeringCurveButton.onClick.AddListener(OnSteerCurveButtonClicked);
         gripButton.onClick.AddListener(OnGripButtonClicked);
     }
     private void Update() {
+        instance = this;
+
         sterringSensitivityText.text = "" + sensitivityValue;
-        SaveSettings.vehiculeSettings = controller;
     }
 
     private void OnCamberButtonClicked() {
