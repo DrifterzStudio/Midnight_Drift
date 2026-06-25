@@ -81,7 +81,7 @@ public class Wheels : MonoBehaviour, IDataPersistence {
     }
     private void OnGripButtonClicked() {
         gameObject.SetActive(false);
-        camber.SetActive(true);
+        grip.SetActive(true);
     }
 
     private void OnSteerSensitivityButtonClicked() {
