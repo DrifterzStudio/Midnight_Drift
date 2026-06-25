@@ -22,9 +22,6 @@ public class Camber : MonoBehaviour, IDataPersistence {
     [Tooltip("Back button.")]
     public Button backButton;
 
-    [Tooltip("Back page.")]
-    public GameObject back;
-
     public float frontAngle = 0;
     public float rearAngle = 0;
 
@@ -57,7 +54,6 @@ public class Camber : MonoBehaviour, IDataPersistence {
         if (instance == null) instance = this;
         frontButton.onClick.AddListener(OnFrontButtonClicked);
         rearButton.onClick.AddListener(OnRearButtonClicked);
-        backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
     private void Update() {
@@ -79,20 +75,12 @@ public class Camber : MonoBehaviour, IDataPersistence {
         controller.Customizer.loadout.customizationData.cambersRear = rearAngle;
     }
 
-    private void OnBackButtonClicked() {
-        gameObject.SetActive(false);
-        back.SetActive(true);
-    }
-
     private void OnDestroy() {
         if (frontButton != null) {
             frontButton.onClick.RemoveListener(OnFrontButtonClicked);
         }
         if (rearButton != null) {
             rearButton.onClick.RemoveListener(OnRearButtonClicked);
-        }
-        if (backButton != null) {
-            backButton.onClick.RemoveListener(OnBackButtonClicked);
         }
     }
 }

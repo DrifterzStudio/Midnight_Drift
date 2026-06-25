@@ -27,9 +27,6 @@ public class Grip : MonoBehaviour, IDataPersistence {
     [Tooltip("Back button.")]
     public Button backButton;
 
-    [Tooltip("Back page.")]
-    public GameObject back;
-
     public float forwardValue = 0.5f;
     public float rearSidewaysValue = 0.9f;
     public float frontSidewaysValue = 0.7f;
@@ -65,7 +62,6 @@ public class Grip : MonoBehaviour, IDataPersistence {
         forwardButton.onClick.AddListener(OnForwardButtonClicked);
         rearSidewaysButton.onClick.AddListener(OnRearSidewaysButtonClicked);
         frontSidewaysButton.onClick.AddListener(OnFrontSidewaysButtonClicked);
-        backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
     void Update() {
@@ -94,10 +90,6 @@ public class Grip : MonoBehaviour, IDataPersistence {
         controller.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
     }
 
-    private void OnBackButtonClicked() {
-        gameObject.SetActive(false);
-        back.SetActive(true);
-    }
     private void OnDestroy() {
         if (forwardButton != null) {
             forwardButton.onClick.RemoveListener(OnForwardButtonClicked);
@@ -107,9 +99,6 @@ public class Grip : MonoBehaviour, IDataPersistence {
         }
         if (frontSidewaysButton != null) {
             frontSidewaysButton.onClick.RemoveListener(OnFrontSidewaysButtonClicked);
-        }
-        if (backButton != null) {
-            backButton.onClick.RemoveListener(OnBackButtonClicked);
         }
     }
 }
