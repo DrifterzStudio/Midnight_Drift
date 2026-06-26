@@ -39,9 +39,12 @@ public class NetworkCamera : NetworkBehaviour
 
     public void OnSteamIdReady(ulong steamId)
     {
+          
         if (_steamIdProcessed) return;
         _steamIdProcessed = true;
-
+        if(isLocalPlayer)
+            Debug.LogError("LOCAL");
+        Debug.LogError(ActivePlayer_List.Instance.Count);
         if (isLocalPlayer)
         {
             LocalInstance = this;

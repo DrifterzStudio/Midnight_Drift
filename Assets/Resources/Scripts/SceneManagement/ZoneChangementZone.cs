@@ -12,7 +12,7 @@ public class ZoneChangementScene : NetworkBehaviour
     // ──────────────────────────────────────────
     // PARAMÈTRES ÉDITEUR
     // ──────────────────────────────────────────
-
+    private float timer = 0;
 
     [Header("Apparence de la zone")]
     [Tooltip("Couleur de la zone au repos")]
@@ -39,14 +39,22 @@ public class ZoneChangementScene : NetworkBehaviour
 
     private void Update()
     {
-        
-        if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change )
+
+
+        if ((ActivePlayer_List.Instance.Count == 1 || Keyboard.current.tKey.IsPressed()) && !change )
         {
-
-            SetCouleur(couleurActivee);
-            LancerTransition();
-
+            timer += Time.deltaTime;
+            if (timer >= 3f)
+            {
+                SetCouleur(couleurActivee);
+                LancerTransition();
+            }
         }
+        else
+        {
+            timer = 0f; 
+        }
+
     }
 
     void Awake()
