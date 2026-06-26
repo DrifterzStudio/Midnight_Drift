@@ -55,6 +55,12 @@ public class NetworkCamera : NetworkBehaviour
                 _vehicles.Clear();
                 LocalInstance.cam.SetTarget(GetComponent<RCCP_CarController>());
             }
+
+            if (_vehicles.Count != 0)
+            {
+                LocalInstance.cam.SetTarget(_vehicles[0]);
+                LocalInstance.ActiveCar = _vehicles[0];
+            }
             return;
         }
 
@@ -65,7 +71,8 @@ public class NetworkCamera : NetworkBehaviour
             return;
 
         _vehicles.Add(GetComponent<RCCP_CarController>());
-        if (_vehicles.Count == 1)
+
+        if (LocalInstance != null && _vehicles.Count == 1)
         {
             LocalInstance.cam.SetTarget(_vehicles[0]);
             LocalInstance.ActiveCar = _vehicles[0];
