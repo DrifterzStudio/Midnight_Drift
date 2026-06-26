@@ -30,10 +30,10 @@ public class NetworkCamera : NetworkBehaviour
         
         base.OnStartClient();
 
-        // sécurité si la valeur est déjà là au moment du spawn (ordre favorable)
-        ulong existingId = GetComponent<PlayerInfos>().SteamId;
-        if (existingId != 0)
-            OnSteamIdReady(existingId);
+        //// sécurité si la valeur est déjà là au moment du spawn (ordre favorable)
+        //ulong existingId = GetComponent<PlayerInfos>().SteamId;
+        //if (existingId != 0)
+        //     OnSteamIdReady(existingId);
     
 }
 
@@ -42,9 +42,7 @@ public class NetworkCamera : NetworkBehaviour
           
         if (_steamIdProcessed) return;
         _steamIdProcessed = true;
-        if(isLocalPlayer)
-            Debug.LogError("LOCAL");
-        Debug.LogError(ActivePlayer_List.Instance.Count);
+      
         if (isLocalPlayer)
         {
             LocalInstance = this;

@@ -41,14 +41,15 @@ public class ZoneChangementScene : NetworkBehaviour
     {
 
 
-        if ((ActivePlayer_List.Instance.Count == 1 || Keyboard.current.tKey.IsPressed()) && !change )
+        if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change && ActivePlayer_List.Instance.Ready)
         {
             timer += Time.deltaTime;
-            //if (timer >= 3f)
-            //{
+
+            if (timer >= 3f)
+            {
                 SetCouleur(couleurActivee);
                 LancerTransition();
-            //}
+            }
         }
         else
         {
