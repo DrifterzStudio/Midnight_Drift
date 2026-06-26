@@ -8,8 +8,7 @@ public class PlayerInfos : NetworkBehaviour
     [SyncVar(hook = nameof(OnSteamIdReceived))]
     public ulong SteamId = 0;
 
-    [SyncVar]
-    public string SteamName = "";
+   
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnStartClient()
     {
@@ -24,7 +23,6 @@ public class PlayerInfos : NetworkBehaviour
     void SendInfosPlayer(ulong Id, string Name)
     {
         SteamId = Id;
-        SteamName = Name;
     }
     private void OnSteamIdReceived(ulong oldId, ulong newId)
     {
