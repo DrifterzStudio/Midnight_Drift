@@ -19,6 +19,12 @@ public class ActivePlayer_List : Singleton_Obj_Net<ActivePlayer_List>
             PlayerSteamId.Add(steamId);
     }
 
+    [Server]
+    private void OnListChangedServer(SyncList<ulong>.Operation op, int index, ulong oldItem, ulong newItem)
+    {
+        Debug.LogError("change");
+    }
+
     [Command(requiresAuthority = false)]
     public void CmdRemove(ulong steamId)
     {

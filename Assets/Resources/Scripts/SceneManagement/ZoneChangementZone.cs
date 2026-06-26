@@ -44,11 +44,11 @@ public class ZoneChangementScene : NetworkBehaviour
         if ((ActivePlayer_List.Instance.Count == 1 || Keyboard.current.tKey.IsPressed()) && !change )
         {
             timer += Time.deltaTime;
-            if (timer >= 3f)
-            {
+            //if (timer >= 3f)
+            //{
                 SetCouleur(couleurActivee);
                 LancerTransition();
-            }
+            //}
         }
         else
         {
