@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bf23d3fd0478052419c06ff0514d4bac
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_stair.hlsl
+  uploadId: 718323

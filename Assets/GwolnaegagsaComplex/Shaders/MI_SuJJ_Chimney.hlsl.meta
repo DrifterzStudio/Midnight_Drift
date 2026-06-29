@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b55c778486a17654dad8259afa5262ed
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Chimney.hlsl
+  uploadId: 718323

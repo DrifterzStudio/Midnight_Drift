@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 719e051a07088834f9c0ea9a70c4023c
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_GNGS_Giwa.hlsl
+  uploadId: 718323

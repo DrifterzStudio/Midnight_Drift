@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b8749cb4deae74a4db6ed5f7dea3d32e
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Door03A.hlsl
+  uploadId: 718323

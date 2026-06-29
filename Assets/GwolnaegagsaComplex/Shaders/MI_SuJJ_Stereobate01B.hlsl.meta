@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: da7286ee53a68d642a921700f8f170cb
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Stereobate01B.hlsl
+  uploadId: 718323

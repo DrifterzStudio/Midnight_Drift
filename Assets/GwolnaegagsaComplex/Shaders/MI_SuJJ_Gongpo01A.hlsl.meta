@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 416b971e0b84aba4e8c4666acbea3dee
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Gongpo01A.hlsl
+  uploadId: 718323

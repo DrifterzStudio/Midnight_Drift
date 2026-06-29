@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8b65a3abbc2e2c142910ddbff9f26c68
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Koreanpaper01.hlsl
+  uploadId: 718323

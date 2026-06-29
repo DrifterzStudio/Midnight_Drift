@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e3b3c2ea51d2d7242ba0f6335bc14920
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/LWCOperations.hlsl
+  uploadId: 718323

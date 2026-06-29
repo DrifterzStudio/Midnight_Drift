@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1dd9944ce65fcb74f87b8f27180ada4e
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Hwaban01.hlsl
+  uploadId: 718323

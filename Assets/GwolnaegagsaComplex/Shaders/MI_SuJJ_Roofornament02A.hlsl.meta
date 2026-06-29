@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 28c4896b792b40e4bb7f4655bd826a74
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Roofornament02A.hlsl
+  uploadId: 718323

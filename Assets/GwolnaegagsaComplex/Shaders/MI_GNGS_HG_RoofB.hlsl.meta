@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b7b199adf4a231e40a044cd9d6099f1c
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_GNGS_HG_RoofB.hlsl
+  uploadId: 718323

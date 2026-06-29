@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f19e4e67408aaa42986de9ac3932cab
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Beam02.hlsl
+  uploadId: 718323

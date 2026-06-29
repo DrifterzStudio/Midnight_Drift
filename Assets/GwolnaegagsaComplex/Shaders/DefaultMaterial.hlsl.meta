@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: daeaab5b7ebcd0b4c95172b421c4b952
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/DefaultMaterial.hlsl
+  uploadId: 718323

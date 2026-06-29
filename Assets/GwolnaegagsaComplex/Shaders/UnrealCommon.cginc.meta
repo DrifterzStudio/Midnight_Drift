@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d18ed4eef4964664cbf28e21ad58fe5d
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/UnrealCommon.cginc
+  uploadId: 718323

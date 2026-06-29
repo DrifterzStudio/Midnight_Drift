@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 451815dc3ba2468448340a82d0cdb7de
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Boaji02.hlsl
+  uploadId: 718323

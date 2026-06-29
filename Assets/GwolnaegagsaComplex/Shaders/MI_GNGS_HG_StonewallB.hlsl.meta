@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 075a7dd4618f82640abd71a66448d3f9
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_GNGS_HG_StonewallB.hlsl
+  uploadId: 718323

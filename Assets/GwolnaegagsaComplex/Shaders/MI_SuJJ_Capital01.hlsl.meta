@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d93ee67bd3d625c40b30fd99efead239
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Capital01.hlsl
+  uploadId: 718323

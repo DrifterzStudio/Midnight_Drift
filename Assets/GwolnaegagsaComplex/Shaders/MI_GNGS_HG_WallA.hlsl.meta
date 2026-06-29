@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ac8da9f255ece1847959cd933066c05d
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_GNGS_HG_WallA.hlsl
+  uploadId: 718323

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6f20ae3eca6915b45bf24338811e25c7
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Door_Iron.hlsl
+  uploadId: 718323

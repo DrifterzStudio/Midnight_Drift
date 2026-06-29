@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 382a247afb8d3704697b4610b0cd363c
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/LargeWorldCoordinates.hlsl
+  uploadId: 718323

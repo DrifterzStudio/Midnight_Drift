@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a4d06f2a71723834485fd44f9d9a4243
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Floor02A.hlsl
+  uploadId: 718323

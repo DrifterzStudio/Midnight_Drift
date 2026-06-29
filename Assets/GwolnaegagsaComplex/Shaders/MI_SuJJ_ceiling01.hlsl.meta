@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1ddd5994a4680cd46b8d7fc92e854489
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_ceiling01.hlsl
+  uploadId: 718323

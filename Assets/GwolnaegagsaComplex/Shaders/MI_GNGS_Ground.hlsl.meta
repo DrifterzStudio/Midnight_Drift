@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5d7cec1f8224e234ca832e3ce513857d
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_GNGS_Ground.hlsl
+  uploadId: 718323

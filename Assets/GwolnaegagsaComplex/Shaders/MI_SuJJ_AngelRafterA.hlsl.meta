@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d64c59467ed91f443b37a6381ab1787b
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_AngelRafterA.hlsl
+  uploadId: 718323

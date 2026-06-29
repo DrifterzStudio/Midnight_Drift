@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 747c36513046f0643869e08cdb3de7e8
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304449
+  packageName: KHS-Gwolnaegagsa, Gyeongbokgung
+  packageVersion: 1.0
+  assetPath: Assets/GwolnaegagsaComplex/Shaders/MI_SuJJ_Pillar02A.hlsl
+  uploadId: 718323
