@@ -5986,6 +5986,20 @@ MonoBehaviour:
   - {fileID: 1587330240}
   gearbox: {fileID: 1587330239}
   inputs: {fileID: 1587330238}
+--- !u!114 &1449542956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052599345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27fafc6f2eb5fe41b528e42e1cb6a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadUpgrades
+  engine: {fileID: 1716257123}
+  gearbox: {fileID: 1587330239}
 --- !u!1 &1450437315
 GameObject:
   m_ObjectHideFlags: 0
@@ -8461,6 +8475,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1716257123 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7039974021550147387, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+  m_PrefabInstance: {fileID: 1752211808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2f0c9985a5bdb4ea7e1096e48b725d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1752211808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8705,6 +8730,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1449542955}
+    - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1449542956}
     - targetCorrespondingSourceObject: {fileID: 7039974021762241073, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1052599348}

@@ -389,20 +389,37 @@ public static class RCCP_VehicleValidator {
         }
 
         // Turbo checks - validate configuration values (not runtime turboChargePsi)
-        if (engine.turboCharged && engine.maxTurboChargePsi <= 0) {
+        if (engine.turbo1Charged && engine.maxTurbo1ChargePsi <= 0) {
             results.Add(new ValidationResult(Severity.Error, Category.Engine,
-                "Turbo is enabled but maxTurboChargePsi is zero or below",
-                "Set maxTurboChargePsi (valid range: 1-35 PSI)", engine));
-        } else if (engine.turboCharged && engine.maxTurboChargePsi > 35f) {
+                "Turbo is enabled but maxTurbo1ChargePsi is zero or below",
+                "Set maxTurbo1ChargePsi (valid range: 1-35 PSI)", engine));
+        } else if (engine.turbo1Charged && engine.maxTurbo1ChargePsi > 35f) {
             results.Add(new ValidationResult(Severity.Warning, Category.Engine,
-                $"maxTurboChargePsi is very high ({engine.maxTurboChargePsi})",
+                $"maxTurbo1ChargePsi is very high ({engine.maxTurbo1ChargePsi})",
                 "Maximum recommended is 35 PSI", engine));
         }
 
-        if (engine.turboCharged && engine.turboChargerCoEfficient <= 1f) {
+        // Turbo checks - validate configuration values (not runtime turboChargePsi)
+        if (engine.turbo2Charged && engine.maxTurbo2ChargePsi <= 0) {
             results.Add(new ValidationResult(Severity.Error, Category.Engine,
-                $"turboChargerCoEfficient should be greater than 1 ({engine.turboChargerCoEfficient})",
-                "Set turboChargerCoEfficient > 1 for turbo to provide boost (e.g., 1.25 = 25% boost)", engine));
+                "Turbo is enabled but maxTurbo2ChargePsi is zero or below",
+                "Set maxTurbo2ChargePsi (valid range: 1-35 PSI)", engine));
+        } else if (engine.turbo2Charged && engine.maxTurbo2ChargePsi > 35f) {
+            results.Add(new ValidationResult(Severity.Warning, Category.Engine,
+                $"maxTurbo2ChargePsi is very high ({engine.maxTurbo2ChargePsi})",
+                "Maximum recommended is 35 PSI", engine));
+        }
+
+        if (engine.turbo1Charged && engine.turbo1ChargerCoEfficient <= 1f) {
+            results.Add(new ValidationResult(Severity.Error, Category.Engine,
+                $"turbo1ChargerCoEfficient should be greater than 1 ({engine.turbo1ChargerCoEfficient})",
+                "Set turbo1ChargerCoEfficient > 1 for turbo to provide boost (e.g., 1.25 = 25% boost)", engine));
+        }
+
+        if (engine.turbo2Charged && engine.turbo2ChargerCoEfficient <= 1f) {
+            results.Add(new ValidationResult(Severity.Error, Category.Engine,
+                $"turbo2ChargerCoEfficient should be greater than 1 ({engine.turbo2ChargerCoEfficient})",
+                "Set turbo2ChargerCoEfficient > 1 for turbo to provide boost (e.g., 1.25 = 25% boost)", engine));
         }
 
         // Engine inertia check (0.01-1.00)
