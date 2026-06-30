@@ -48,20 +48,51 @@ public class Score : RCCP_GenericComponent
     public float popupFadeOutDuration = 0.5f;
     public float popupScalePunch = 1.3f;
 
+    [Header("Score Banking Sound")]
+    [Tooltip("Sound played when drift points are added to the total score.")]
+    public AudioClip scoreBankSound;
+    [Range(0f, 1f)]
+    public float scoreBankSoundVolume = 1f;
+
+    [Header("Score Lost Effect")]
+    [Tooltip("Sound played when drift points are lost due to a collision.")]
+    public AudioClip scoreLostSound;
+    [Range(0f, 1f)]
+    public float scoreLostSoundVolume = 1f;
+    public Color scoreLostColor = Color.red;
+    public float scoreLostShakeDuration = 0.3f;
+    public float scoreLostShakeStrength = 10f;
+
+    private AudioSource audioSource;
+
     private CanvasGroup scoreUpdateCanvasGroup;
     private RectTransform scoreUpdateRect;
     private float fadeTimer = 0f;
     private bool isFadingOut = false;
     private Vector3 baseScale;
 
+    private Color baseTextColor;
+    private float shakeTimer = 0f;
+    private bool isShaking = false;
+    private Vector3 popupBasePosition;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (!audioSource)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f;
+
         scoreUpdateCanvasGroup = scoreUpdateText.GetComponent<CanvasGroup>();
         if (!scoreUpdateCanvasGroup)
             scoreUpdateCanvasGroup = scoreUpdateText.gameObject.AddComponent<CanvasGroup>();
 
         scoreUpdateRect = scoreUpdateText.GetComponent<RectTransform>();
         baseScale = scoreUpdateRect.localScale;
+        popupBasePosition = scoreUpdateRect.anchoredPosition;
+        baseTextColor = scoreUpdateText.color;
 
         scoreUpdateText.gameObject.SetActive(false);
         multiplierText.gameObject.SetActive(false);
@@ -69,16 +100,14 @@ public class Score : RCCP_GenericComponent
 
     private void Update()
     {
-        // Getting active player car controller on the scene.
         carController = RCCPSceneManager.activePlayerVehicle;
 
-        // If no active player car found, return.
         if (!carController)
             return;
 
         if (!isEnd)
         {
-            if (IsDrifting())
+            if (IsDrifting() && !isShaking)
             {
                 AccumulateDrift();
             }
@@ -95,11 +124,12 @@ public class Score : RCCP_GenericComponent
         UpdateMultiplier();
         UpdateUI();
         UpdatePopupAnimation();
+        UpdateShakeEffect();
     }
 
     private bool IsDrifting()
     {
-        return Mathf.Abs((float)carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= driftSlipThreshold
+        return Mathf.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= driftSlipThreshold
             && carController.speed >= 0;
     }
 
@@ -114,6 +144,23 @@ public class Score : RCCP_GenericComponent
 
     private void HandleDriftTimeout()
     {
+        if (isShaking || isFadingOut)
+        {
+            distDrift = 0;
+            metters = 0;
+            timer = 0;
+            return;
+        }
+
+        if ((int)distDrift <= 0)
+        {
+            distDrift = 0;
+            metters = 0;
+            timer = 0;
+            HidePopupImmediately();
+            return;
+        }
+
         timer += Time.deltaTime;
         if (timer >= driftTimeoutDelay)
         {
@@ -123,7 +170,14 @@ public class Score : RCCP_GenericComponent
 
     private void BankDriftScore()
     {
-        score += (int)distDrift * scoreMultiplier;
+        bool hasPointsToBank = (int)distDrift > 0;
+
+        if (hasPointsToBank)
+        {
+            score += (int)distDrift * scoreMultiplier;
+            PlayScoreBankSound();
+        }
+
         scoreUpdate = 0;
         distDrift = 0;
         distMultiplierModifier = 0;
@@ -131,7 +185,16 @@ public class Score : RCCP_GenericComponent
         scoreMultiplier = 1;
         timer = 0;
 
-        StartPopupFadeOut();
+        if (hasPointsToBank)
+            StartPopupFadeOut();
+        else
+            HidePopupImmediately();
+    }
+
+    private void PlayScoreBankSound()
+    {
+        if (scoreBankSound && audioSource)
+            audioSource.PlayOneShot(scoreBankSound, scoreBankSoundVolume);
     }
 
     private void ApplyFinalMultipliers()
@@ -145,6 +208,9 @@ public class Score : RCCP_GenericComponent
     {
         scoreTotal = score;
         scoreText.text = scoreTotal.ToString("N0");
+
+        if (isShaking)
+            return;
 
         bool isCurrentlyDrifting = distDrift > 0 || metters > 0;
 
@@ -209,10 +275,89 @@ public class Score : RCCP_GenericComponent
             isEnd = true;
     }
 
+    [Tooltip("Layer used by circuit obstacles (props, barriers, tires, etc.).")]
+    public LayerMask obstacleLayer;
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
-            BankDriftScore();
+        if (IsInLayerMask(collision.gameObject.layer, obstacleLayer))
+            CancelDriftScore();
+    }
+
+    private bool IsInLayerMask(int layer, LayerMask mask)
+    {
+        return (mask.value & (1 << layer)) != 0;
+    }
+
+    private void CancelDriftScore()
+    {
+        if (isShaking)
+            return;
+
+        bool hadPointsToLose = (int)distDrift > 0;
+
+        distDrift = 0;
+        metters = 0;
+        distMultiplierModifier = 0;
+        scoreMultiplierModifier = 0;
+        scoreMultiplier = 1;
+        timer = 0;
+        scoreUpdate = 0;
+
+        if (hadPointsToLose)
+            StartScoreLostEffect();
+        else
+            HidePopupImmediately();
+
+        isFadingOut = false;
+    }
+
+    private void StartScoreLostEffect()
+    {
+        scoreUpdateText.gameObject.SetActive(true);
+        scoreUpdateCanvasGroup.alpha = 1f;
+        scoreUpdateText.color = scoreLostColor;
+
+        shakeTimer = 0f;
+        isShaking = true;
+
+        PlayScoreLostSound();
+    }
+
+    private void PlayScoreLostSound()
+    {
+        if (scoreLostSound && audioSource)
+            audioSource.PlayOneShot(scoreLostSound, scoreLostSoundVolume);
+    }
+
+    private void UpdateShakeEffect()
+    {
+        if (!isShaking)
+            return;
+
+        shakeTimer += Time.deltaTime;
+        float t = shakeTimer / scoreLostShakeDuration;
+
+        if (t >= 1f)
+        {
+            isShaking = false;
+            scoreUpdateRect.anchoredPosition = popupBasePosition;
+            scoreUpdateText.color = baseTextColor;
+            HidePopupImmediately();
+            return;
+        }
+
+        float damper = 1f - t;
+        float offsetX = Mathf.Sin(t * 40f) * scoreLostShakeStrength * damper;
+        scoreUpdateRect.anchoredPosition = popupBasePosition + new Vector3(offsetX, 0f, 0f);
+    }
+
+    private void HidePopupImmediately()
+    {
+        scoreUpdateText.gameObject.SetActive(false);
+        multiplierText.gameObject.SetActive(false);
+        scoreUpdateRect.anchoredPosition = popupBasePosition;
+        scoreUpdateText.color = baseTextColor;
     }
 
     private void UpdateMultiplier()
