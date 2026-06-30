@@ -82,7 +82,8 @@
 
         public override void ServerChangeScene(string newSceneName)
         {
-            // volontairement vide
+            base.OnServerSceneChanged(newSceneName);
+            NetworkServer.isLoadingScene = false;
         }
         public override void OnServerReady(NetworkConnectionToClient conn)
         {
