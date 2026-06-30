@@ -170,7 +170,7 @@ public class ZoneChangementScene : NetworkBehaviour
     {
         // whait two player in the area to change scene 
         
-        Mirror_Manager.Instance.ChangeScene("Game", "toto");
+        Mirror_Manager.Instance.ChangeScene("Game", "GameScene");
         change = true;
     }
 

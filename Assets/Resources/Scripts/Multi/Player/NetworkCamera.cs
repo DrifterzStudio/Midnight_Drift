@@ -17,8 +17,10 @@ public class NetworkCamera : NetworkBehaviour
     private int _currentTarget = 0;
     public bool IsPlayerActive = false;
    
-    private void Awake() 
+    private void Awake()
     {
+        LocalInstance = null;
+        _vehicles = new();
         cam = FindAnyObjectByType<RCCP_Camera>();
         if (cam == null)
             Debug.LogWarning("error cam null");
@@ -132,6 +134,7 @@ public class NetworkCamera : NetworkBehaviour
         if (_vehicles.Count == 0)
         {
             Debug.LogError("no player found force set");
+            LocalInstance.IsPlayerActive = true;
             LocalInstance.cam.SetTarget(LocalInstance.gameObject.GetComponent<RCCP_CarController>());
         }
 

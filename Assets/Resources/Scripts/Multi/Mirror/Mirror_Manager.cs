@@ -134,6 +134,7 @@
     [Server]
     public void ChangeScene(string slot, string scene)
     {
+        Debug.Log($"[DEBUG-Replay] Avant ChangeScene -> Objets réseau actifs : {NetworkServer.spawned.Count}");
         if (NetworkServer.isLoadingScene)
         {
             Debug.LogWarning("[Server] ChangeScene ignoré : un chargement est déjà en cours.");

@@ -28,6 +28,8 @@ public class PlayerInfos : NetworkBehaviour
     }
     private void OnSteamIdReceived(ulong oldId, ulong newId)
     {
+        if (this == null || gameObject == null)
+            return;
         Connect(newId);
         GetComponent<NetworkCamera>()?.OnSteamIdReady(newId);
     }
