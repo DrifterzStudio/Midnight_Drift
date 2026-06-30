@@ -128,26 +128,32 @@
             customHandling = true;
         }
 
-       
 
-        [Server]
-        public void ChangeScene(string slot, string scene)
+
+    [Server]
+    public void ChangeScene(string slot, string scene)
+    {
+        if (NetworkServer.isLoadingScene)
         {
-          
-            NetworkServer.SetAllClientsNotReady();
-            networkSceneName = scene;
-            NetworkServer.isLoadingScene = true;
-
-            dataObj.SetSceneData(slot,scene);
-            OnServerChangeScene(scene);
-
-            if (NetworkServer.active)
-            {
-                NetworkServer.SendToAll(new custom_change_scene { Slot = slot, Scene = scene });
-            }
-           
-            startPositionIndex = 0;
-            startPositions.Clear();
+            Debug.LogWarning("[Server] ChangeScene ignoré : un chargement est déjà en cours.");
+            return;
         }
 
+        NetworkServer.SetAllClientsNotReady();
+        networkSceneName = scene;
+        NetworkServer.isLoadingScene = true;
+
+        dataObj.SetSceneData(slot, scene);
+
+        if (NetworkServer.active)
+        {
+            NetworkServer.SendToAll(new custom_change_scene { Slot = slot, Scene = scene });
+        }
+
+        OnServerChangeScene(scene);
+
+        startPositionIndex = 0;
+        startPositions.Clear();
     }
+
+}
