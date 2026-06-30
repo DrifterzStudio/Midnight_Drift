@@ -58,8 +58,12 @@ using UnityEngine;
         }
 
         private void Update()
-        {
-            NetworkCamera camera = GetComponent<NetworkCamera>();
+        { 
+            if (!NetworkClient.ready)
+            {
+                return;
+            }
+        NetworkCamera camera = GetComponent<NetworkCamera>();
             if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.IsPlayerActive && isLocalPlayer)
             {
                 if (!_carController) return;
