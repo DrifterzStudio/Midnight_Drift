@@ -169,7 +169,7 @@ public class ZoneChangementScene : NetworkBehaviour
     void LancerTransition()
     {
         // whait two player in the area to change scene 
-        ActivePlayer_List.Instance.PlayerSteamId.Clear();
+        
         Mirror_Manager.Instance.ChangeScene("Game", "GameScene");
         change = true;
     }
