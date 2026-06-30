@@ -56,7 +56,7 @@
         public override void Start()
         {
             base.Start();
-            NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
+        NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
             Debug.Log("Mirror_Manager start success");
         }   
 

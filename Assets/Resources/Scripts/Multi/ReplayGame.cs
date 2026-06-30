@@ -20,8 +20,15 @@ public class ReplayGame : NetworkBehaviour
             {
                 isChangingScene = true;
                 ActivePlayer_List.Instance.PlayerSteamId.Clear();
-                Mirror_Manager.Instance.ChangeScene("Game", "GameLobbyScene");
+                LancerTransition();
             }
         }
+    }
+
+    [Server]
+    void LancerTransition()
+    {
+        Mirror_Manager.Instance.ChangeScene("Game", "GameLobbyScene");
+        isChangingScene = true;
     }
 }
