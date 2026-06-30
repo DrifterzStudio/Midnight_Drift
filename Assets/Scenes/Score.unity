@@ -6000,6 +6000,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoadUpgrades
   engine: {fileID: 1716257123}
   gearbox: {fileID: 1587330239}
+  axles:
+  - {fileID: 1587330241}
+  - {fileID: 1587330240}
+  aero: {fileID: 1456666201}
 --- !u!1 &1450437315
 GameObject:
   m_ObjectHideFlags: 0
@@ -6110,6 +6114,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450437315}
   m_Mesh: {fileID: 8735197704200476758, guid: d245c8941f0672e4e8ecda60178449aa, type: 3}
+--- !u!114 &1456666201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7039974021142484710, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
+  m_PrefabInstance: {fileID: 1752211808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a592bce24b898bd42b63f8a954417cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1458453858
 GameObject:
   m_ObjectHideFlags: 0

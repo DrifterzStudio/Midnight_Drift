@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AddTurbo : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
+
+    public Text turboNumber;
 
     public bool turbo1 = false;
     public bool turbo2 = false;
@@ -34,6 +37,11 @@ public class AddTurbo : MonoBehaviour, IDataPersistence {
         if (instance == null) instance = this;
     }
 
+    private void Update() {
+        if (turbo2) turboNumber.text = "2";        
+        else if (turbo1) turboNumber.text = "1";        
+        else turboNumber.text = "0";        
+    }
 
     public void onButtonClicked() {
         if (turbo1) {
