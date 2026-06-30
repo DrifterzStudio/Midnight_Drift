@@ -41,13 +41,14 @@ public class ZoneChangementScene : NetworkBehaviour
     {
 
 
-        if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change && ActivePlayer_List.Instance.Ready)
+        if ((ActivePlayer_List.Instance.Count == 1 || Keyboard.current.tKey.IsPressed()) && !change && ActivePlayer_List.Instance.Ready)
         {
             timer += Time.deltaTime;
 
             if (timer >= 3f)
             {
                 SetCouleur(couleurActivee);
+                
                 LancerTransition();
             }
         }
@@ -168,6 +169,7 @@ public class ZoneChangementScene : NetworkBehaviour
     void LancerTransition()
     {
         // whait two player in the area to change scene 
+        ActivePlayer_List.Instance.PlayerSteamId.Clear();
         Mirror_Manager.Instance.ChangeScene("Game", "GameScene");
         change = true;
     }

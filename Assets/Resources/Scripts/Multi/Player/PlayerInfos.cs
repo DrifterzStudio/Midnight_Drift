@@ -1,6 +1,7 @@
-using UnityEngine;
 using Mirror;
 using Steamworks;
+using UnityEngine;
+using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsystemDescriptor;
 
 public class PlayerInfos : NetworkBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerInfos : NetworkBehaviour
             return;
         ulong myId = SteamUser.GetSteamID().m_SteamID;
         string MyName = SteamFriends.GetPersonaName();
+        GetComponent<Connect_callBack>().OnDisconnect = Disconnect;
         SendInfosPlayer(myId, MyName);
     }
 
@@ -26,6 +28,41 @@ public class PlayerInfos : NetworkBehaviour
     }
     private void OnSteamIdReceived(ulong oldId, ulong newId)
     {
+        Connect(newId);
         GetComponent<NetworkCamera>()?.OnSteamIdReady(newId);
+    }
+
+    void Connect(ulong id)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        if (Score_Manager.Instance == null)
+        {
+            Debug.LogError("Score_Manager.Instance == null");
+            return;
+        }
+
+        if (Score_Manager.Instance.ScoreData == null)
+        {
+            Debug.LogError("ScoreData == null");
+            return;
+        }
+
+        if (!Score_Manager.Instance.ScoreData.ContainsKey(id))
+        {
+            Score_Manager.Instance.CmdAddPlayer(id);
+        }
+    }
+    void Disconnect()
+    {
+        if (!isLocalPlayer) return;
+        if (ActivePlayer_List.Instance.Contains(SteamId))
+            ActivePlayer_List.Instance.CmdRemove(SteamId);
+
+        if(Score_Manager.Instance.ScoreData.ContainsKey(SteamId))
+            Score_Manager.Instance.CmdRemovePlayer(SteamId);
+
+        Debug.Log($"disconect : {SteamId}");
     }
 }

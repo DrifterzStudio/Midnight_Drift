@@ -5,6 +5,7 @@ using Mirror;
 
 public class ReplayGame : MonoBehaviour
 {
+ 
     // Update is called once per frame
     [ServerCallback]
     private void Update()

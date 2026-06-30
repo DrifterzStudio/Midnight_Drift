@@ -9,28 +9,28 @@ using UnityEngine;
     {
 
        static private Score _localInstance = null;
-        // variable syncro
-        [SyncVar(hook = nameof(OnScoreChanged))]
-        private float _syncScore = 0f;
-        [SyncVar(hook = nameof(OnScoreUpdateChanged))]
-        private float _syncScoreUpdate = 0f;
-        [SyncVar]
-        private float _syncScoreMultiplier = 1f;
+    // variable syncro
+    //[SyncVar(hook = nameof(OnScoreChanged))]
+    //private float _syncScore = 0f;
+    [SyncVar(hook = nameof(OnScoreUpdateChanged))]
+    private float _syncScoreUpdate = 0f;
+    [SyncVar]
+    private float _syncScoreMultiplier = 1f;
 
-        // private variable 
-        private float _meters = 0f;
-        private float _distDrift = 0f;
-        private float _timer = 0f;
-        private float _score = 0f;
-        private float _multiplier = 1f;
-        private float _challengeMultiplier = 1f;
-        private float _scoreMultiplier = 1f;
-        private float _distMultiplierModifier = 0f;
-        private float _scoreMultiplierModifier = 0f;
-        private bool _isEnd = false;
-        private bool _isChallengeMultiApplied = false;
+    // private variable 
+    private float _meters = 0f;
+    private float _distDrift = 0f;
+    private float _timer = 0f;
+    private float _score = 0f;
+    private float _multiplier = 1f;
+    private float _challengeMultiplier = 1f;
+    private float _scoreMultiplier = 1f;
+    private float _distMultiplierModifier = 0f;
+    private float _scoreMultiplierModifier = 0f;
+    private bool _isEnd = false;
+    private bool _isChallengeMultiApplied = false;
 
-        private bool[] _scoreAchievements = { false, false, false };
+    private bool[] _scoreAchievements = { false, false, false };
         private bool[] _distAchievements = { false, false, false };
         private bool[] _parkingChallenge = { false, false };
 
@@ -69,11 +69,12 @@ using UnityEngine;
                 float speed = _carController.speed;
                 float deltaTime = Time.deltaTime;
                 CmdUpdateDrift(sidewaysSlip, speed, deltaTime);
+                _scoreText.text = "Score: " + (int)Score_Manager.Instance.ScoreData[GetComponent<PlayerInfos>().SteamId];
             }
             else if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.ActiveCar != null && NetworkCamera.LocalInstance.ActiveCar.gameObject == gameObject)
             {
                 _localInstance._scoreText.text =
-                $"Score: {(int)_syncScore}";
+                $"Score: {(int)Score_Manager.Instance.ScoreData[GetComponent<PlayerInfos>().SteamId]}";
 
                 _localInstance._scoreUpdateText.text =
                 _syncScoreUpdate > 0
@@ -97,7 +98,9 @@ using UnityEngine;
                     _score *= _multiplier;
                     _score *= _challengeMultiplier;
                     _isChallengeMultiApplied = true;
-                    _syncScore = _score;
+                    Score_Manager.Instance.CmdAddScoreForCon(GetComponent<PlayerInfos>().SteamId,_score);
+                //_syncScore += _score;
+                _score = 0;
                 }
 
                 return;
@@ -118,7 +121,8 @@ using UnityEngine;
                 if (_timer >= 2f)
                 {
                     _score += (int)_distDrift * _scoreMultiplier;
-                    _syncScore = _score;
+                    Score_Manager.Instance.CmdAddScoreForCon(GetComponent<PlayerInfos>().SteamId, _score);
+                    _score = 0;
                     _syncScoreUpdate = 0f;
 
                     _distDrift = 0f;
