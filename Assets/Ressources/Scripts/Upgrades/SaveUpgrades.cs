@@ -17,18 +17,21 @@ public class SaveUpgrades : MonoBehaviour, IGameData {
     public bool turbo2;
 
     // Chassis
+    public int lightenedMass;
+    public int carbonMass;
+    public float newYCenter;
     public int antiRollBarValue;
+
+    // Suspension
+    public float newY;
+    public float tilts;
 
     // Tire
     public float slickness;
 
     // Transmision
-    // Gearbox
     public float[] gearRatios;
-
-    // Brake
     public float brakePower;
-    //}
 
     void IGameData.setData(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
@@ -42,17 +45,21 @@ public class SaveUpgrades : MonoBehaviour, IGameData {
         turbo2 = tmp.turbo2;
 
         // Chassis
+        lightenedMass = tmp.lightenedMass;
+        carbonMass = tmp.carbonMass;
+        newYCenter = tmp.newYCenter;
         antiRollBarValue = tmp.antiRollBarValue;
+
+        // Suspension
+        newY = tmp.newY;
+        tilts = tmp.tilts;
+
         // Tire
         slickness = tmp.slickness;
 
-        // Transmision {
-        // Gearbox
+        // Transmision 
         gearRatios = tmp.gearRatios;
-
-        // Brake
         brakePower = tmp.brakePower;
-        //}
     }
 
     string IGameData.getDataDirPath() {

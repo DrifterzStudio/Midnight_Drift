@@ -1,23 +1,26 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class Differential : MonoBehaviour, IDataPersistence {
+public class Lightened : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
-    public static Differential instance;
+    public int lightenedMass = -50;
+
+    private bool isLightened = false;
+
+    public static Lightened instance;
 
     public void SaveGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
-            //tmp.lightenedMass = lightenedMass;
+            tmp.lightenedMass = lightenedMass;
         }
     }
 
     public void LoadGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
-            //lightenedMass = tmp.lightenedMass;
+            lightenedMass = tmp.lightenedMass;
         }
     }
 
@@ -25,12 +28,14 @@ public class Differential : MonoBehaviour, IDataPersistence {
         return "";
     }
 
-
     void Awake() {
-        if (instance == null) instance = this;    
+        if (instance == null) instance = this;
     }
 
     public void OnButtonClicked() {
-
+        if (!isLightened) {
+            controller.Rigid.mass = lightenedMass;
+            isLightened = true;
+        }
     }
 }

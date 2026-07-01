@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AntiRollBar : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
+
+    public Text ARBText;
 
     public int antiRollBarValue = 500;
 
@@ -29,6 +32,7 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence {
 
     void Awake() {
         if (instance == null) instance = this;
+        ARBText.text = antiRollBarValue.ToString();
     }
 
     public void OnButtonClicked() {
@@ -40,5 +44,6 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence {
         }
         controller.FrontAxle.antirollForce = antiRollBarValue;
         controller.FrontAxle.antirollForce = antiRollBarValue;
-    } 
+        ARBText.text = antiRollBarValue.ToString();
+    }
 }

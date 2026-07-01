@@ -1,23 +1,27 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class Differential : MonoBehaviour, IDataPersistence {
+public class CarbonFiberBody : MonoBehaviour, IDataPersistence {
 
     public RCCP_CarController controller;
 
-    public static Differential instance;
+    public int carbonMass = -200;
+
+    private bool isCarbon = false;
+
+    public static CarbonFiberBody instance;
+
 
     public void SaveGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
-            //tmp.lightenedMass = lightenedMass;
+            tmp.carbonMass = carbonMass;
         }
     }
 
     public void LoadGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
-            //lightenedMass = tmp.lightenedMass;
+            carbonMass = tmp.carbonMass;
         }
     }
 
@@ -25,12 +29,14 @@ public class Differential : MonoBehaviour, IDataPersistence {
         return "";
     }
 
-
     void Awake() {
-        if (instance == null) instance = this;    
+        if (instance == null) instance = this;
     }
 
     public void OnButtonClicked() {
-
+        if (!isCarbon) {
+            controller.Rigid.mass = carbonMass;
+            isCarbon = true;
+        }
     }
 }
