@@ -1,11 +1,25 @@
 using Mirror;
+using Steamworks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Score_Manager : Singleton_Obj_Net<Score_Manager>
 {
     public readonly SyncDictionary<ulong, float> ScoreData = new();
 
     [Command(requiresAuthority = false)]
+
+    public void Update()
+    {
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            foreach (var item in ScoreData)
+            {
+                string playerName = SteamFriends.GetFriendPersonaName(new CSteamID(item.Key));
+                Debug.Log($"Score {playerName} ({item.Key}) = {item.Value}");
+            }
+        }
+    }
     public void CmdAddPlayer(ulong steamId)
     {
         if(ScoreData.ContainsKey(steamId))
