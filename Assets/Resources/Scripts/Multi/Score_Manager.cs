@@ -10,9 +10,7 @@ public class Score_Manager : Singleton_Obj_Net<Score_Manager>
 
     private void Update()
     {
-        if (isServer)
-            return;
-
+      
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
             foreach (var item in ScoreData)
