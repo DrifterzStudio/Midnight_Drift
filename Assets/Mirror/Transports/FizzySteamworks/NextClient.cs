@@ -157,6 +157,7 @@ namespace Mirror.FizzySteam
 
         public void Disconnect()
         {
+            Debug.Log("Disconect");
             cancelToken?.Cancel();
             Dispose();
 

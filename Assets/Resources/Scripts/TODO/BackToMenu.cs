@@ -30,10 +30,11 @@ public class BackToMenu : MonoBehaviour
     }
     void transitionToMenuServer()
     {
-
-         if (NetworkClient.active && !NetworkServer.active)
+        Debug.Log("Appel de StopClient()");
+        if (NetworkClient.active && !NetworkServer.active)
             {
-                Mirror_Manager.Instance.StopClient();
+             Transport.active.ClientDisconnect();
+             Mirror_Manager.Instance.StopClient();
                 isChangingScene = true;
             }   
             else if (NetworkServer.active)
@@ -46,6 +47,7 @@ public class BackToMenu : MonoBehaviour
 
     void transitionToMenu()
     {
+        Steam_Lobby.Instance.LeaveLobby();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Scene_Controller.Instance.NewTransition()

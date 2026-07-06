@@ -116,14 +116,20 @@ using UnityEngine.SceneManagement;
                     SpawnPlayer(conn, prefab);
             }
         }
-
-        public override void OnStopClient()
+        public override void OnClientDisconnect()
         {
+            base.OnClientDisconnect();
+            Debug.Log("OnClientDisconnect appelé");
+        }
+
+    public override void OnStopClient()
+    {
+        Debug.Log("Client trying to stop");
+            base.OnStopClient(); 
             Steam_Lobby.Instance.LeaveLobby();
-            base .OnStopClient();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        Scene_Controller.Instance.NewTransition()
+             Scene_Controller.Instance.NewTransition()
                 .Load("Menu", "Menu", true)
                 .Unload("Multi_Server")
                 .Unload("Multi_Game")

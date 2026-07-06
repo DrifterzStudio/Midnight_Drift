@@ -7,7 +7,7 @@ public class Host_Script : MonoBehaviour
 {
     private bool isReady = false;
     private bool alreadyPresseed = false;
-
+    
     private void Start()
     {
         Mirror_Manager.Instance.RegisterPrefab("MultiGameScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerCar"));

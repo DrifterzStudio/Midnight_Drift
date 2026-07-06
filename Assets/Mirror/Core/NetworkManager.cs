@@ -636,6 +636,7 @@ namespace Mirror
             //     NetworkClient.OnTransportDisconnect
             //   NetworkManager.OnClientDisconnect
             NetworkClient.Disconnect();
+            Debug.LogWarning("disconect");
         }
 
         // called when quitting the application by closing the window / pressing
