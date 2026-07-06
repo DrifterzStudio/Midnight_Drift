@@ -10,24 +10,52 @@ public class BackToMenu : MonoBehaviour
     private void Update()
     {
 
-
         if (isChangingScene) return;
 
-        if (NetworkServer.active && NetworkClient.isConnected)
+        //TODO changement classique
+
+        if (Keyboard.current.mKey.wasPressedThisFrame)
         {
-            if (Keyboard.current.mKey.wasPressedThisFrame)
+            if (NetworkServer.active)
             {
-                
-                Debug.Log("Transitioning to Menu");
+                transitionToMenuServer();
+            }
+            else if (!NetworkServer.active)
+            {
                 transitionToMenu();
             }
         }
+          
     }
-    [Server]
+    void transitionToMenuServer()
+    {
+
+        void DisconnectClient()
+        {
+            if (NetworkClient.active && !NetworkServer.active)
+            {
+                Mirror_Manager.Instance.StopClient();
+                isChangingScene = true;
+            }   
+            else if (NetworkServer.active)
+            {
+                Mirror_Manager.Instance.StopHost();
+                isChangingScene = true;
+            }
+        }
+    }
+
     void transitionToMenu()
     {
-    
-        Mirror_Manager.Instance.StopHost();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Scene_Controller.Instance.NewTransition()
+            .Load("Menu", "Menu", true)
+            .Unload("Multi_Server")
+            .Unload("Multi_Game")
+            .EnableOverlay(true)
+            .Execute();
     }
-    
+
+
 }
