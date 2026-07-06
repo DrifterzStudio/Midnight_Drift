@@ -18,6 +18,7 @@ public class BackToMenu : MonoBehaviour
         {
             if (NetworkServer.active)
             {
+                Debug.Log("Leave Server");
                 transitionToMenuServer();
             }
             else if (!NetworkServer.active)
@@ -30,9 +31,7 @@ public class BackToMenu : MonoBehaviour
     void transitionToMenuServer()
     {
 
-        void DisconnectClient()
-        {
-            if (NetworkClient.active && !NetworkServer.active)
+         if (NetworkClient.active && !NetworkServer.active)
             {
                 Mirror_Manager.Instance.StopClient();
                 isChangingScene = true;
@@ -43,7 +42,7 @@ public class BackToMenu : MonoBehaviour
                 isChangingScene = true;
             }
         }
-    }
+    
 
     void transitionToMenu()
     {
