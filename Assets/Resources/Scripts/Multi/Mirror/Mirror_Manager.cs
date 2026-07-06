@@ -1,7 +1,10 @@
     using Mirror;
+    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+using UnityEngine.SceneManagement;
     using static Scene_Controller;
+
 
 
   
@@ -14,7 +17,7 @@
             public string Scene;
         }
     private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
-        [SerializeField] private Server_Data dataObj;
+       // private Server_Data dataObj;
         public void RegisterPrefab(string scene, GameObject prefabObject)
         {
             if (!NetworkClient.prefabs.ContainsValue(prefabObject))
@@ -22,6 +25,10 @@
             AddPrefabs(scene, prefabObject);
         }
 
+        public void SetData(Server_Data data)
+        {
+            //dataObj = data;
+        }
         private void AddPrefabs(string SceneName, GameObject prefab)
         {
             if (_prefabs.ContainsKey(SceneName))
@@ -56,12 +63,22 @@
         public override void Start()
         {
             base.Start();
-        NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
+            //NetworkClient.RegisterHandler<custom_change_scene>(OnSceneChangeMessage);
             Debug.Log("Mirror_Manager start success");
-        }   
+        }
 
-
-        private void OnSceneChangeMessage(custom_change_scene msg)
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            //dataObj = FindFirstObjectByType<Server_Data>();
+        }
+        
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            NetworkClient.ReplaceHandler<custom_change_scene>(OnSceneChangeMessage);
+        }
+    private void OnSceneChangeMessage(custom_change_scene msg)
         {
             Debug.LogWarning($"Message reçu slot:{msg.Slot} scene:{msg.Scene}");
 
@@ -74,6 +91,7 @@
                 .Execute();
 
         }
+
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
@@ -90,8 +108,10 @@
             base.OnServerReady(conn);
             Debug.Log($"[Server] Client ready : {conn.connectionId}");
 
-            if (_prefabs.TryGetValue(dataObj.GetSceneName(), out GameObject prefab))
+            if (_prefabs.TryGetValue(SceneManager.GetActiveScene().name, out GameObject prefab))
             {
+
+                Debug.LogError($"load :{SceneManager.GetActiveScene().name}");
                 if (prefab != null)
                     SpawnPlayer(conn, prefab);
             }
@@ -112,7 +132,7 @@
                 return;
             }
 
-            Debug.Log($"Scene : {dataObj.GetSceneName()}");
+            Debug.Log($"Scene : {SceneManager.GetActiveScene()}");
             Debug.Log($"Prefab : {prefab.name}");
 
             Vector3 spawnPos = GetStartPosition()?.position ?? Vector3.zero;
@@ -129,8 +149,7 @@
             customHandling = true;
         }
 
-
-
+      
     [Server]
     public void ChangeScene(string slot, string scene)
     {
@@ -145,7 +164,6 @@
         networkSceneName = scene;
         NetworkServer.isLoadingScene = true;
 
-        dataObj.SetSceneData(slot, scene);
 
         if (NetworkServer.active)
         {

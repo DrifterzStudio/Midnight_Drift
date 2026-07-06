@@ -72,8 +72,6 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
         
     }
 
-
-
     // Todo
     private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
     {
