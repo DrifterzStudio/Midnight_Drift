@@ -117,6 +117,17 @@ using UnityEngine.SceneManagement;
             }
         }
 
+        public override void OnStopClient()
+        {
+            base .OnStopClient();
+            Scene_Controller.Instance.NewTransition()
+                .Load("Menu", "Menu", true)
+                .Unload("Multi_Server")
+                .Unload("Multi_Game")
+                .EnableOverlay(true)
+                .Execute();
+    }
+
         [Server]
         public void SpawnPlayer(NetworkConnectionToClient conn, GameObject prefab)
         {
