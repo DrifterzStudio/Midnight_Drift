@@ -119,6 +119,7 @@ using UnityEngine.SceneManagement;
 
         public override void OnStopClient()
         {
+            Steam_Lobby.Instance.LeaveLobby();
             base .OnStopClient();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

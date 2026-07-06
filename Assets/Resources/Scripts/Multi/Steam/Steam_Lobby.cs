@@ -40,7 +40,7 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     {
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, MaxPlayer);
     }
-
+    
     public void LockLobby()
     {
         if(_isLocked  || !LobbyID.IsValid())
@@ -106,6 +106,15 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
         //    Debug.Log("A Player Left");
     }
 
+    public void LeaveLobby()
+    {
+        if (!LobbyID.IsValid())
+            return;
+
+        SteamMatchmaking.LeaveLobby(LobbyID);
+        LobbyID = CSteamID.Nil;
+        _isLocked = false;
+    }
     public void RefreshLobby()
     {
         //TODO if needed to lobby ui
