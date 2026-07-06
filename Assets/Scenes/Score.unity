@@ -5998,12 +5998,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27fafc6f2eb5fe41b528e42e1cb6a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadUpgrades
+  controller: {fileID: 1052599346}
   engine: {fileID: 1716257123}
   gearbox: {fileID: 1587330239}
   axles:
   - {fileID: 1587330241}
   - {fileID: 1587330240}
   aero: {fileID: 1456666201}
+  custom:
+    initialized: 0
+    suspensionDistanceFront: 0.2
+    suspensionDistanceRear: 0.2
+    suspensionSpringForceFront: 55000
+    suspensionSpringForceRear: 55000
+    suspensionDamperFront: 3500
+    suspensionDamperRear: 3500
+    suspensionTargetFront: 0.5
+    suspensionTargetRear: 0.5
+    cambersFront: 0
+    cambersRear: 0
+    gearShiftingThreshold: 0.8
+    clutchThreshold: 0.1
+    counterSteering: 1
+    steeringLimiter: 1
+    ABS: 0
+    ESP: 0
+    TCS: 0
+    SH: 0
+    NOS: 0
+    revLimiter: 0
+    automaticTransmission: 0
+    headlightColor: {r: 1, g: 1, b: 1, a: 1}
+    wheelSmokeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1450437315
 GameObject:
   m_ObjectHideFlags: 0

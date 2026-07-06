@@ -1,7 +1,7 @@
-using UnityEngine;
+using UnityEditor.Overlays;
 using UnityEngine.UI;
 
-public class EnginePower : MonoBehaviour { //IDataPersitence
+public class EnginePower : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -9,9 +9,6 @@ public class EnginePower : MonoBehaviour { //IDataPersitence
     public Text maxText;
 
     private int enginePowerIdx = 0;
-
-    public int minEnginePowerValue = 700;
-    public int maxEnginePowerValue = 8000;
 
     public static EnginePower instance;
 
@@ -32,11 +29,14 @@ public class EnginePower : MonoBehaviour { //IDataPersitence
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
+        minEnginePowerValue = 700;
+        maxEnginePowerValue = 8000;
         minText.text = minEnginePowerValue.ToString();
         maxText.text = maxEnginePowerValue.ToString();
     }

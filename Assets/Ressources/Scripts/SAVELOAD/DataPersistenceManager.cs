@@ -7,11 +7,10 @@ using UnityEngine.Rendering;
 
 public class DataPersistenceManager : MonoBehaviour
 {
-    private List<IGameData> objectsData;
-    private List<IDataPersistence> dataPersistenceObjects;
+    public List<IGameData> objectsData;
+    public List<IDataPersistence> dataPersistenceObjects;
     private DataFileHandler dataFileHandler;
     public static DataPersistenceManager instance { get; private set; }
-
 
     private void Awake()
     {
@@ -31,6 +30,10 @@ public class DataPersistenceManager : MonoBehaviour
         LoadGame();
         
     }
+
+    private void Update() {
+    }
+
     public void NewGame()
     {
         this.objectsData = findAllGameData();

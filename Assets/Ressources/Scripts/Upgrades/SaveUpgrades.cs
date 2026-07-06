@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SaveUpgrades : MonoBehaviour, IGameData {
 
+    public DataPersistenceManager dataPersistence;
+
+    [Header("Save")]
     public string dataDirPath;
     public string dataFileName;
     public bool useEncryption;
@@ -32,6 +35,14 @@ public class SaveUpgrades : MonoBehaviour, IGameData {
     // Transmision
     public float[] gearRatios;
     public float brakePower;
+
+
+    public static SaveUpgrades saveInstance;
+
+    private void Awake() {
+        if (saveInstance == null) saveInstance = this;
+        dataPersistence.objectsData.Add(saveInstance);
+    }
 
     void IGameData.setData(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;

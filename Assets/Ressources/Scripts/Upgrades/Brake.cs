@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Brake : MonoBehaviour, IDataPersistence {
+public class Brake : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
     public Text brakePowerText;
-
-    public float brakePower = 0.15f;
     
     public static Brake instance;
 
@@ -33,7 +31,9 @@ public class Brake : MonoBehaviour, IDataPersistence {
 
     void Awake() {
         if (instance == null) instance = this;
-    }
+        dataPersistence.dataPersistenceObjects.Add(instance);
+        brakePower = 0.15f;
+}
 
     private void Update() {
         if (brakePower == 0.15f) brakePowerText.text = "Normal";

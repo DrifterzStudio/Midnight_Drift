@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class LoadUpgrades : MonoBehaviour {
 
+    public IGameData gameData;
+
     public RCCP_CarController controller;
     public RCCP_Engine engine;
     public RCCP_Gearbox gearbox;

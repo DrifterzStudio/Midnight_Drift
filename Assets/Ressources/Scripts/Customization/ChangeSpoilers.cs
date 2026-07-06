@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
+public class ChangeSpoilers : SaveCustom, IDataPersistence {
 
     [Header("Customization")]
     public RCCP_CarController controller;
@@ -11,8 +11,6 @@ public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
     public Button spoilersButton;
 
     public Text spoilersText;
-
-    public List<GameObject> spoilers;
 
     public static ChangeSpoilers instance;
 
@@ -38,13 +36,14 @@ public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
 
     private void Awake() {
         if (spoilersButton != null) spoilersButton.onClick.AddListener(OnButtonClicked);
+        dataPersistence.dataPersistenceObjects.Add(instance);
     }
 
     void Update() {

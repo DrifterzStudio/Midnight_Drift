@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class GearboxRatio : MonoBehaviour, IDataPersistence {
+public class GearboxRatio : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -11,7 +11,6 @@ public class GearboxRatio : MonoBehaviour, IDataPersistence {
 
     private int currentUpgrade = 0;
     private int currentUpgradeText = 0;
-    public float[] gearRatios;
 
     public static GearboxRatio instance;
 
@@ -36,7 +35,8 @@ public class GearboxRatio : MonoBehaviour, IDataPersistence {
 
     private void Awake() {
         if (instance == null) instance = this;
-    }
+        dataPersistence.dataPersistenceObjects.Add(instance);
+}
 
     void Update() {
         if (currentUpgrade < 4) {

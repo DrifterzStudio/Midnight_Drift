@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeWheels : MonoBehaviour, IDataPersistence {
+public class ChangeWheels : SaveCustom, IDataPersistence {
 
     [Header("Customization")]
-    public List<Material> materials;
-
     public List<MeshRenderer> meshRenderer;
 
     public Button wheelsButton;
@@ -36,15 +34,14 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
+        if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         if (wheelsButton != null) wheelsButton.onClick.AddListener(OnButtonClicked);
         

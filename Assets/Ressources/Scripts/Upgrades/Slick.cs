@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slick : MonoBehaviour, IDataPersistence {
+public class Slick : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
     public Text slick;
-
-    public float slickness = 10f;
 
     public static Slick instance;
 
@@ -31,7 +29,9 @@ public class Slick : MonoBehaviour, IDataPersistence {
 
     private void Awake() {
         if (instance == null) instance = this;
-    }
+        dataPersistence.dataPersistenceObjects.Add(instance);
+        slickness = 10f;
+}
 
     private void Update() {
         if (slickness == 10) slick.text = "Normal";

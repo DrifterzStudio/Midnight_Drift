@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class Reinforcement : MonoBehaviour, IDataPersistence {
+public class Reinforcement : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
-
-    public float newYCenter = -0.5f;
 
     private bool isNewYCenter = false;
 
@@ -31,7 +29,9 @@ public class Reinforcement : MonoBehaviour, IDataPersistence {
 
     void Awake() {
         if (instance == null) instance = this;
-    }
+        dataPersistence.dataPersistenceObjects.Add(instance);
+        newYCenter = -0.5f;
+}
 
     public void OnButtonClicked() {
         if (!isNewYCenter) {

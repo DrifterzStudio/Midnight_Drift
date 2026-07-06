@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SaveCustom : MonoBehaviour, IGameData {
 
+    public DataPersistenceManager dataPersistence;
+
+    [Header("Save")]
     public string dataDirPath;
     public string dataFileName;
     public bool useEncryption;
@@ -16,6 +19,13 @@ public class SaveCustom : MonoBehaviour, IGameData {
 
     public List<GameObject> spoilers;
     public int currentSpoiler;
+
+    public static SaveCustom saveInstance;
+
+    private void Awake() {
+        if (saveInstance == null) saveInstance = this;
+        dataPersistence.objectsData.Add(saveInstance);
+    }
 
     void IGameData.setData(IGameData data) {
         SaveCustom tmp = data as SaveCustom;

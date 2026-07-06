@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Differential : MonoBehaviour, IDataPersistence {
+public class Differential : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
@@ -27,7 +27,8 @@ public class Differential : MonoBehaviour, IDataPersistence {
 
 
     void Awake() {
-        if (instance == null) instance = this;    
+        if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
     }
 
     public void OnButtonClicked() {

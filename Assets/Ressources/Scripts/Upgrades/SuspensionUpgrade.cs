@@ -1,17 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SuspensionUpgrade : MonoBehaviour, IDataPersistence {
+public class SuspensionUpgrade : SaveUpgrades, IDataPersistence {
 
     public RCCP_CarController controller;
 
     public Text typeText;
 
     private int suspensionIdx = 0;
-
-    public float newY = 0.16f;
-
-    public float tilts = 5f;
 
     public static SuspensionUpgrade instance;
 
@@ -37,6 +33,9 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence {
 
     void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
+        newY = 0.16f;
+        tilts = 5f;
         typeText.text = "Normal";
     }
 
