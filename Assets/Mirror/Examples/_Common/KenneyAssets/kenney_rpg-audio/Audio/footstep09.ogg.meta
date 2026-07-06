@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 7e142c079d0c39b49bae87425b3cb35c
+guid: ccf7de35293e248b6a37333d49a4e3f6
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 8
+  serializedVersion: 7
   defaultSettings:
     serializedVersion: 2
     loadType: 0
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129321
+  packageName: Mirror
+  packageVersion: 96.0.1
+  assetPath: Assets/Mirror/Examples/_Common/KenneyAssets/kenney_rpg-audio/Audio/footstep09.ogg
+  uploadId: 736421

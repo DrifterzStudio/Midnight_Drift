@@ -1,9 +1,44 @@
 fileFormatVersion: 2
-guid: 6f58abdbc406cf54fb5f16fe5ffa0c31
+guid: 0a99c2fa66eb6ec49939e7e84f07cafe
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DISPLAY
+    second: {fileID: 2100000, guid: b563ebaa5a857694397f838e4e8fa767, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EXT_Disc
+    second: {fileID: 2100000, guid: 4b2416969f7d2494ba10ad39452f072a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lit
+    second: {fileID: 2100000, guid: a3794ac76df7a424dbe26774910fad5c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RPMBAR
+    second: {fileID: 2100000, guid: dd1b6452473ca38488ac5a758d61aee5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: generic_tread_slick
+    second: {fileID: 2100000, guid: 33a82d61d0e5bdd4288164570d853421, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: generic_tyre
+    second: {fileID: 2100000, guid: bb0bd0a04da9208459b7b8bbf4d3cf94, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: toy_supra_rac01_paint
+    second: {fileID: 2100000, guid: e50573e75f997e74e8f04403f75ae6dd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -20,8 +55,8 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importAnimatedCustomProperties: 1
+    importConstraints: 1
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -68,7 +103,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
