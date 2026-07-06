@@ -120,7 +120,9 @@ using UnityEngine.SceneManagement;
         public override void OnStopClient()
         {
             base .OnStopClient();
-            Scene_Controller.Instance.NewTransition()
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        Scene_Controller.Instance.NewTransition()
                 .Load("Menu", "Menu", true)
                 .Unload("Multi_Server")
                 .Unload("Multi_Game")
