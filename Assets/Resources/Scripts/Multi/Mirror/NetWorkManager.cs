@@ -111,7 +111,6 @@ public class NetWorkManager : NetworkManager
             NetworkServer.SendToAll(new SceneMessage { sceneName = GameScene });
         }
 
-        LobbyManager lobbymana = Object.FindAnyObjectByType<LobbyManager>();
         
         startPositionIndex = 0;
         startPositions.Clear();

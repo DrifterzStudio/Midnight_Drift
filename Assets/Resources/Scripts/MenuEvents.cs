@@ -10,10 +10,10 @@ public class MenuEvents : MonoBehaviour
     public void ToGame()
     {
         Scene_Controller.Instance.NewTransition()
-            .Load("Server","ServerScene")
-        .Load("Game", "LobbyScene", true)
-        .Unload("Menu")
-        .EnableOverlay(true)
-        .Execute();
+            .Load("Multi_Server","MultiServerScene")
+            .Load("Multi_Game", "MultiLobbyScene", true)
+            .Unload("Menu")
+            .EnableOverlay(true)
+            .Execute();
     }
 }

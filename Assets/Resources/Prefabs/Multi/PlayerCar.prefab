@@ -21900,7 +21900,7 @@ GameObject:
   - component: {fileID: 2371419484718353265}
   - component: {fileID: 156943839625898389}
   m_Layer: 8
-  m_Name: MyPrefab
+  m_Name: PlayerCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

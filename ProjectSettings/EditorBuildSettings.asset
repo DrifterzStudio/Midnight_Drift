@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: 9f2f5ac8d79bf554d9e1f3a4a37d9a6f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/toto.unity
     guid: f6a87941962c32f4aa474d406251da33
   - enabled: 1
@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene.unity
     guid: f12d8f3c0b203f34d889f8e7f1e1e95e
   - enabled: 1
-    path: Assets/Scenes/ServerScene.unity
+    path: Assets/Scenes/MultiServerScene.unity
     guid: 4f873994194c78a47895c13947d9029e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

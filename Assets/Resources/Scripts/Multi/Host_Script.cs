@@ -10,8 +10,8 @@ public class Host_Script : MonoBehaviour
 
     private void Start()
     {
-        Mirror_Manager.Instance.RegisterPrefab("GameScene", Resources.Load<GameObject>("Prefabs/MyPrefab"));
-        Mirror_Manager.Instance.RegisterPrefab("GameLobbyScene", Resources.Load<GameObject>("Prefabs/Player"));
+        Mirror_Manager.Instance.RegisterPrefab("MultiGameScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerCar"));
+        Mirror_Manager.Instance.RegisterPrefab("MultiGameLobbyScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerFps"));
 
     }
     public void OnClick()
@@ -27,7 +27,7 @@ public class Host_Script : MonoBehaviour
     {
         if(isReady && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            Mirror_Manager.Instance.ChangeScene("Game", "GameLobbyScene");
+            Mirror_Manager.Instance.ChangeScene("Multi_Game", "MultiGameLobbyScene");
             Steam_Lobby.Instance.LockLobby();
         }
 

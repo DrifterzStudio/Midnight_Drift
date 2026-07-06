@@ -28,7 +28,7 @@ public class ReplayGame : NetworkBehaviour
     [Server]
     void LancerTransition()
     {
-        Mirror_Manager.Instance.ChangeScene("Game", "GameLobbyScene");
+        Mirror_Manager.Instance.ChangeScene("Multi_Game", "MultiGameLobbyScene");
         isChangingScene = true;
     }
 }
