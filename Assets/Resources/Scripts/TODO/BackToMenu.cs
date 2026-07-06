@@ -34,6 +34,10 @@ public class BackToMenu : MonoBehaviour
             // Client uniquement
             Mirror_Manager.Instance.StopClient();
         }
+        else
+        {
+            transitionToMenu();
+        }
 
         isChangingScene = true;
     }
@@ -41,7 +45,6 @@ public class BackToMenu : MonoBehaviour
 
     void transitionToMenu()
     {
-        Steam_Lobby.Instance.LeaveLobby();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Scene_Controller.Instance.NewTransition()
