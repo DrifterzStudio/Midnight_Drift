@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3236cfb49f043b4fb279b00ec5bdaa5
+guid: fb67205c672fbb04d829783b9f771fc9
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -19,3 +19,10 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129321
+  packageName: Mirror
+  packageVersion: 96.0.1
+  assetPath: Assets/Mirror/Hosting/Edgegap/Editor/Fonts/Src/BaronNeue.otf
+  uploadId: 736421
