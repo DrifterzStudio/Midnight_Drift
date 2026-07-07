@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class Braking : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Tooltip("Button that switch the state of the handbrake.")]
@@ -50,13 +54,15 @@ public class Braking : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
 
     private void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
+
         handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
         handbrakeMultiplierButton.onClick.AddListener(OnHandbrakeMultiplierButtonClicked);
         brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);

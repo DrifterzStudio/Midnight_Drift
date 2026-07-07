@@ -1,12 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AddTurbo : SaveUpgrades, IDataPersistence {
+public class AddTurbo : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
 
     public Text turboNumber;
 
+    public bool turbo1 = false;
+    public bool turbo2 = false;
     public static AddTurbo instance;
 
 
@@ -27,14 +33,12 @@ public class AddTurbo : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     private void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        turbo1 = false;
-        turbo2 = false;
     }
 
     private void Update() {

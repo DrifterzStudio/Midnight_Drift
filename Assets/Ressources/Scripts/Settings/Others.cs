@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class Others : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController carController;
 
     [Header("Deadzone")]
@@ -74,7 +78,7 @@ public class Others : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
@@ -82,6 +86,7 @@ public class Others : MonoBehaviour, IDataPersistence {
 
     private void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         steerButton.onClick.AddListener(OnSteerButtonClicked);
         throttleButton.onClick.AddListener(OnThrottleButtonClicked);

@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class PropulsionType : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Header("Drive Wheels Type")]
@@ -42,7 +46,7 @@ public class PropulsionType : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
@@ -50,7 +54,8 @@ public class PropulsionType : MonoBehaviour, IDataPersistence {
 
 
     private void Awake() {
-        if (instance == null) instance = this;  
+        if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         DWTButton.onClick.AddListener(OnDWTButtonClicked);
     }

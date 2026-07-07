@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AntiRollBar : SaveUpgrades, IDataPersistence {
-    
+public class AntiRollBar : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     public Text ARBText;
 
+    public int antiRollBarValue = 500;
 
     public static AntiRollBar instance;
 
@@ -26,13 +31,15 @@ public class AntiRollBar : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        antiRollBarValue = 500;
+    }
+
+    private void Update() {
         ARBText.text = antiRollBarValue.ToString();
     }
 
@@ -45,6 +52,5 @@ public class AntiRollBar : SaveUpgrades, IDataPersistence {
         }
         controller.FrontAxle.antirollForce = antiRollBarValue;
         controller.FrontAxle.antirollForce = antiRollBarValue;
-        ARBText.text = antiRollBarValue.ToString();
     }
 }

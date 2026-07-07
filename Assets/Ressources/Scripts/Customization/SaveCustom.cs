@@ -14,10 +14,8 @@ public class SaveCustom : MonoBehaviour, IGameData {
     public bool usePrettyPrint;
 
 
-    public List<Material> materials;
     public int currentMat;
 
-    public List<GameObject> spoilers;
     public int currentSpoiler;
 
     public static SaveCustom saveInstance;
@@ -29,10 +27,8 @@ public class SaveCustom : MonoBehaviour, IGameData {
 
     void IGameData.setData(IGameData data) {
         SaveCustom tmp = data as SaveCustom;
-        materials = tmp.materials;
         currentMat = tmp.currentMat;
 
-        spoilers = tmp.spoilers;
         currentSpoiler = tmp.currentSpoiler;
     }
 

@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class Reinforcement : SaveUpgrades, IDataPersistence {
+public class Reinforcement : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
+
+    public float newYCenter = -0.5f;
 
     private bool isNewYCenter = false;
 
@@ -24,13 +30,12 @@ public class Reinforcement : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        newYCenter = -0.5f;
 }
 
     public void OnButtonClicked() {

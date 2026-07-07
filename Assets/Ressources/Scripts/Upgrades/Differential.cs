@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Differential : SaveUpgrades, IDataPersistence {
+public class Differential : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
 
@@ -22,7 +26,7 @@ public class Differential : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 

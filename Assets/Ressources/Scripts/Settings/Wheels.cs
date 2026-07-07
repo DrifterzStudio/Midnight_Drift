@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class Wheels : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Header("Camber")]
@@ -53,7 +57,7 @@ public class Wheels : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
@@ -64,6 +68,8 @@ public class Wheels : MonoBehaviour, IDataPersistence {
             instance = this;
             Debug.Log("Instance loaded");
         }
+        dataPersistence.dataPersistenceObjects.Add(instance);
+
         camberButton.onClick.AddListener(OnCamberButtonClicked);
         steeringSensitivityButton.onClick.AddListener(OnSteerSensitivityButtonClicked);
         steeringCurveButton.onClick.AddListener(OnSteerCurveButtonClicked);

@@ -3,11 +3,17 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class GearboxRatio : SaveUpgrades, IDataPersistence {
+public class GearboxRatio : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
 
     public Text ratioText;
+
+    public float[] gearRatios;
 
     private int currentUpgrade = 0;
     private int currentUpgradeText = 0;
@@ -30,7 +36,7 @@ public class GearboxRatio : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     private void Awake() {

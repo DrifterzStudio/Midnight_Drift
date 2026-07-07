@@ -7,6 +7,9 @@ using static RCCP_Gearbox.CurrentGearState;
 
 public class SaveSettings : MonoBehaviour, IGameData {
 
+    public DataPersistenceManager dataPersistence;
+
+    [Header("Save")]
     public string dataDirPath;
     public string dataFileName;
     public bool useEncryption;
@@ -67,6 +70,13 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public float clutchValue;
 
     public bool isTelemetry = false;
+
+    public static SaveSettings saveInstance;
+
+    private void Awake() {
+        if (saveInstance == null) saveInstance = this;
+        dataPersistence.objectsData.Add(saveInstance);
+    }
 
     void IGameData.setData(IGameData data) {
         SaveSettings tmp = data as SaveSettings;

@@ -5,10 +5,8 @@ using UnityEngine;
 public class DataFileHandler
 {
 
-
-    public void load(IGameData data)
+    public void load(IGameData data, string fullPath)
     {
-        string fullPath = Path.Combine(data.getDataDirPath(), data.getDataFileName());
         if (File.Exists(fullPath))
         {
             try
@@ -28,8 +26,12 @@ public class DataFileHandler
                 Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
             }
         }
-
+        else {
+            Debug.LogError("Path not found: " + fullPath);
         }
+
+    }
+
     public void save(IGameData data)
     {
         
@@ -46,12 +48,17 @@ public class DataFileHandler
                 }
 
                 File.WriteAllText(fullPath, dataToSave);
+                Debug.Log("Save successed");
 
             }
             catch (Exception e)
             {
                 Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
             }
+        }
+        else 
+        {
+            Debug.LogError("Path not found: " + fullPath);
         }
     }
 

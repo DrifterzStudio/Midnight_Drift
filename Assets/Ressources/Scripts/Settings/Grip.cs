@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class Grip : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Tooltip("Grip forward button.")]
@@ -53,12 +57,14 @@ public class Grip : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
     private void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
+
         forwardButton.onClick.AddListener(OnForwardButtonClicked);
         rearSidewaysButton.onClick.AddListener(OnRearSidewaysButtonClicked);
         frontSidewaysButton.onClick.AddListener(OnFrontSidewaysButtonClicked);

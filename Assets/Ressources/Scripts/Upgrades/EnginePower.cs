@@ -1,12 +1,20 @@
 using UnityEditor.Overlays;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class EnginePower : SaveUpgrades, IDataPersistence {
+public class EnginePower : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
 
     public Text minText;
     public Text maxText;
+
+    public int minEnginePowerValue = 700;
+    public int maxEnginePowerValue = 8000;
 
     private int enginePowerIdx = 0;
 
@@ -35,12 +43,13 @@ public class EnginePower : SaveUpgrades, IDataPersistence {
     void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        minEnginePowerValue = 700;
-        maxEnginePowerValue = 8000;
+    }
+
+    private void Update() {
         minText.text = minEnginePowerValue.ToString();
         maxText.text = maxEnginePowerValue.ToString();
     }
-    
+
     public void OnButtonClicked() {
         if (enginePowerIdx < 2) enginePowerIdx += 1;
         if (enginePowerIdx == 0) {
@@ -57,7 +66,5 @@ public class EnginePower : SaveUpgrades, IDataPersistence {
         }
         controller.Engine.minEngineRPM = minEnginePowerValue;
         controller.Engine.maxEngineRPM = maxEnginePowerValue;
-        minText.text = minEnginePowerValue.ToString();
-        maxText.text = maxEnginePowerValue.ToString();
     }
 }

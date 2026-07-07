@@ -2,25 +2,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeWheels : SaveCustom, IDataPersistence {
+public class ChangeWheels : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     [Header("Customization")]
     public List<MeshRenderer> meshRenderer;
-
-    public Button wheelsButton;
+    public List<Material> materials;
 
     public Text wheelsText;
 
-    private int materialIndex = 0;
+    public int materialIndex = 0;
 
     public static ChangeWheels instance;
-
-    public RCCP_CarController controller;
 
     public void LoadGame(IGameData data) {
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
-            materials = tmp.materials;
             materialIndex = tmp.currentMat;
         }
     }
@@ -28,7 +28,6 @@ public class ChangeWheels : SaveCustom, IDataPersistence {
     public void SaveGame(IGameData data) {
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
-            tmp.materials = materials;
             tmp.currentMat = materialIndex;
         }
     }
@@ -42,8 +41,6 @@ public class ChangeWheels : SaveCustom, IDataPersistence {
     private void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-
-        if (wheelsButton != null) wheelsButton.onClick.AddListener(OnButtonClicked);
         
     }
 
@@ -59,7 +56,7 @@ public class ChangeWheels : SaveCustom, IDataPersistence {
 
     }
 
-    private void OnButtonClicked() {
+    public void OnButtonClicked() {
         if (materialIndex + 1 > materials.Count - 1) materialIndex = 0;
         else materialIndex += 1;
     }

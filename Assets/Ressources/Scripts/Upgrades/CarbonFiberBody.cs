@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class CarbonFiberBody : SaveUpgrades, IDataPersistence {
+public class CarbonFiberBody : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
+
+    public int carbonMass = -200;
 
     private bool isCarbon = false;
 
@@ -24,13 +30,12 @@ public class CarbonFiberBody : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        carbonMass = -200;
 }
 
     public void OnButtonClicked() {

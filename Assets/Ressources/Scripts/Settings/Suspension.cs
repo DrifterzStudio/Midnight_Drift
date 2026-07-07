@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class Suspension : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Tooltip("The button that change the suspensson distance.")]
@@ -58,14 +62,13 @@ public class Suspension : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
+        if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         distButton.onClick.AddListener(OnDistButtonClicked);
         forceButton.onClick.AddListener(OnForceButtonClicked);

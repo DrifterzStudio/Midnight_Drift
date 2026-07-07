@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class DrivingAid : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController carController;
 
     [Header("ABS")]
@@ -75,13 +79,12 @@ public class DrivingAid : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     private void Awake() {
-        if (instance == null) {
-            instance = this;
-        }
+        if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         ABSButton.onClick.AddListener(OnABSButtonClicked);
         TCSButton.onClick.AddListener(OnTCSButtonClicked);

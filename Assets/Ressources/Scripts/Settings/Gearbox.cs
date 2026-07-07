@@ -7,6 +7,10 @@ using static RCCP_Gearbox.CurrentGearState;
 
 public class Gearbox : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController carController;
 
     [Header("Gearbox")]
@@ -98,7 +102,7 @@ public class Gearbox : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
@@ -106,6 +110,7 @@ public class Gearbox : MonoBehaviour, IDataPersistence {
 
     private void Awake() {
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
 
         autoReverseButton.onClick.AddListener(OnAutoReverseButtonClicked);
         gearboxButton.onClick.AddListener(OnGearboxButtonClicked);

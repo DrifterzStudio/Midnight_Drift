@@ -3,34 +3,34 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeSpoilers : SaveCustom, IDataPersistence {
+public class ChangeSpoilers : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     [Header("Customization")]
     public RCCP_CarController controller;
 
-    public Button spoilersButton;
+    public List<GameObject> spoilers;
 
     public Text spoilersText;
 
     public static ChangeSpoilers instance;
 
-    private int spoilersIndex = -1;
+    public int spoilersIndex = -1;
 
 
     public void LoadGame(IGameData data) {
-        Debug.Log("Load spoilers");
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
-            spoilers = tmp.spoilers;
             spoilersIndex = tmp.currentSpoiler;
         }
     }
 
     public void SaveGame(IGameData data) {
-        Debug.Log("Save spoilers");
         SaveCustom tmp = data as SaveCustom;
         if (tmp != null) {
-            tmp.spoilers = spoilers;
             tmp.currentSpoiler = spoilersIndex;
         }
     }
@@ -42,7 +42,7 @@ public class ChangeSpoilers : SaveCustom, IDataPersistence {
 
 
     private void Awake() {
-        if (spoilersButton != null) spoilersButton.onClick.AddListener(OnButtonClicked);
+        if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
     }
 
@@ -57,7 +57,7 @@ public class ChangeSpoilers : SaveCustom, IDataPersistence {
         }
     }
 
-    private void OnButtonClicked() {
+    public void OnButtonClicked() {
         if (spoilersIndex != -1) controller.Customizer.SpoilerManager.spoilers[spoilersIndex].gameObject.SetActive(false);
 
         if (spoilersIndex + 1 > spoilers.Count - 1) spoilersIndex = -1;

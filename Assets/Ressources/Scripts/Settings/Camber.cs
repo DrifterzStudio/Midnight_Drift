@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Camber : MonoBehaviour, IDataPersistence {
 
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
+
     public RCCP_CarController controller;
 
     [Tooltip("Camber front button.")]
@@ -45,13 +49,15 @@ public class Camber : MonoBehaviour, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
 
 
     private void Awake() { 
         if (instance == null) instance = this;
+        dataPersistence.dataPersistenceObjects.Add(instance);
+
         frontButton.onClick.AddListener(OnFrontButtonClicked);
         rearButton.onClick.AddListener(OnRearButtonClicked);
     }

@@ -1,8 +1,14 @@
 using UnityEngine;
 
-public class Lightened : SaveUpgrades, IDataPersistence {
+public class Lightened : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
+
+    public int lightenedMass = -50;
 
     private bool isLightened = false;
 
@@ -23,13 +29,12 @@ public class Lightened : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        lightenedMass = -50;
 }
 
     public void OnButtonClicked() {

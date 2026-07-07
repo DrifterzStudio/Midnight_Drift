@@ -552,6 +552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc19c87d21a0764282af3668ef2937e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Braking
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   handbrakeButton: {fileID: 1754799101}
   handbrakeText: {fileID: 930191445}
@@ -4289,6 +4291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2a1957b48eead46b65f17cec1bfa00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Suspension
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   distButton: {fileID: 1507545433}
   distText: {fileID: 1678602189}
@@ -4777,25 +4781,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lightened
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Chassis
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: -50
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
+  lightenedMass: -50
 --- !u!1 &226089734
 GameObject:
   m_ObjectHideFlags: 0
@@ -5615,26 +5603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GearboxRatio
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Transmition
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   ratioText: {fileID: 988009266}
+  gearRatios: []
 --- !u!1 &260376450
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,6 +6975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0e4ee295a613b74cb85e6811e720496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camber
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   frontButton: {fileID: 1794126450}
   rearButton: {fileID: 1060418739}
@@ -7471,6 +7445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9af3164325304d4192bcc4dd7775d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wheels
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   camberButton: {fileID: 1056900190}
   camber: {fileID: 349496814}
@@ -8662,27 +8638,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnginePower
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Engine
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 700
-  maxEnginePowerValue: 8000
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   minText: {fileID: 630433764}
   maxText: {fileID: 1775771908}
+  minEnginePowerValue: 700
+  maxEnginePowerValue: 8000
 --- !u!1 &425654019
 GameObject:
   m_ObjectHideFlags: 0
@@ -10653,26 +10614,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SuspensionUpgrade
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Suspension
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0.16
-  tilts: 5
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   typeText: {fileID: 627243588}
+  newY: 0.16
+  tilts: 5
 --- !u!1 &579655126
 GameObject:
   m_ObjectHideFlags: 0
@@ -13892,26 +13838,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeWheels
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save
-  dataFileName: Customization
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  materials:
-  - {fileID: 2100000, guid: 2b527868554550948a4a5fa57800c8e9, type: 2}
-  - {fileID: 2100000, guid: c66722ed7c536c044bbac11705d7a82f, type: 2}
-  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
-  currentMat: 0
-  spoilers: []
-  currentSpoiler: 0
+  dataFileName: save_custom.json
   meshRenderer:
   - {fileID: 478118449}
   - {fileID: 642534066}
   - {fileID: 1690530588}
   - {fileID: 464864315}
-  wheelsButton: {fileID: 751980749}
+  materials:
+  - {fileID: 2100000, guid: 2b527868554550948a4a5fa57800c8e9, type: 2}
+  - {fileID: 2100000, guid: c66722ed7c536c044bbac11705d7a82f, type: 2}
+  - {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   wheelsText: {fileID: 1086865660}
-  controller: {fileID: 1900771013}
+  materialIndex: 0
 --- !u!1 &733076827
 GameObject:
   m_ObjectHideFlags: 0
@@ -14616,9 +14554,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
-        m_MethodName: Onclick
+      - m_Target: {fileID: 733029290}
+        m_TargetAssemblyTypeName: ChangeWheels, Assembly-CSharp
+        m_MethodName: OnButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17130,26 +17068,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AddTurbo
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Turbo
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   turboNumber: {fileID: 1814545048}
+  turbo1: 0
+  turbo2: 0
 --- !u!1 &906677819
 GameObject:
   m_ObjectHideFlags: 0
@@ -17609,13 +17532,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeSpoilers
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save
-  dataFileName: Customization
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  materials: []
-  currentMat: 0
+  dataFileName: save_custom.json
+  controller: {fileID: 1900771013}
   spoilers:
   - {fileID: 573772224}
   - {fileID: 519995672}
@@ -17633,10 +17551,8 @@ MonoBehaviour:
   - {fileID: 564124097}
   - {fileID: 1440685788}
   - {fileID: 547164731}
-  currentSpoiler: 0
-  controller: {fileID: 1900771013}
-  spoilersButton: {fileID: 1321489994}
   spoilersText: {fileID: 636123514}
+  spoilersIndex: -1
 --- !u!1 &930191443
 GameObject:
   m_ObjectHideFlags: 0
@@ -19488,6 +19404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89bc533ab3c8f0b47848a36105a0980f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrivingAid
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   carController: {fileID: 1900771013}
   ABSButton: {fileID: 1691566629}
   ABSText: {fileID: 813770100}
@@ -22792,14 +22710,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveCustom
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save
-  dataFileName: Customization
+  dataDirPath: Save\Customization
+  dataFileName: save_custom.json
   useEncryption: 0
   encryption: 
   usePrettyPrint: 0
-  materials: []
   currentMat: 0
-  spoilers: []
   currentSpoiler: 0
 --- !u!1 &1185989268
 GameObject:
@@ -23650,26 +23566,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Brake
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Transmition
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0.15
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   brakePowerText: {fileID: 1127722455}
+  brakePower: 0.15
 --- !u!1 &1243151745
 GameObject:
   m_ObjectHideFlags: 0
@@ -25223,25 +25123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarbonFiberBody
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Chassis
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: -200
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
+  carbonMass: -200
 --- !u!1 &1301203514
 GameObject:
   m_ObjectHideFlags: 0
@@ -25503,9 +25387,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TabButton, Assembly-CSharp
-        m_MethodName: Onclick
+      - m_Target: {fileID: 916446954}
+        m_TargetAssemblyTypeName: ChangeSpoilers, Assembly-CSharp
+        m_MethodName: OnButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25723,25 +25607,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Reinforcement
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Chassis
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: -0.5
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
+  newYCenter: -0.5
 --- !u!114 &1326424486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26755,6 +26623,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6fca327342ec454e97e1c6cd6a16738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grip
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   forwardButton: {fileID: 232468494}
   rearSidewaysButton: {fileID: 1355851835}
@@ -26994,8 +26864,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveUpgrades
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save
-  dataFileName: Upgrades
+  dataDirPath: Save\Upgrades
+  dataFileName: save_upgrades.json
   useEncryption: 0
   encryption: 
   usePrettyPrint: 0
@@ -28464,6 +28334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e60d9a61565f642af5d6b85bc5c5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PropulsionType
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   controller: {fileID: 1900771013}
   DWTButton: {fileID: 998645212}
   DWTText: {fileID: 407977925}
@@ -32854,25 +32726,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slick
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Slick
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 10
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
+  slickness: 10
   slick: {fileID: 397668142}
 --- !u!1 &1723453638
 GameObject:
@@ -35907,24 +35763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Differential
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Transmition
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 0
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
 --- !u!1 &1891287197
 GameObject:
@@ -37525,6 +37364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1beac3a3185f394d88ad546f786de17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Others
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   carController: {fileID: 1900771013}
   steerButton: {fileID: 193354395}
   steerText: {fileID: 676184121}
@@ -39308,8 +39149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1343283dc39ce8499c0c15864808779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveSettings
-  dataDirPath: 
-  dataFileName: 
+  dataPersistence: {fileID: 2100792501}
+  dataDirPath: Save\Settings
+  dataFileName: save_settings.json
   useEncryption: 0
   encryption: 
   usePrettyPrint: 0
@@ -39655,26 +39497,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AntiRollBar
   dataPersistence: {fileID: 2100792501}
-  dataDirPath: Save/Upgrades
-  dataFileName: Chassis
-  useEncryption: 0
-  encryption: 
-  usePrettyPrint: 0
-  minEnginePowerValue: 0
-  maxEnginePowerValue: 0
-  turbo1: 0
-  turbo2: 0
-  lightenedMass: 0
-  carbonMass: 0
-  newYCenter: 0
-  antiRollBarValue: 500
-  newY: 0
-  tilts: 0
-  slickness: 0
-  gearRatios: []
-  brakePower: 0
+  dataFileName: save_upgrades.json
   controller: {fileID: 1900771013}
   ARBText: {fileID: 947902299}
+  antiRollBarValue: 500
 --- !u!1 &2087145369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4094807288963624558, guid: 792b48efe97f4da4aaafbee80e86c553, type: 3}
@@ -39750,6 +39576,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ffcca08cca18142992e031110864f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataPersistenceManager
+  customPath: Save\Customization\save_custom.json
+  saveCustom: {fileID: 1152591878}
+  changeWheels: {fileID: 733029290}
+  changeSpoilers: {fileID: 916446954}
+  upgradesPath: Save\Upgrades\save_upgrades.json
+  saveUpgrades: {fileID: 1389327689}
+  addTurbo: {fileID: 889148634}
+  antiRollBar: {fileID: 2080823287}
+  brake: {fileID: 1218370398}
+  carbonFiberBody: {fileID: 1299544229}
+  enginePower: {fileID: 415410277}
+  gearboxRatio: {fileID: 257312525}
+  lightened: {fileID: 223685672}
+  reinforcement: {fileID: 1323850697}
+  slick: {fileID: 1720038205}
+  suspensionUpgrade: {fileID: 578750300}
+  settingsPath: Save\Settings\save_settings.json
+  saveSettings: {fileID: 2070479267}
+  braking: {fileID: 23731461}
+  camber: {fileID: 349496816}
+  drivingAid: {fileID: 1024298918}
+  Gearbox: {fileID: 2142883105}
+  grip: {fileID: 1373056295}
+  others: {fileID: 1979467711}
+  propulsionType: {fileID: 1476369582}
+  suspension: {fileID: 216888356}
+  wheels: {fileID: 373062455}
 --- !u!4 &2100792502
 Transform:
   m_ObjectHideFlags: 0
@@ -40291,6 +40144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1d9b0602da2e741b72fcb5ca1c71dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gearbox
+  dataPersistence: {fileID: 2100792501}
+  dataFileName: save_settings.json
   carController: {fileID: 1900771013}
   autoReverseButton: {fileID: 942732489}
   autoReverseText: {fileID: 1774571714}

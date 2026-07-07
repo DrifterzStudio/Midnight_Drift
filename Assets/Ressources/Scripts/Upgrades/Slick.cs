@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slick : SaveUpgrades, IDataPersistence {
+public class Slick : MonoBehaviour, IDataPersistence {
+
+    public DataPersistenceManager dataPersistence;
+
+    public string dataFileName;
 
     public RCCP_CarController controller;
+
+    public float slickness = 10f;
 
     public Text slick;
 
@@ -24,13 +30,12 @@ public class Slick : SaveUpgrades, IDataPersistence {
     }
 
     public string getDataFileName() {
-        return "";
+        return dataFileName;
     }
 
     private void Awake() {
         if (instance == null) instance = this;
         dataPersistence.dataPersistenceObjects.Add(instance);
-        slickness = 10f;
 }
 
     private void Update() {
