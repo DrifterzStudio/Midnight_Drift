@@ -113,7 +113,6 @@ using UnityEngine.SceneManagement;
             if (_prefabs.TryGetValue(SceneManager.GetActiveScene().name, out GameObject prefab))
             {
 
-                Debug.LogError($"load :{SceneManager.GetActiveScene().name}");
                 if (prefab != null)
                     SpawnPlayer(conn, prefab);
             }
