@@ -149,36 +149,71 @@ public class RCCP_Engine : RCCP_Component {
     /// </summary>
     [Header("Turbo")]
     [Tooltip("Enables turbocharger simulation.")]
-    public bool turboCharged = false;
+    public bool turbo1Charged = false;
 
     /// <summary>
     /// Current turbo pressure in PSI.
     /// </summary>
     [Min(0f), Tooltip("Current turbo boost pressure in PSI.")]
-    public float turboChargePsi = 0f;
+    public float turbo1ChargePsi = 0f;
 
     /// <summary>
     /// Last frame's PSI, used for blow-off detection.
     /// </summary>
     [Min(0f)]
-    internal float turboChargePsi_Old = 0f;
+    internal float turbo1ChargePsi_Old = 0f;
 
     /// <summary>
     /// Max turbo boost (PSI) that can be reached at full throttle and high RPM.
     /// </summary>
     [Min(0f), Tooltip("Maximum turbo boost pressure in PSI.")]
-    public float maxTurboChargePsi = 12f;
+    public float maxTurbo1ChargePsi = 12f;
 
     /// <summary>
     /// Maximum torque multiplier from the turbo at max boost.
     /// </summary>
     [Range(1f, 2f), Tooltip("Torque multiplier from turbo at max boost.")]
-    public float turboChargerCoEfficient = 1.25f;
+    public float turbo1ChargerCoEfficient = 1.25f;
 
     /// <summary>
     /// True if the turbo is venting/blowing off due to sudden throttle closure.
     /// </summary>
-    [HideInInspector] public bool turboBlowOut = false;
+    [HideInInspector] public bool turbo1BlowOut = false;
+
+    /// <summary>
+    /// Enables forced induction simulation (turbo). If true, turboChargePsi is calculated each frame.
+    /// </summary>
+    [Tooltip("Enables turbocharger simulation.")]
+    public bool turbo2Charged = false;
+
+    /// <summary>
+    /// Current turbo pressure in PSI.
+    /// </summary>
+    [Min(0f), Tooltip("Current turbo boost pressure in PSI.")]
+    public float turbo2ChargePsi = 0f;
+
+    /// <summary>
+    /// Last frame's PSI, used for blow-off detection.
+    /// </summary>
+    [Min(0f)]
+    internal float turbo2ChargePsi_Old = 0f;
+
+    /// <summary>
+    /// Max turbo boost (PSI) that can be reached at full throttle and high RPM.
+    /// </summary>
+    [Min(0f), Tooltip("Maximum turbo boost pressure in PSI.")]
+    public float maxTurbo2ChargePsi = 12f;
+
+    /// <summary>
+    /// Maximum torque multiplier from the turbo at max boost.
+    /// </summary>
+    [Range(1f, 2f), Tooltip("Torque multiplier from turbo at max boost.")]
+    public float turbo2ChargerCoEfficient = 1.25f;
+
+    /// <summary>
+    /// True if the turbo is venting/blowing off due to sudden throttle closure.
+    /// </summary>
+    [HideInInspector] public bool turbo2BlowOut = false;
 
     /// <summary>
     /// Additional multiplier applied to the engine torque (e.g., from nitrous).
@@ -769,34 +804,65 @@ public class RCCP_Engine : RCCP_Component {
     /// Enhanced turbocharging with improved lag and spool-up behavior.
     /// </summary>
     private void TurboCharger() {
-
+        // Turbo 1
         // If engine or turbo is off, gradually reduce PSI.
-        if (!engineRunning || !turboCharged) {
+        if (!engineRunning || !turbo1Charged) {
 
-            turboChargePsi = Mathf.MoveTowards(turboChargePsi, 0f, Time.fixedDeltaTime * 10f);
-            turboBlowOut = false;
+            turbo1ChargePsi = Mathf.MoveTowards(turbo1ChargePsi, 0f, Time.fixedDeltaTime * 10f);
+            turbo1BlowOut = false;
             lastFuelInput = fuelInput;
             return;
 
         }
 
         // Calculate spool-up curve
-        float rpmFactor = Mathf.InverseLerp(minEngineRPM * 1.5f, maxEngineRPM * 0.8f, engineRPM);
-        rpmFactor = Mathf.Pow(rpmFactor, 1.5f);
+        float rpmFactor1 = Mathf.InverseLerp(minEngineRPM * 1.5f, maxEngineRPM * 0.8f, engineRPM);
+        rpmFactor1 = Mathf.Pow(rpmFactor1, 1.5f);
 
-        float targetPsi = maxTurboChargePsi * fuelInput * rpmFactor;
-        float spoolRate = Mathf.Lerp(10f, 20f, fuelInput);
-        turboChargePsi = Mathf.MoveTowards(turboChargePsi, targetPsi, Time.fixedDeltaTime * spoolRate);
+        float targetPsi1 = maxTurbo1ChargePsi * fuelInput * rpmFactor1;
+        float spoolRate1 = Mathf.Lerp(10f, 20f, fuelInput);
+        turbo1ChargePsi = Mathf.MoveTowards(turbo1ChargePsi, targetPsi1, Time.fixedDeltaTime * spoolRate1);
 
         // Blow-off event detection: when throttle goes from "pressed" to "released"
-        bool justLifted = lastFuelInput >= throttleLiftThreshold && fuelInput < throttleLiftThreshold;
-        if (justLifted && turboChargePsi > turboBlowOffMinPsi) {
+        bool justLifted1 = lastFuelInput >= throttleLiftThreshold && fuelInput < throttleLiftThreshold;
+        if (justLifted1 && turbo1ChargePsi > turboBlowOffMinPsi) {
 
-            turboBlowOut = true;
+            turbo1BlowOut = true;
 
         } else {
 
-            turboBlowOut = false;
+            turbo1BlowOut = false;
+
+        }
+
+        // Turbo 2
+        // If engine or turbo is off, gradually reduce PSI.
+        if (!engineRunning || !turbo2Charged) {
+
+            turbo2ChargePsi = Mathf.MoveTowards(turbo2ChargePsi, 0f, Time.fixedDeltaTime * 10f);
+            turbo2BlowOut = false;
+            lastFuelInput = fuelInput;
+            return;
+
+        }
+
+        // Calculate spool-up curve
+        float rpmFactor2 = Mathf.InverseLerp(minEngineRPM * 1.5f, maxEngineRPM * 0.8f, engineRPM);
+        rpmFactor2 = Mathf.Pow(rpmFactor2, 1.5f);
+
+        float targetPsi2 = maxTurbo1ChargePsi * fuelInput * rpmFactor2;
+        float spoolRate2 = Mathf.Lerp(10f, 20f, fuelInput);
+        turbo2ChargePsi = Mathf.MoveTowards(turbo2ChargePsi, targetPsi2, Time.fixedDeltaTime * spoolRate2);
+
+        // Blow-off event detection: when throttle goes from "pressed" to "released"
+        bool justLifted2 = lastFuelInput >= throttleLiftThreshold && fuelInput < throttleLiftThreshold;
+        if (justLifted2 && turbo2ChargePsi > turboBlowOffMinPsi) {
+
+            turbo2BlowOut = true;
+
+        } else {
+
+            turbo2BlowOut = false;
 
         }
 
@@ -869,12 +935,21 @@ public class RCCP_Engine : RCCP_Component {
         // Knock penalty
         float knockMultiplier = 1f - (knockFactor * 0.3f);
 
-        // Turbo boost
-        float turboMultiplier = 1f;
-        if (turboCharged && turboChargePsi > 0f) {
+        // Turbo 1 boost
+        float turbo1Multiplier = 1f;
+        if (turbo1Charged && turbo1ChargePsi > 0f) {
 
-            float boostRatio = turboChargePsi / maxTurboChargePsi;
-            turboMultiplier = 1f + (boostRatio * (turboChargerCoEfficient - 1f));
+            float boostRatio1 = turbo1ChargePsi / maxTurbo1ChargePsi;
+            turbo1Multiplier = 1f + (boostRatio1 * (turbo1ChargerCoEfficient - 1f));
+
+        }
+
+        // Turbo 2 boost
+        float turbo2Multiplier = 1f;
+        if (turbo2Charged && turbo2ChargePsi > 0f) {
+
+            float boostRatio2 = turbo2ChargePsi / maxTurbo2ChargePsi;
+            turbo2Multiplier = 1f + (boostRatio2 * (turbo2ChargerCoEfficient - 1f));
 
         }
 
@@ -882,7 +957,7 @@ public class RCCP_Engine : RCCP_Component {
         float negativeFeedbackScale = GetNegativeFeedbackTorqueScale();
 
         // Apply all multipliers
-        producedTorqueAsNM = baseTorque * temperatureMultiplier * vvtMultiplier * knockMultiplier * turboMultiplier * negativeFeedbackScale * multiplier;
+        producedTorqueAsNM = baseTorque * temperatureMultiplier * vvtMultiplier * knockMultiplier * turbo1Multiplier * turbo2Multiplier * negativeFeedbackScale * multiplier;
 
         // Clamp torque so we never exceed our realistic limit
         producedTorqueAsNM = Mathf.Clamp(producedTorqueAsNM, -maximumTorqueAsNM * 1.8f, maximumTorqueAsNM * 1.8f);
@@ -1067,11 +1142,19 @@ public class RCCP_Engine : RCCP_Component {
         cutFuel = false;
         revLimiterTimer = 0f;
 
-        if (turboCharged) {
+        if (turbo1Charged) {
 
-            turboChargePsi = 0f;
-            turboChargePsi_Old = 0f;
-            turboBlowOut = false;
+            turbo1ChargePsi = 0f;
+            turbo1ChargePsi_Old = 0f;
+            turbo1BlowOut = false;
+
+        }
+
+        if (turbo2Charged) {
+
+            turbo2ChargePsi = 0f;
+            turbo2ChargePsi_Old = 0f;
+            turbo2BlowOut = false;
 
         }
 

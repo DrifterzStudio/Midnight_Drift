@@ -151,13 +151,22 @@ public class RCCP_EngineEditor : Editor {
 
         EditorGUILayout.Space();
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("turboCharged"), new GUIContent("Turbo Charged"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo1Charged"), new GUIContent("Turbo 1 Charged"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo2Charged"), new GUIContent("Turbo 2 Charged"));
 
-        if (prop.turboCharged) {
+        if (prop.turbo1Charged) {
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("turboChargePsi"), new GUIContent("Turbo Charge PSI"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("maxTurboChargePsi"), new GUIContent("Max Turbo Charge PSI"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("turboChargerCoEfficient"), new GUIContent("Turbo Charger Coefficient"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo1ChargePsi"), new GUIContent("Turbo Charge 1 PSI"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("maxTurbo1ChargePsi"), new GUIContent("Max Turbo Charge 1 PSI"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo1ChargerCoEfficient"), new GUIContent("Turbo 1 Charger Coefficient"));
+
+        }
+
+        if (prop.turbo2Charged) {
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo2ChargePsi"), new GUIContent("Turbo Charge 2 PSI"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("maxTurbo2ChargePsi"), new GUIContent("Max Turbo Charge 2 PSI"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo2ChargerCoEfficient"), new GUIContent("Turbo 2 Charger Coefficient"));
 
         }
 
@@ -210,10 +219,17 @@ public class RCCP_EngineEditor : Editor {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("idleInput"), new GUIContent("Current Idle Input"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("engineLoad"), new GUIContent("Current Engine Load"));
 
-            if (prop.turboCharged) {
+            if (prop.turbo1Charged) {
 
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("turboChargePsi"), new GUIContent("Current Turbo PSI"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("turboBlowOut"), new GUIContent("Turbo Blow Out"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo1ChargePsi"), new GUIContent("Current Turbo 1 PSI"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo1BlowOut"), new GUIContent("Turbo Blow 1 Out"));
+
+            }
+
+            if (prop.turbo2Charged) {
+
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo2ChargePsi"), new GUIContent("Current 2 Turbo PSI"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("turbo2BlowOut"), new GUIContent("Turbo Blow 2 Out"));
 
             }
 
