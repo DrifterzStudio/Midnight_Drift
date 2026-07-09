@@ -127,7 +127,7 @@ public class NetworkCamera : NetworkBehaviour
     {
         Debug.Log("disconnect");
 
-       
+
 
         if (!ActivePlayer_List.Instance.Contains(GetComponent<PlayerInfos>().SteamId))
             return;
@@ -145,7 +145,7 @@ public class NetworkCamera : NetworkBehaviour
             LocalInstance.cam.SetTarget(LocalInstance.gameObject.GetComponent<RCCP_CarController>());
         }
 
-        if (LocalInstance.ActiveCar == car && _vehicles.Count!= 0)
+        if (LocalInstance.ActiveCar == car )
         {
             LocalInstance._currentTarget = 0;
             LocalInstance.cam.SetTarget(_vehicles[0]);
