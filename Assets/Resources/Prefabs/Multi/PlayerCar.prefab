@@ -12755,7 +12755,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3139949905873372613}
   - {fileID: 6651296950140069203}
   - {fileID: 6117166706229429733}
   - {fileID: 1054802923731646459}
@@ -12769,6 +12768,7 @@ Transform:
   - {fileID: 939775041298600148}
   - {fileID: 847151343460124856}
   - {fileID: 4543898525492910674}
+  - {fileID: 3139949905873372613}
   - {fileID: 4726242693700184909}
   - {fileID: 871750597923657485}
   m_Father: {fileID: 0}
@@ -12935,6 +12935,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  driftSlipThreshold: 0.25
+  driftTimeoutDelay: 2
+  popupFadeOutDuration: 0.5
+  popupScalePunch: 1.3
+  scoreBankSound: {fileID: 0}
+  scoreBankSoundVolume: 1
+  scoreLostSound: {fileID: 0}
+  scoreLostSoundVolume: 1
+  scoreLostColor: {r: 1, g: 0, b: 0, a: 1}
+  scoreLostShakeDuration: 0.3
+  scoreLostShakeStrength: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-1428517971017891006
 MonoBehaviour:
   m_ObjectHideFlags: 0

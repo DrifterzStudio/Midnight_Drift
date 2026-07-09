@@ -9,6 +9,7 @@ public class Score : NetworkBehaviour
 {
     static private Score _localInstance = null;
 
+    // variable syncro
     //[SyncVar(hook = nameof(OnScoreChanged))]
     //private float _syncScore = 0f;
     [SyncVar(hook = nameof(OnScoreUpdateChanged))]
@@ -16,6 +17,7 @@ public class Score : NetworkBehaviour
     [SyncVar]
     private float _syncScoreMultiplier = 1f;
 
+    // private variable
     private float _meters = 0f;
     private float _distDrift = 0f;
     private float _timer = 0f;
@@ -141,7 +143,6 @@ public class Score : NetworkBehaviour
         }
     }
 
-
     private void UpdateScoreUI(float scoreValue)
     {
         if (_localInstance == null)
@@ -169,10 +170,15 @@ public class Score : NetworkBehaviour
                 rect.localScale = baseScale;
         }
 
-        if (!isCurrentlyDrifting && !_localInstance._isFadingOut)
-            return;
+        if (!isCurrentlyDrifting)
+        {
 
-    
+            if (!_localInstance._isFadingOut)
+                scoreUpdateText.gameObject.SetActive(false);
+
+            return;
+        }
+
         if (_syncScoreMultiplier > 1)
         {
             scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")} x{_syncScoreMultiplier:0.0}";
@@ -231,12 +237,10 @@ public class Score : NetworkBehaviour
                 _syncScoreMultiplier = 1f;
                 _timer = 0f;
 
-         
                 if (hasPointsToBank)
                     RpcOnScoreBanked();
             }
         }
-        // appel server uniquement
         UpdateMultiplier();
     }
 
@@ -254,7 +258,7 @@ public class Score : NetworkBehaviour
             _isEnd = true;
     }
 
-  
+
     [ServerCallback]
     private void OnCollisionEnter(Collision collision)
     {
@@ -364,6 +368,7 @@ public class Score : NetworkBehaviour
             _syncScoreMultiplier = _scoreMultiplier;
         }
     }
+
 
     private void OnScoreChanged(float _, float newScore)
     {
