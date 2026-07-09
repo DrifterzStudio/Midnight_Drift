@@ -60,8 +60,10 @@ public class PlayerInfos : NetworkBehaviour
     {
         if(!NetworkServer.active)
             return;
-        
+        if (!NetworkClient.ready) return;
         if (!isLocalPlayer) return;
+
+
         if (ActivePlayer_List.Instance.Contains(SteamId))
             ActivePlayer_List.Instance.CmdRemove(SteamId);
 
