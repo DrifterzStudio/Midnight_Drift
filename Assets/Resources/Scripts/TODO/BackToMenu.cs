@@ -13,22 +13,37 @@ public class BackToMenu : MonoBehaviour
         if (isChangingScene) return;
 
         //TODO changement classique
+
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
+            if (NetworkServer.active)
+            {
                 Debug.Log("Leave Server");
                 transitionToMenuServer();
+            }
+            else if (!NetworkServer.active)
+            {
+                transitionToMenu();
+            }
         }
           
     }
-
     void transitionToMenuServer()
     {
         Debug.Log("Appel de StopClient()");
-        if (NetworkServer.active)
-        {
-            // Host ou serveur dédié
-            Mirror_Manager.Instance.StopHost();
+        if (NetworkClient.active && !NetworkServer.active)
+            {
+             Transport.active.ClientDisconnect();
+             Mirror_Manager.Instance.StopClient();
+                isChangingScene = true;
+            }   
+            else if (NetworkServer.active)
+            {
+                Mirror_Manager.Instance.StopHost();
+                isChangingScene = true;
+            }
         }
+<<<<<<< HEAD
         else if (NetworkClient.active)
         {
             // Client uniquement
@@ -42,6 +57,9 @@ public class BackToMenu : MonoBehaviour
         isChangingScene = true;
     }
 
+=======
+    
+>>>>>>> parent of 68f12034 ([Kroktur] test de la mort)
 
     void transitionToMenu()
     {
