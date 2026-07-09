@@ -58,6 +58,9 @@ public class PlayerInfos : NetworkBehaviour
     }
     void Disconnect()
     {
+        if(!NetworkServer.active)
+            return;
+        
         if (!isLocalPlayer) return;
         if (ActivePlayer_List.Instance.Contains(SteamId))
             ActivePlayer_List.Instance.CmdRemove(SteamId);
