@@ -5218,11 +5218,16 @@ MonoBehaviour:
   engineRevLimiter: 1
   cutFuel: 0
   revLimiterCutFrequency: 15
-  turboCharged: 0
-  turboChargePsi: 0
-  maxTurboChargePsi: 12
-  turboChargerCoEfficient: 1.25
-  turboBlowOut: 0
+  turbo1Charged: 0
+  turbo1ChargePsi: 0
+  maxTurbo1ChargePsi: 12
+  turbo1ChargerCoEfficient: 1.25
+  turbo1BlowOut: 0
+  turbo2Charged: 0
+  turbo2ChargePsi: 0
+  maxTurbo2ChargePsi: 12
+  turbo2ChargerCoEfficient: 1.25
+  turbo2BlowOut: 0
   engineFriction: 0.2
   engineInertia: 0.2
   engineLoad: 0
@@ -12959,7 +12964,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ActiveCar: {fileID: 0}
+  ActiveCar: {fileID: 5708294451233646451}
   IsPlayerActive: 0
 --- !u!114 &-8538982327405000149
 MonoBehaviour:
