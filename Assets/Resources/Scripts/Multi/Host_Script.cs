@@ -14,12 +14,6 @@ public class Host_Script : MonoBehaviour
     {
         Mirror_Manager.Instance.RegisterPrefab("MultiGameScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerCar"));
         Mirror_Manager.Instance.RegisterPrefab("MultiGameLobbyScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerFps"));
-
-        if (NetworkServer.active)
-        {
-            hostButton.SetActive(false);
-        }
-
         startButton.SetActive(false);
 
     }
@@ -29,7 +23,7 @@ public class Host_Script : MonoBehaviour
             return;
         alreadyPresseed = true;
         Steam_Lobby.Instance.CreateLobby();
-        hostButton.SetActive(false);
+        //hostButton.SetActive(false);
         startButton.SetActive(true);
         isReady = true;
     }
