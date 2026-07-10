@@ -12,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Interactable
+  - Player
   - RCCP_Vehicle
   - RCCP_WheelCollider
   - RCCP_DetachablePart

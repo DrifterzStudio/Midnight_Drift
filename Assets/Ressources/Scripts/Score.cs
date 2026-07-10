@@ -129,6 +129,9 @@ public class Score : RCCP_GenericComponent
 
     private bool IsDrifting()
     {
+        if (carController.PoweredAxles == null || carController.PoweredAxles.Count == 0)
+            return false;
+
         return Mathf.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= driftSlipThreshold
             && carController.speed >= 0;
     }
