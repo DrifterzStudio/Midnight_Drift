@@ -2,16 +2,22 @@ using System;
 using Mirror;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Host_Script : MonoBehaviour
 {
     private bool isReady = false;
     private bool alreadyPresseed = false;
-    
+    [SerializeField] private GameObject startButton;
     private void Start()
     {
         Mirror_Manager.Instance.RegisterPrefab("MultiGameScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerCar"));
         Mirror_Manager.Instance.RegisterPrefab("MultiGameLobbyScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerFps"));
+
+        if (NetworkServer.active)
+        {
+            gameObject.SetActive(false);
+        }
 
     }
     public void OnClick()
@@ -20,6 +26,8 @@ public class Host_Script : MonoBehaviour
             return;
         alreadyPresseed = true;
         Steam_Lobby.Instance.CreateLobby();
+        gameObject.SetActive(false);
+        startButton.SetActive(true);
         isReady = true;
     }
 
