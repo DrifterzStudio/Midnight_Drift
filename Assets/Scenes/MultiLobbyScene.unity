@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625e2cb2c15f60c43987051469c22e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Host_Script
+  startButton: {fileID: 0}
 --- !u!4 &88249371
 Transform:
   m_ObjectHideFlags: 0
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625e2cb2c15f60c43987051469c22e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Host_Script
+  startButton: {fileID: 1015255693}
 --- !u!4 &429131452
 Transform:
   m_ObjectHideFlags: 0
@@ -804,6 +806,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3599c54bf7ca33479008c89f6548dc4, type: 3}
+--- !u!1 &1015255693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2451553858526880672, guid: d3599c54bf7ca33479008c89f6548dc4, type: 3}
+  m_PrefabInstance: {fileID: 1015255692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1272200391
 GameObject:
   m_ObjectHideFlags: 0
