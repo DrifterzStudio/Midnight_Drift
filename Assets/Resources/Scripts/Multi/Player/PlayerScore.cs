@@ -4,6 +4,7 @@ using Telepathy;
 using TMPro;
 using UnityEngine;
 
+
 public class Score : NetworkBehaviour
 {
     static private Score _localInstance = null;
@@ -169,9 +170,14 @@ public class Score : NetworkBehaviour
                 rect.localScale = baseScale;
         }
 
-        if (!isCurrentlyDrifting && !_localInstance._isFadingOut)
-            return;
+        if (!isCurrentlyDrifting)
+        {
 
+            if (!_localInstance._isFadingOut)
+                scoreUpdateText.gameObject.SetActive(false);
+
+            return;
+        }
 
         if (_syncScoreMultiplier > 1)
         {
@@ -362,6 +368,7 @@ public class Score : NetworkBehaviour
             _syncScoreMultiplier = _scoreMultiplier;
         }
     }
+
 
     private void OnScoreChanged(float _, float newScore)
     {

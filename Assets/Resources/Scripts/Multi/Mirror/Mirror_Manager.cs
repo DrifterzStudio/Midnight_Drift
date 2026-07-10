@@ -95,10 +95,8 @@ using UnityEngine.SceneManagement;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
         {
-            base.OnServerAddPlayer(conn);
-            NetworkServer.SpawnObjects();
-        // volontairement vide
-    }
+            // volontairement vide
+        }
 
         public override void ServerChangeScene(string newSceneName)
         {
