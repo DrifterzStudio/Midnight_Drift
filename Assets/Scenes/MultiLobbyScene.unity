@@ -153,51 +153,11 @@ Transform:
   - {fileID: 2061692244}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &88249369
+--- !u!1 &44010579 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7598644991019044897, guid: d3599c54bf7ca33479008c89f6548dc4, type: 3}
+  m_PrefabInstance: {fileID: 1015255692}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 88249371}
-  - component: {fileID: 88249370}
-  m_Layer: 0
-  m_Name: HostScript
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &88249370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88249369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625e2cb2c15f60c43987051469c22e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Host_Script
-  startButton: {fileID: 0}
---- !u!4 &88249371
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88249369}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.91367, y: -14.78918, z: -49.884}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &429131450
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625e2cb2c15f60c43987051469c22e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Host_Script
+  hostButton: {fileID: 44010579}
   startButton: {fileID: 1015255693}
 --- !u!4 &429131452
 Transform:
@@ -913,7 +874,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 25826590}
   - {fileID: 1272200392}
-  - {fileID: 88249371}
   - {fileID: 625581733}
   - {fileID: 488365021}
   - {fileID: 1015255692}

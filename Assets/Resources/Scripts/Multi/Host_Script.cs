@@ -8,6 +8,7 @@ public class Host_Script : MonoBehaviour
 {
     private bool isReady = false;
     private bool alreadyPresseed = false;
+    [SerializeField] private GameObject hostButton;
     [SerializeField] private GameObject startButton;
     private void Start()
     {
@@ -16,8 +17,10 @@ public class Host_Script : MonoBehaviour
 
         if (NetworkServer.active)
         {
-            gameObject.SetActive(false);
+            hostButton.SetActive(false);
         }
+
+        startButton.SetActive(false);
 
     }
     public void OnClick()
@@ -26,7 +29,7 @@ public class Host_Script : MonoBehaviour
             return;
         alreadyPresseed = true;
         Steam_Lobby.Instance.CreateLobby();
-        gameObject.SetActive(false);
+        hostButton.SetActive(false);
         startButton.SetActive(true);
         isReady = true;
     }
