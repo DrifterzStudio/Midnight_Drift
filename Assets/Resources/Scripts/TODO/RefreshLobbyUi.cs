@@ -117,9 +117,7 @@ public class RefreshLobbyUi : MonoBehaviour
         }
     }
 
-    // ---------------------------------------------------------
-    // OWNER
-    // ---------------------------------------------------------
+
     private void RefreshAllLeaderIcons()
     {
         if (Steam_Lobby.Instance == null)
@@ -144,10 +142,6 @@ public class RefreshLobbyUi : MonoBehaviour
             leaderIconComp.gameObject.SetActive(isOwner);
         }
     }
-
-    // ---------------------------------------------------------
-    // PHOTO DE PROFIL
-    // ---------------------------------------------------------
     private void SetAvatar(GameObject obj, CSteamID steamID)
     {
         int avatarHandle = SteamFriends.GetLargeFriendAvatar(steamID);
