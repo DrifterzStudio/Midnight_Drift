@@ -194,7 +194,7 @@ public class RefreshLobbyUi : MonoBehaviour
             TMP_Text comp = obj.transform.GetChild(1).GetComponent<TMP_Text>();
             if (comp.text != loadedName)
                 continue;
-
+            
             RawImage pictureComp = obj.transform.GetChild(0).GetComponent<RawImage>();
             ApplyAvatar(pictureComp, callback.m_iImage);
         }

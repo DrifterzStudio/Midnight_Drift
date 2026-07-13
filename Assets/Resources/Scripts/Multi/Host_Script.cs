@@ -40,12 +40,6 @@ public class Host_Script : MonoBehaviour
 
     public void OnClickExit()
     {
-        Steam_Lobby.Instance.LeaveLobby();
-        Scene_Controller.Instance.NewTransition()
-            .Load("Menu", "Menu", true)
-            .Unload("Multi_Server")
-            .Unload("Multi_Game")
-            .EnableOverlay(true)
-            .Execute();
+        BackToMenu.Instance.transitionToMenuServer();
     }
 }
