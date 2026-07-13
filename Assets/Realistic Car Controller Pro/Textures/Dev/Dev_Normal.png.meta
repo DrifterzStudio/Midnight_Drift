@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 730a20ac80a5ac94dbf6cba33c2e2398
+AssetOrigin:
+  serializedVersion: 1
+  productId: 178967
+  packageName: Realistic Car Controller Pro
+  packageVersion: 2.41.1
+  assetPath: Assets/Realistic Car Controller Pro/Textures/Dev/Dev_Normal.png
+  uploadId: 912608
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -141,10 +148,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 178967
-  packageName: Realistic Car Controller Pro
-  packageVersion: 2.41.1
-  assetPath: Assets/Realistic Car Controller Pro/Textures/Dev/Dev_Normal.png
-  uploadId: 912608

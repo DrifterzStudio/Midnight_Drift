@@ -306,8 +306,8 @@ public class RCCP_MirrorSync : NetworkBehaviour {
 
         if (transformFallbackHandlerRegistered && transformFallbackHandlerRefCount == 0) {
 
-            NetworkServer.UnregisterHandler<RCCP_MirrorTransformFallbackMessage>();
-            transformFallbackHandlerRegistered = false;
+            //NetworkServer.UnregisterHandler<RCCP_MirrorTransformFallbackMessage>();
+            //transformFallbackHandlerRegistered = false;
 
         }
 

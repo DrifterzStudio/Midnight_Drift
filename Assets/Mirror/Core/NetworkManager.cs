@@ -440,6 +440,10 @@ namespace Mirror
         {
             if (NetworkServer.active || NetworkClient.active)
             {
+                if (NetworkServer.active)
+                    Debug.LogWarning("Server Active");
+                if (NetworkClient.active)
+                    Debug.LogWarning("Client Active");
                 Debug.LogWarning("Server or Client already started.");
                 return;
             }
@@ -632,6 +636,7 @@ namespace Mirror
             //     NetworkClient.OnTransportDisconnect
             //   NetworkManager.OnClientDisconnect
             NetworkClient.Disconnect();
+            Debug.LogWarning("disconect");
         }
 
         // called when quitting the application by closing the window / pressing
@@ -958,6 +963,7 @@ namespace Mirror
                 // fixes https://github.com/vis2k/Mirror/issues/2517 where if
                 // FinishLoadScene throws an exception, loadingSceneAsync would
                 // never be cleared and this code would run every Update.
+                Debug.Log("Scene Refresh .....");
                 try
                 {
                     FinishLoadScene();
