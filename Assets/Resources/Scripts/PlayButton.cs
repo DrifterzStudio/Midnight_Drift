@@ -3,7 +3,7 @@ using UnityEngine;
 public class SceneLoaderButton : MonoBehaviour, IInteractable
 {
     [Header("Scène à charger")]
-    public string sceneName = "Circuit";
+    public string sceneName = "Circuit_Solo";
 
     [Header("Highlight")]
     public Renderer targetRenderer;

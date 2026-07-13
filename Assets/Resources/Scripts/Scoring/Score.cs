@@ -138,7 +138,7 @@ public class Score : RCCP_GenericComponent
 
     private void AccumulateDrift()
     {
-        metters += (Mathf.Abs(carController.speed) / 3.6f) * Time.deltaTime;
+        metters += (Mathf.Abs(carController.speed)) * Time.deltaTime * 2;
         timer = 0;
         distDrift += metters;
         scoreUpdate = (int)distDrift * scoreMultiplier;
@@ -371,12 +371,12 @@ public class Score : RCCP_GenericComponent
         if (score >= 1000 && !scoreAchievements[2]) { multiplier += 2; scoreAchievements[2] = true; }
 
         // Calculate the distance achievements multiplier.
-        if (metters >= 200 && !distAchievements[0]) { multiplier += 1.8f; distAchievements[0] = true; }
-        if (metters >= 100 && !distAchievements[1]) { multiplier += 1.2f; distAchievements[1] = true; }
-        if (metters >= 50 && !distAchievements[2]) { multiplier += 1; distAchievements[2] = true; }
+        if (distDrift >= 200 && !distAchievements[0]) { multiplier += 1.8f; distAchievements[0] = true; }
+        if (distDrift >= 100 && !distAchievements[1]) { multiplier += 1.2f; distAchievements[1] = true; }
+        if (distDrift >= 50 && !distAchievements[2]) { multiplier += 1; distAchievements[2] = true; }
 
         // Calculate the parking challenge multiplier.
-        if (metters >= 30 && !parkingChallenge[0]) { challengeMultiplier *= 1.5f; parkingChallenge[0] = true; }
+        if (distDrift >= 30 && !parkingChallenge[0]) { challengeMultiplier *= 1.5f; parkingChallenge[0] = true; }
         if (score >= 5000 && !parkingChallenge[1]) { challengeMultiplier *= 2; parkingChallenge[1] = true; }
 
         // Calculate the score multiplier with distance.

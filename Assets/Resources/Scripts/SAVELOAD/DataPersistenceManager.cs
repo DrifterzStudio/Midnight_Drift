@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.IO;
 using System.Linq;
-using UnityEngine.Rendering;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 
 public class DataPersistenceManager : MonoBehaviour
@@ -60,11 +61,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
-
         this.dataFileHandler = new DataFileHandler();
         this.dataPersistenceObjects = findAllDataPersistence();
-        LoadGame();
-        
     }
 
     public void NewGame()
@@ -72,25 +70,16 @@ public class DataPersistenceManager : MonoBehaviour
         this.objectsData = findAllGameData();
     }
 
-    public void LoadGame()
+    public void LoadGameFor(string vehicleId)
     {
-        if (this.objectsData == null)
-        {
-            NewGame();
-        }
+        dataFileHandler.load(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
+        dataFileHandler.load(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
+        dataFileHandler.load(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
 
-        // Customization
-        dataFileHandler.load(saveCustom, customPath);
-        changeWheels.LoadGame(saveCustom);
-        changeSpoilers.LoadGame(saveCustom);
-
-        // Upgrades
-        dataFileHandler.load(saveUpgrades, upgradesPath);
         addTurbo.LoadGame(saveUpgrades);
         antiRollBar.LoadGame(saveUpgrades);
         brake.LoadGame(saveUpgrades);
         carbonFiberBody.LoadGame(saveUpgrades);
-        //differential.LoadGame(saveUpgrades);
         enginePower.LoadGame(saveUpgrades);
         gearboxRatio.LoadGame(saveUpgrades);
         lightened.LoadGame(saveUpgrades);
@@ -98,9 +87,6 @@ public class DataPersistenceManager : MonoBehaviour
         slick.LoadGame(saveUpgrades);
         suspensionUpgrade.LoadGame(saveUpgrades);
 
-
-        // Settings
-        dataFileHandler.load(saveSettings, settingsPath);
         braking.LoadGame(saveSettings);
         camber.LoadGame(saveSettings);
         drivingAid.LoadGame(saveSettings);
@@ -111,9 +97,11 @@ public class DataPersistenceManager : MonoBehaviour
         suspension.LoadGame(saveSettings);
         wheels.LoadGame(saveSettings);
 
+        changeWheels.LoadGame(saveCustom);
+        changeSpoilers.LoadGame(saveCustom);
     }
 
-    public void SaveGame()
+    public void SaveGameFor(string vehicleId)
     {
         foreach (IDataPersistence dataPersistence in dataPersistenceObjects)
         {
@@ -122,18 +110,20 @@ public class DataPersistenceManager : MonoBehaviour
                 if (data.getDataFileName() == dataPersistence.getDataFileName())
                 {
                     dataPersistence.SaveGame(data);
-                    dataFileHandler.save(data);
                 }
             }
         }
-        
+
+        dataFileHandler.save(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
+        dataFileHandler.save(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
+        dataFileHandler.save(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
     }
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        if (GameSession.SelectedVehicle != null)
+            SaveGameFor(GameSession.SelectedVehicle.vehicleId);
     }
-
 
     private List<IGameData> findAllGameData()
     {

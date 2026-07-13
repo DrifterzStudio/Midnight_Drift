@@ -1,5 +1,3 @@
-using UnityEditor.TerrainTools;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveCustom : MonoBehaviour, IGameData {
