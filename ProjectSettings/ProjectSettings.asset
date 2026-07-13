@@ -523,6 +523,13 @@ PlayerSettings:
       m_Height: 720
       m_Kind: 1
       m_SubKind: 
+  - m_BuildTarget: VisionOS
+    m_Icons:
+    - m_Textures: []
+      m_Width: 1024
+      m_Height: 1024
+      m_Kind: 0
+      m_SubKind: 
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
     m_StaticBatching: 1
@@ -839,8 +846,8 @@ PlayerSettings:
     PS4: BCG_RCCP;BCG_URP;RCCP_MIRROR
     PS5: BCG_RCCP;BCG_URP;RCCP_MIRROR
     QNX: BCG_RCCP;BCG_URP;RCCP_MIRROR
-    Standalone: BCG_RCCP;BCG_URP;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;EDGEGAP_PLUGIN_SERVERS;RCCP_MIRROR
-    VisionOS: BCG_RCCP;BCG_URP;RCCP_MIRROR
+    Standalone: BCG_RCCP;BCG_URP;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;EDGEGAP_PLUGIN_SERVERS;RCCP_MIRROR;STEAMWORKS_NET
+    VisionOS: BCG_RCCP;BCG_URP;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;RCCP_MIRROR
     WebGL: BCG_RCCP;BCG_URP;RCCP_MIRROR
     Windows Store Apps: BCG_RCCP;BCG_URP;RCCP_MIRROR
     XboxOne: BCG_RCCP;BCG_URP;RCCP_MIRROR
@@ -850,6 +857,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}
@@ -867,7 +875,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: TurboDrift
-  metroPackageVersion: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -875,7 +883,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: TurboDrift
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: TurboDrift
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

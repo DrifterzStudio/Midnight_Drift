@@ -1,0 +1,194 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VectorGraphics;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class Scene_Controller : Singleton_Obj<Scene_Controller>
+{
+    [SerializeField] private Loading_Overlay overlay;
+    [SerializeField] private float waitingTime = 0.5f;
+    private Dictionary<string, string> _loadedSceneBySlot = new Dictionary<string, string>();
+    private bool _isBusy = false;
+
+    public SceneTransition NewTransition()
+    {
+        return new SceneTransition();
+    }
+    private Coroutine ExecutePlan(SceneTransition transition)
+    {
+        if(_isBusy)
+        {
+            Debug.LogWarning("already in transition");
+            return null;
+        }
+        _isBusy = true;
+        return StartCoroutine(ChangeSceneRoutine(transition));
+    }
+    private IEnumerator ChangeSceneRoutine(SceneTransition transition)
+    {
+        if(transition.Overlay)
+        {
+            yield return overlay.FadeInBlack();
+            yield return new WaitForSeconds(waitingTime);
+        }
+        foreach(var slotKey in transition.ScenesToUnload)
+        {
+            yield return UnloadSceneRoutine(slotKey);
+        }
+        if(transition.ClearUnusedAssets)
+        {
+            yield return CleanUnusedAssetsRoutine();
+        }
+        foreach (var key in transition.ScenesToLoad)
+        {
+            if (_loadedSceneBySlot.ContainsKey(key.Key))
+            {
+                yield return UnloadSceneRoutine(key.Key);
+            }
+
+            if (transition.AsyncOpp.ContainsKey(key.Key))
+            {
+                yield return LoadAdditiveRoutineWitHLoadOpp(key.Key, key.Value, transition.AsyncOpp[key.Key], transition.ActiveSceneName == key.Value);
+            }
+            else 
+                yield return LoadAdditiveRoutine(key.Key, key.Value, transition.ActiveSceneName == key.Value);
+        }
+        if (transition.Overlay)
+        {
+            yield return overlay.FadeOutBlack();
+        }
+        _isBusy = false;
+    }
+
+    private IEnumerator LoadAdditiveRoutineWitHLoadOpp(string key, string sceneName, SceneLoadOperation opp, bool isActive)
+    {
+         opp.Op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+         opp.OnOpCreated?.Invoke(opp.Op);
+        if (opp.Op == null) yield break;
+        opp.Op.allowSceneActivation = false;
+        while (opp.Op.progress < 0.9f)
+        {
+            yield return null;
+        }
+        opp.Op.allowSceneActivation = true;
+        while (!opp.Op.isDone)
+        {
+            yield return null;
+        }
+        if (isActive)
+        {
+            UnityEngine.SceneManagement.Scene newScene = SceneManager.GetSceneByName(sceneName);
+            if (newScene.IsValid() && newScene.isLoaded)
+            {
+                SceneManager.SetActiveScene(newScene);
+            }
+        }
+        _loadedSceneBySlot[key] = sceneName;
+    }
+    private IEnumerator LoadAdditiveRoutine(string key,string sceneName,bool isActive)
+    {
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Additive);
+        if (loadOp == null) yield break;
+        loadOp.allowSceneActivation = false;
+        while (loadOp.progress < 0.9f)
+        {
+            yield return null;
+        }
+        loadOp.allowSceneActivation = true;
+        while(!loadOp.isDone)
+        {
+            yield return null;
+        }
+        if(isActive)
+        {
+            UnityEngine.SceneManagement.Scene newScene = SceneManager.GetSceneByName(sceneName);
+            if(newScene.IsValid() && newScene.isLoaded)
+            {
+                SceneManager.SetActiveScene(newScene);
+            }
+        }
+        _loadedSceneBySlot[key] = sceneName;
+    }
+
+    private IEnumerator UnloadSceneRoutine(string key)
+    {
+        if (!_loadedSceneBySlot.TryGetValue(key, out string sceneName)) yield break;
+        if(string.IsNullOrEmpty(sceneName)) yield break;
+        AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(sceneName);
+        if (unloadOp != null)
+        {
+            while(!unloadOp.isDone)
+            {
+                yield return null;
+            }
+        }
+        _loadedSceneBySlot.Remove(key);
+    }
+
+    private IEnumerator CleanUnusedAssetsRoutine()
+    {
+        AsyncOperation cleanupOp = Resources.UnloadUnusedAssets();
+        while(!cleanupOp.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    public class SceneLoadOperation
+    {
+        public AsyncOperation Op;
+        public Action<AsyncOperation> OnOpCreated;
+    }
+
+    public class SceneTransition
+    {
+        public Dictionary<string, string> ScenesToLoad { get; } = new Dictionary<string, string>();
+        public Dictionary<string, SceneLoadOperation> AsyncOpp { get; } = new Dictionary<string, SceneLoadOperation>();
+        public List<string> ScenesToUnload { get; } = new List<string>();
+        public string ActiveSceneName { get; private set; } = "";
+        public bool ClearUnusedAssets { get; private set; } = false;
+        public bool Overlay { get; private set; } = false;
+
+        public SceneTransition Load(string key,string sceneName, bool setActive = false)
+        {
+            ScenesToLoad[key] = sceneName;
+            if(setActive) ActiveSceneName = sceneName;
+            return this;
+        }
+        public SceneTransition Load(string key, string sceneName, SceneLoadOperation opp, bool setActive = false)
+        {
+            AsyncOpp[key] = opp;
+            ScenesToLoad[key] = sceneName;
+            if (setActive) ActiveSceneName = sceneName;
+            return this;
+        }
+
+        public SceneTransition Unload(string key)
+        {
+            ScenesToUnload.Add(key);
+            return this;
+        }
+
+        public SceneTransition EnableOverlay(bool enable)
+        {
+            Overlay = enable;
+            return this;
+        }
+
+        public SceneTransition ClearAssets(bool enable)
+        {
+            ClearUnusedAssets = enable;
+            return this;
+        }
+
+        public Coroutine Execute()
+        {
+            return Scene_Controller.Instance.ExecutePlan(this);
+
+        }
+
+    }
+
+
+}

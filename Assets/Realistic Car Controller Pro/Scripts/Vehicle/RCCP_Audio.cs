@@ -1145,7 +1145,7 @@ public class RCCP_Audio : RCCP_Component {
         }
 
         // Handle turbocharger spool sound
-        if (turboSound != null && turboSound.audioClips != null && cachedEngine.turboCharged) {
+        if (turboSound != null && turboSound.audioClips != null && cachedEngine.turbo1Charged) {
 
             if (!turboSound.audioSource) {
 
@@ -1166,7 +1166,7 @@ public class RCCP_Audio : RCCP_Component {
             } else {
 
                 // Volume based on turbo pressure
-                float turboVolume = Mathf.Lerp(0f, turboSound.maxVolume, cachedEngine.turboChargePsi / cachedEngine.maxTurboChargePsi);
+                float turboVolume = Mathf.Lerp(0f, turboSound.maxVolume, cachedEngine.turbo1ChargePsi / cachedEngine.maxTurbo1ChargePsi);
                 turboSound.audioSource.volume = turboVolume < AUDIO_DEADZONE ? 0f : turboVolume;
 
             }
@@ -1174,7 +1174,7 @@ public class RCCP_Audio : RCCP_Component {
         }
 
         // Handle turbo blow-off valve sound
-        if (blowSound != null && blowSound.audioClips != null && blowSound.audioClips.Length >= 1 && cachedEngine.turboCharged) {
+        if (blowSound != null && blowSound.audioClips != null && blowSound.audioClips.Length >= 1 && cachedEngine.turbo1Charged) {
 
             if (!blowSound.audioSource) {
 
@@ -1195,7 +1195,7 @@ public class RCCP_Audio : RCCP_Component {
             } else {
 
                 // Play blow-off sound when turbo releases pressure
-                if (cachedEngine.turboBlowOut && !blowSound.audioSource.isPlaying) {
+                if (cachedEngine.turbo1BlowOut && !blowSound.audioSource.isPlaying) {
 
                     blowSound.audioSource.clip = blowSound.audioClips[UnityEngine.Random.Range(0, blowSound.audioClips.Length)];
                     blowSound.audioSource.Play();

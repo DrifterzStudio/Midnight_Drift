@@ -291,25 +291,27 @@ public class RCCP_MirrorSync : NetworkBehaviour {
 
         transformFallbackHandlerRefCount++;
 
-        if (!transformFallbackHandlerRegistered) {
+        //if (!transformFallbackHandlerRegistered) {
 
-            NetworkServer.RegisterHandler<RCCP_MirrorTransformFallbackMessage>(OnServerTransformFallbackMessage);
-            transformFallbackHandlerRegistered = true;
+        //    NetworkServer.RegisterHandler<RCCP_MirrorTransformFallbackMessage>(OnServerTransformFallbackMessage);
+        //    transformFallbackHandlerRegistered = true;
 
-        }
+        //}
+        NetworkServer.ReplaceHandler<RCCP_MirrorTransformFallbackMessage>(OnServerTransformFallbackMessage);
 
     }
+
 
     public override void OnStopServer() {
 
         transformFallbackHandlerRefCount = Mathf.Max(0, transformFallbackHandlerRefCount - 1);
 
-        if (transformFallbackHandlerRegistered && transformFallbackHandlerRefCount == 0) {
+        //if (transformFallbackHandlerRegistered && transformFallbackHandlerRefCount == 0) {
 
-            NetworkServer.UnregisterHandler<RCCP_MirrorTransformFallbackMessage>();
-            transformFallbackHandlerRegistered = false;
+        //    NetworkServer.UnregisterHandler<RCCP_MirrorTransformFallbackMessage>();
+        //    transformFallbackHandlerRegistered = false;
 
-        }
+        //}
 
     }
 
@@ -383,6 +385,10 @@ public class RCCP_MirrorSync : NetworkBehaviour {
 
         if (!NetworkClient.isConnected)
             return;
+
+        if (!NetworkClient.ready)  
+            return;
+
 
         if (!carController)
             return;
