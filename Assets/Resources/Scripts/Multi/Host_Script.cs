@@ -15,26 +15,37 @@ public class Host_Script : MonoBehaviour
         Mirror_Manager.Instance.RegisterPrefab("MultiGameScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerCar"));
         Mirror_Manager.Instance.RegisterPrefab("MultiGameLobbyScene", Resources.Load<GameObject>("Prefabs/Multi/PlayerFps"));
         startButton.SetActive(false);
-
     }
+
     public void OnClick()
     {
         if(alreadyPresseed)
             return;
         alreadyPresseed = true;
         Steam_Lobby.Instance.CreateLobby();
-        //hostButton.SetActive(false);
         startButton.SetActive(true);
-        isReady = true;
     }
 
-    private void Update()
+    public void OnClickStart()
     {
-        if(isReady && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (!NetworkServer.active)
         {
-            Mirror_Manager.Instance.ChangeScene("Multi_Game", "MultiGameLobbyScene");
-            Steam_Lobby.Instance.LockLobby();
+            Debug.LogWarning("Serveur pas encore prêt, réessaie dans un instant.");
+            return;
         }
 
+        Mirror_Manager.Instance.ChangeScene("Multi_Game", "MultiGameLobbyScene");
+        Steam_Lobby.Instance.LockLobby();
+    }
+
+    public void OnClickExit()
+    {
+        Steam_Lobby.Instance.LeaveLobby();
+        Scene_Controller.Instance.NewTransition()
+            .Load("Menu", "Menu", true)
+            .Unload("Multi_Server")
+            .Unload("Multi_Game")
+            .EnableOverlay(true)
+            .Execute();
     }
 }
