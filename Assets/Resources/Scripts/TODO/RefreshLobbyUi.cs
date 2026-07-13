@@ -76,11 +76,9 @@ public class RefreshLobbyUi : MonoBehaviour
             }
         }
 
-        // Peu importe Enter ou Exit : on resynchronise la couronne sur tout le monde
         RefreshAllLeaderIcons();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!NetworkServer.active && !NetworkClient.active)
@@ -115,13 +113,12 @@ public class RefreshLobbyUi : MonoBehaviour
                 }
             }
 
-            // Une fois tous les slots initiaux peuplés, on pose la couronne
             RefreshAllLeaderIcons();
         }
     }
 
     // ---------------------------------------------------------
-    // OWNER / COURONNE — resynchronise TOUS les slots actifs
+    // OWNER
     // ---------------------------------------------------------
     private void RefreshAllLeaderIcons()
     {
