@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine;
 
 
-public class Score : NetworkBehaviour
+public class PlayerScore : NetworkBehaviour
 {
-    static private Score _localInstance = null;
+    static private PlayerScore _localInstance = null;
 
     // variable syncro
     //[SyncVar(hook = nameof(OnScoreChanged))]
@@ -119,11 +119,10 @@ public class Score : NetworkBehaviour
             return;
         }
 
-        NetworkCamera camera = GetComponent<NetworkCamera>();
         if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.IsPlayerActive && isLocalPlayer)
         {
             if (!_carController) return;
-            if (_carController.PoweredAxles.Count <= 0) return;
+            if (_carController.PoweredAxles == null || _carController.PoweredAxles.Count <= 0) return;
 
             float sidewaysSlip = (float)Math.Abs(_carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip);
             float speed = _carController.speed;
@@ -424,6 +423,8 @@ public class Score : NetworkBehaviour
 
     private void StartScoreLostEffect()
     {
+        _isFadingOut = false;
+
         _scoreUpdateText.gameObject.SetActive(true);
         if (_scoreUpdateCanvasGroup != null)
             _scoreUpdateCanvasGroup.alpha = 1f;
