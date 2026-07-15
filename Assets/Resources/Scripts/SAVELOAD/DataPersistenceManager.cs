@@ -1,122 +1,94 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-
 
 public class DataPersistenceManager : MonoBehaviour
 {
-    public List<IGameData> objectsData;
-    public List<IDataPersistence> dataPersistenceObjects;
+    public List<IGameData> objectsData = new List<IGameData>();
+    public List<IDataPersistence> dataPersistenceObjects = new List<IDataPersistence>();
     private DataFileHandler dataFileHandler;
     public static DataPersistenceManager instance { get; private set; }
 
-    [Header("Save Customization")]
-    public string customPath;
-    public SaveCustom saveCustom;
-    public ChangeWheels changeWheels;
-    public ChangeSpoilers changeSpoilers;
+    [Header("Save Folders (relative to persistentDataPath)")]
+    public string upgradesFolder = "Upgrades";
+    public string customFolder = "Custom";
+    public string settingsFolder = "Settings";
 
-    [Header("Save Upgrades")]
-    public string upgradesPath;
+    [Header("Data Containers")]
     public SaveUpgrades saveUpgrades;
-    public AddTurbo addTurbo;
-    public AntiRollBar antiRollBar;
-    public Brake brake;
-    public CarbonFiberBody carbonFiberBody;
-    //public Differential differential;
-    public EnginePower enginePower;
-    public GearboxRatio gearboxRatio;
-    public Lightened lightened;
-    public Reinforcement reinforcement;
-    public Slick slick;
-    public SuspensionUpgrade suspensionUpgrade;
+    public SaveCustom saveCustom;       // optional for now, can stay empty
+    public SaveSettings saveSettings;   // optional for now, can stay empty
 
-    [Header("Save Settings")]
-    public string settingsPath;
-    public SaveSettings saveSettings;
-    public Braking braking;
-    public Camber camber;
-    public DrivingAid drivingAid;
-    public Gearbox Gearbox;
-    public Grip grip;
-    public Others others;
-    public PropulsionType propulsionType;
-    public Suspension suspension;
-    public Wheels wheels;
+    // Full paths built at runtime, valid on any machine
+    private string upgradesPath;
+    private string customPath;
+    private string settingsPath;
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+            return;
         }
         instance = this;
-    }
 
+        upgradesPath = Path.Combine(Application.persistentDataPath, upgradesFolder);
+        customPath = Path.Combine(Application.persistentDataPath, customFolder);
+        settingsPath = Path.Combine(Application.persistentDataPath, settingsFolder);
+
+        Directory.CreateDirectory(upgradesPath);
+        Directory.CreateDirectory(customPath);
+        Directory.CreateDirectory(settingsPath);
+
+        dataFileHandler = new DataFileHandler();
+    }
 
     private void Start()
     {
-        this.dataFileHandler = new DataFileHandler();
-        this.dataPersistenceObjects = findAllDataPersistence();
-    }
-
-    public void NewGame()
-    {
-        this.objectsData = findAllGameData();
+        // Fallback: catch any IDataPersistence that did not register itself in Awake
+        dataPersistenceObjects = findAllDataPersistence();
     }
 
     public void LoadGameFor(string vehicleId)
     {
-        dataFileHandler.load(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
-        dataFileHandler.load(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
-        dataFileHandler.load(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
+        if (saveUpgrades != null)
+            dataFileHandler.load(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
+        if (saveCustom != null)
+            dataFileHandler.load(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
+        if (saveSettings != null)
+            dataFileHandler.load(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
 
-        addTurbo.LoadGame(saveUpgrades);
-        antiRollBar.LoadGame(saveUpgrades);
-        brake.LoadGame(saveUpgrades);
-        carbonFiberBody.LoadGame(saveUpgrades);
-        enginePower.LoadGame(saveUpgrades);
-        gearboxRatio.LoadGame(saveUpgrades);
-        lightened.LoadGame(saveUpgrades);
-        reinforcement.LoadGame(saveUpgrades);
-        slick.LoadGame(saveUpgrades);
-        suspensionUpgrade.LoadGame(saveUpgrades);
-
-        braking.LoadGame(saveSettings);
-        camber.LoadGame(saveSettings);
-        drivingAid.LoadGame(saveSettings);
-        Gearbox.LoadGame(saveSettings);
-        grip.LoadGame(saveSettings);
-        others.LoadGame(saveSettings);
-        propulsionType.LoadGame(saveSettings);
-        suspension.LoadGame(saveSettings);
-        wheels.LoadGame(saveSettings);
-
-        changeWheels.LoadGame(saveCustom);
-        changeSpoilers.LoadGame(saveCustom);
+        // Generic dispatch: every registered IDataPersistence receives
+        // the data container matching its dataFileName
+        DispatchAll((dp, data) => dp.LoadGame(data));
     }
 
     public void SaveGameFor(string vehicleId)
     {
-        foreach (IDataPersistence dataPersistence in dataPersistenceObjects)
+        DispatchAll((dp, data) => dp.SaveGame(data));
+
+        if (saveUpgrades != null)
+            dataFileHandler.save(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
+        if (saveCustom != null)
+            dataFileHandler.save(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
+        if (saveSettings != null)
+            dataFileHandler.save(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
+    }
+
+    // Single generic loop shared by load and save (no duplicated matching logic)
+    private void DispatchAll(System.Action<IDataPersistence, IGameData> action)
+    {
+        foreach (IDataPersistence dp in dataPersistenceObjects)
         {
             foreach (IGameData data in objectsData)
             {
-                if (data.getDataFileName() == dataPersistence.getDataFileName())
-                {
-                    dataPersistence.SaveGame(data);
-                }
+                if (data.getDataFileName() == dp.getDataFileName())
+                    action(dp, data);
             }
         }
-
-        dataFileHandler.save(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
-        dataFileHandler.save(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
-        dataFileHandler.save(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
     }
 
     private void OnApplicationQuit()
@@ -125,16 +97,12 @@ public class DataPersistenceManager : MonoBehaviour
             SaveGameFor(GameSession.SelectedVehicle.vehicleId);
     }
 
-    private List<IGameData> findAllGameData()
-    {
-        IEnumerable<IGameData> objectsData = FindObjectsByType<MonoBehaviour>().OfType<IGameData>();
-
-        return new List<IGameData>(objectsData);
-    }
     private List<IDataPersistence> findAllDataPersistence()
     {
-        IEnumerable<IDataPersistence> dataPresistences = FindObjectsByType<MonoBehaviour>().OfType<IDataPersistence>();
+        IEnumerable<IDataPersistence> found =
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .OfType<IDataPersistence>();
 
-        return new List<IDataPersistence>(dataPresistences);
+        return found.Distinct().ToList();
     }
 }
