@@ -34,6 +34,16 @@ public class GarageDisplayManager : MonoBehaviour
         foreach (Score score in currentInstance.GetComponentsInChildren<Score>(true))
             score.enabled = false;
 
+        // The preview car keeps RCCP's full physics, so the player would otherwise bump into it
+        // and roll it off its stand. Freeze the body (kinematic) and block inputs so it just
+        // sits still on the pedestal. Only the preview instance is affected.
+        if (controller != null)
+        {
+            controller.canControl = false;
+            if (controller.TryGetComponent(out Rigidbody carRigidbody))
+                carRigidbody.isKinematic = true;
+        }
+
         CarInstance.instance = controller;
         AssignControllerToUpgradeComponents(controller);
 

@@ -16,3 +16,4 @@ MonoBehaviour:
   displayName: Mazda RX-7
   prefab: {fileID: 331667537467588133, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
   icon: {fileID: 21300000, guid: f1cfb6dff7097de439e12ed06847b26e, type: 3}
+  previewScale: {x: 0.2, y: 0.2, z: 0.2}
