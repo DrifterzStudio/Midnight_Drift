@@ -73,6 +73,13 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (forwardButton != null) forwardButton.onClick.AddListener(OnForwardButtonClicked);
         if (rearSidewaysButton != null) rearSidewaysButton.onClick.AddListener(OnRearSidewaysButtonClicked);
         if (frontSidewaysButton != null) frontSidewaysButton.onClick.AddListener(OnFrontSidewaysButtonClicked);
+        if (backButton != null) backButton.onClick.AddListener(OnBackButtonClicked);
+    }
+
+    // backButton was declared but wired to nothing, so this panel had no way out.
+    private void OnBackButtonClicked() {
+        if (Wheels.instance != null)
+            Wheels.instance.ShowMenu();
     }
 
     private void Start() {
@@ -123,5 +130,6 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (forwardButton != null) forwardButton.onClick.RemoveListener(OnForwardButtonClicked);
         if (rearSidewaysButton != null) rearSidewaysButton.onClick.RemoveListener(OnRearSidewaysButtonClicked);
         if (frontSidewaysButton != null) frontSidewaysButton.onClick.RemoveListener(OnFrontSidewaysButtonClicked);
+        if (backButton != null) backButton.onClick.RemoveListener(OnBackButtonClicked);
     }
 }

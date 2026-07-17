@@ -63,6 +63,13 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
         if (frontButton != null) frontButton.onClick.AddListener(OnFrontButtonClicked);
         if (rearButton != null) rearButton.onClick.AddListener(OnRearButtonClicked);
+        if (backButton != null) backButton.onClick.AddListener(OnBackButtonClicked);
+    }
+
+    // backButton was declared but wired to nothing, so this panel had no way out.
+    private void OnBackButtonClicked() {
+        if (Wheels.instance != null)
+            Wheels.instance.ShowMenu();
     }
 
     private void Start() {
@@ -115,5 +122,6 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
     private void OnDestroy() {
         if (frontButton != null) frontButton.onClick.RemoveListener(OnFrontButtonClicked);
         if (rearButton != null) rearButton.onClick.RemoveListener(OnRearButtonClicked);
+        if (backButton != null) backButton.onClick.RemoveListener(OnBackButtonClicked);
     }
 }

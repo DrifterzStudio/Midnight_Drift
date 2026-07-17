@@ -57,14 +57,6 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public bool rearAxleSteer;
     public bool rearAxleHandbrake;
 
-    // Others
-    public float steerValue;
-    public float throttleValue;
-    public float brakeValue;
-    public float handbrakeValue;
-    public float clutchValue;
-
-    public bool isTelemetry = false;
 
     public static SaveSettings saveInstance;
 
@@ -114,13 +106,6 @@ public class SaveSettings : MonoBehaviour, IGameData {
         rearAxleSteer = tmp.rearAxleSteer;
         rearAxleHandbrake = tmp.rearAxleHandbrake;
 
-        steerValue = tmp.steerValue;
-        throttleValue = tmp.throttleValue;
-        brakeValue = tmp.brakeValue;
-        handbrakeValue = tmp.handbrakeValue;
-        clutchValue = tmp.clutchValue;
-
-        isTelemetry = tmp.isTelemetry;
     }
 
     string IGameData.getDataDirPath() {

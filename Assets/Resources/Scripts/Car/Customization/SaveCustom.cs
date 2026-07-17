@@ -14,6 +14,10 @@ public class SaveCustom : MonoBehaviour, IGameData {
 
     public int currentSpoiler;
 
+    // Body paint. Alpha 0 means "never painted", the same convention RCCP uses on
+    // RCCP_CustomizationLoadout.paint, so a fresh save keeps the prefab's own colour.
+    public Color bodyColor = new Color(1f, 1f, 1f, 0f);
+
     public static SaveCustom saveInstance;
 
     private void Awake() {
@@ -26,6 +30,8 @@ public class SaveCustom : MonoBehaviour, IGameData {
         currentMat = tmp.currentMat;
 
         currentSpoiler = tmp.currentSpoiler;
+
+        bodyColor = tmp.bodyColor;
     }
 
     string IGameData.getDataDirPath() {

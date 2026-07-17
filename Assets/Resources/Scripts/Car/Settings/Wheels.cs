@@ -7,6 +7,11 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public RCCP_CarController controller;
 
+    [Header("Menu")]
+    [Tooltip("Container holding this menu's own buttons (Slick, Camber, Grip). Must be a sibling " +
+             "of the Camber and Grip panels, not their parent, or hiding it would hide them too.")]
+    public GameObject wheelsMenu;
+
     [Header("Camber")]
     [Tooltip("Camber button.")]
     public Button camberButton;
@@ -32,6 +37,12 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
     public Button steeringCurveButton;
 
     //public float steeringCurve;
+
+    // Slow / Normal / Fast, inside RCCP_Axle.steerSpeed's own [.01, 5] range, centred on its
+    // default of 1. This stepped 0 / .5 / 1 before, and 0 is below the minimum: the steering
+    // would have frozen solid.
+    private static readonly float[] SensitivitySteps = { .5f, 1f, 2f };
+    private static readonly string[] SensitivityLabels = { "Slow", "Normal", "Fast" };
 
     public float sensitivityValue = 1f;
 
@@ -84,40 +95,90 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
     }
 
     private void OnCamberButtonClicked() {
-        gameObject.SetActive(false);
-        if (camber != null) camber.SetActive(true);
+        ShowSubPanel(camber);
     }
 
     private void OnGripButtonClicked() {
-        gameObject.SetActive(false);
-        if (grip != null) grip.SetActive(true);
+        ShowSubPanel(grip);
+    }
+
+    /// <summary>
+    /// Camber and Grip call this from their back buttons. Wheels owns the navigation between its
+    /// menu and its sub-panels, so no one else toggles those GameObjects.
+    /// </summary>
+    public void ShowMenu() {
+        if (camber != null) camber.SetActive(false);
+        if (grip != null) grip.SetActive(false);
+        if (wheelsMenu != null) wheelsMenu.SetActive(true);
+    }
+
+    /// <summary>
+    /// Hides the menu and reveals one sub-panel. This used to call gameObject.SetActive(false),
+    /// which disabled whatever object the script sits on: with every settings script living on
+    /// ComponentUpgrade, one click took the entire customization menu down with it.
+    /// </summary>
+    void ShowSubPanel(GameObject panel) {
+        if (panel == null)
+            return;
+
+        if (wheelsMenu == null) {
+            Debug.LogWarning("Wheels: 'Wheels Menu' is not assigned, refusing to open the sub-panel.", this);
+            return;
+        }
+
+        wheelsMenu.SetActive(false);
+        panel.SetActive(true);
     }
 
     private void OnSteerSensitivityButtonClicked() {
-        if (sensitivityValue + 0.5f > 1f) sensitivityValue = 0f;
-        else sensitivityValue += 0.5f;
+        sensitivityValue = SensitivitySteps[(NearestStepIndex(sensitivityValue) + 1) % SensitivitySteps.Length];
 
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnSteerCurveButtonClicked() { } // controller.GetVehiculeType().sterringCurve
+    private void OnSteerCurveButtonClicked() { } // RCCP_Input.steeringCurve, an AnimationCurve
+
+    // The saved value is the raw setting, not an index, so the cursor is rebuilt from it.
+    static int NearestStepIndex(float value) {
+        int nearest = 0;
+        float smallestDelta = Mathf.Abs(value - SensitivitySteps[0]);
+
+        for (int i = 1; i < SensitivitySteps.Length; i++) {
+            float delta = Mathf.Abs(value - SensitivitySteps[i]);
+
+            if (delta < smallestDelta) {
+                smallestDelta = delta;
+                nearest = i;
+            }
+        }
+
+        return nearest;
+    }
 
     /// <summary>
-    /// Does nothing on purpose, and the Steering Sensitivity button is inert until this is
-    /// settled. It used to write GetVehicleBehaviorType().steeringSensitivity, which was wrong
-    /// twice over: that object lives inside the shared RCCP_Settings ScriptableObject (so the
-    /// write hit every vehicle and was saved to disk in the Editor), and RCCP never reads
-    /// steeringSensitivity anywhere, so it steered nothing regardless. The value is still saved
-    /// and shown; it needs to be pointed at a real RCCP steering parameter.
+    /// Drives RCCP_Axle.steerSpeed, how fast the wheels reach the requested angle. The original
+    /// wrote GetVehicleBehaviorType().steeringSensitivity, wrong twice over: that object lives
+    /// inside the shared RCCP_Settings ScriptableObject (so the write hit every vehicle and was
+    /// saved to disk in the Editor), and RCCP reads steeringSensitivity nowhere, so it steered
+    /// nothing regardless.
     /// </summary>
     void ApplyToController() {
+        if (controller == null)
+            return;
+
+        // Applied to both axles: the rear one steers too once PropulsionType is set to AWD.
+        if (controller.FrontAxle != null)
+            controller.FrontAxle.steerSpeed = sensitivityValue;
+
+        if (controller.RearAxle != null)
+            controller.RearAxle.steerSpeed = sensitivityValue;
     }
 
     // Called only when the value changes, never per frame.
     void RefreshUI() {
         if (sterringSensitivityText != null)
-            sterringSensitivityText.text = "" + sensitivityValue;
+            sterringSensitivityText.text = SensitivityLabels[NearestStepIndex(sensitivityValue)];
     }
 
     private void OnDestroy() {

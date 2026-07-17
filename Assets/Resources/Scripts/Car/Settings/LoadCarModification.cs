@@ -9,8 +9,6 @@ using UnityEngine;
 /// garage scene. Their static 'instance' then points at a destroyed object, so every
 /// "if (X.instance != null)" silently failed Unity's fake-null check and nothing was applied.
 ///
-/// Steering sensitivity is deliberately absent: RCCP declares it on
-/// RCCP_Settings.BehaviorType but never reads it, so it drives nothing.
 /// </summary>
 public class LoadCarModification : MonoBehaviour {
 
@@ -100,6 +98,12 @@ public class LoadCarModification : MonoBehaviour {
         if (controller.FrontAxle != null && data.handbrakeMultiplier > 0f)
             controller.FrontAxle.handbrakeMultiplier = data.handbrakeMultiplier;
 
+        // Steering sensitivity (RCCP_Axle.steerSpeed). Both axles, since the rear steers on AWD.
+        if (data.sensitivityValue > 0f) {
+            if (controller.FrontAxle != null) controller.FrontAxle.steerSpeed = data.sensitivityValue;
+            if (controller.RearAxle != null) controller.RearAxle.steerSpeed = data.sensitivityValue;
+        }
+
         // Gearbox
         if (controller.Gearbox != null) {
             controller.Gearbox.currentGearState.gearState = data.isReverse;
@@ -127,14 +131,6 @@ public class LoadCarModification : MonoBehaviour {
             controller.RearAxle.isHandbrake = data.rearAxleHandbrake;
         }
 
-        // Others
-        if (controller.Inputs != null) {
-            controller.Inputs.steeringDeadzone = data.steerValue;
-            controller.Inputs.throttleDeadzone = data.throttleValue;
-            controller.Inputs.brakeDeadzone = data.brakeValue;
-            controller.Inputs.handbrakeDeadzone = data.handbrakeValue;
-            controller.Inputs.clutchDeadzone = data.clutchValue;
-        }
     }
 
     RCCP_CustomizationData CustomizationData {

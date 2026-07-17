@@ -22318,8 +22318,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completeSetup: 0
   checkedSetup: 0
-  paintMaterial: {fileID: 0}
-  id: _BaseColor
+  paintMaterial: {fileID: 2100000, guid: 2074c805daf2d154e9f1387484cfd810, type: 2}
+  id: _BASE_COLOR
 --- !u!1 &4113399241006335839
 GameObject:
   m_ObjectHideFlags: 0

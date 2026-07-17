@@ -33,6 +33,10 @@ public class SaveUpgrades : MonoBehaviour, IGameData
     public float[] gearRatios;
     public float brakePower;
 
+    // Index into Differential's own list of modes, not RCCP's enum value. 1 = Limited, which is
+    // RCCP's default, so a fresh save leaves the vehicle as authored.
+    public int differentialType = 1;
+
     private void Awake()
     {
         DataPersistenceManager.instance.objectsData.Add(this);
@@ -61,9 +65,10 @@ public class SaveUpgrades : MonoBehaviour, IGameData
         // Tire
         slickness = tmp.slickness;
 
-        // Transmision 
+        // Transmision
         gearRatios = tmp.gearRatios;
         brakePower = tmp.brakePower;
+        differentialType = tmp.differentialType;
     }
 
     string IGameData.getDataDirPath() {

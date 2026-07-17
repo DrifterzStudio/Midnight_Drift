@@ -82,6 +82,24 @@ public class LoadUpgrades : MonoBehaviour {
 
         if (data.brakePower > 0 && controller.Engine != null)
             controller.Engine.engineBrakingCoefficient = data.brakePower;
+
+        // Differential. Mirrors Differential's own list of modes; Differentials is an array
+        // because an AWD car carries one per axle plus a centre one.
+        if (controller.Differentials != null) {
+            RCCP_Differential.DifferentialType mode = DifferentialModeFor(data.differentialType);
+
+            foreach (RCCP_Differential differential in controller.Differentials) {
+                if (differential != null)
+                    differential.differentialType = mode;
+            }
+        }
+    }
+
+    static RCCP_Differential.DifferentialType DifferentialModeFor(int index) {
+        if (index <= 0) return RCCP_Differential.DifferentialType.Open;
+        if (index == 1) return RCCP_Differential.DifferentialType.Limited;
+
+        return RCCP_Differential.DifferentialType.FullLocked;
     }
 
     RCCP_CustomizationData CustomizationData {
