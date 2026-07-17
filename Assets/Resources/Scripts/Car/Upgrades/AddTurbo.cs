@@ -13,7 +13,6 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
     public bool turbo2 = false;
     public static AddTurbo instance;
 
-
     public void SaveGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
@@ -28,6 +27,9 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
             turbo1 = tmp.turbo1;
             turbo2 = tmp.turbo2;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public string getDataFileName() {
@@ -36,8 +38,8 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public void SetController(RCCP_CarController newController) {
         controller = newController;
-        if (turbo2) controller.Engine.turbo2Charged = true;
-        else if (turbo1) controller.Engine.turbo1Charged = true;
+        ApplyToController();
+        RefreshUI();
     }
 
     private void Awake() {
@@ -45,20 +47,33 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    private void Update() {
-        if (turbo2) turboNumber.text = "2";        
-        else if (turbo1) turboNumber.text = "1";        
-        else turboNumber.text = "0";        
+    private void Start() {
+        RefreshUI();
     }
 
     public void onButtonClicked() {
-        if (turbo1) {
-            controller.Engine.turbo2Charged = true;
-            turbo2 = true;
-        }
-        else {
-            controller.Engine.turbo1Charged = true;
-            turbo1 = true;
-        }
+        if (turbo1) turbo2 = true;
+        else turbo1 = true;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        if (controller == null || controller.Engine == null)
+            return;
+
+        if (turbo2) controller.Engine.turbo2Charged = true;
+        else if (turbo1) controller.Engine.turbo1Charged = true;
+    }
+
+    // Called only when the turbo count changes, never per frame.
+    void RefreshUI() {
+        if (turboNumber == null)
+            return;
+
+        if (turbo2) turboNumber.text = "2";
+        else if (turbo1) turboNumber.text = "1";
+        else turboNumber.text = "0";
     }
 }

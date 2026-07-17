@@ -1,9 +1,7 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class DrivingAid : MonoBehaviour, IDataPersistence {
+public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public string dataFileName;
 
@@ -45,33 +43,41 @@ public class DrivingAid : MonoBehaviour, IDataPersistence {
     [Tooltip("Text showing the current state of the arcade speed preservation.")]
     public Text ASPText;
 
+    // These used to live directly on GetVehicleBehaviorType(), so this script had no state of
+    // its own and every read threw before a car was shown. They are the source of truth now, and
+    // ApplyToController pushes them onto the behavior.
+    public bool ABS = true;
+    public bool TCS = true;
+    public bool ESP = true;
+    public bool SH = true;
+    public bool TH = true;
     public float ASPValue = 1f;
 
-
     public static DrivingAid instance;
-
-
 
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            carController.GetVehicleBehaviorType().ABS = tmp.ABS;
-            carController.GetVehicleBehaviorType().TCS = tmp.TCS;
-            carController.GetVehicleBehaviorType().ESP = tmp.ESP;
-            carController.GetVehicleBehaviorType().steeringHelper = tmp.SH;
-            carController.GetVehicleBehaviorType().tractionHelper = tmp.TH;
+            ABS = tmp.ABS;
+            TCS = tmp.TCS;
+            ESP = tmp.ESP;
+            SH = tmp.SH;
+            TH = tmp.TH;
             ASPValue = tmp.ASPValue;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public void SaveGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            tmp.ABS = carController.GetVehicleBehaviorType().ABS;
-            tmp.TCS = carController.GetVehicleBehaviorType().TCS;
-            tmp.ESP = carController.GetVehicleBehaviorType().ESP;
-            tmp.SH = carController.GetVehicleBehaviorType().steeringHelper;
-            tmp.TH = carController.GetVehicleBehaviorType().tractionHelper;
+            tmp.ABS = ABS;
+            tmp.TCS = TCS;
+            tmp.ESP = ESP;
+            tmp.SH = SH;
+            tmp.TH = TH;
             tmp.ASPValue = ASPValue;
         }
     }
@@ -80,81 +86,104 @@ public class DrivingAid : MonoBehaviour, IDataPersistence {
         return dataFileName;
     }
 
+    // Was missing IVehicleDependent, so 'carController' stayed null and every click threw.
+    public void SetController(RCCP_CarController newController) {
+        carController = newController;
+        ApplyToController();
+        RefreshUI();
+    }
+
     private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
-        ABSButton.onClick.AddListener(OnABSButtonClicked);
-        TCSButton.onClick.AddListener(OnTCSButtonClicked);
-        ESPButton.onClick.AddListener(OnESPButtonClicked);
-        SHButton.onClick.AddListener(OnSHButtonClicked);
-        THButton.onClick.AddListener(OnTHButtonClicked);
-        ASPButton.onClick.AddListener(OnASPButtonClicked);
+        if (ABSButton != null) ABSButton.onClick.AddListener(OnABSButtonClicked);
+        if (TCSButton != null) TCSButton.onClick.AddListener(OnTCSButtonClicked);
+        if (ESPButton != null) ESPButton.onClick.AddListener(OnESPButtonClicked);
+        if (SHButton != null) SHButton.onClick.AddListener(OnSHButtonClicked);
+        if (THButton != null) THButton.onClick.AddListener(OnTHButtonClicked);
+        if (ASPButton != null) ASPButton.onClick.AddListener(OnASPButtonClicked);
     }
 
-    private void Update() {
-        instance = this;
-
-        if (carController.GetVehicleBehaviorType().ABS == true) ABSText.text = "On";
-        else ABSText.text = "Off";
-
-        if (carController.GetVehicleBehaviorType().TCS == true) TCSText.text = "On";
-        else TCSText.text = "Off";
-
-        if (carController.GetVehicleBehaviorType().ESP == true) ESPText.text = "On";
-        else ESPText.text = "Off";
-
-        if (carController.GetVehicleBehaviorType().steeringHelper == true) SHText.text = "On";
-        else SHText.text = "Off";
-
-        if (carController.GetVehicleBehaviorType().tractionHelper == true) THText.text = "On";
-        else THText.text = "Off";
-
-        ASPText.text = ASPValue.ToString();
+    private void Start() {
+        RefreshUI();
     }
+
     private void OnABSButtonClicked() {
-        carController.GetVehicleBehaviorType().ABS = !carController.GetVehicleBehaviorType().ABS;
+        ABS = !ABS;
+        ApplyToController();
+        RefreshUI();
     }
+
     private void OnTCSButtonClicked() {
-        carController.GetVehicleBehaviorType().TCS = !carController.GetVehicleBehaviorType().TCS;
+        TCS = !TCS;
+        ApplyToController();
+        RefreshUI();
     }
+
     private void OnESPButtonClicked() {
-        carController.GetVehicleBehaviorType().ESP = !carController.GetVehicleBehaviorType().ESP;
+        ESP = !ESP;
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnSHButtonClicked() {
-        carController.GetVehicleBehaviorType().steeringHelper = !carController.GetVehicleBehaviorType().steeringHelper;
+        SH = !SH;
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnTHButtonClicked() {
-        carController.GetVehicleBehaviorType().tractionHelper = !carController.GetVehicleBehaviorType().tractionHelper;
+        TH = !TH;
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnASPButtonClicked() {
         if (ASPValue + .2f > 1.1f) ASPValue = 0f;
         else ASPValue += .2f;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    /// <summary>
+    /// Writes to this vehicle's own RCCP_Stability. The original went through
+    /// GetVehicleBehaviorType(), which returns an object inside the shared RCCP_Settings
+    /// ScriptableObject: every car saw the change, and in the Editor it was written to disk and
+    /// survived Play Mode. RCCP_CarController only ever copies that behavior into Stability
+    /// (see its CheckBehavior), so Stability is the real per-vehicle home for these flags.
+    /// CheckBehavior runs once on spawn and on OnBehaviorChanged, both before SetController
+    /// reaches us, so these writes are not overwritten.
+    /// </summary>
+    void ApplyToController() {
+        if (carController == null || carController.Stability == null)
+            return;
+
+        carController.Stability.ABS = ABS;
+        carController.Stability.TCS = TCS;
+        carController.Stability.ESP = ESP;
+        carController.Stability.steeringHelper = SH;
+        carController.Stability.tractionHelper = TH;
         carController.Stability.preserveSpeedFactor = ASPValue;
     }
 
-    private void OnDestroy() {
-        if (ABSButton != null) {
-            ABSButton.onClick.RemoveListener(OnABSButtonClicked);
-        }
-        if (TCSButton != null) {
-            TCSButton.onClick.RemoveListener(OnTCSButtonClicked);
-        }
-        if (ESPButton != null) {
-            ESPButton.onClick.RemoveListener(OnESPButtonClicked);
-        }
-        if (SHButton != null) {
-            SHButton.onClick.RemoveListener(OnSHButtonClicked);
-        }
-        if (THButton != null) {
-            THButton.onClick.RemoveListener(OnTHButtonClicked);
-        }
-        if (ASPButton != null) {
-            ASPButton.onClick.RemoveListener(OnASPButtonClicked);
-        }
+    // Called only when a value changes, never per frame.
+    void RefreshUI() {
+        if (ABSText != null) ABSText.text = ABS ? "On" : "Off";
+        if (TCSText != null) TCSText.text = TCS ? "On" : "Off";
+        if (ESPText != null) ESPText.text = ESP ? "On" : "Off";
+        if (SHText != null) SHText.text = SH ? "On" : "Off";
+        if (THText != null) THText.text = TH ? "On" : "Off";
+        if (ASPText != null) ASPText.text = ASPValue.ToString();
     }
 
+    private void OnDestroy() {
+        if (ABSButton != null) ABSButton.onClick.RemoveListener(OnABSButtonClicked);
+        if (TCSButton != null) TCSButton.onClick.RemoveListener(OnTCSButtonClicked);
+        if (ESPButton != null) ESPButton.onClick.RemoveListener(OnESPButtonClicked);
+        if (SHButton != null) SHButton.onClick.RemoveListener(OnSHButtonClicked);
+        if (THButton != null) THButton.onClick.RemoveListener(OnTHButtonClicked);
+        if (ASPButton != null) ASPButton.onClick.RemoveListener(OnASPButtonClicked);
+    }
 }

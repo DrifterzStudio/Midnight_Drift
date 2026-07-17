@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Braking : MonoBehaviour, IDataPersistence {
+public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public string dataFileName;
 
@@ -32,20 +31,24 @@ public class Braking : MonoBehaviour, IDataPersistence {
 
     public static Braking instance;
 
-
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            controller.RearAxle.isHandbrake = tmp.isHandbrake;
+            // Went straight to controller.RearAxle before, which left this field at its default
+            // and threw when no car was shown.
+            isHandbrake = tmp.isHandbrake;
             handbrakeMultiplier = tmp.handbrakeMultiplier;
             brakeMultiplier = tmp.brakeMultiplier;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public void SaveGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            tmp.isHandbrake = controller.RearAxle.isHandbrake;
+            tmp.isHandbrake = isHandbrake;
             tmp.handbrakeMultiplier = handbrakeMultiplier;
             tmp.brakeMultiplier = brakeMultiplier;
         }
@@ -55,43 +58,76 @@ public class Braking : MonoBehaviour, IDataPersistence {
         return dataFileName;
     }
 
-
+    // Was missing IVehicleDependent, so 'controller' stayed null and every click threw.
+    public void SetController(RCCP_CarController newController) {
+        controller = newController;
+        ApplyToController();
+        RefreshUI();
+    }
 
     private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
-        handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
-        handbrakeMultiplierButton.onClick.AddListener(OnHandbrakeMultiplierButtonClicked);
-        brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);
+        if (handbrakeButton != null) handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
+        if (handbrakeMultiplierButton != null) handbrakeMultiplierButton.onClick.AddListener(OnHandbrakeMultiplierButtonClicked);
+        if (brakeMultiplierButton != null) brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);
     }
 
-    private void Update() {
-        instance = this;
-
-        if (controller.RearAxle.isHandbrake) handbrakeText.text = "On";
-        else handbrakeText.text = "Off";
-
-        handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
-        brakeMultiplierText.text = brakeMultiplier.ToString();
+    private void Start() {
+        RefreshUI();
     }
 
     private void OnHandbrakeButtonClicked() {
-        controller.RearAxle.isHandbrake = !controller.RearAxle.isHandbrake;
-        isHandbrake = controller.RearAxle.isHandbrake;
+        isHandbrake = !isHandbrake;
+
+        // Reaches the axle through PropulsionType, the single owner of the handbrake flags.
+        if (PropulsionType.instance != null)
+            PropulsionType.instance.SetRearHandbrake(isHandbrake);
+
+        RefreshUI();
     }
 
     private void OnHandbrakeMultiplierButtonClicked() {
         if (handbrakeMultiplier + .1f > 1f) handbrakeMultiplier = 0f;
         else handbrakeMultiplier += .1f;
-        controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
-        controller.FrontAxle.brakeMultiplier = handbrakeMultiplier;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnBrakeMultiplierButtonClicked() {
         if (brakeMultiplier + .1f > 1f) brakeMultiplier = 0f;
         else brakeMultiplier += .1f;
-        controller.RearAxle.brakeMultiplier = brakeMultiplier;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        if (controller == null)
+            return;
+
+        // isHandbrake is deliberately not written here: PropulsionType derives it from the drive
+        // layout (FWD/RWD/AWD) and owns it. Both scripts used to write RearAxle.isHandbrake with
+        // no deterministic order between them.
+        if (controller.RearAxle != null) {
+            controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
+            controller.RearAxle.brakeMultiplier = brakeMultiplier;
+        }
+
+        // The original wrote FrontAxle.brakeMultiplier here, so the handbrake slider quietly
+        // retuned the front service brakes. LoadCarModification puts handbrakeMultiplier on both
+        // axles, which is the intent.
+        if (controller.FrontAxle != null)
+            controller.FrontAxle.handbrakeMultiplier = handbrakeMultiplier;
+    }
+
+    // Called only when a value changes, never per frame.
+    void RefreshUI() {
+        if (handbrakeText != null) handbrakeText.text = isHandbrake ? "On" : "Off";
+        if (handbrakeMultiplierText != null) handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
+        if (brakeMultiplierText != null) brakeMultiplierText.text = brakeMultiplier.ToString();
     }
 
     private void OnDestroy() {
@@ -99,5 +135,4 @@ public class Braking : MonoBehaviour, IDataPersistence {
         if (handbrakeMultiplierButton != null) handbrakeMultiplierButton.onClick.RemoveListener(OnHandbrakeMultiplierButtonClicked);
         if (brakeMultiplierButton != null) brakeMultiplierButton.onClick.RemoveListener(OnBrakeMultiplierButtonClicked);
     }
-
 }

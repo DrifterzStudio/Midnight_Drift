@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slick : MonoBehaviour, IDataPersistence {
+public class Slick : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public string dataFileName;
 
@@ -25,30 +25,54 @@ public class Slick : MonoBehaviour, IDataPersistence {
         if (tmp != null) {
             slickness = tmp.slickness;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public string getDataFileName() {
         return dataFileName;
     }
 
+    // Was missing IVehicleDependent, so 'controller' was never assigned: the garage car is
+    // spawned at runtime and can't be dragged in from the Inspector.
+    public void SetController(RCCP_CarController newController) {
+        controller = newController;
+        ApplyToController();
+        RefreshUI();
+    }
+
     private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
-}
+    }
 
-    private void Update() {
-        if (slickness == 10) slick.text = "Normal";
-        else if (slickness == 5) slick.text = "Semi-Slick"; 
-        else if (slickness == 1) slick.text = "Slick"; 
+    private void Start() {
+        RefreshUI();
     }
 
     public void OnButtonClicked() {
-        if (slickness == 10) {
-            slickness = 5f;
-        }
-        else if (slickness == 5f) {
-            slickness = 1f;
-        }
+        if (slickness == 10) slickness = 5f;
+        else if (slickness == 5f) slickness = 1f;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        if (controller == null || controller.AeroDynamics == null)
+            return;
+
         controller.AeroDynamics.wheelResistance = slickness;
+    }
+
+    // Called only when the value changes, never per frame.
+    void RefreshUI() {
+        if (slick == null)
+            return;
+
+        if (slickness == 10) slick.text = "Normal";
+        else if (slickness == 5) slick.text = "Semi-Slick";
+        else if (slickness == 1) slick.text = "Slick";
     }
 }

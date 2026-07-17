@@ -20,7 +20,6 @@ public class SaveUpgrades : MonoBehaviour, IGameData
     // Chassis
     public int lightenedMass;
     public int carbonMass;
-    public float newYCenter;
     public int antiRollBarValue;
 
     // Suspension
@@ -53,7 +52,6 @@ public class SaveUpgrades : MonoBehaviour, IGameData
         // Chassis
         lightenedMass = tmp.lightenedMass;
         carbonMass = tmp.carbonMass;
-        newYCenter = tmp.newYCenter;
         antiRollBarValue = tmp.antiRollBarValue;
 
         // Suspension

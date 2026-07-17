@@ -1,9 +1,7 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Camber : MonoBehaviour, IDataPersistence {
+public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public string dataFileName;
 
@@ -29,13 +27,15 @@ public class Camber : MonoBehaviour, IDataPersistence {
 
     public static Camber instance;
 
-
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
             frontAngle = tmp.frontAngle;
             rearAngle = tmp.rearAngle;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public void SaveGame(IGameData data) {
@@ -50,41 +50,70 @@ public class Camber : MonoBehaviour, IDataPersistence {
         return dataFileName;
     }
 
+    // Was missing IVehicleDependent, so 'controller' stayed null and every click threw.
+    public void SetController(RCCP_CarController newController) {
+        controller = newController;
+        ApplyToController();
+        RefreshUI();
+    }
 
-
-    private void Awake() { 
+    private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
-        frontButton.onClick.AddListener(OnFrontButtonClicked);
-        rearButton.onClick.AddListener(OnRearButtonClicked);
+        if (frontButton != null) frontButton.onClick.AddListener(OnFrontButtonClicked);
+        if (rearButton != null) rearButton.onClick.AddListener(OnRearButtonClicked);
     }
 
-    private void Update() {
-        instance = this;
-
-        frontAngleText.text = "" + (int)frontAngle;
-        rearAngleText.text = "" + (int)rearAngle;
+    private void Start() {
+        RefreshUI();
     }
 
+    // -10..+10 in 5-degree steps. Went to +/-15 before, outside the -10..10 range RCCP uses on
+    // its own camber sliders.
     private void OnFrontButtonClicked() {
-        if (frontAngle + 5f > 15f) frontAngle = -15f;
+        if (frontAngle + 5f > 10f) frontAngle = -10f;
         else frontAngle += 5f;
-        controller.Customizer.loadout.customizationData.cambersFront = frontAngle;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnRearButtonClicked() {
-        if (rearAngle + 5f > 15f) rearAngle = -15f;
+        if (rearAngle + 5f > 10f) rearAngle = -10f;
         else rearAngle += 5f;
-        controller.Customizer.loadout.customizationData.cambersRear = rearAngle;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        RCCP_CustomizationData custom = CustomizationData;
+
+        if (custom == null)
+            return;
+
+        custom.cambersFront = frontAngle;
+        custom.cambersRear = rearAngle;
+    }
+
+    // Called only when a value changes, never per frame.
+    void RefreshUI() {
+        if (frontAngleText != null) frontAngleText.text = "" + (int)frontAngle;
+        if (rearAngleText != null) rearAngleText.text = "" + (int)rearAngle;
+    }
+
+    RCCP_CustomizationData CustomizationData {
+        get {
+            if (controller == null || controller.Customizer == null || controller.Customizer.loadout == null)
+                return null;
+
+            return controller.Customizer.loadout.customizationData;
+        }
     }
 
     private void OnDestroy() {
-        if (frontButton != null) {
-            frontButton.onClick.RemoveListener(OnFrontButtonClicked);
-        }
-        if (rearButton != null) {
-            rearButton.onClick.RemoveListener(OnRearButtonClicked);
-        }
+        if (frontButton != null) frontButton.onClick.RemoveListener(OnFrontButtonClicked);
+        if (rearButton != null) rearButton.onClick.RemoveListener(OnRearButtonClicked);
     }
 }

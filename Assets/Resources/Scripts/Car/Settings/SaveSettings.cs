@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
@@ -50,8 +48,8 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public TransmissionType transmissionType;
     public float GSTValue;
     public float shiftingDelay;
+    public bool CTWS = true;
     public float clutchThreshold;
-    public int ARFValue;
 
     // Propulsion Type
     public bool frontAxleSteer;
@@ -108,8 +106,8 @@ public class SaveSettings : MonoBehaviour, IGameData {
         transmissionType = tmp.transmissionType;
         GSTValue = tmp.GSTValue;
         shiftingDelay = tmp.shiftingDelay;
+        CTWS = tmp.CTWS;
         clutchThreshold = tmp.clutchThreshold;
-        ARFValue = tmp.ARFValue;
 
         frontAxleSteer = tmp.frontAxleSteer;
         frontAxleHandbrake = tmp.frontAxleHandbrake;

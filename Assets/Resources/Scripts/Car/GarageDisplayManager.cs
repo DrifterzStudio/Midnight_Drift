@@ -45,9 +45,13 @@ public class GarageDisplayManager : MonoBehaviour
         }
 
         CarInstance.instance = controller;
+
+        // Select before handing the controller out: SetController implementations read
+        // GameSession.SelectedVehicle (for the prefab's stock values), and it still pointed at
+        // the previously shown vehicle when this ran afterwards.
+        GameSession.SelectVehicle(vehicle);
         AssignControllerToUpgradeComponents(controller);
 
-        GameSession.SelectVehicle(vehicle);
         DataPersistenceManager.instance.LoadGameFor(vehicle.vehicleId);
 
         customizationPanel.SetActive(true);

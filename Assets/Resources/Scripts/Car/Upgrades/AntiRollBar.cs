@@ -16,10 +16,16 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
         DataPersistenceManager.instance.dataPersistenceObjects.Add(this);
     }
 
+    private void Start()
+    {
+        RefreshUI();
+    }
+
     public void SetController(RCCP_CarController newController)
     {
         controller = newController;
         ApplyToController();
+        RefreshUI();
     }
 
     public void LoadGame(IGameData data)
@@ -29,6 +35,7 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
         {
             antiRollBarValue = tmp.antiRollBarValue;
             ApplyToController();
+            RefreshUI();
         }
     }
 
@@ -48,16 +55,17 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public void ApplyToController()
     {
-        if (controller != null)
-        {
-            controller.FrontAxle.antirollForce = antiRollBarValue;
-            controller.RearAxle.antirollForce = antiRollBarValue;
-        }
+        if (controller == null)
+            return;
+
+        if (controller.FrontAxle != null) controller.FrontAxle.antirollForce = antiRollBarValue;
+        if (controller.RearAxle != null) controller.RearAxle.antirollForce = antiRollBarValue;
     }
 
-    private void Update()
+    // Called only when the value changes, never per frame.
+    void RefreshUI()
     {
-        ARBText.text = antiRollBarValue.ToString();
+        if (ARBText != null) ARBText.text = antiRollBarValue.ToString();
     }
 
     public void OnButtonClicked()
@@ -65,5 +73,6 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
         if (antiRollBarValue == 500) antiRollBarValue = 1000;
         else if (antiRollBarValue == 1000) antiRollBarValue = 1500;
         ApplyToController();
+        RefreshUI();
     }
 }

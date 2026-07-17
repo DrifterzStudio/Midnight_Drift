@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
-public class Others : MonoBehaviour, IDataPersistence {
+public class Others : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public string dataFileName;
 
@@ -50,7 +49,6 @@ public class Others : MonoBehaviour, IDataPersistence {
 
     public static Others instance;
 
-
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
@@ -61,6 +59,9 @@ public class Others : MonoBehaviour, IDataPersistence {
             clutchValue = tmp.clutchValue;
             isTelemetry = tmp.isTelemetry;
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public void SaveGame(IGameData data) {
@@ -79,74 +80,104 @@ public class Others : MonoBehaviour, IDataPersistence {
         return dataFileName;
     }
 
-
-
+    // Was missing IVehicleDependent, so 'carController' stayed null and every click threw.
+    public void SetController(RCCP_CarController newController) {
+        carController = newController;
+        ApplyToController();
+        RefreshUI();
+    }
 
     private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
-        steerButton.onClick.AddListener(OnSteerButtonClicked);
-        throttleButton.onClick.AddListener(OnThrottleButtonClicked);
-        brakeButton.onClick.AddListener(OnBrakeButtonClicked);
-        handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
-        clutchButton.onClick.AddListener(OnClutchButtonClicked);
-        telemetryButton.onClick.AddListener(OnTelemetryButtonClicked);
+        if (steerButton != null) steerButton.onClick.AddListener(OnSteerButtonClicked);
+        if (throttleButton != null) throttleButton.onClick.AddListener(OnThrottleButtonClicked);
+        if (brakeButton != null) brakeButton.onClick.AddListener(OnBrakeButtonClicked);
+        if (handbrakeButton != null) handbrakeButton.onClick.AddListener(OnHandbrakeButtonClicked);
+        if (clutchButton != null) clutchButton.onClick.AddListener(OnClutchButtonClicked);
+        if (telemetryButton != null) telemetryButton.onClick.AddListener(OnTelemetryButtonClicked);
     }
 
-    private void Update() {
-        instance = this;
-
-        if (isTelemetry) telemetryText.text = "On";
-        else telemetryText.text = "Off";
-
-        steerText.text = steerValue.ToString();
-        throttleText.text = throttleValue.ToString();
-        brakeText.text = brakeValue.ToString();
-        handbrakeText.text = handbrakeValue.ToString();
-        clutchText.text = clutchValue.ToString();
+    private void Start() {
+        RefreshUI();
     }
 
     private void OnSteerButtonClicked() {
         if (steerValue + .02f > .2f) steerValue = 0f;
         else steerValue += .02f;
-        carController.Inputs.steeringDeadzone = steerValue;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnThrottleButtonClicked() {
         if (throttleValue + .02f > .2f) throttleValue = 0f;
         else throttleValue += .02f;
-        carController.Inputs.throttleDeadzone = throttleValue;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnBrakeButtonClicked() {
         if (brakeValue + .02f > .2f) brakeValue = 0f;
         else brakeValue += .02f;
-        carController.Inputs.brakeDeadzone = brakeValue;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnHandbrakeButtonClicked() {
         if (handbrakeValue + .02f > .2f) handbrakeValue = 0f;
         else handbrakeValue += .02f;
-        carController.Inputs.handbrakeDeadzone = handbrakeValue;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnClutchButtonClicked() {
         if (clutchValue + .02f > .2f) clutchValue = 0f;
         else clutchValue += .02f;
-        carController.Inputs.clutchDeadzone = clutchValue;
+
+        ApplyToController();
+        RefreshUI();
     }
 
     private void OnTelemetryButtonClicked() {
         isTelemetry = !isTelemetry;
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        if (carController == null || carController.Inputs == null)
+            return;
+
+        carController.Inputs.steeringDeadzone = steerValue;
+        carController.Inputs.throttleDeadzone = throttleValue;
+        carController.Inputs.brakeDeadzone = brakeValue;
+        carController.Inputs.handbrakeDeadzone = handbrakeValue;
+        carController.Inputs.clutchDeadzone = clutchValue;
+    }
+
+    // Called only when a value changes, never per frame.
+    void RefreshUI() {
+        if (telemetryText != null) telemetryText.text = isTelemetry ? "On" : "Off";
+
+        if (steerText != null) steerText.text = steerValue.ToString();
+        if (throttleText != null) throttleText.text = throttleValue.ToString();
+        if (brakeText != null) brakeText.text = brakeValue.ToString();
+        if (handbrakeText != null) handbrakeText.text = handbrakeValue.ToString();
+        if (clutchText != null) clutchText.text = clutchValue.ToString();
     }
 
     private void OnDestroy() {
-        if (steerButton != null) steerButton.onClick.RemoveAllListeners();
-        if (throttleButton != null) throttleButton.onClick.RemoveAllListeners();
-        if (brakeButton != null) brakeButton.onClick.RemoveAllListeners();
-        if (handbrakeButton != null) handbrakeButton.onClick.RemoveAllListeners();
-        if (clutchButton != null) clutchButton.onClick.RemoveAllListeners();
-        if (telemetryButton != null) telemetryButton.onClick.RemoveAllListeners();
+        // RemoveAllListeners() also wiped anything wired in the Inspector on these buttons;
+        // unsubscribe only what this script added.
+        if (steerButton != null) steerButton.onClick.RemoveListener(OnSteerButtonClicked);
+        if (throttleButton != null) throttleButton.onClick.RemoveListener(OnThrottleButtonClicked);
+        if (brakeButton != null) brakeButton.onClick.RemoveListener(OnBrakeButtonClicked);
+        if (handbrakeButton != null) handbrakeButton.onClick.RemoveListener(OnHandbrakeButtonClicked);
+        if (clutchButton != null) clutchButton.onClick.RemoveListener(OnClutchButtonClicked);
+        if (telemetryButton != null) telemetryButton.onClick.RemoveListener(OnTelemetryButtonClicked);
     }
 }

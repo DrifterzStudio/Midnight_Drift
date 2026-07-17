@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent {
@@ -22,24 +21,30 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public static PropulsionType instance;
 
-
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            controller.FrontAxle.isSteer = tmp.frontAxleSteer;
-            controller.FrontAxle.isHandbrake = tmp.frontAxleHandbrake;
-            controller.RearAxle.isSteer = tmp.rearAxleSteer;
-            controller.RearAxle.isHandbrake = tmp.rearAxleHandbrake;
+            fIsSteer = tmp.frontAxleSteer;
+            fIsHandbrake = tmp.frontAxleHandbrake;
+            rIsSteer = tmp.rearAxleSteer;
+            rIsHandbrake = tmp.rearAxleHandbrake;
+
+            // driveType isn't persisted, only the axle flags it produces, so rebuild it from
+            // them. Without this the label would drift out of sync with the loaded car.
+            driveType = DeriveDriveType();
         }
+
+        ApplyToController();
+        RefreshUI();
     }
 
     public void SaveGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            tmp.frontAxleSteer = controller.FrontAxle.isSteer;
-            tmp.frontAxleHandbrake = controller.FrontAxle.isHandbrake;
-            tmp.rearAxleSteer = controller.RearAxle.isSteer;
-            tmp.rearAxleHandbrake = controller.RearAxle.isHandbrake;
+            tmp.frontAxleSteer = fIsSteer;
+            tmp.frontAxleHandbrake = fIsHandbrake;
+            tmp.rearAxleSteer = rIsSteer;
+            tmp.rearAxleHandbrake = rIsHandbrake;
         }
     }
 
@@ -49,66 +54,94 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public void SetController(RCCP_CarController newController) {
         controller = newController;
+        ApplyToController();
+        RefreshUI();
     }
-
-
-
-
 
     private void Awake() {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
-        DWTButton.onClick.AddListener(OnDWTButtonClicked);
+        if (DWTButton != null)
+            DWTButton.onClick.AddListener(OnDWTButtonClicked);
     }
 
-    private void Update() {
-        instance = this;
-
-        if (driveType == 0) {
-            DWTText.text = "Front wheels drive";
-            controller.FrontAxle.isSteer = true;
-            fIsSteer = true;
-            controller.FrontAxle.isHandbrake = true;
-            fIsHandbrake = true;
-            controller.RearAxle.isSteer = false;
-            rIsSteer = false;
-            controller.RearAxle.isHandbrake = false;
-            rIsHandbrake = false;
-        }
-        if (driveType == 1) {
-            DWTText.text = "Rear wheels drive"; 
-            controller.FrontAxle.isSteer = true;
-            fIsSteer = true;
-            controller.FrontAxle.isHandbrake = false;
-            fIsHandbrake = false;
-            controller.RearAxle.isSteer = false;
-            rIsSteer = false;
-            controller.RearAxle.isHandbrake = true;
-            rIsHandbrake = true;
-        }
-        if (driveType == 2) {
-            DWTText.text = "All wheels drive";
-            controller.FrontAxle.isSteer = true;
-            fIsSteer = true;
-            controller.FrontAxle.isHandbrake = true;
-            fIsHandbrake = true;
-            controller.RearAxle.isSteer = true;
-            rIsSteer = true;
-            controller.RearAxle.isHandbrake = true;
-            rIsHandbrake = true;
-        }
-
+    private void Start() {
+        RefreshUI();
     }
 
     private void OnDWTButtonClicked() {
         if (driveType + 1 > 2) driveType = 0;
         else driveType += 1;
-        
+
+        SetFlagsFromDriveType();
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void SetFlagsFromDriveType() {
+        switch (driveType) {
+            case 0:     // Front wheels drive
+                fIsSteer = true; fIsHandbrake = true;
+                rIsSteer = false; rIsHandbrake = false;
+                break;
+            case 1:     // Rear wheels drive
+                fIsSteer = true; fIsHandbrake = false;
+                rIsSteer = false; rIsHandbrake = true;
+                break;
+            default:    // All wheels drive
+                fIsSteer = true; fIsHandbrake = true;
+                rIsSteer = true; rIsHandbrake = true;
+                break;
+        }
+    }
+
+    int DeriveDriveType() {
+        if (rIsSteer && rIsHandbrake) return 2;
+        if (fIsHandbrake) return 0;
+        return 1;
+    }
+
+    /// <summary>
+    /// Braking's handbrake toggle routes through here. This script is the single owner of the
+    /// axle handbrake flags, so both used to write RearAxle.isHandbrake in an undefined order.
+    /// </summary>
+    public void SetRearHandbrake(bool enabled) {
+        rIsHandbrake = enabled;
+        ApplyToController();
+        RefreshUI();
+    }
+
+    // Previously this ran every frame from Update(), which re-applied the whole drive setup
+    // 60x/sec and overwrote anything else touching the axles. Now it only runs on a real change.
+    void ApplyToController() {
+        if (controller == null)
+            return;
+
+        if (controller.FrontAxle != null) {
+            controller.FrontAxle.isSteer = fIsSteer;
+            controller.FrontAxle.isHandbrake = fIsHandbrake;
+        }
+
+        if (controller.RearAxle != null) {
+            controller.RearAxle.isSteer = rIsSteer;
+            controller.RearAxle.isHandbrake = rIsHandbrake;
+        }
+    }
+
+    void RefreshUI() {
+        if (DWTText == null)
+            return;
+
+        switch (driveType) {
+            case 0: DWTText.text = "Front wheels drive"; break;
+            case 1: DWTText.text = "Rear wheels drive"; break;
+            default: DWTText.text = "All wheels drive"; break;
+        }
     }
 
     private void OnDestroy() {
-         DWTButton.onClick.RemoveAllListeners();
+        if (DWTButton != null)
+            DWTButton.onClick.RemoveListener(OnDWTButtonClicked);
     }
-
 }

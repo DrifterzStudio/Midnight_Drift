@@ -31,6 +31,11 @@ public class EnginePower : MonoBehaviour, IDataPersistence, IVehicleDependent {
             minEnginePowerValue = tmp.minEnginePowerValue;
             maxEnginePowerValue = tmp.maxEnginePowerValue;
         }
+
+        // LoadGame runs after SetController, so the controller still holds the pre-load values
+        // until we push them again here.
+        ApplyToController();
+        RefreshUI();
     }
 
     public string getDataFileName() {
@@ -39,11 +44,8 @@ public class EnginePower : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public void SetController(RCCP_CarController newController) {
         controller = newController;
-
-        if (controller.Engine != null) {
-            controller.Engine.minEngineRPM = minEnginePowerValue;
-            controller.Engine.maxEngineRPM = maxEnginePowerValue;
-        }
+        ApplyToController();
+        RefreshUI();
     }
 
     void Awake() {
@@ -51,9 +53,8 @@ public class EnginePower : MonoBehaviour, IDataPersistence, IVehicleDependent {
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    private void Update() {
-        minText.text = minEnginePowerValue.ToString();
-        maxText.text = maxEnginePowerValue.ToString();
+    void Start() {
+        RefreshUI();
     }
 
     public void OnButtonClicked() {
@@ -70,9 +71,23 @@ public class EnginePower : MonoBehaviour, IDataPersistence, IVehicleDependent {
             minEnginePowerValue = 1700;
             maxEnginePowerValue = 9000;
         }
-        if (controller.Engine != null) {
-            controller.Engine.minEngineRPM = minEnginePowerValue;
-            controller.Engine.maxEngineRPM = maxEnginePowerValue;
-        }
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController() {
+        if (controller == null || controller.Engine == null)
+            return;
+
+        controller.Engine.minEngineRPM = minEnginePowerValue;
+        controller.Engine.maxEngineRPM = maxEnginePowerValue;
+    }
+
+    // Called only when a value actually changes. Writing .text marks the Canvas dirty and
+    // ToString() allocates, so doing this per frame in Update() rebuilt the UI continuously.
+    void RefreshUI() {
+        if (minText != null) minText.text = minEnginePowerValue.ToString();
+        if (maxText != null) maxText.text = maxEnginePowerValue.ToString();
     }
 }

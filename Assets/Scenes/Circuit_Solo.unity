@@ -78320,7 +78320,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7244054106247001883, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
   m_PrefabInstance: {fileID: 6261249600891301605}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6261249600891301606}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54a4ed26752a63946be6463955e96435, type: 3}
@@ -84033,8 +84033,62 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 331667537467588133, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6261249600891301610}
+    - targetCorrespondingSourceObject: {fileID: 331667537467588133, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6261249600891301612}
+    - targetCorrespondingSourceObject: {fileID: 331667537467588133, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6261249600891301611}
   m_SourcePrefab: {fileID: 100100000, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+--- !u!1 &6261249600891301606 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 331667537467588133, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+  m_PrefabInstance: {fileID: 6261249600891301605}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6261249600891301610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261249600891301606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27fafc6f2eb5fe41b528e42e1cb6a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadUpgrades
+  controller: {fileID: 0}
+--- !u!114 &6261249600891301611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261249600891301606}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fffc8d3095155440b93020c334a9ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadCustom
+  wheels: []
+  spoilers: []
+--- !u!114 &6261249600891301612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261249600891301606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f07e160a1cb36a4ebfbc35f6b44c41e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadCarModification
+  controller: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

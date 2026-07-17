@@ -16,10 +16,16 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
         DataPersistenceManager.instance.dataPersistenceObjects.Add(this);
     }
 
+    private void Start()
+    {
+        RefreshUI();
+    }
+
     public void SetController(RCCP_CarController newController)
     {
         controller = newController;
         ApplyToController();
+        RefreshUI();
     }
 
     public void LoadGame(IGameData data)
@@ -29,6 +35,7 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
         {
             brakePower = tmp.brakePower;
             ApplyToController();
+            RefreshUI();
         }
     }
 
@@ -48,12 +55,16 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public void ApplyToController()
     {
-        if (controller != null)
+        if (controller != null && controller.Engine != null)
             controller.Engine.engineBrakingCoefficient = brakePower;
     }
 
-    private void Update()
+    // Called only when the value changes, never per frame.
+    void RefreshUI()
     {
+        if (brakePowerText == null)
+            return;
+
         if (brakePower == 0.15f) brakePowerText.text = "Normal";
         else if (brakePower == 0.17f) brakePowerText.text = "Upgraded";
         else if (brakePower == 0.2f) brakePowerText.text = "Max";
@@ -64,5 +75,6 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
         if (brakePower == 0.15f) brakePower = 0.17f;
         else if (brakePower == 0.17f) brakePower = 0.2f;
         ApplyToController();
+        RefreshUI();
     }
 }
