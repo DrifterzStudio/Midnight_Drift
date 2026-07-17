@@ -16,8 +16,7 @@ public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependen
     public void SaveGame(IGameData data) {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null) {
-            // 0 means "not bought". The previous version always wrote the constant, so a car
-            // that never bought this upgrade still loaded as if it had.
+            // 0 means "not bought", so an unowned upgrade doesn't get re-applied on load.
             tmp.carbonMass = isCarbon ? carbonMass : 0;
         }
     }
@@ -38,7 +37,6 @@ public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependen
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and OnButtonClicked threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -57,10 +55,7 @@ public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependen
         ApplyToController();
     }
 
-    /// <summary>
-    /// The original assigned the delta straight to Rigid.mass, setting the car to -200 kg, which
-    /// Unity rejects. It is a delta against the vehicle's stock mass.
-    /// </summary>
+    // carbonMass is a delta against the stock mass, not an absolute value.
     void ApplyToController() {
         if (!isCarbon || controller == null || controller.Rigid == null)
             return;

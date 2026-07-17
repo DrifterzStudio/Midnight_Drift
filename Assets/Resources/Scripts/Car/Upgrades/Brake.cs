@@ -59,7 +59,6 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
             controller.Engine.engineBrakingCoefficient = brakePower;
     }
 
-    // Called only when the value changes, never per frame.
     void RefreshUI()
     {
         if (brakePowerText == null)

@@ -34,8 +34,6 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
     public void LoadGame(IGameData data) {
         SaveSettings tmp = data as SaveSettings;
         if (tmp != null) {
-            // Went straight to controller.RearAxle before, which left this field at its default
-            // and threw when no car was shown.
             isHandbrake = tmp.isHandbrake;
             handbrakeMultiplier = tmp.handbrakeMultiplier;
             brakeMultiplier = tmp.brakeMultiplier;
@@ -58,7 +56,6 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and every click threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -108,22 +105,17 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (controller == null)
             return;
 
-        // isHandbrake is deliberately not written here: PropulsionType derives it from the drive
-        // layout (FWD/RWD/AWD) and owns it. Both scripts used to write RearAxle.isHandbrake with
-        // no deterministic order between them.
+        // isHandbrake is deliberately not written here: PropulsionType owns the axle handbrake flags.
         if (controller.RearAxle != null) {
             controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
             controller.RearAxle.brakeMultiplier = brakeMultiplier;
         }
 
-        // The original wrote FrontAxle.brakeMultiplier here, so the handbrake slider quietly
-        // retuned the front service brakes. LoadCarModification puts handbrakeMultiplier on both
-        // axles, which is the intent.
+        // handbrakeMultiplier goes on both axles, matching LoadCarModification.
         if (controller.FrontAxle != null)
             controller.FrontAxle.handbrakeMultiplier = handbrakeMultiplier;
     }
 
-    // Called only when a value changes, never per frame.
     void RefreshUI() {
         if (handbrakeText != null) handbrakeText.text = isHandbrake ? "On" : "Off";
         if (handbrakeMultiplierText != null) handbrakeMultiplierText.text = handbrakeMultiplier.ToString();

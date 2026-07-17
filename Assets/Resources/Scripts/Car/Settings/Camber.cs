@@ -50,7 +50,6 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and every click threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -66,7 +65,6 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (backButton != null) backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
-    // backButton was declared but wired to nothing, so this panel had no way out.
     private void OnBackButtonClicked() {
         if (Wheels.instance != null)
             Wheels.instance.ShowMenu();
@@ -104,7 +102,6 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         custom.cambersRear = rearAngle;
     }
 
-    // Called only when a value changes, never per frame.
     void RefreshUI() {
         if (frontAngleText != null) frontAngleText.text = "" + (int)frontAngle;
         if (rearAngleText != null) rearAngleText.text = "" + (int)rearAngle;

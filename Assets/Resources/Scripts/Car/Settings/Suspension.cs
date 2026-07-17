@@ -27,10 +27,8 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current value of suspension damper.")]
     public Text damperText;
 
-    // Soft / Stock / Stiff, centred on RCCP's defaults and inside the ranges its own
-    // customization sliders use (RCCP_Canvas): springs 10000-100000, dampers 1000-10000,
-    // distances 0.05-0.4, targets 0-1. These stepped 0 -> .5 -> 1 before, so one click set the
-    // spring to 1 instead of 55000 and dropped the car on its belly.
+    // Values inside the ranges RCCP's own customization sliders use (RCCP_Canvas): springs
+    // 10000-100000, dampers 1000-10000, distances 0.05-0.4, targets 0-1.
     private static readonly float[] DistSteps = { .1f, .2f, .3f };
     private static readonly float[] ForceSteps = { 40000f, 55000f, 70000f };
     private static readonly float[] TargetSteps = { .3f, .5f, .7f };
@@ -84,7 +82,6 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and every click threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -175,8 +172,7 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         custom.suspensionDamperRear = damperValue;
     }
 
-    // Called only when a value changes, never per frame. Shows Soft/Stock/Stiff rather than the
-    // raw figure: "55000" means nothing to a player.
+    // Shows the label rather than the raw figure: "55000" means nothing to a player.
     void RefreshUI() {
         if (distText != null) distText.text = DistLabels[NearestStepIndex(distValue, DistSteps)];
         if (forceText != null) forceText.text = ForceLabels[NearestStepIndex(forceValue, ForceSteps)];
@@ -211,8 +207,6 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
     }
 
     private void OnDestroy() {
-        // Every one of these used to unsubscribe from distButton regardless of which button was
-        // checked, so force/target/damper listeners leaked.
         if (distButton != null) distButton.onClick.RemoveListener(OnDistButtonClicked);
         if (forceButton != null) forceButton.onClick.RemoveListener(OnForceButtonClicked);
         if (targetButton != null) targetButton.onClick.RemoveListener(OnTargetButtonClicked);

@@ -52,8 +52,7 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current state of the clutch threshold.")]
     public Text clutchThresholdText;
 
-    // Anti-roll force used to live here too, fighting AntiRollBar (the Chassis upgrade) over
-    // FrontAxle.antirollForce with no deterministic order. AntiRollBar owns it now.
+    // Anti-roll force lives on AntiRollBar (the Chassis upgrade), not here.
 
     private bool isReverse = false;
     public GearState gearState = GearState.InForwardGear;
@@ -77,9 +76,8 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
             CTWS = tmp.CTWS;
             clutchThreshold = tmp.clutchThreshold;
 
-            // isReverse and gearboxType drive the labels but aren't persisted themselves, so
-            // rebuild them from the values that are. Update() used to hide this by rewriting
-            // the labels every frame.
+            // isReverse and gearboxType drive the labels but aren't persisted, so rebuild them
+            // from the values that are.
             isReverse = gearState == GearState.InReverseGear;
             gearboxType = TransmissionToIndex(transmissionType);
         }
@@ -212,8 +210,6 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
             carController.Inputs.cutThrottleWhenShifting = CTWS;
     }
 
-    // Called only when a value actually changes. Every label here used to be rewritten from
-    // Update(), allocating a string per field per frame and dirtying the Canvas continuously.
     void RefreshUI() {
         if (autoReverseText != null)
             autoReverseText.text = isReverse ? "On" : "Off";

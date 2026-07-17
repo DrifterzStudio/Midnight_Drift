@@ -67,7 +67,6 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
         else if (turbo1) controller.Engine.turbo1Charged = true;
     }
 
-    // Called only when the turbo count changes, never per frame.
     void RefreshUI() {
         if (turboNumber == null)
             return;

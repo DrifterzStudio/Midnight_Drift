@@ -84069,12 +84069,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6261249600891301606}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fffc8d3095155440b93020c334a9ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadCustom
+  controller: {fileID: 0}
   wheels: []
+  wheelMaterials: []
   spoilers: []
 --- !u!114 &6261249600891301612
 MonoBehaviour:

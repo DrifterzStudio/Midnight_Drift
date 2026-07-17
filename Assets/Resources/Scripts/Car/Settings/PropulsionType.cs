@@ -103,8 +103,8 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
     }
 
     /// <summary>
-    /// Braking's handbrake toggle routes through here. This script is the single owner of the
-    /// axle handbrake flags, so both used to write RearAxle.isHandbrake in an undefined order.
+    /// Braking's handbrake toggle routes through here, keeping this script the single owner of the
+    /// axle handbrake flags.
     /// </summary>
     public void SetRearHandbrake(bool enabled) {
         rIsHandbrake = enabled;
@@ -112,8 +112,7 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
         RefreshUI();
     }
 
-    // Previously this ran every frame from Update(), which re-applied the whole drive setup
-    // 60x/sec and overwrote anything else touching the axles. Now it only runs on a real change.
+    // Only runs on a real change, so it doesn't fight other systems touching the axles.
     void ApplyToController() {
         if (controller == null)
             return;

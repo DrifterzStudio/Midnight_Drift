@@ -6,9 +6,8 @@ using UnityEngine;
 /// Attach to the vehicle root (the object holding RCCP_CarController).
 ///
 /// Reads the SaveCustom container, which reaches this scene because SaveCustomData carries
-/// DontDestroy. It used to read ChangeSpoilers.instance / ChangeWheels.instance instead: those
-/// live on ComponentUpgrade, destroyed with the garage scene, so their statics pointed at dead
-/// objects and every "!= null" check silently failed Unity's fake-null test.
+/// DontDestroy, rather than the ChangeColor/ChangeWheels/ChangeSpoilers statics which are
+/// destroyed with the garage scene.
 /// </summary>
 public class LoadCustom : MonoBehaviour {
 

@@ -34,7 +34,6 @@ public class Slick : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' was never assigned: the garage car is
     // spawned at runtime and can't be dragged in from the Inspector.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
@@ -66,7 +65,6 @@ public class Slick : MonoBehaviour, IDataPersistence, IVehicleDependent {
         controller.AeroDynamics.wheelResistance = slickness;
     }
 
-    // Called only when the value changes, never per frame.
     void RefreshUI() {
         if (slick == null)
             return;

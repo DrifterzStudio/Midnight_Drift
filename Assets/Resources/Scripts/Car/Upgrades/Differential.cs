@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Cycles the vehicle's differential between Open, Limited-slip and Fully Locked.
-/// The whole script was an empty stub before: SaveGame, LoadGame and OnButtonClicked all had
-/// commented-out or empty bodies, so the button did nothing at all.
 /// </summary>
 public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
@@ -82,7 +80,6 @@ public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    // Called only when the mode changes, never per frame.
     void RefreshUI() {
         if (typeText != null)
             typeText.text = StepLabels[currentIdx];

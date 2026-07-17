@@ -38,24 +38,26 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public float rearSidewaysValue;
     public float frontSidewaysValue;
 
-    // Braking
-    public bool isHandbrake;
+    // Braking. Rear handbrake on by default, matching the RWD layout.
+    public bool isHandbrake = true;
     public float handbrakeMultiplier;
     public float brakeMultiplier;
 
-    // Gearbox
-    public GearState isReverse;
-    public TransmissionType transmissionType;
+    // Gearbox. LoadCarModification applies these unconditionally, so the defaults must be a
+    // drivable state (Forward + Automatic), not enum 0 (Park + Manual).
+    public GearState isReverse = GearState.InForwardGear;
+    public TransmissionType transmissionType = TransmissionType.Automatic;
     public float GSTValue;
     public float shiftingDelay;
     public bool CTWS = true;
     public float clutchThreshold;
 
-    // Propulsion Type
-    public bool frontAxleSteer;
-    public bool frontAxleHandbrake;
-    public bool rearAxleSteer;
-    public bool rearAxleHandbrake;
+    // Propulsion Type. Applied unconditionally too, so default to a drivable RWD layout (front
+    // steers, rear holds the handbrake); all-false would leave no axle steering.
+    public bool frontAxleSteer = true;
+    public bool frontAxleHandbrake = false;
+    public bool rearAxleSteer = false;
+    public bool rearAxleHandbrake = true;
 
 
     public static SaveSettings saveInstance;

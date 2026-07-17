@@ -82,17 +82,26 @@ public class ChangeColor : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (palette == null || palette.Length == 0)
             return;
 
-        int next = HasPaint ? (NearestPaletteIndex() + 1) % palette.Length : 0;
-
-        currentColor = palette[next].color;
-        currentColor.a = 1f;
+        if (!HasPaint) {
+            // From "Origine", enter the palette at the first colour.
+            currentColor = palette[0].color;
+            currentColor.a = 1f;
+        }
+        else if (NearestPaletteIndex() == palette.Length - 1) {
+            // Past the last colour, cycle back to the car's original paint.
+            currentColor = new Color(1f, 1f, 1f, 0f);
+        }
+        else {
+            currentColor = palette[NearestPaletteIndex() + 1].color;
+            currentColor.a = 1f;
+        }
 
         ApplyToController();
         RefreshUI();
     }
 
     void ApplyToController() {
-        if (!HasPaint || controller == null || controller.Customizer == null)
+        if (controller == null || controller.Customizer == null)
             return;
 
         RCCP_VehicleUpgrade_PaintManager paintManager = controller.Customizer.PaintManager;
@@ -100,12 +109,18 @@ public class ChangeColor : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (paintManager == null)
             return;
 
+        if (!HasPaint) {
+            // Restore() re-applies the colours RCCP captured from the material at init, undoing
+            // any instanced paint. That's what makes "Origine" truly reset the car.
+            paintManager.Restore();
+            return;
+        }
+
         // Paint() rather than PaintWithoutSave(): it also updates RCCP's own loadout, which the
         // Customizer restores on init and would otherwise overwrite our colour.
         paintManager.Paint(currentColor);
     }
 
-    // Called only when the colour changes, never per frame.
     void RefreshUI() {
         if (colorText == null)
             return;

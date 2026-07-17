@@ -43,9 +43,7 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current state of the arcade speed preservation.")]
     public Text ASPText;
 
-    // These used to live directly on GetVehicleBehaviorType(), so this script had no state of
-    // its own and every read threw before a car was shown. They are the source of truth now, and
-    // ApplyToController pushes them onto the behavior.
+    // Source of truth for these flags; ApplyToController pushes them onto RCCP_Stability.
     public bool ABS = true;
     public bool TCS = true;
     public bool ESP = true;
@@ -86,7 +84,6 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'carController' stayed null and every click threw.
     public void SetController(RCCP_CarController newController) {
         carController = newController;
         ApplyToController();
@@ -148,13 +145,9 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
     }
 
     /// <summary>
-    /// Writes to this vehicle's own RCCP_Stability. The original went through
-    /// GetVehicleBehaviorType(), which returns an object inside the shared RCCP_Settings
-    /// ScriptableObject: every car saw the change, and in the Editor it was written to disk and
-    /// survived Play Mode. RCCP_CarController only ever copies that behavior into Stability
-    /// (see its CheckBehavior), so Stability is the real per-vehicle home for these flags.
-    /// CheckBehavior runs once on spawn and on OnBehaviorChanged, both before SetController
-    /// reaches us, so these writes are not overwritten.
+    /// Writes to this vehicle's own RCCP_Stability, not GetVehicleBehaviorType() which is a shared
+    /// RCCP_Settings asset. RCCP_CarController copies that behavior into Stability in CheckBehavior
+    /// (spawn + OnBehaviorChanged), both before SetController reaches us, so these writes survive.
     /// </summary>
     void ApplyToController() {
         if (carController == null || carController.Stability == null)
@@ -168,7 +161,6 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         carController.Stability.preserveSpeedFactor = ASPValue;
     }
 
-    // Called only when a value changes, never per frame.
     void RefreshUI() {
         if (ABSText != null) ABSText.text = ABS ? "On" : "Off";
         if (TCSText != null) TCSText.text = TCS ? "On" : "Off";

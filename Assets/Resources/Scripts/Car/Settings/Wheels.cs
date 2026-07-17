@@ -38,9 +38,7 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     //public float steeringCurve;
 
-    // Slow / Normal / Fast, inside RCCP_Axle.steerSpeed's own [.01, 5] range, centred on its
-    // default of 1. This stepped 0 / .5 / 1 before, and 0 is below the minimum: the steering
-    // would have frozen solid.
+    // Inside RCCP_Axle.steerSpeed's [.01, 5] range (0 would freeze the steering), centred on 1.
     private static readonly float[] SensitivitySteps = { .5f, 1f, 2f };
     private static readonly string[] SensitivityLabels = { "Slow", "Normal", "Fast" };
 
@@ -71,7 +69,6 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and the sensitivity click threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -113,9 +110,8 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
     }
 
     /// <summary>
-    /// Hides the menu and reveals one sub-panel. This used to call gameObject.SetActive(false),
-    /// which disabled whatever object the script sits on: with every settings script living on
-    /// ComponentUpgrade, one click took the entire customization menu down with it.
+    /// Hides the menu and reveals one sub-panel. Toggles wheelsMenu, not this GameObject: every
+    /// settings script lives on ComponentUpgrade, so disabling it would take the whole menu down.
     /// </summary>
     void ShowSubPanel(GameObject panel) {
         if (panel == null)
@@ -157,11 +153,8 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
     }
 
     /// <summary>
-    /// Drives RCCP_Axle.steerSpeed, how fast the wheels reach the requested angle. The original
-    /// wrote GetVehicleBehaviorType().steeringSensitivity, wrong twice over: that object lives
-    /// inside the shared RCCP_Settings ScriptableObject (so the write hit every vehicle and was
-    /// saved to disk in the Editor), and RCCP reads steeringSensitivity nowhere, so it steered
-    /// nothing regardless.
+    /// Drives RCCP_Axle.steerSpeed, how fast the wheels reach the requested angle. Not
+    /// steeringSensitivity, which RCCP declares but reads nowhere.
     /// </summary>
     void ApplyToController() {
         if (controller == null)
@@ -175,7 +168,6 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
             controller.RearAxle.steerSpeed = sensitivityValue;
     }
 
-    // Called only when the value changes, never per frame.
     void RefreshUI() {
         if (sterringSensitivityText != null)
             sterringSensitivityText.text = SensitivityLabels[NearestStepIndex(sensitivityValue)];

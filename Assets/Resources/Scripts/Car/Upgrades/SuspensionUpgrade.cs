@@ -41,7 +41,6 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDepend
         return dataFileName;
     }
 
-    // Was missing IVehicleDependent, so 'controller' stayed null and OnButtonClicked threw.
     public void SetController(RCCP_CarController newController) {
         controller = newController;
         ApplyToController();
@@ -85,9 +84,7 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDepend
             return;
         }
 
-        // No fine-tuning tab in this scene, so apply the base directly. The original wrote
-        // controller.transform.up.Set(..., newY, ...), a no-op: transform.up returns a Vector3
-        // copy, so Set() mutated a temporary that was discarded.
+        // No fine-tuning tab in this scene, so apply the base directly.
         custom.suspensionDistanceFront = newY;
         custom.suspensionDistanceRear = newY;
     }
@@ -105,7 +102,6 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDepend
         return 0;
     }
 
-    // Called only when the value changes, never per frame.
     void RefreshUI() {
         if (typeText == null)
             return;

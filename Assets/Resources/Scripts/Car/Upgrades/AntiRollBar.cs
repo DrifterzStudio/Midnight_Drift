@@ -62,7 +62,6 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
         if (controller.RearAxle != null) controller.RearAxle.antirollForce = antiRollBarValue;
     }
 
-    // Called only when the value changes, never per frame.
     void RefreshUI()
     {
         if (ARBText != null) ARBText.text = antiRollBarValue.ToString();

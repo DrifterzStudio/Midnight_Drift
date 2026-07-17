@@ -79,7 +79,6 @@ public class GearboxRatio : MonoBehaviour, IDataPersistence, IVehicleDependent {
             controller.Gearbox.gearRatios = gearRatios;
     }
 
-    // Called only when the upgrade level changes, never per frame.
     void RefreshUI() {
         if (ratioText == null)
             return;

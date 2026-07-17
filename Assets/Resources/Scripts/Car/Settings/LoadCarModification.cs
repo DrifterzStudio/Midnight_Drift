@@ -4,11 +4,8 @@ using UnityEngine;
 /// Applies the settings tuned in the garage to this vehicle when its scene loads.
 /// Attach to the vehicle root (the object holding RCCP_CarController).
 ///
-/// Reads the SaveSettings container rather than the garage's Gearbox/PropulsionType/... script
-/// instances: those live on ComponentUpgrade, which has no DontDestroy and is destroyed with the
-/// garage scene. Their static 'instance' then points at a destroyed object, so every
-/// "if (X.instance != null)" silently failed Unity's fake-null check and nothing was applied.
-///
+/// Reads the SaveSettings container, which persists via DontDestroy, rather than the garage's
+/// Gearbox/PropulsionType/... statics which are destroyed with the garage scene.
 /// </summary>
 public class LoadCarModification : MonoBehaviour {
 
@@ -104,9 +101,10 @@ public class LoadCarModification : MonoBehaviour {
             if (controller.RearAxle != null) controller.RearAxle.steerSpeed = data.sensitivityValue;
         }
 
-        // Gearbox
+        // Gearbox. gearState (Park/Reverse/Neutral/Forward) is deliberately not applied: it is
+        // transient runtime state, not a tuning choice, and forcing it (Park especially) would
+        // stall the car at the start of a race. RCCP manages it from the prefab default.
         if (controller.Gearbox != null) {
-            controller.Gearbox.currentGearState.gearState = data.isReverse;
             controller.Gearbox.transmissionType = data.transmissionType;
 
             if (data.GSTValue > 0f) controller.Gearbox.shiftThreshold = data.GSTValue;
