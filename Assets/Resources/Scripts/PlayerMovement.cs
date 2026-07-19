@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // don't turn the camera while paused (timeScale 0)
+        if (Time.timeScale == 0f)
+            return;
+
         xRotation -= lookInput.y * mouseSensitivity;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

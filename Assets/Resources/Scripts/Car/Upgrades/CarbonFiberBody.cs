@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -11,19 +12,26 @@ public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependen
 
     private bool isCarbon = false;
 
+    // read by Lightened so both can rebase the shared mass together
+    public bool IsCarbon => isCarbon;
+
     public static CarbonFiberBody instance;
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
-            // 0 means "not bought", so an unowned upgrade doesn't get re-applied on load.
+        if (tmp != null)
+        {
+            // 0 = not bought, so an unowned upgrade isn't re-applied on load
             tmp.carbonMass = isCarbon ? carbonMass : 0;
         }
     }
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             isCarbon = tmp.carbonMass != 0;
 
             if (isCarbon)
@@ -33,46 +41,60 @@ public class CarbonFiberBody : MonoBehaviour, IDataPersistence, IVehicleDependen
         ApplyToController();
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
     }
 
-    void Awake() {
+    void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    public void OnButtonClicked() {
-        if (isCarbon)
-            return;
-
-        isCarbon = true;
+    public void OnButtonClicked()
+    {
+        // toggle on/off so you can cancel it
+        isCarbon = !isCarbon;
         ApplyToController();
     }
 
-    // carbonMass is a delta against the stock mass, not an absolute value.
-    void ApplyToController() {
-        if (!isCarbon || controller == null || controller.Rigid == null)
+    // carbonMass is a delta from the stock mass, not an absolute value
+    void ApplyToController()
+    {
+        if (controller == null || controller.Rigid == null)
             return;
 
         float stockMass = StockMass;
 
         if (stockMass > 0f)
-            controller.Rigid.mass = stockMass + carbonMass;
+            controller.Rigid.mass = stockMass + CombinedMassDelta();
     }
 
-    /// <summary>
-    /// Read from the prefab rather than the live car: Lightened writes the same field, so reading
-    /// the instance would stack both deltas depending on which ran first. Rebasing each upgrade
-    /// on the stock mass is what makes them replace each other.
-    /// </summary>
-    float StockMass {
-        get {
+    // carbon replaces lightened when both are on. recompute from stock so toggling either one works
+    int CombinedMassDelta()
+    {
+        if (isCarbon)
+            return carbonMass;
+
+        if (Lightened.instance != null && Lightened.instance.IsLightened)
+            return Lightened.instance.lightenedMass;
+
+        return 0;
+    }
+
+    // read from the prefab, not the live car: Lightened writes the same field, so reading the
+    // instance could stack both deltas. rebasing on the stock mass is what makes them replace each other
+    float StockMass
+    {
+        get
+        {
             if (GameSession.SelectedVehicle == null || GameSession.SelectedVehicle.prefab == null)
                 return 0f;
 

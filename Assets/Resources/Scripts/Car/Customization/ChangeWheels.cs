@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeWheels : MonoBehaviour, IDataPersistence {
+public class ChangeWheels : MonoBehaviour, IDataPersistence
+{
 
     public string dataFileName;
 
@@ -16,33 +17,40 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
     public static ChangeWheels instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveCustom tmp = data as SaveCustom;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             materialIndex = tmp.currentMat;
         }
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveCustom tmp = data as SaveCustom;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.currentMat = materialIndex;
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
 
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
-        
+
     }
 
-    void Update() {
+    void Update()
+    {
         instance = this;
 
         meshRenderer[0].material = materials[materialIndex];
@@ -54,17 +62,20 @@ public class ChangeWheels : MonoBehaviour, IDataPersistence {
 
     }
 
-    public void OnButtonClicked() {
+    public void OnButtonClicked()
+    {
         if (materialIndex + 1 > materials.Count - 1) materialIndex = 0;
         else materialIndex += 1;
     }
 
 
-    public int GetMatIndex() {
+    public int GetMatIndex()
+    {
         return materialIndex;
     }
 
-    public Material GetCurrentMat() { 
-        return materials[materialIndex]; 
+    public Material GetCurrentMat()
+    {
+        return materials[materialIndex];
     }
 }

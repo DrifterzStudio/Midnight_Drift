@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -17,92 +18,109 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDepend
 
     public static SuspensionUpgrade instance;
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.newY = newY;
             tmp.tilts = tilts;
         }
     }
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
+        if (tmp != null && tmp.newY > 0f)
+        {
             newY = tmp.newY;
             tilts = tmp.tilts;
-            suspensionIdx = DeriveSuspensionIdx();
         }
+        else
+        {
+            // no saved upgrade, stock ride height
+            newY = 0.2f;
+        }
+        suspensionIdx = DeriveSuspensionIdx();
 
         ApplyToController();
         RefreshUI();
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    void Awake() {
+    void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    public void OnButtonClicked() {
-        if (suspensionIdx < 2) suspensionIdx += 1;
+    public void OnButtonClicked()
+    {
+        // cycle Normal -> Low -> Drift -> Normal, past Drift goes back to stock
+        suspensionIdx = (suspensionIdx + 1) % 3;
 
         if (suspensionIdx == 0) newY = 0.2f;
         else if (suspensionIdx == 1) newY = 0.15f;
-        else if (suspensionIdx == 2) newY = 0.1f;
+        else newY = 0.1f;
 
         ApplyToController();
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         RCCP_CustomizationData custom = CustomizationData;
 
         if (custom == null)
             return;
 
-        if (suspensionIdx == 2)
-            custom.cambersFront = tilts;
+        // camber only at Drift, clear it otherwise
+        custom.cambersFront = (suspensionIdx == 2) ? tilts : 0f;
 
-        // Ride height is written by Suspension, not here: it layers its own trim on top of this
-        // base and both scripts would otherwise fight over suspensionDistance in an undefined
-        // order. Ask it to re-apply so the new base takes effect immediately.
-        if (Suspension.instance != null) {
+        // Suspension writes the ride height, not us - it layers its own trim on this base. ask it
+        // to re-apply so the new base kicks in right away.
+        if (Suspension.instance != null)
+        {
             Suspension.instance.ReapplySuspension();
             return;
         }
 
-        // No fine-tuning tab in this scene, so apply the base directly.
+        // no fine-tuning tab in this scene, so apply the base directly
         custom.suspensionDistanceFront = newY;
         custom.suspensionDistanceRear = newY;
     }
 
-    /// <summary>
-    /// Base ride height this upgrade level grants, which Suspension trims around.
-    /// </summary>
-    public float BaseRideHeight {
+    // base ride height for this level, which Suspension trims around
+    public float BaseRideHeight
+    {
         get { return newY; }
     }
 
-    int DeriveSuspensionIdx() {
+    int DeriveSuspensionIdx()
+    {
         if (newY <= 0.1f) return 2;
         if (newY <= 0.15f) return 1;
         return 0;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (typeText == null)
             return;
 
@@ -111,8 +129,10 @@ public class SuspensionUpgrade : MonoBehaviour, IDataPersistence, IVehicleDepend
         else if (suspensionIdx == 2) typeText.text = "Drift";
     }
 
-    RCCP_CustomizationData CustomizationData {
-        get {
+    RCCP_CustomizationData CustomizationData
+    {
+        get
+        {
             if (controller == null || controller.Customizer == null || controller.Customizer.loadout == null)
                 return null;
 

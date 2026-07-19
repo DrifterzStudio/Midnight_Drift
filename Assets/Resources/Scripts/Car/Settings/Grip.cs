@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -34,9 +35,11 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Grip instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             forwardValue = tmp.forwardValue;
             rearSidewaysValue = tmp.rearSidewaysValue;
             frontSidewaysValue = tmp.frontSidewaysValue;
@@ -46,26 +49,31 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.forwardValue = forwardValue;
             tmp.rearSidewaysValue = rearSidewaysValue;
             tmp.frontSidewaysValue = frontSidewaysValue;
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -75,16 +83,19 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (backButton != null) backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
-    private void OnBackButtonClicked() {
+    private void OnBackButtonClicked()
+    {
         if (Wheels.instance != null)
             Wheels.instance.ShowMenu();
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnForwardButtonClicked() {
+    private void OnForwardButtonClicked()
+    {
         if (forwardValue + 0.1f > 1) forwardValue = 0;
         else forwardValue += 0.1f;
 
@@ -92,7 +103,8 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnRearSidewaysButtonClicked() {
+    private void OnRearSidewaysButtonClicked()
+    {
         if (rearSidewaysValue + 0.1f > 1) rearSidewaysValue = 0;
         else rearSidewaysValue += 0.1f;
 
@@ -100,7 +112,8 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnFrontSidewaysButtonClicked() {
+    private void OnFrontSidewaysButtonClicked()
+    {
         if (frontSidewaysValue + 0.1f > 1) frontSidewaysValue = 0;
         else frontSidewaysValue += 0.1f;
 
@@ -108,7 +121,8 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         if (controller == null || controller.Stability == null)
             return;
 
@@ -117,13 +131,15 @@ public class Grip : MonoBehaviour, IDataPersistence, IVehicleDependent {
         controller.Stability.driftFrontSidewaysStiffnessMin = frontSidewaysValue;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (forwardText != null) forwardText.text = "" + forwardValue;
         if (rearSidewaysText != null) rearSidewaysText.text = "" + rearSidewaysValue;
         if (frontSidewaysText != null) frontSidewaysText.text = "" + frontSidewaysValue;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (forwardButton != null) forwardButton.onClick.RemoveListener(OnForwardButtonClicked);
         if (rearSidewaysButton != null) rearSidewaysButton.onClick.RemoveListener(OnRearSidewaysButtonClicked);
         if (frontSidewaysButton != null) frontSidewaysButton.onClick.RemoveListener(OnFrontSidewaysButtonClicked);

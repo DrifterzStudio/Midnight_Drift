@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -27,23 +28,23 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current value of suspension damper.")]
     public Text damperText;
 
-    // Values inside the ranges RCCP's own customization sliders use (RCCP_Canvas): springs
-    // 10000-100000, dampers 1000-10000, distances 0.05-0.4, targets 0-1.
+    // values within RCCP's own slider ranges (RCCP_Canvas): springs 10000-100000, dampers
+    // 1000-10000, distances 0.05-0.4, targets 0-1
     private static readonly float[] DistSteps = { .1f, .2f, .3f };
     private static readonly float[] ForceSteps = { 40000f, 55000f, 70000f };
     private static readonly float[] TargetSteps = { .3f, .5f, .7f };
     private static readonly float[] DamperSteps = { 2500f, 3500f, 4500f };
 
-    // One label set per parameter: Soft/Stiff only describes a spring or a damper, not a height.
+    // one label set per param: Soft/Stiff is for a spring or damper, not a height
     private static readonly string[] DistLabels = { "Low", "Stock", "High" };
     private static readonly string[] ForceLabels = { "Soft", "Stock", "Stiff" };
     private static readonly string[] DamperLabels = { "Soft", "Stock", "Stiff" };
 
-    // Inverted on purpose: targetPosition runs 0 (fully extended) to 1 (fully compressed), so a
-    // higher number rests the car lower.
+    // inverted on purpose: targetPosition goes 0 (fully extended) to 1 (fully compressed), so a
+    // higher number sits the car lower.
     private static readonly string[] TargetLabels = { "High", "Stock", "Low" };
 
-    // RCCP's own customization sliders clamp ride height to 0.05 - 0.4, with 0.2 as stock.
+    // RCCP's sliders clamp ride height to 0.05 - 0.4, stock is 0.2
     private const float StockRideHeight = .2f;
     private const float MinRideHeight = .05f;
     private const float MaxRideHeight = .4f;
@@ -55,9 +56,11 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Suspension instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             distValue = tmp.distValue;
             forceValue = tmp.forceValue;
             targetValue = tmp.targetValue;
@@ -68,9 +71,11 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.distValue = distValue;
             tmp.forceValue = forceValue;
             tmp.targetValue = targetValue;
@@ -78,17 +83,20 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -98,47 +106,56 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (damperButton != null) damperButton.onClick.AddListener(OnDamperButtonClicked);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnDistButtonClicked() {
+    private void OnDistButtonClicked()
+    {
         distValue = NextStep(distValue, DistSteps);
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnForceButtonClicked() {
+    private void OnForceButtonClicked()
+    {
         forceValue = NextStep(forceValue, ForceSteps);
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnTargetButtonClicked() {
+    private void OnTargetButtonClicked()
+    {
         targetValue = NextStep(targetValue, TargetSteps);
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnDamperButtonClicked() {
+    private void OnDamperButtonClicked()
+    {
         damperValue = NextStep(damperValue, DamperSteps);
         ApplyToController();
         RefreshUI();
     }
 
-    static float NextStep(float current, float[] steps) {
+    static float NextStep(float current, float[] steps)
+    {
         return steps[(NearestStepIndex(current, steps) + 1) % steps.Length];
     }
 
-    // The saved value is the raw setting, not an index, so the cursor is rebuilt from it.
-    static int NearestStepIndex(float value, float[] steps) {
+    // the saved value is the raw setting, not an index, so the cursor is rebuilt from it
+    static int NearestStepIndex(float value, float[] steps)
+    {
         int nearest = 0;
         float smallestDelta = Mathf.Abs(value - steps[0]);
 
-        for (int i = 1; i < steps.Length; i++) {
+        for (int i = 1; i < steps.Length; i++)
+        {
             float delta = Mathf.Abs(value - steps[i]);
 
-            if (delta < smallestDelta) {
+            if (delta < smallestDelta)
+            {
                 smallestDelta = delta;
                 nearest = i;
             }
@@ -147,16 +164,16 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return nearest;
     }
 
-    /// <summary>
-    /// Lets SuspensionUpgrade push a new base ride height through the single owner of
-    /// suspensionDistance, instead of writing the field itself behind our back.
-    /// </summary>
-    public void ReapplySuspension() {
+    // lets SuspensionUpgrade set a new base ride height through us (the single owner of
+    // suspensionDistance) instead of writing the field itself.
+    public void ReapplySuspension()
+    {
         ApplyToController();
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         RCCP_CustomizationData custom = CustomizationData;
 
         if (custom == null)
@@ -172,21 +189,21 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         custom.suspensionDamperRear = damperValue;
     }
 
-    // Shows the label rather than the raw figure: "55000" means nothing to a player.
-    void RefreshUI() {
+    // shows the label, not the raw number - "55000" means nothing to a player
+    void RefreshUI()
+    {
         if (distText != null) distText.text = DistLabels[NearestStepIndex(distValue, DistSteps)];
         if (forceText != null) forceText.text = ForceLabels[NearestStepIndex(forceValue, ForceSteps)];
         if (targetText != null) targetText.text = TargetLabels[NearestStepIndex(targetValue, TargetSteps)];
         if (damperText != null) damperText.text = DamperLabels[NearestStepIndex(damperValue, DamperSteps)];
     }
 
-    /// <summary>
-    /// The Chassis upgrade sets the base ride height (Normal/Low/Drift); this tab trims around
-    /// it. distValue is that trim, expressed as an offset from the stock 0.2 m, so buying Drift
-    /// keeps the player's chosen trim instead of throwing it away.
-    /// </summary>
-    float RideHeight {
-        get {
+    // the Chassis upgrade sets the base ride height (Normal/Low/Drift), this tab trims around it.
+    // distValue is that trim (offset from the stock 0.2 m), so buying Drift keeps the player's trim.
+    float RideHeight
+    {
+        get
+        {
             float baseHeight = SuspensionUpgrade.instance != null
                 ? SuspensionUpgrade.instance.BaseRideHeight
                 : StockRideHeight;
@@ -197,8 +214,10 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    RCCP_CustomizationData CustomizationData {
-        get {
+    RCCP_CustomizationData CustomizationData
+    {
+        get
+        {
             if (controller == null || controller.Customizer == null || controller.Customizer.loadout == null)
                 return null;
 
@@ -206,7 +225,8 @@ public class Suspension : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (distButton != null) distButton.onClick.RemoveListener(OnDistButtonClicked);
         if (forceButton != null) forceButton.onClick.RemoveListener(OnForceButtonClicked);
         if (targetButton != null) targetButton.onClick.RemoveListener(OnTargetButtonClicked);

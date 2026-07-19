@@ -2,7 +2,8 @@ using UnityEngine;
 using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
-public class SaveSettings : MonoBehaviour, IGameData {
+public class SaveSettings : MonoBehaviour, IGameData
+{
 
     [Header("Save")]
     public string dataDirPath;
@@ -38,13 +39,13 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public float rearSidewaysValue;
     public float frontSidewaysValue;
 
-    // Braking. Rear handbrake on by default, matching the RWD layout.
+    // braking. rear handbrake on by default (RWD layout)
     public bool isHandbrake = true;
     public float handbrakeMultiplier;
     public float brakeMultiplier;
 
-    // Gearbox. LoadCarModification applies these unconditionally, so the defaults must be a
-    // drivable state (Forward + Automatic), not enum 0 (Park + Manual).
+    // gearbox. LoadCarModification applies these no matter what, so the defaults have to be
+    // drivable (Forward + Automatic), not enum 0 (Park + Manual)
     public GearState isReverse = GearState.InForwardGear;
     public TransmissionType transmissionType = TransmissionType.Automatic;
     public float GSTValue;
@@ -52,8 +53,8 @@ public class SaveSettings : MonoBehaviour, IGameData {
     public bool CTWS = true;
     public float clutchThreshold;
 
-    // Propulsion Type. Applied unconditionally too, so default to a drivable RWD layout (front
-    // steers, rear holds the handbrake); all-false would leave no axle steering.
+    // propulsion. applied no matter what too, so default to a drivable RWD layout (front steers,
+    // rear holds the handbrake) - all-false would leave nothing steering
     public bool frontAxleSteer = true;
     public bool frontAxleHandbrake = false;
     public bool rearAxleSteer = false;
@@ -62,12 +63,14 @@ public class SaveSettings : MonoBehaviour, IGameData {
 
     public static SaveSettings saveInstance;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (saveInstance == null) saveInstance = this;
         DataPersistenceManager.instance.objectsData.Add(saveInstance);
     }
 
-    void IGameData.setData(IGameData data) {
+    void IGameData.setData(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
 
         distValue = tmp.distValue;
@@ -110,23 +113,28 @@ public class SaveSettings : MonoBehaviour, IGameData {
 
     }
 
-    string IGameData.getDataDirPath() {
+    string IGameData.getDataDirPath()
+    {
         return dataDirPath;
     }
 
-    string IGameData.getDataFileName() {
+    string IGameData.getDataFileName()
+    {
         return dataFileName;
     }
 
-    bool IGameData.useEncryption() {
+    bool IGameData.useEncryption()
+    {
         return useEncryption;
     }
 
-    string IGameData.getEncryptionKey() {
+    string IGameData.getEncryptionKey()
+    {
         return encryption;
     }
 
-    bool IGameData.usePrettyPrint() {
+    bool IGameData.usePrettyPrint()
+    {
         return usePrettyPrint;
     }
 }

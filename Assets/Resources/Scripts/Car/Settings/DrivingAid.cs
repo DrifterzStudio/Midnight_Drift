@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -43,7 +44,7 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current state of the arcade speed preservation.")]
     public Text ASPText;
 
-    // Source of truth for these flags; ApplyToController pushes them onto RCCP_Stability.
+    // source of truth for these flags. ApplyToController pushes them onto RCCP_Stability
     public bool ABS = true;
     public bool TCS = true;
     public bool ESP = true;
@@ -53,9 +54,11 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static DrivingAid instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             ABS = tmp.ABS;
             TCS = tmp.TCS;
             ESP = tmp.ESP;
@@ -68,9 +71,11 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.ABS = ABS;
             tmp.TCS = TCS;
             tmp.ESP = ESP;
@@ -80,17 +85,20 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         carController = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -102,41 +110,48 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (ASPButton != null) ASPButton.onClick.AddListener(OnASPButtonClicked);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnABSButtonClicked() {
+    private void OnABSButtonClicked()
+    {
         ABS = !ABS;
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnTCSButtonClicked() {
+    private void OnTCSButtonClicked()
+    {
         TCS = !TCS;
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnESPButtonClicked() {
+    private void OnESPButtonClicked()
+    {
         ESP = !ESP;
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnSHButtonClicked() {
+    private void OnSHButtonClicked()
+    {
         SH = !SH;
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnTHButtonClicked() {
+    private void OnTHButtonClicked()
+    {
         TH = !TH;
         ApplyToController();
         RefreshUI();
     }
 
-    private void OnASPButtonClicked() {
+    private void OnASPButtonClicked()
+    {
         if (ASPValue + .2f > 1.1f) ASPValue = 0f;
         else ASPValue += .2f;
 
@@ -144,12 +159,10 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    /// <summary>
-    /// Writes to this vehicle's own RCCP_Stability, not GetVehicleBehaviorType() which is a shared
-    /// RCCP_Settings asset. RCCP_CarController copies that behavior into Stability in CheckBehavior
-    /// (spawn + OnBehaviorChanged), both before SetController reaches us, so these writes survive.
-    /// </summary>
-    void ApplyToController() {
+    // writes to this car's own RCCP_Stability, not the shared RCCP_Settings asset. RCCP copies the
+    // behavior into Stability on spawn (before SetController reaches us), so writing here sticks per car.
+    void ApplyToController()
+    {
         if (carController == null || carController.Stability == null)
             return;
 
@@ -161,7 +174,8 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         carController.Stability.preserveSpeedFactor = ASPValue;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (ABSText != null) ABSText.text = ABS ? "On" : "Off";
         if (TCSText != null) TCSText.text = TCS ? "On" : "Off";
         if (ESPText != null) ESPText.text = ESP ? "On" : "Off";
@@ -170,7 +184,8 @@ public class DrivingAid : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (ASPText != null) ASPText.text = ASPValue.ToString();
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (ABSButton != null) ABSButton.onClick.RemoveListener(OnABSButtonClicked);
         if (TCSButton != null) TCSButton.onClick.RemoveListener(OnTCSButtonClicked);
         if (ESPButton != null) ESPButton.onClick.RemoveListener(OnESPButtonClicked);

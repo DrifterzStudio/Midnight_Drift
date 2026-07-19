@@ -1,52 +1,53 @@
 using UnityEngine;
 
-/// <summary>
-/// Applies the upgrades bought in the garage to this vehicle when its scene loads.
-/// Reads the SaveUpgrades container, which reaches this scene because SaveUpgradeData
-/// carries DontDestroy. Attach to the vehicle root (the object holding RCCP_CarController).
-/// </summary>
-public class LoadUpgrades : MonoBehaviour {
-
+// applies the garage upgrades to the car when the scene loads. reads the SaveUpgrades container
+// (it survives the scene change thanks to DontDestroy). put this on the vehicle root (the RCCP_CarController).
+public class LoadUpgrades : MonoBehaviour
+{
     [Tooltip("Left empty, it resolves from this GameObject. Every sub-component (engine, gearbox, " +
              "axles...) is reached through the controller, which finds them on its own.")]
     public RCCP_CarController controller;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (controller == null)
             controller = GetComponent<RCCP_CarController>();
 
         if (controller == null)
             controller = GetComponentInParent<RCCP_CarController>();
 
-        if (controller == null) {
+        if (controller == null)
+        {
             Debug.LogWarning("LoadUpgrades: no RCCP_CarController found, vehicle keeps its default setup.", this);
             return;
         }
 
         SaveUpgrades data = FindFirstObjectByType<SaveUpgrades>(FindObjectsInactive.Include);
 
-        if (data == null) {
+        if (data == null)
+        {
             Debug.LogWarning("LoadUpgrades: no SaveUpgrades found, vehicle keeps its default setup.", this);
             return;
         }
 
         // Engine
-        if (data.maxEnginePowerValue > 0 && controller.Engine != null) {
+        if (data.maxEnginePowerValue > 0 && controller.Engine != null)
+        {
             controller.Engine.minEngineRPM = data.minEnginePowerValue;
             controller.Engine.maxEngineRPM = data.maxEnginePowerValue;
         }
 
         // Turbo
-        if (controller.Engine != null) {
+        if (controller.Engine != null)
+        {
             controller.Engine.turbo1Charged = data.turbo1;
             controller.Engine.turbo2Charged = data.turbo2;
         }
 
-        // Chassis. Both fields are deltas against the stock mass, not absolute values: the
-        // original assigned them directly, setting the car to -50 or -200 kg. Read the stock
-        // mass before touching it, and let carbon win when both are owned, since the two
-        // upgrades replace each other rather than stack.
-        if (controller.Rigid != null) {
+        // Chassis. the mass values are deltas from the stock mass, not absolute. read stock first,
+        // and let carbon win over lightened when both are owned (they replace each other, don't stack)
+        if (controller.Rigid != null)
+        {
             float stockMass = controller.Rigid.mass;
 
             if (data.carbonMass != 0)
@@ -56,15 +57,16 @@ public class LoadUpgrades : MonoBehaviour {
         }
 
         // AntiRollBar
-        if (data.antiRollBarValue > 0) {
+        if (data.antiRollBarValue > 0)
+        {
             if (controller.FrontAxle != null) controller.FrontAxle.antirollForce = data.antiRollBarValue;
             if (controller.RearAxle != null) controller.RearAxle.antirollForce = data.antiRollBarValue;
         }
 
-        // Suspension. newY is the ride height, mirroring SuspensionUpgrade: the original wrote
-        // controller.transform.up.Set(..., newY, ...), a no-op on a returned Vector3 copy.
-        // Cambers only come with the lowest (drift) level, as in SuspensionUpgrade.
-        if (data.newY != 0 && CustomizationData != null) {
+        // Suspension. newY is the ride height (same as SuspensionUpgrade). cambers only on the
+        // lowest (drift) level.
+        if (data.newY != 0 && CustomizationData != null)
+        {
             CustomizationData.suspensionDistanceFront = data.newY;
             CustomizationData.suspensionDistanceRear = data.newY;
 
@@ -83,27 +85,32 @@ public class LoadUpgrades : MonoBehaviour {
         if (data.brakePower > 0 && controller.Engine != null)
             controller.Engine.engineBrakingCoefficient = data.brakePower;
 
-        // Differential. Mirrors Differential's own list of modes; Differentials is an array
-        // because an AWD car carries one per axle plus a centre one.
-        if (controller.Differentials != null) {
+        // Differential. same mode list as the Differential upgrade. Differentials is an array
+        // (awd cars have one per axle + a centre one).
+        if (controller.Differentials != null)
+        {
             RCCP_Differential.DifferentialType mode = DifferentialModeFor(data.differentialType);
 
-            foreach (RCCP_Differential differential in controller.Differentials) {
+            foreach (RCCP_Differential differential in controller.Differentials)
+            {
                 if (differential != null)
                     differential.differentialType = mode;
             }
         }
     }
 
-    static RCCP_Differential.DifferentialType DifferentialModeFor(int index) {
+    static RCCP_Differential.DifferentialType DifferentialModeFor(int index)
+    {
         if (index <= 0) return RCCP_Differential.DifferentialType.Open;
         if (index == 1) return RCCP_Differential.DifferentialType.Limited;
 
         return RCCP_Differential.DifferentialType.FullLocked;
     }
 
-    RCCP_CustomizationData CustomizationData {
-        get {
+    RCCP_CustomizationData CustomizationData
+    {
+        get
+        {
             if (controller.Customizer == null || controller.Customizer.loadout == null)
                 return null;
 

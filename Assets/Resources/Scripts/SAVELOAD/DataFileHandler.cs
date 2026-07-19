@@ -5,7 +5,8 @@ using UnityEngine;
 public class DataFileHandler
 {
 
-    public void load(IGameData data, string fullPath)
+    // true if a file was actually read. false = no save yet for this key
+    public bool load(IGameData data, string fullPath)
     {
         if (File.Exists(fullPath))
         {
@@ -19,6 +20,7 @@ public class DataFileHandler
                 }
 
                 JsonUtility.FromJsonOverwrite(dataToLoad, data);
+                return true;
 
             }
             catch (Exception e)
@@ -26,10 +28,8 @@ public class DataFileHandler
                 Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
             }
         }
-        else {
-            Debug.LogError("Path not found: " + fullPath);
-        }
 
+        return false;
     }
 
     public void save(IGameData data, string fullPath)

@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -27,9 +28,11 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Camber instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             frontAngle = tmp.frontAngle;
             rearAngle = tmp.rearAngle;
         }
@@ -38,25 +41,30 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.frontAngle = frontAngle;
             tmp.rearAngle = rearAngle;
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -65,18 +73,21 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (backButton != null) backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
-    private void OnBackButtonClicked() {
+    private void OnBackButtonClicked()
+    {
         if (Wheels.instance != null)
             Wheels.instance.ShowMenu();
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
     // -10..+10 in 5-degree steps. Went to +/-15 before, outside the -10..10 range RCCP uses on
     // its own camber sliders.
-    private void OnFrontButtonClicked() {
+    private void OnFrontButtonClicked()
+    {
         if (frontAngle + 5f > 10f) frontAngle = -10f;
         else frontAngle += 5f;
 
@@ -84,7 +95,8 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnRearButtonClicked() {
+    private void OnRearButtonClicked()
+    {
         if (rearAngle + 5f > 10f) rearAngle = -10f;
         else rearAngle += 5f;
 
@@ -92,7 +104,8 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         RCCP_CustomizationData custom = CustomizationData;
 
         if (custom == null)
@@ -102,13 +115,16 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         custom.cambersRear = rearAngle;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (frontAngleText != null) frontAngleText.text = "" + (int)frontAngle;
         if (rearAngleText != null) rearAngleText.text = "" + (int)rearAngle;
     }
 
-    RCCP_CustomizationData CustomizationData {
-        get {
+    RCCP_CustomizationData CustomizationData
+    {
+        get
+        {
             if (controller == null || controller.Customizer == null || controller.Customizer.loadout == null)
                 return null;
 
@@ -116,7 +132,8 @@ public class Camber : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (frontButton != null) frontButton.onClick.RemoveListener(OnFrontButtonClicked);
         if (rearButton != null) rearButton.onClick.RemoveListener(OnRearButtonClicked);
         if (backButton != null) backButton.onClick.RemoveListener(OnBackButtonClicked);

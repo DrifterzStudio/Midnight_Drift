@@ -33,7 +33,8 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null)
         {
-            antiRollBarValue = tmp.antiRollBarValue;
+            // 0 = not saved yet, fall back to stock
+            antiRollBarValue = tmp.antiRollBarValue > 0 ? tmp.antiRollBarValue : 500;
             ApplyToController();
             RefreshUI();
         }
@@ -69,8 +70,10 @@ public class AntiRollBar : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public void OnButtonClicked()
     {
+        // cycle 500 -> 1000 -> 1500 -> 500, past the last one goes back to stock
         if (antiRollBarValue == 500) antiRollBarValue = 1000;
         else if (antiRollBarValue == 1000) antiRollBarValue = 1500;
+        else antiRollBarValue = 500;
         ApplyToController();
         RefreshUI();
     }

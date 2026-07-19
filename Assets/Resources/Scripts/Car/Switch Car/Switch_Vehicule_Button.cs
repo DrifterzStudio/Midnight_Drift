@@ -3,10 +3,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Switch car with a button.
-/// </summary>
-public class SwitchVehiculeButton : MonoBehaviour {
+// switch car with a button
+public class SwitchVehiculeButton : MonoBehaviour
+{
     [Tooltip("The button that change the car.")]
     [Space()]
     public Button switchCarButton;
@@ -18,40 +17,51 @@ public class SwitchVehiculeButton : MonoBehaviour {
     private GameObject activeCar = null;
     private int whichCar = 0;
 
-    private void Awake() {
-        if (switchCarButton == null) {
+    private void Awake()
+    {
+        if (switchCarButton == null)
+        {
             return;
         }
         switchCarButton.onClick.AddListener(OnButtonClicked);
 
-        if (activeCar == null && cars.Count >= 1) {
+        if (activeCar == null && cars.Count >= 1)
+        {
             activeCar = cars[0];
         }
         SwitchCar();
     }
 
-    private void OnButtonClicked() {
-        if (whichCar == 0) {
+    private void OnButtonClicked()
+    {
+        if (whichCar == 0)
+        {
             whichCar = cars.Count - 1;
         }
-        else {
+        else
+        {
             whichCar--;
         }
         SwitchCar();
     }
 
-    private void SwitchCar() {
+    private void SwitchCar()
+    {
         activeCar = cars[whichCar];
         activeCar.SetActive(true);
-        for (int i = 0; i < cars.Count; i++) {
-            if (cars[i] != activeCar) {
+        for (int i = 0; i < cars.Count; i++)
+        {
+            if (cars[i] != activeCar)
+            {
                 cars[i].SetActive(false);
             }
         }
     }
 
-    private void OnDestroy() {
-        if (switchCarButton != null) {
+    private void OnDestroy()
+    {
+        if (switchCarButton != null)
+        {
             switchCarButton.onClick.RemoveListener(OnButtonClicked);
         }
     }

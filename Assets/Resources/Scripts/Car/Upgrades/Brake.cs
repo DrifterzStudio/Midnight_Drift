@@ -33,7 +33,8 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null)
         {
-            brakePower = tmp.brakePower;
+            // 0 = not saved yet, fall back to stock
+            brakePower = tmp.brakePower > 0f ? tmp.brakePower : 0.15f;
             ApplyToController();
             RefreshUI();
         }
@@ -71,8 +72,10 @@ public class Brake : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public void OnButtonClicked()
     {
+        // cycle Normal -> Upgraded -> Max -> Normal, past Max goes back to stock
         if (brakePower == 0.15f) brakePower = 0.17f;
         else if (brakePower == 0.17f) brakePower = 0.2f;
+        else brakePower = 0.15f;
         ApplyToController();
         RefreshUI();
     }

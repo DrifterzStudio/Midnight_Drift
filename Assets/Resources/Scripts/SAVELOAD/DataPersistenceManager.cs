@@ -25,12 +25,18 @@ public class DataPersistenceManager : MonoBehaviour
     private string customPath;
     private string settingsPath;
 
+    // factory-default snapshot of each container (json), to reset a vehicle that has no save
+    private string upgradesDefaults;
+    private string customDefaults;
+    private string settingsDefaults;
+    private bool defaultsCaptured;
+
     private void Awake()
     {
         if (instance != null && instance != this)
         {
+            // dupe from a scene reload, the DontDestroy one already exists
             Destroy(gameObject);
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
             return;
         }
         instance = this;
@@ -50,16 +56,19 @@ public class DataPersistenceManager : MonoBehaviour
     {
         // Fallback: catch any IDataPersistence that did not register itself in Awake
         dataPersistenceObjects = findAllDataPersistence();
+
+        // grab the factory defaults now, while the containers still have their authored values
+        CaptureDefaults();
     }
 
     public void LoadGameFor(string vehicleId)
     {
-        if (saveUpgrades != null)
-            dataFileHandler.load(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"));
-        if (saveCustom != null)
-            dataFileHandler.load(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
-        if (saveSettings != null)
-            dataFileHandler.load(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
+        RefreshRuntimeLists();
+        CaptureDefaults();
+
+        LoadOrReset(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"), upgradesDefaults);
+        LoadOrReset(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"), customDefaults);
+        LoadOrReset(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"), settingsDefaults);
 
         // Generic dispatch: every registered IDataPersistence receives
         // the data container matching its dataFileName
@@ -68,6 +77,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGameFor(string vehicleId)
     {
+        RefreshRuntimeLists();
+
         DispatchAll((dp, data) => dp.SaveGame(data));
 
         if (saveUpgrades != null)
@@ -76,6 +87,37 @@ public class DataPersistenceManager : MonoBehaviour
             dataFileHandler.save(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
         if (saveSettings != null)
             dataFileHandler.save(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
+    }
+
+    private void CaptureDefaults()
+    {
+        if (defaultsCaptured) return;
+
+        if (saveUpgrades != null) upgradesDefaults = JsonUtility.ToJson(saveUpgrades);
+        if (saveCustom != null) customDefaults = JsonUtility.ToJson(saveCustom);
+        if (saveSettings != null) settingsDefaults = JsonUtility.ToJson(saveSettings);
+
+        defaultsCaptured = true;
+    }
+
+    // load the container from disk, or reset it to defaults if this vehicle has no save yet
+    private void LoadOrReset(IGameData container, string path, string defaultsJson)
+    {
+        if (container == null) return;
+
+        if (!dataFileHandler.load(container, path) && !string.IsNullOrEmpty(defaultsJson))
+            JsonUtility.FromJsonOverwrite(defaultsJson, container);
+    }
+
+    // rebuild the lists from live objects so a scene reload doesn't leave stale/duplicate refs around
+    private void RefreshRuntimeLists()
+    {
+        objectsData.Clear();
+        if (saveUpgrades != null) objectsData.Add(saveUpgrades);
+        if (saveCustom != null) objectsData.Add(saveCustom);
+        if (saveSettings != null) objectsData.Add(saveSettings);
+
+        dataPersistenceObjects = findAllDataPersistence();
     }
 
     // Single generic loop shared by load and save (no duplicated matching logic)
@@ -93,8 +135,10 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (GameSession.SelectedVehicle != null)
-            SaveGameFor(GameSession.SelectedVehicle.vehicleId);
+        // only the garage has tuning to save on quit, and its guarded save won't clobber it
+        GarageDisplayManager garage = FindFirstObjectByType<GarageDisplayManager>();
+        if (garage != null)
+            garage.SaveIfCustomizing();
     }
 
     private List<IDataPersistence> findAllDataPersistence()

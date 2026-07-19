@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Cycles the vehicle's differential between Open, Limited-slip and Fully Locked.
-/// </summary>
-public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
+// cycles the diff between Open, Limited-slip and Fully Locked
+public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -13,8 +12,7 @@ public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current differential mode.")]
     public Text typeText;
 
-    // Direct is deliberately left out: it bypasses the differential rather than being a tier
-    // above Locked.
+    // Direct is left out on purpose - it bypasses the diff instead of being a tier above Locked
     private static readonly RCCP_Differential.DifferentialType[] Steps = {
         RCCP_Differential.DifferentialType.Open,
         RCCP_Differential.DifferentialType.Limited,
@@ -28,13 +26,15 @@ public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Differential instance;
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null)
             tmp.differentialType = currentIdx;
     }
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
         if (tmp != null)
             currentIdx = Mathf.Clamp(tmp.differentialType, 0, Steps.Length - 1);
@@ -43,44 +43,52 @@ public class Differential : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    void Awake() {
+    void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    public void OnButtonClicked() {
+    public void OnButtonClicked()
+    {
         currentIdx = (currentIdx + 1) % Steps.Length;
 
         ApplyToController();
         RefreshUI();
     }
 
-    // Differentials is an array: an AWD car has one per axle plus a centre one.
-    void ApplyToController() {
+    // Differentials is an array (awd cars have one per axle + a centre one)
+    void ApplyToController()
+    {
         if (controller == null || controller.Differentials == null)
             return;
 
-        foreach (RCCP_Differential differential in controller.Differentials) {
+        foreach (RCCP_Differential differential in controller.Differentials)
+        {
             if (differential != null)
                 differential.differentialType = Steps[currentIdx];
         }
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (typeText != null)
             typeText.text = StepLabels[currentIdx];
     }

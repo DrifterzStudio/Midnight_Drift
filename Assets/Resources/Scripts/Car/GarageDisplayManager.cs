@@ -12,8 +12,9 @@ public class GarageDisplayManager : MonoBehaviour
 
     public void ShowVehicle(VehicleDefinition vehicle)
     {
-        // Save the vehicle we are leaving before switching to a new one
-        if (GameSession.SelectedVehicle != null)
+        // only save if a car is shown. after a garage reload SelectedVehicle still points at the old
+        // car while the controls are back to default, so saving here would wipe the tuning
+        if (currentInstance != null && GameSession.SelectedVehicle != null)
             DataPersistenceManager.instance.SaveGameFor(GameSession.SelectedVehicle.vehicleId);
 
         if (currentInstance != null)
@@ -66,10 +67,16 @@ public class GarageDisplayManager : MonoBehaviour
         Cursor.visible = true;
     }
 
+    // only save if a car is shown, so we don't overwrite the save with default control values
+    public void SaveIfCustomizing()
+    {
+        if (currentInstance != null && GameSession.SelectedVehicle != null && DataPersistenceManager.instance != null)
+            DataPersistenceManager.instance.SaveGameFor(GameSession.SelectedVehicle.vehicleId);
+    }
+
     public void CloseCustomization()
     {
-        if (GameSession.SelectedVehicle != null)
-            DataPersistenceManager.instance.SaveGameFor(GameSession.SelectedVehicle.vehicleId);
+        SaveIfCustomizing();
 
         if (currentInstance != null)
             Destroy(currentInstance);

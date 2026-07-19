@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -21,16 +22,18 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
 
     public static PropulsionType instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             fIsSteer = tmp.frontAxleSteer;
             fIsHandbrake = tmp.frontAxleHandbrake;
             rIsSteer = tmp.rearAxleSteer;
             rIsHandbrake = tmp.rearAxleHandbrake;
 
-            // driveType isn't persisted, only the axle flags it produces, so rebuild it from
-            // them. Without this the label would drift out of sync with the loaded car.
+            // driveType isn't saved, only the axle flags it makes, so rebuild it from them or the
+            // label drifts out of sync with the loaded car.
             driveType = DeriveDriveType();
         }
 
@@ -38,9 +41,11 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.frontAxleSteer = fIsSteer;
             tmp.frontAxleHandbrake = fIsHandbrake;
             tmp.rearAxleSteer = rIsSteer;
@@ -48,17 +53,20 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -66,11 +74,13 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
             DWTButton.onClick.AddListener(OnDWTButtonClicked);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnDWTButtonClicked() {
+    private void OnDWTButtonClicked()
+    {
         if (driveType + 1 > 2) driveType = 0;
         else driveType += 1;
 
@@ -79,8 +89,10 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
         RefreshUI();
     }
 
-    void SetFlagsFromDriveType() {
-        switch (driveType) {
+    void SetFlagsFromDriveType()
+    {
+        switch (driveType)
+        {
             case 0:     // Front wheels drive
                 fIsSteer = true; fIsHandbrake = true;
                 rIsSteer = false; rIsHandbrake = false;
@@ -96,50 +108,56 @@ public class PropulsionType : MonoBehaviour, IDataPersistence, IVehicleDependent
         }
     }
 
-    int DeriveDriveType() {
+    int DeriveDriveType()
+    {
         if (rIsSteer && rIsHandbrake) return 2;
         if (fIsHandbrake) return 0;
         return 1;
     }
 
-    /// <summary>
-    /// Braking's handbrake toggle routes through here, keeping this script the single owner of the
-    /// axle handbrake flags.
-    /// </summary>
-    public void SetRearHandbrake(bool enabled) {
+    // Braking's handbrake toggle goes through here so this script stays the only owner of the axle
+    // handbrake flags.
+    public void SetRearHandbrake(bool enabled)
+    {
         rIsHandbrake = enabled;
         ApplyToController();
         RefreshUI();
     }
 
-    // Only runs on a real change, so it doesn't fight other systems touching the axles.
-    void ApplyToController() {
+    // only runs on a real change, so it doesn't fight other systems touching the axles
+    void ApplyToController()
+    {
         if (controller == null)
             return;
 
-        if (controller.FrontAxle != null) {
+        if (controller.FrontAxle != null)
+        {
             controller.FrontAxle.isSteer = fIsSteer;
             controller.FrontAxle.isHandbrake = fIsHandbrake;
         }
 
-        if (controller.RearAxle != null) {
+        if (controller.RearAxle != null)
+        {
             controller.RearAxle.isSteer = rIsSteer;
             controller.RearAxle.isHandbrake = rIsHandbrake;
         }
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (DWTText == null)
             return;
 
-        switch (driveType) {
+        switch (driveType)
+        {
             case 0: DWTText.text = "Front wheels drive"; break;
             case 1: DWTText.text = "Rear wheels drive"; break;
             default: DWTText.text = "All wheels drive"; break;
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (DWTButton != null)
             DWTButton.onClick.RemoveListener(OnDWTButtonClicked);
     }

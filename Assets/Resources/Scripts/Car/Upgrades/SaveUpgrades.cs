@@ -31,10 +31,12 @@ public class SaveUpgrades : MonoBehaviour, IGameData
 
     // Transmision
     public float[] gearRatios;
+    // gearbox tier (0 = stock)
+    public int gearboxUpgrade;
     public float brakePower;
 
-    // Index into Differential's own list of modes, not RCCP's enum value. 1 = Limited, which is
-    // RCCP's default, so a fresh save leaves the vehicle as authored.
+    // index into Differential's own mode list, not RCCP's enum. 1 = Limited (RCCP's default), so a
+    // fresh save leaves the car as authored
     public int differentialType = 1;
 
     private void Awake()
@@ -42,7 +44,8 @@ public class SaveUpgrades : MonoBehaviour, IGameData
         DataPersistenceManager.instance.objectsData.Add(this);
     }
 
-    void IGameData.setData(IGameData data) {
+    void IGameData.setData(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
 
         // Engine
@@ -67,27 +70,33 @@ public class SaveUpgrades : MonoBehaviour, IGameData
 
         // Transmision
         gearRatios = tmp.gearRatios;
+        gearboxUpgrade = tmp.gearboxUpgrade;
         brakePower = tmp.brakePower;
         differentialType = tmp.differentialType;
     }
 
-    string IGameData.getDataDirPath() {
+    string IGameData.getDataDirPath()
+    {
         return dataDirPath;
     }
 
-    string IGameData.getDataFileName() {
+    string IGameData.getDataFileName()
+    {
         return dataFileName;
     }
 
-    bool IGameData.useEncryption() {
+    bool IGameData.useEncryption()
+    {
         return useEncryption;
     }
 
-    string IGameData.getEncryptionKey() {
+    string IGameData.getEncryptionKey()
+    {
         return encryption;
     }
 
-    bool IGameData.usePrettyPrint() {
+    bool IGameData.usePrettyPrint()
+    {
         return usePrettyPrint;
     }
 }

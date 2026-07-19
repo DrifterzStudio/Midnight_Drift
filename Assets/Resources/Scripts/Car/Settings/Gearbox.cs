@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using static RCCP_Gearbox;
 using static RCCP_Gearbox.CurrentGearState;
 
-public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -52,7 +53,7 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
     [Tooltip("Text showing the current state of the clutch threshold.")]
     public Text clutchThresholdText;
 
-    // Anti-roll force lives on AntiRollBar (the Chassis upgrade), not here.
+    // anti-roll force lives on AntiRollBar (the Chassis upgrade), not here
 
     private bool isReverse = false;
     public GearState gearState = GearState.InForwardGear;
@@ -66,9 +67,11 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
     public static Gearbox instance;
 
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             gearState = tmp.isReverse;
             transmissionType = tmp.transmissionType;
             GSTValue = tmp.GSTValue;
@@ -86,9 +89,11 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.isReverse = gearState;
             tmp.transmissionType = transmissionType;
             tmp.GSTValue = GSTValue;
@@ -98,18 +103,21 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         carController = newController;
         ApplyToController();
         RefreshUI();
     }
 
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -121,11 +129,13 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (clutchThresholdButton != null) clutchThresholdButton.onClick.AddListener(OnClutchThresholdButtonClicked);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnAutoReverseButtonClicked() {
+    private void OnAutoReverseButtonClicked()
+    {
         isReverse = !isReverse;
         gearState = isReverse ? GearState.InReverseGear : GearState.InForwardGear;
 
@@ -135,7 +145,8 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnGearboxButtonClicked() {
+    private void OnGearboxButtonClicked()
+    {
         if (gearboxType + 1 > 2) gearboxType = 0;
         else gearboxType += 1;
 
@@ -147,8 +158,9 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnGSTButtonClicked() {
-        // Threshold and shifting delay only apply to the automatic gearbox.
+    private void OnGSTButtonClicked()
+    {
+        // threshold and shifting delay only apply to the automatic gearbox
         if (gearboxType != 1)
             return;
 
@@ -161,7 +173,8 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnShiftingDelayButtonClicked() {
+    private void OnShiftingDelayButtonClicked()
+    {
         if (gearboxType != 1)
             return;
 
@@ -174,7 +187,8 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnCTWSButtonClicked() {
+    private void OnCTWSButtonClicked()
+    {
         CTWS = !CTWS;
 
         if (carController != null && carController.Inputs != null)
@@ -183,23 +197,27 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnClutchThresholdButtonClicked() {
+    private void OnClutchThresholdButtonClicked()
+    {
         if (clutchThreshold + .2f > 1f) clutchThreshold = 0f;
         else clutchThreshold += .2f;
 
         if (carController != null && carController.Customizer != null && carController.Customizer.loadout != null
-            && carController.Customizer.loadout.customizationData != null) {
+            && carController.Customizer.loadout.customizationData != null)
+        {
             carController.Customizer.loadout.customizationData.clutchThreshold += clutchThreshold;
         }
 
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         if (carController == null)
             return;
 
-        if (carController.Gearbox != null) {
+        if (carController.Gearbox != null)
+        {
             carController.Gearbox.transmissionType = transmissionType;
             carController.Gearbox.currentGearState.gearState = gearState;
             carController.Gearbox.shiftThreshold = GSTValue;
@@ -210,20 +228,23 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
             carController.Inputs.cutThrottleWhenShifting = CTWS;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (autoReverseText != null)
             autoReverseText.text = isReverse ? "On" : "Off";
 
         if (otherParam != null)
             otherParam.SetActive(gearboxType == 1);
 
-        if (gearboxTypeText != null) {
+        if (gearboxTypeText != null)
+        {
             if (gearboxType == 0) gearboxTypeText.text = "Manual";
             else if (gearboxType == 1) gearboxTypeText.text = "Automatic";
             else gearboxTypeText.text = "Automatic DNRP";
         }
 
-        if (gearboxType == 1) {
+        if (gearboxType == 1)
+        {
             if (GSTText != null) GSTText.text = GSTValue.ToString();
             if (shiftingDelayText != null) shiftingDelayText.text = shiftingDelay.ToString();
         }
@@ -232,19 +253,22 @@ public class Gearbox : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (clutchThresholdText != null) clutchThresholdText.text = clutchThreshold.ToString();
     }
 
-    static int TransmissionToIndex(TransmissionType type) {
+    static int TransmissionToIndex(TransmissionType type)
+    {
         if (type == TransmissionType.Manual) return 0;
         if (type == TransmissionType.Automatic) return 1;
         return 2;
     }
 
-    static TransmissionType IndexToTransmission(int index) {
+    static TransmissionType IndexToTransmission(int index)
+    {
         if (index == 0) return TransmissionType.Manual;
         if (index == 1) return TransmissionType.Automatic;
         return TransmissionType.Automatic_DNRP;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (autoReverseButton != null) autoReverseButton.onClick.RemoveListener(OnAutoReverseButtonClicked);
         if (gearboxButton != null) gearboxButton.onClick.RemoveListener(OnGearboxButtonClicked);
         if (GSTButton != null) GSTButton.onClick.RemoveListener(OnGSTButtonClicked);

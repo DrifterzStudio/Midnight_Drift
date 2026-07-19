@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -38,7 +39,7 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     //public float steeringCurve;
 
-    // Inside RCCP_Axle.steerSpeed's [.01, 5] range (0 would freeze the steering), centred on 1.
+    // inside RCCP_Axle.steerSpeed's [.01, 5] range (0 would freeze steering), centred on 1
     private static readonly float[] SensitivitySteps = { .5f, 1f, 2f };
     private static readonly string[] SensitivityLabels = { "Slow", "Normal", "Fast" };
 
@@ -46,9 +47,11 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Wheels instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             //steeringCurve = tmp.steeringCurve;
             sensitivityValue = tmp.sensitivityValue;
         }
@@ -57,25 +60,30 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             //tmp.steeringCurve = steeringCurve;
             tmp.sensitivityValue = sensitivityValue;
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -85,39 +93,40 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (steeringCurveButton != null) steeringCurveButton.onClick.AddListener(OnSteerCurveButtonClicked);
     }
 
-    // This panel hides itself when opening Camber/Grip, so refresh on every re-enable rather
-    // than once in Start.
-    private void OnEnable() {
+    // this panel hides itself when opening Camber/Grip, so refresh on every re-enable, not just in Start
+    private void OnEnable()
+    {
         RefreshUI();
     }
 
-    private void OnCamberButtonClicked() {
+    private void OnCamberButtonClicked()
+    {
         ShowSubPanel(camber);
     }
 
-    private void OnGripButtonClicked() {
+    private void OnGripButtonClicked()
+    {
         ShowSubPanel(grip);
     }
 
-    /// <summary>
-    /// Camber and Grip call this from their back buttons. Wheels owns the navigation between its
-    /// menu and its sub-panels, so no one else toggles those GameObjects.
-    /// </summary>
-    public void ShowMenu() {
+    // Camber and Grip call this from their back buttons. Wheels owns the nav between its menu and
+    // its sub-panels, so nobody else toggles those objects.
+    public void ShowMenu()
+    {
         if (camber != null) camber.SetActive(false);
         if (grip != null) grip.SetActive(false);
         if (wheelsMenu != null) wheelsMenu.SetActive(true);
     }
 
-    /// <summary>
-    /// Hides the menu and reveals one sub-panel. Toggles wheelsMenu, not this GameObject: every
-    /// settings script lives on ComponentUpgrade, so disabling it would take the whole menu down.
-    /// </summary>
-    void ShowSubPanel(GameObject panel) {
+    // hides the menu and shows one sub-panel. toggles wheelsMenu, not this object - every settings
+    // script lives on ComponentUpgrade, so disabling it would kill the whole menu.
+    void ShowSubPanel(GameObject panel)
+    {
         if (panel == null)
             return;
 
-        if (wheelsMenu == null) {
+        if (wheelsMenu == null)
+        {
             Debug.LogWarning("Wheels: 'Wheels Menu' is not assigned, refusing to open the sub-panel.", this);
             return;
         }
@@ -126,7 +135,8 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
         panel.SetActive(true);
     }
 
-    private void OnSteerSensitivityButtonClicked() {
+    private void OnSteerSensitivityButtonClicked()
+    {
         sensitivityValue = SensitivitySteps[(NearestStepIndex(sensitivityValue) + 1) % SensitivitySteps.Length];
 
         ApplyToController();
@@ -135,15 +145,18 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     private void OnSteerCurveButtonClicked() { } // RCCP_Input.steeringCurve, an AnimationCurve
 
-    // The saved value is the raw setting, not an index, so the cursor is rebuilt from it.
-    static int NearestStepIndex(float value) {
+    // the saved value is the raw setting, not an index, so the cursor is rebuilt from it
+    static int NearestStepIndex(float value)
+    {
         int nearest = 0;
         float smallestDelta = Mathf.Abs(value - SensitivitySteps[0]);
 
-        for (int i = 1; i < SensitivitySteps.Length; i++) {
+        for (int i = 1; i < SensitivitySteps.Length; i++)
+        {
             float delta = Mathf.Abs(value - SensitivitySteps[i]);
 
-            if (delta < smallestDelta) {
+            if (delta < smallestDelta)
+            {
                 smallestDelta = delta;
                 nearest = i;
             }
@@ -152,15 +165,14 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
         return nearest;
     }
 
-    /// <summary>
-    /// Drives RCCP_Axle.steerSpeed, how fast the wheels reach the requested angle. Not
-    /// steeringSensitivity, which RCCP declares but reads nowhere.
-    /// </summary>
-    void ApplyToController() {
+    // drives RCCP_Axle.steerSpeed (how fast the wheels reach the requested angle). not
+    // steeringSensitivity, which RCCP declares but never reads.
+    void ApplyToController()
+    {
         if (controller == null)
             return;
 
-        // Applied to both axles: the rear one steers too once PropulsionType is set to AWD.
+        // applied to both axles - the rear one steers too when PropulsionType is AWD
         if (controller.FrontAxle != null)
             controller.FrontAxle.steerSpeed = sensitivityValue;
 
@@ -168,12 +180,14 @@ public class Wheels : MonoBehaviour, IDataPersistence, IVehicleDependent {
             controller.RearAxle.steerSpeed = sensitivityValue;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (sterringSensitivityText != null)
             sterringSensitivityText.text = SensitivityLabels[NearestStepIndex(sensitivityValue)];
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (camberButton != null) camberButton.onClick.RemoveListener(OnCamberButtonClicked);
         if (gripButton != null) gripButton.onClick.RemoveListener(OnGripButtonClicked);
         if (steeringSensitivityButton != null) steeringSensitivityButton.onClick.RemoveListener(OnSteerSensitivityButtonClicked);

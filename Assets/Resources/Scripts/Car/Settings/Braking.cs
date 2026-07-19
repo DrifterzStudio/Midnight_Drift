@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -31,9 +32,11 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
 
     public static Braking instance;
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             isHandbrake = tmp.isHandbrake;
             handbrakeMultiplier = tmp.handbrakeMultiplier;
             brakeMultiplier = tmp.brakeMultiplier;
@@ -43,26 +46,31 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveSettings tmp = data as SaveSettings;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.isHandbrake = isHandbrake;
             tmp.handbrakeMultiplier = handbrakeMultiplier;
             tmp.brakeMultiplier = brakeMultiplier;
         }
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
 
@@ -71,21 +79,24 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         if (brakeMultiplierButton != null) brakeMultiplierButton.onClick.AddListener(OnBrakeMultiplierButtonClicked);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    private void OnHandbrakeButtonClicked() {
+    private void OnHandbrakeButtonClicked()
+    {
         isHandbrake = !isHandbrake;
 
-        // Reaches the axle through PropulsionType, the single owner of the handbrake flags.
+        // goes to the axle through PropulsionType, the only owner of the handbrake flags
         if (PropulsionType.instance != null)
             PropulsionType.instance.SetRearHandbrake(isHandbrake);
 
         RefreshUI();
     }
 
-    private void OnHandbrakeMultiplierButtonClicked() {
+    private void OnHandbrakeMultiplierButtonClicked()
+    {
         if (handbrakeMultiplier + .1f > 1f) handbrakeMultiplier = 0f;
         else handbrakeMultiplier += .1f;
 
@@ -93,7 +104,8 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    private void OnBrakeMultiplierButtonClicked() {
+    private void OnBrakeMultiplierButtonClicked()
+    {
         if (brakeMultiplier + .1f > 1f) brakeMultiplier = 0f;
         else brakeMultiplier += .1f;
 
@@ -101,12 +113,14 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         if (controller == null)
             return;
 
-        // isHandbrake is deliberately not written here: PropulsionType owns the axle handbrake flags.
-        if (controller.RearAxle != null) {
+        // isHandbrake isn't written here - PropulsionType owns the axle handbrake flags
+        if (controller.RearAxle != null)
+        {
             controller.RearAxle.handbrakeMultiplier = handbrakeMultiplier;
             controller.RearAxle.brakeMultiplier = brakeMultiplier;
         }
@@ -116,13 +130,15 @@ public class Braking : MonoBehaviour, IDataPersistence, IVehicleDependent {
             controller.FrontAxle.handbrakeMultiplier = handbrakeMultiplier;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (handbrakeText != null) handbrakeText.text = isHandbrake ? "On" : "Off";
         if (handbrakeMultiplierText != null) handbrakeMultiplierText.text = handbrakeMultiplier.ToString();
         if (brakeMultiplierText != null) brakeMultiplierText.text = brakeMultiplier.ToString();
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (handbrakeButton != null) handbrakeButton.onClick.RemoveListener(OnHandbrakeButtonClicked);
         if (handbrakeMultiplierButton != null) handbrakeMultiplierButton.onClick.RemoveListener(OnHandbrakeMultiplierButtonClicked);
         if (brakeMultiplierButton != null) brakeMultiplierButton.onClick.RemoveListener(OnBrakeMultiplierButtonClicked);

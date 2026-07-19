@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
+public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
 
     public string dataFileName;
 
@@ -13,17 +14,21 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
     public bool turbo2 = false;
     public static AddTurbo instance;
 
-    public void SaveGame(IGameData data) {
+    public void SaveGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             tmp.turbo1 = turbo1;
             tmp.turbo2 = turbo2;
         }
     }
 
-    public void LoadGame(IGameData data) {
+    public void LoadGame(IGameData data)
+    {
         SaveUpgrades tmp = data as SaveUpgrades;
-        if (tmp != null) {
+        if (tmp != null)
+        {
             turbo1 = tmp.turbo1;
             turbo2 = tmp.turbo2;
         }
@@ -32,42 +37,52 @@ public class AddTurbo : MonoBehaviour, IDataPersistence, IVehicleDependent {
         RefreshUI();
     }
 
-    public string getDataFileName() {
+    public string getDataFileName()
+    {
         return dataFileName;
     }
 
-    public void SetController(RCCP_CarController newController) {
+    public void SetController(RCCP_CarController newController)
+    {
         controller = newController;
         ApplyToController();
         RefreshUI();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         if (instance == null) instance = this;
         DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
     }
 
-    private void Start() {
+    private void Start()
+    {
         RefreshUI();
     }
 
-    public void onButtonClicked() {
-        if (turbo1) turbo2 = true;
-        else turbo1 = true;
+    public void onButtonClicked()
+    {
+        // cycle none -> turbo 1 -> turbo 1+2 -> none, past the last one removes it
+        if (!turbo1) turbo1 = true;                    // none -> 1
+        else if (!turbo2) turbo2 = true;               // 1 -> 2
+        else { turbo1 = false; turbo2 = false; }       // 2 -> none
 
         ApplyToController();
         RefreshUI();
     }
 
-    void ApplyToController() {
+    void ApplyToController()
+    {
         if (controller == null || controller.Engine == null)
             return;
 
-        if (turbo2) controller.Engine.turbo2Charged = true;
-        else if (turbo1) controller.Engine.turbo1Charged = true;
+        // write both flags so the turbo can be turned back off
+        controller.Engine.turbo1Charged = turbo1;
+        controller.Engine.turbo2Charged = turbo2;
     }
 
-    void RefreshUI() {
+    void RefreshUI()
+    {
         if (turboNumber == null)
             return;
 

@@ -1,15 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Applies the visual customization chosen in the garage to this vehicle when its scene loads.
-/// Attach to the vehicle root (the object holding RCCP_CarController).
-///
-/// Reads the SaveCustom container, which reaches this scene because SaveCustomData carries
-/// DontDestroy, rather than the ChangeColor/ChangeWheels/ChangeSpoilers statics which are
-/// destroyed with the garage scene.
-/// </summary>
-public class LoadCustom : MonoBehaviour {
+// applies the garage's visual customization to the car when the scene loads. put this on the
+// vehicle root. reads the SaveCustom container (survives the scene change via DontDestroy).
+public class LoadCustom : MonoBehaviour
+{
 
     [Tooltip("Left empty, it resolves from this GameObject.")]
     public RCCP_CarController controller;
@@ -23,7 +18,8 @@ public class LoadCustom : MonoBehaviour {
     [Tooltip("Spoiler variants, in the same order as the garage's list.")]
     public List<GameObject> spoilers;
 
-    void Awake() {
+    void Awake()
+    {
         if (controller == null)
             controller = GetComponent<RCCP_CarController>();
 
@@ -32,7 +28,8 @@ public class LoadCustom : MonoBehaviour {
 
         SaveCustom data = FindFirstObjectByType<SaveCustom>(FindObjectsInactive.Include);
 
-        if (data == null) {
+        if (data == null)
+        {
             Debug.LogWarning("LoadCustom: no SaveCustom found, vehicle keeps its default look.", this);
             return;
         }
@@ -42,8 +39,9 @@ public class LoadCustom : MonoBehaviour {
         ApplyWheelMaterial(data);
     }
 
-    // Alpha 0 means the player never picked a colour, so the prefab's own paint is left alone.
-    void ApplyBodyColor(SaveCustom data) {
+    // alpha 0 means the player never picked a colour, so the prefab's own paint is left alone
+    void ApplyBodyColor(SaveCustom data)
+    {
         if (data.bodyColor.a <= 0f || controller == null || controller.Customizer == null)
             return;
 
@@ -53,7 +51,8 @@ public class LoadCustom : MonoBehaviour {
             paintManager.Paint(data.bodyColor);
     }
 
-    void ApplySpoiler(SaveCustom data) {
+    void ApplySpoiler(SaveCustom data)
+    {
         if (spoilers == null || data.currentSpoiler < 0 || data.currentSpoiler >= spoilers.Count)
             return;
 
@@ -61,7 +60,8 @@ public class LoadCustom : MonoBehaviour {
             spoilers[data.currentSpoiler].SetActive(true);
     }
 
-    void ApplyWheelMaterial(SaveCustom data) {
+    void ApplyWheelMaterial(SaveCustom data)
+    {
         if (wheels == null || wheelMaterials == null)
             return;
 
@@ -73,7 +73,8 @@ public class LoadCustom : MonoBehaviour {
         if (material == null)
             return;
 
-        foreach (MeshRenderer wheel in wheels) {
+        foreach (MeshRenderer wheel in wheels)
+        {
             if (wheel != null)
                 wheel.material = material;
         }

@@ -1,37 +1,27 @@
-using System;
 using TMPro;
 using UnityEngine;
 
+// solo drift score hud. reads the car's slip/speed, runs a DriftScoreCalculator, and shows the
+// score / popup / multiplier / sounds from it.
 public class Score : RCCP_GenericComponent
 {
     private RCCP_CarController carController;
-
-    private float metters = 0;
-    private float distDrift = 0;
-    private float timer = 0;
-
-    private float score = 0;
-    private float scoreUpdate = 0;
-    private float scoreTotal = 0;
-
-    private float distMultiplierModifier = 0;
-    private float scoreMultiplierModifier = 0;
-    private float multiplier = 1;
-    private float challengeMultiplier = 1;
-    private float scoreMultiplier = 1;
-
-    private bool[] scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
-    private bool[] distAchievements = { false, false, false }; // 200 / 100 / 50
-    private bool[] parkingChallenge = { false, false }; // dist 30m / 5000 pts
-
-    private bool isChallengeMultAply = false;
-    private bool isEnd = false;
+    private DriftScoreCalculator calc;
 
     [Tooltip("Minimum sideways slip required to count as drifting.")]
     public float driftSlipThreshold = 0.25f;
 
     [Tooltip("Time without drifting before the current run banks into total score.")]
     public float driftTimeoutDelay = 2f;
+
+    [Tooltip("Drift points earned per second (scaled by speed). Higher = score climbs faster.")]
+    public float pointsRate = 4f;
+
+    [Tooltip("Seconds of continuous drift to raise the multiplier by one (x2, x3...).")]
+    public float multiplierStepTime = 0.8f;
+
+    [Tooltip("Maximum drift multiplier.")]
+    public int maxMultiplier = 10;
 
     [Tooltip("Text showing the current score.")]
     [Space()]
@@ -63,6 +53,9 @@ public class Score : RCCP_GenericComponent
     public float scoreLostShakeDuration = 0.3f;
     public float scoreLostShakeStrength = 10f;
 
+    [Tooltip("Layer used by circuit obstacles (props, barriers, tires, etc.).")]
+    public LayerMask obstacleLayer;
+
     private AudioSource audioSource;
 
     private CanvasGroup scoreUpdateCanvasGroup;
@@ -78,6 +71,17 @@ public class Score : RCCP_GenericComponent
 
     private void Start()
     {
+        calc = new DriftScoreCalculator
+        {
+            DriftSlipThreshold = driftSlipThreshold,
+            DriftTimeoutDelay = driftTimeoutDelay,
+            PointsRate = pointsRate,
+            MultiplierStepTime = multiplierStepTime,
+            MaxMultiplier = maxMultiplier,
+        };
+        calc.Banked += OnBanked;
+        calc.Lost += OnLost;
+
         audioSource = GetComponent<AudioSource>();
         if (!audioSource)
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -105,93 +109,70 @@ public class Score : RCCP_GenericComponent
         if (!carController)
             return;
 
-        if (!isEnd)
-        {
-            if (IsDrifting() && !isShaking)
-            {
-                AccumulateDrift();
-            }
-            else
-            {
-                HandleDriftTimeout();
-            }
-        }
-        else if (!isChallengeMultAply)
-        {
-            ApplyFinalMultipliers();
-        }
+        // no scoring during the crash shake
+        if (!calc.Ended && !isShaking)
+            calc.Tick(CurrentSlip(), carController.speed, Time.deltaTime);
 
-        UpdateMultiplier();
         UpdateUI();
         UpdatePopupAnimation();
         UpdateShakeEffect();
     }
 
-    private bool IsDrifting()
+    public float ScoreTotal => calc != null ? calc.Score : 0f;
+
+    // RaceManager calls this on the last lap. banks the pending drift and returns the total
+    public float FinalizeAndGetScore()
+    {
+        return calc != null ? calc.Finalize() : 0f;
+    }
+
+    private float CurrentSlip()
     {
         if (carController.PoweredAxles == null || carController.PoweredAxles.Count == 0)
-            return false;
+            return 0f;
 
-        return Mathf.Abs(carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip) >= driftSlipThreshold
-            && carController.speed >= 0;
+        return carController.PoweredAxles[0].leftWheelCollider.SidewaysSlip;
     }
 
-    private void AccumulateDrift()
+    private void OnBanked()
     {
-        metters += (Mathf.Abs(carController.speed)) * Time.deltaTime * 2;
-        timer = 0;
-        distDrift += metters;
-        scoreUpdate = (int)distDrift * scoreMultiplier;
-        metters = 0;
+        PlayScoreBankSound();
+        StartPopupFadeOut();
     }
 
-    private void HandleDriftTimeout()
+    private void OnLost()
     {
+        StartScoreLostEffect();
+    }
+
+    private void UpdateUI()
+    {
+        scoreText.text = calc.Score.ToString("N0");
+
         if (isShaking || isFadingOut)
+            return; // the shake / fade animations own the popup right now
+
+        if (calc.PendingPoints > 0)
         {
-            distDrift = 0;
-            metters = 0;
-            timer = 0;
-            return;
+            scoreUpdateText.gameObject.SetActive(true);
+            scoreUpdateCanvasGroup.alpha = 1f;
+            scoreUpdateRect.localScale = baseScale;
+            scoreUpdateText.text = "+" + ((int)calc.PendingPoints).ToString("N0");
+
+            if (calc.Multiplier > 1)
+            {
+                multiplierText.gameObject.SetActive(true);
+                multiplierText.text = "x" + calc.Multiplier;
+            }
+            else
+            {
+                multiplierText.gameObject.SetActive(false);
+            }
         }
-
-        if ((int)distDrift <= 0)
-        {
-            distDrift = 0;
-            metters = 0;
-            timer = 0;
-            HidePopupImmediately();
-            return;
-        }
-
-        timer += Time.deltaTime;
-        if (timer >= driftTimeoutDelay)
-        {
-            BankDriftScore();
-        }
-    }
-
-    private void BankDriftScore()
-    {
-        bool hasPointsToBank = (int)distDrift > 0;
-
-        if (hasPointsToBank)
-        {
-            score += (int)distDrift * scoreMultiplier;
-            PlayScoreBankSound();
-        }
-
-        scoreUpdate = 0;
-        distDrift = 0;
-        distMultiplierModifier = 0;
-        scoreMultiplierModifier = 0;
-        scoreMultiplier = 1;
-        timer = 0;
-
-        if (hasPointsToBank)
-            StartPopupFadeOut();
         else
+        {
             HidePopupImmediately();
+        }
     }
 
     private void PlayScoreBankSound()
@@ -200,51 +181,12 @@ public class Score : RCCP_GenericComponent
             audioSource.PlayOneShot(scoreBankSound, scoreBankSoundVolume);
     }
 
-    private void ApplyFinalMultipliers()
-    {
-        score *= multiplier;
-        score *= challengeMultiplier;
-        isChallengeMultAply = true;
-    }
-
-    private void UpdateUI()
-    {
-        scoreTotal = score;
-        scoreText.text = scoreTotal.ToString("N0");
-
-        if (isShaking)
-            return;
-
-        bool isCurrentlyDrifting = distDrift > 0 || metters > 0;
-
-        if (isCurrentlyDrifting && !isFadingOut)
-        {
-            scoreUpdateText.gameObject.SetActive(true);
-            scoreUpdateCanvasGroup.alpha = 1f;
-            scoreUpdateRect.localScale = baseScale;
-        }
-
-        if (!isCurrentlyDrifting && !isFadingOut)
-            return;
-
-        scoreUpdateText.text = "+" + ((int)distDrift).ToString("N0");
-
-        if (scoreMultiplier > 1)
-        {
-            multiplierText.gameObject.SetActive(true);
-            multiplierText.text = "x" + scoreMultiplier.ToString("0.0");
-        }
-        else
-        {
-            multiplierText.gameObject.SetActive(false);
-        }
-    }
-
     private void StartPopupFadeOut()
     {
         fadeTimer = 0f;
         isFadingOut = true;
         scoreUpdateCanvasGroup.alpha = 1f;
+        multiplierText.gameObject.SetActive(false); // multiplier is consumed on bank, don't let it linger
     }
 
     private void UpdatePopupAnimation()
@@ -268,23 +210,26 @@ public class Score : RCCP_GenericComponent
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Finish"))
-            isEnd = true;
+        if (calc != null && collider.CompareTag("Finish"))
+            calc.Finalize();
     }
 
     private void OnTriggerStay(Collider collider)
     {
-        if (collider.CompareTag("Finish"))
-            isEnd = true;
+        if (calc != null && collider.CompareTag("Finish"))
+            calc.Finalize();
     }
-
-    [Tooltip("Layer used by circuit obstacles (props, barriers, tires, etc.).")]
-    public LayerMask obstacleLayer;
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (isShaking || calc == null)
+            return;
+
         if (IsInLayerMask(collision.gameObject.layer, obstacleLayer))
-            CancelDriftScore();
+        {
+            isFadingOut = false;
+            calc.RegisterCollision();
+        }
     }
 
     private bool IsInLayerMask(int layer, LayerMask mask)
@@ -292,34 +237,12 @@ public class Score : RCCP_GenericComponent
         return (mask.value & (1 << layer)) != 0;
     }
 
-    private void CancelDriftScore()
-    {
-        if (isShaking)
-            return;
-
-        bool hadPointsToLose = (int)distDrift > 0;
-
-        distDrift = 0;
-        metters = 0;
-        distMultiplierModifier = 0;
-        scoreMultiplierModifier = 0;
-        scoreMultiplier = 1;
-        timer = 0;
-        scoreUpdate = 0;
-
-        if (hadPointsToLose)
-            StartScoreLostEffect();
-        else
-            HidePopupImmediately();
-
-        isFadingOut = false;
-    }
-
     private void StartScoreLostEffect()
     {
         scoreUpdateText.gameObject.SetActive(true);
         scoreUpdateCanvasGroup.alpha = 1f;
         scoreUpdateText.color = scoreLostColor;
+        multiplierText.gameObject.SetActive(false); // the drift is lost, drop the multiplier too
 
         shakeTimer = 0f;
         isShaking = true;
@@ -361,36 +284,5 @@ public class Score : RCCP_GenericComponent
         multiplierText.gameObject.SetActive(false);
         scoreUpdateRect.anchoredPosition = popupBasePosition;
         scoreUpdateText.color = baseTextColor;
-    }
-
-    private void UpdateMultiplier()
-    {
-        // Calculate the score achievements multiplier.
-        if (score >= 10000 && !scoreAchievements[0]) { multiplier += 3; scoreAchievements[0] = true; }
-        if (score >= 5000 && !scoreAchievements[1]) { multiplier += 2.5f; scoreAchievements[1] = true; }
-        if (score >= 1000 && !scoreAchievements[2]) { multiplier += 2; scoreAchievements[2] = true; }
-
-        // Calculate the distance achievements multiplier.
-        if (distDrift >= 200 && !distAchievements[0]) { multiplier += 1.8f; distAchievements[0] = true; }
-        if (distDrift >= 100 && !distAchievements[1]) { multiplier += 1.2f; distAchievements[1] = true; }
-        if (distDrift >= 50 && !distAchievements[2]) { multiplier += 1; distAchievements[2] = true; }
-
-        // Calculate the parking challenge multiplier.
-        if (distDrift >= 30 && !parkingChallenge[0]) { challengeMultiplier *= 1.5f; parkingChallenge[0] = true; }
-        if (score >= 5000 && !parkingChallenge[1]) { challengeMultiplier *= 2; parkingChallenge[1] = true; }
-
-        // Calculate the score multiplier with distance.
-        if (distMultiplierModifier < distDrift && distMultiplierModifier + 100 <= distDrift)
-        {
-            distMultiplierModifier += 100;
-            multiplier += distMultiplierModifier / 200;
-        }
-
-        // Calculate the score multiplier with score.
-        if (scoreMultiplierModifier < distDrift && scoreMultiplierModifier + 150 <= distDrift)
-        {
-            scoreMultiplierModifier += 150;
-            scoreMultiplier = 1 + scoreMultiplierModifier / 300;
-        }
     }
 }
