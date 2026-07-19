@@ -5,9 +5,9 @@ using TMPro;
 using UnityEngine;
 
 
-public class Score : NetworkBehaviour
+public class PlayerScore : NetworkBehaviour
 {
-    static private Score _localInstance = null;
+    static private PlayerScore _localInstance = null;
 
     // variable syncro
     //[SyncVar(hook = nameof(OnScoreChanged))]

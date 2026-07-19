@@ -9,11 +9,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Environment
   - Water
   - UI
-  - 
-  - 
+  - Interactable
+  - Player
   - RCCP_Vehicle
   - RCCP_WheelCollider
   - RCCP_DetachablePart
