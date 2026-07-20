@@ -18,7 +18,7 @@ public class LeaderBoard_script : MonoBehaviour
     private Callback<AvatarImageLoaded_t> avatarLoadedCallback;
     void Start()
     {
-        Score_Manager.Instance.ScoreData.OnChange += OnScoreDataChanged;
+        
         avatarLoadedCallback = Callback<AvatarImageLoaded_t>.Create(OnAvatarImageLoaded);
     }
 
@@ -47,7 +47,7 @@ public class LeaderBoard_script : MonoBehaviour
         if (!init && Score_Manager.Instance)
         {
             init = true;
-          
+            Score_Manager.Instance.ScoreData.OnChange += OnScoreDataChanged;
             foreach (var pair in Score_Manager.Instance.ScoreData)
             {
                 CSteamID steamID = new CSteamID(pair.Key);
@@ -79,7 +79,6 @@ public class LeaderBoard_script : MonoBehaviour
         ulong key,
         float value)
     {
-        if(!NetworkServer.active ||!NetworkClient.active) return;
 
         CSteamID steamID = new CSteamID(key);
 
