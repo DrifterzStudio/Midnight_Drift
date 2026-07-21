@@ -1,10 +1,16 @@
 using Edgegap;
 using Mirror;
 using Steamworks;
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
+public enum LobbyChatStateUpdate
+{
+    Enter,
+    Exit
+}
 
 
 
@@ -21,7 +27,7 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     private const string HostAddressKey = "HostAddress"; 
     public int MaxPlayer { get; private set; } = 4;
     private bool _isLocked = false;
-
+    public Action<ulong, LobbyChatStateUpdate> lobbyUpdateCallBack = null;
     private void Start()
     {
         if (!SteamManager.Initialized)
@@ -96,14 +102,24 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     private void OnLobbyChatUpdate(LobbyChatUpdate_t callback)
     {
         RefreshLobby();
-
+        Debug.Log(callback.m_ulSteamIDLobby);
         EChatMemberStateChange state = (EChatMemberStateChange)callback.m_rgfChatMemberStateChange;
 
-        //if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
-        //    Debug.Log("New Player");
+        if (state == EChatMemberStateChange.k_EChatMemberStateChangeEntered)
+        {
+            Debug.Log("New Player");
+            if (lobbyUpdateCallBack != null)
+                lobbyUpdateCallBack(callback.m_ulSteamIDUserChanged, LobbyChatStateUpdate.Enter);
+        }
 
-        //if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
-        //    Debug.Log("A Player Left");
+        if (state == EChatMemberStateChange.k_EChatMemberStateChangeLeft)
+        {
+            Debug.Log("A Player Left");
+            if (lobbyUpdateCallBack != null)
+                lobbyUpdateCallBack(callback.m_ulSteamIDUserChanged, LobbyChatStateUpdate.Exit);
+        }
+
+       
     }
 
     public void LeaveLobby()
@@ -118,5 +134,22 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
     public void RefreshLobby()
     {
         //TODO if needed to lobby ui
+    }
+
+    public List<ulong> GetLobbyMembers()
+    {
+        List<ulong> members = new List<ulong>();
+
+        if (!LobbyID.IsValid())
+            return members;
+
+        int count = SteamMatchmaking.GetNumLobbyMembers(LobbyID);
+
+        for (int i = 0; i < count; i++)
+        {
+            members.Add(SteamMatchmaking.GetLobbyMemberByIndex(LobbyID, i).m_SteamID);
+        }
+
+        return members;
     }
 }

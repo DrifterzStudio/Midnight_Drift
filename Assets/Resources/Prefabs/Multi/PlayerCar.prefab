@@ -12735,6 +12735,7 @@ GameObject:
   - component: {fileID: -1428517971017891006}
   - component: {fileID: -8538982327405000149}
   - component: {fileID: -452345262490582119}
+  - component: {fileID: 4063140507654215794}
   m_Layer: 8
   m_Name: PlayerCar
   m_TagString: Untagged
@@ -13001,6 +13002,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd9964883ea20d4bbf1fcc0a15ea480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Connect_callBack
+--- !u!114 &4063140507654215794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223501263425353625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76bd7007652a80844b02f7e6d61779aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerName
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  nameTagGui: {fileID: 632791438936913367}
 --- !u!1 &5300460439689635172
 GameObject:
   m_ObjectHideFlags: 0
