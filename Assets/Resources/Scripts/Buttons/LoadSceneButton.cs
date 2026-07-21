@@ -11,6 +11,9 @@ public class LoadSceneButton : MonoBehaviour
     public string sceneName;
     public bool isAdditive;
 
+    [Tooltip("If set, opens this menu instead of loading right away. The menu loads the scene once a car is chosen.")]
+    public CarSelectionMenu carSelectionMenu;
+
     // stops a double load when both the inspector onClick and the Start listener fire
     private int _lastLoadFrame = -1;
 
@@ -25,6 +28,13 @@ public class LoadSceneButton : MonoBehaviour
         if (_lastLoadFrame == Time.frameCount)
             return;
         _lastLoadFrame = Time.frameCount;
+
+        // pick a car first if a menu is set - it loads the scene once a car is chosen
+        if (carSelectionMenu != null)
+        {
+            carSelectionMenu.Open();
+            return;
+        }
 
         if(isAdditive)
         {

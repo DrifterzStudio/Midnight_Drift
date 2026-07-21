@@ -9,4 +9,8 @@ public class Game_UI_Manager : Singleton_Obj<Game_UI_Manager>
     public TMP_Text score;
     [SerializeField]
     public TMP_Text updScore;
+    [SerializeField]
+    public TMP_Text multiplier;
+    [SerializeField]
+    public TMP_Text lap;
 }
