@@ -13,11 +13,12 @@ public class PlayerInfos : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void OnStartClient()
     {
+        GetComponent<Connect_callBack>().OnDisconnect += Disconnect;
         if (!isLocalPlayer)
             return;
         ulong myId = SteamUser.GetSteamID().m_SteamID;
         string MyName = SteamFriends.GetPersonaName();
-        GetComponent<Connect_callBack>().OnDisconnect = Disconnect;
+       
         SendInfosPlayer(myId, MyName);
     }
 
@@ -58,11 +59,8 @@ public class PlayerInfos : NetworkBehaviour
     }
     void Disconnect()
     {
-        if (!NetworkServer.active)
+        if (!NetworkServer.active && !NetworkClient.ready)
             return;
-        if (!NetworkClient.ready) return;
-        if (!isLocalPlayer) return;
-
 
         if (ActivePlayer_List.Instance.Contains(SteamId))
             ActivePlayer_List.Instance.CmdRemove(SteamId);
