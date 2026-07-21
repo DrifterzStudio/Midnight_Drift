@@ -162,6 +162,9 @@ GameObject:
   - component: {fileID: 5438829557970676854}
   - component: {fileID: 7244054106247001883}
   - component: {fileID: 2828143375502365415}
+  - component: {fileID: 5437576999997369699}
+  - component: {fileID: -3560992619739922123}
+  - component: {fileID: 6887650337805271080}
   m_Layer: 8
   m_Name: Mazda_Player
   m_TagString: Untagged
@@ -303,6 +306,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Score
   driftSlipThreshold: 0.25
   driftTimeoutDelay: 2
+  pointsRate: 4
+  multiplierStepTime: 0.8
+  maxMultiplier: 10
   scoreText: {fileID: 0}
   scoreUpdateText: {fileID: 0}
   multiplierText: {fileID: 0}
@@ -318,6 +324,48 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &5437576999997369699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331667537467588133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fffc8d3095155440b93020c334a9ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadCustom
+  controller: {fileID: 0}
+  wheels: []
+  wheelMaterials: []
+  spoilers: []
+--- !u!114 &-3560992619739922123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331667537467588133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f07e160a1cb36a4ebfbc35f6b44c41e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadCarModification
+  controller: {fileID: 0}
+--- !u!114 &6887650337805271080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331667537467588133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27fafc6f2eb5fe41b528e42e1cb6a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadUpgrades
+  controller: {fileID: 0}
 --- !u!1 &419462789368019967
 GameObject:
   m_ObjectHideFlags: 0

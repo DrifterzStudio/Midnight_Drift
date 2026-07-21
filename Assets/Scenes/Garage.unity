@@ -14148,6 +14148,7 @@ MonoBehaviour:
   tilts: 0
   slickness: 0
   gearRatios: []
+  gearboxUpgrade: 0
   brakePower: 0
   differentialType: 1
 --- !u!4 &1336908262

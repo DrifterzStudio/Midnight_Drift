@@ -71,6 +71,18 @@ public class Score : RCCP_GenericComponent
 
     private void Start()
     {
+        // a spawned car can't hold a scene UI ref, so pull the HUD texts from the scene if unset
+        if (scoreText == null)
+        {
+            ScoreHUD hud = FindAnyObjectByType<ScoreHUD>();
+            if (hud != null)
+            {
+                scoreText = hud.scoreText;
+                scoreUpdateText = hud.scoreUpdateText;
+                multiplierText = hud.multiplierText;
+            }
+        }
+
         calc = new DriftScoreCalculator
         {
             DriftSlipThreshold = driftSlipThreshold,

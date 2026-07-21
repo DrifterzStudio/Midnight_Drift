@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78dace2bd6b234540942a210d4f83add, type: 3}
   m_Name: SecondCar
   m_EditorClassIdentifier: Assembly-CSharp::VehicleDefinition
-  vehicleId: mk4
-  displayName: Supra MK4
-  prefab: {fileID: 919132149155446097, guid: 9348344c54aa6764c87f060030f74f71, type: 3}
+  vehicleId: rx8
+  displayName: Mazda RX-8
+  prefab: {fileID: 7727480442206660404, guid: 38b13aaa4848ce44aada2866d698ac81, type: 3}
   icon: {fileID: 0}
