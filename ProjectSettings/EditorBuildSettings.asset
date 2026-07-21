@@ -5,28 +5,38 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: c0b4159a6a1178e4cb61bb7ad0d3d657
+  - enabled: 1
+    path: Assets/Scenes/Garage.unity
+    guid: 62b149f870e62a0449ec41cebe6c88c7
+  - enabled: 1
+    path: Assets/Scenes/Circuit_Solo.unity
+    guid: 3ecca07e70657f14fafc2cc0fd5545c2
+  - enabled: 0
+    path: Assets/Scenes/Circuit.unity
+    guid: ac3f6980ec1bf6f499f8de080cd535c8
+  - enabled: 0
     path: Assets/Scenes/Core.unity
     guid: 23c2e3b884f12484a98b9a47e18179c7
-  - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: 1cffa945816981349ae33f2eb96690b9
-  - enabled: 1
-    path: Assets/Scenes/MultiGameLobbyScene.unity
-    guid: da6c56452ccdbdd4297eb87171e2299f
-  - enabled: 1
-    path: Assets/Scenes/MultiGameScene.unity
-    guid: f12d8f3c0b203f34d889f8e7f1e1e95e
-  - enabled: 1
-    path: Assets/Scenes/MultiLobbyScene.unity
-    guid: 9f2f5ac8d79bf554d9e1f3a4a37d9a6f
-  - enabled: 1
-    path: Assets/Scenes/MultiServerScene.unity
-    guid: 4f873994194c78a47895c13947d9029e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Session.unity
     guid: 4bdb44cff0d9aad42949efba4522ea14
-  - enabled: 1
-    path: Assets/Scenes/Score.unity
-    guid: 9517a8efbb1b1c04e97c7f9061afce16
-  m_configObjects: {}
+  - enabled: 0
+    path: Assets/Scenes/Menu.unity
+    guid: 1cffa945816981349ae33f2eb96690b9
+  - enabled: 0
+    path: Assets/Scenes/MultiGameScene.unity
+    guid: f12d8f3c0b203f34d889f8e7f1e1e95e
+  - enabled: 0
+    path: Assets/deplacement test.unity
+    guid: 829d441301dcbff4eb77ab972490dc5c
+  - enabled: 0
+    path: Assets/Scenes/MultiLobbyScene.unity
+    guid: 9f2f5ac8d79bf554d9e1f3a4a37d9a6f
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

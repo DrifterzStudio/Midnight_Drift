@@ -1,0 +1,108 @@
+using System.Linq;
+using UnityEngine;
+
+public class GarageDisplayManager : MonoBehaviour
+{
+    public Transform spawnPoint;
+    public GameObject customizationPanel;
+    public GameObject vehicleSelectionMenu;
+    public PlayerMovement player;
+
+    private GameObject currentInstance;
+
+    public void ShowVehicle(VehicleDefinition vehicle)
+    {
+        // only save if a car is shown. after a garage reload SelectedVehicle still points at the old
+        // car while the controls are back to default, so saving here would wipe the tuning
+        if (currentInstance != null && GameSession.SelectedVehicle != null)
+            DataPersistenceManager.instance.SaveGameFor(GameSession.SelectedVehicle.vehicleId);
+
+        if (currentInstance != null)
+            Destroy(currentInstance);
+
+        currentInstance = Instantiate(vehicle.prefab, spawnPoint.position, spawnPoint.rotation);
+        RCCP_CarController controller = currentInstance.GetComponentInChildren<RCCP_CarController>(true);
+
+        // Lights (and their lens flares) would look wrong in the small garage room, but only for
+        // this preview instance, the prefab (and every other scene using it, like Circuit_Solo)
+        // is left untouched. Deactivating the GameObject (rather than just disabling the script)
+        // guarantees the lens flare stops rendering too, since it isn't tied to enabled state.
+        foreach (RCCP_Light rccpLight in currentInstance.GetComponentsInChildren<RCCP_Light>(true))
+            rccpLight.gameObject.SetActive(false);
+
+        // Score/drift tracking is baked onto the vehicle prefab but only wired up with real UI
+        // references in Circuit_Solo; it has no business running for the garage preview instance.
+        foreach (Score score in currentInstance.GetComponentsInChildren<Score>(true))
+            score.enabled = false;
+
+        // The preview car keeps RCCP's full physics, so the player would otherwise bump into it
+        // and roll it off its stand. Freeze the body (kinematic) and block inputs so it just
+        // sits still on the pedestal. Only the preview instance is affected.
+        if (controller != null)
+        {
+            controller.canControl = false;
+            if (controller.TryGetComponent(out Rigidbody carRigidbody))
+                carRigidbody.isKinematic = true;
+        }
+
+        CarInstance.instance = controller;
+
+        // Select before handing the controller out: SetController implementations read
+        // GameSession.SelectedVehicle (for the prefab's stock values), and it still pointed at
+        // the previously shown vehicle when this ran afterwards.
+        GameSession.SelectVehicle(vehicle);
+        AssignControllerToUpgradeComponents(controller);
+
+        DataPersistenceManager.instance.LoadGameFor(vehicle.vehicleId);
+
+        customizationPanel.SetActive(true);
+
+        if (vehicleSelectionMenu != null)
+            vehicleSelectionMenu.SetActive(false);
+
+        if (player != null)
+            player.enabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    // only save if a car is shown, so we don't overwrite the save with default control values
+    public void SaveIfCustomizing()
+    {
+        if (currentInstance != null && GameSession.SelectedVehicle != null && DataPersistenceManager.instance != null)
+            DataPersistenceManager.instance.SaveGameFor(GameSession.SelectedVehicle.vehicleId);
+    }
+
+    public void CloseCustomization()
+    {
+        SaveIfCustomizing();
+
+        if (currentInstance != null)
+            Destroy(currentInstance);
+
+        currentInstance = null;
+        CarInstance.instance = null;
+
+        customizationPanel.SetActive(false);
+
+        if (vehicleSelectionMenu != null)
+            vehicleSelectionMenu.SetActive(false);
+
+        if (player != null)
+            player.enabled = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    // finds every IVehicleDependent in the scene, no manual list to maintain
+    void AssignControllerToUpgradeComponents(RCCP_CarController controller)
+    {
+        var dependents = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .OfType<IVehicleDependent>();
+
+        foreach (IVehicleDependent d in dependents)
+            d.SetController(controller);
+    }
+}

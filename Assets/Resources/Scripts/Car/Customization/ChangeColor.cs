@@ -1,0 +1,178 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+// cycles the body paint through a palette, for the Visuel tab
+public class ChangeColor : MonoBehaviour, IDataPersistence, IVehicleDependent
+{
+
+    [System.Serializable]
+    public class PaintColor
+    {
+
+        [Tooltip("Name shown to the player.")]
+        public string name = "Color";
+
+        [Tooltip("Body colour applied to every painter of the vehicle.")]
+        public Color color = Color.white;
+    }
+
+    public string dataFileName;
+
+    public RCCP_CarController controller;
+
+    [Tooltip("Button cycling to the next colour.")]
+    public Button colorButton;
+
+    [Tooltip("Text showing the current colour's name.")]
+    public Text colorText;
+
+    [Tooltip("Colours the player can pick, in order.")]
+    public PaintColor[] palette = {
+        new PaintColor { name = "Rouge",  color = new Color(.60f, .05f, .05f) },
+        new PaintColor { name = "Noir",   color = new Color(.06f, .06f, .07f) },
+        new PaintColor { name = "Blanc",  color = new Color(.90f, .90f, .92f) },
+        new PaintColor { name = "Bleu",   color = new Color(.08f, .20f, .55f) },
+        new PaintColor { name = "Jaune",  color = new Color(.85f, .70f, .10f) },
+        new PaintColor { name = "Violet", color = new Color(.35f, .10f, .50f) }
+    };
+
+    // alpha 0 means the player never picked a colour (same as RCCP's own convention). the prefab's
+    // paint is left alone then.
+    private Color currentColor = new Color(1f, 1f, 1f, 0f);
+
+    public static ChangeColor instance;
+
+    public void SaveGame(IGameData data)
+    {
+        SaveCustom tmp = data as SaveCustom;
+        if (tmp != null)
+            tmp.bodyColor = currentColor;
+    }
+
+    public void LoadGame(IGameData data)
+    {
+        SaveCustom tmp = data as SaveCustom;
+        if (tmp != null)
+            currentColor = tmp.bodyColor;
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    public string getDataFileName()
+    {
+        return dataFileName;
+    }
+
+    public void SetController(RCCP_CarController newController)
+    {
+        controller = newController;
+        ApplyToController();
+        RefreshUI();
+    }
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        DataPersistenceManager.instance.dataPersistenceObjects.Add(instance);
+
+        if (colorButton != null) colorButton.onClick.AddListener(OnColorButtonClicked);
+    }
+
+    private void Start()
+    {
+        RefreshUI();
+    }
+
+    private void OnColorButtonClicked()
+    {
+        if (palette == null || palette.Length == 0)
+            return;
+
+        if (!HasPaint)
+        {
+            // from "Origine", enter the palette at the first colour
+            currentColor = palette[0].color;
+            currentColor.a = 1f;
+        }
+        else if (NearestPaletteIndex() == palette.Length - 1)
+        {
+            // past the last colour, cycle back to the car's original paint
+            currentColor = new Color(1f, 1f, 1f, 0f);
+        }
+        else
+        {
+            currentColor = palette[NearestPaletteIndex() + 1].color;
+            currentColor.a = 1f;
+        }
+
+        ApplyToController();
+        RefreshUI();
+    }
+
+    void ApplyToController()
+    {
+        if (controller == null || controller.Customizer == null)
+            return;
+
+        RCCP_VehicleUpgrade_PaintManager paintManager = controller.Customizer.PaintManager;
+
+        if (paintManager == null)
+            return;
+
+        if (!HasPaint)
+        {
+            // Restore() re-applies the colours RCCP grabbed at init, undoing any instanced paint -
+            // that's what makes "Origine" actually reset the car.
+            paintManager.Restore();
+            return;
+        }
+
+        // Paint() not PaintWithoutSave() - it also updates RCCP's loadout, which the Customizer
+        // restores on init and would otherwise overwrite our colour.
+        paintManager.Paint(currentColor);
+    }
+
+    void RefreshUI()
+    {
+        if (colorText == null)
+            return;
+
+        colorText.text = HasPaint ? palette[NearestPaletteIndex()].name : "Origine";
+    }
+
+    bool HasPaint
+    {
+        get { return currentColor.a > 0f; }
+    }
+
+    // the colour itself is saved, not an index, so reordering the palette won't repaint the car.
+    // the cursor is rebuilt by finding the closest entry.
+    int NearestPaletteIndex()
+    {
+        int nearest = 0;
+        float smallestDelta = float.MaxValue;
+
+        for (int i = 0; i < palette.Length; i++)
+        {
+            Color candidate = palette[i].color;
+
+            float delta = Mathf.Abs(candidate.r - currentColor.r)
+                        + Mathf.Abs(candidate.g - currentColor.g)
+                        + Mathf.Abs(candidate.b - currentColor.b);
+
+            if (delta < smallestDelta)
+            {
+                smallestDelta = delta;
+                nearest = i;
+            }
+        }
+
+        return nearest;
+    }
+
+    private void OnDestroy()
+    {
+        if (colorButton != null) colorButton.onClick.RemoveListener(OnColorButtonClicked);
+    }
+}

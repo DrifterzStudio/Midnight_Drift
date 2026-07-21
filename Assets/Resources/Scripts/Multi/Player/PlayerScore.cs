@@ -1,37 +1,25 @@
 using System;
 using Mirror;
-using Telepathy;
 using TMPro;
 using UnityEngine;
 
-public class Score : NetworkBehaviour
-{
-    static private Score _localInstance = null;
 
-    // variable syncro
-    //[SyncVar(hook = nameof(OnScoreChanged))]
-    //private float _syncScore = 0f;
+public class PlayerScore : NetworkBehaviour
+{
+    static private PlayerScore _localInstance = null;
+
     [SyncVar(hook = nameof(OnScoreUpdateChanged))]
     private float _syncScoreUpdate = 0f;
     [SyncVar]
-    private float _syncScoreMultiplier = 1f;
+    private int _syncScoreMultiplier = 1;
+    [SyncVar]
+    private int _syncCurrentLap = 1;
 
-    // private variable
-    private float _meters = 0f;
-    private float _distDrift = 0f;
-    private float _timer = 0f;
-    private float _score = 0f;
-    private float _multiplier = 1f;
-    private float _challengeMultiplier = 1f;
-    private float _scoreMultiplier = 1f;
-    private float _distMultiplierModifier = 0f;
-    private float _scoreMultiplierModifier = 0f;
-    private bool _isEnd = false;
-    private bool _isChallengeMultiApplied = false;
+    public int CurrentLap => _syncCurrentLap;
 
-    private bool[] _scoreAchievements = { false, false, false }; // 10000 / 5000 / 1000
-    private bool[] _distAchievements = { false, false, false }; // 200 / 100 / 50
-    private bool[] _parkingChallenge = { false, false }; // dist 30m / 5000 pts
+    private DriftScoreCalculator _calc;
+    private LapTracker _lapTracker;
+    private float _pushedScore = 0f;
 
     private TMP_Text _scoreText;
     private TMP_Text _scoreUpdateText;
@@ -44,6 +32,25 @@ public class Score : NetworkBehaviour
 
     [Tooltip("Time without drifting before the current run banks into total score.")]
     public float driftTimeoutDelay = 2f;
+
+    [Tooltip("Drift points earned per second (scaled by speed). Higher = score climbs faster.")]
+    public float pointsRate = 4f;
+
+    [Tooltip("Seconds of continuous drift to raise the multiplier by one (x2, x3...).")]
+    public float multiplierStepTime = 0.8f;
+
+    [Tooltip("Maximum drift multiplier.")]
+    public int maxMultiplier = 10;
+
+    [Header("Laps")]
+    [Tooltip("Number of laps before this player's race ends. Keep it the same as solo.")]
+    public int maxLaps = 5;
+
+    [Tooltip("How far from the line the car must get before a crossing counts.")]
+    public float lineLeaveDistance = 25f;
+
+    [Tooltip("How far sideways from the line still counts as crossing it.")]
+    public float lineHalfWidth = 25f;
 
     [Header("Score Popup Animation")]
     public float popupFadeOutDuration = 0.5f;
@@ -80,6 +87,40 @@ public class Score : NetworkBehaviour
     private bool _isShaking = false;
     private Vector3 _popupBasePosition;
 
+    public override void OnStartServer()
+    {
+        _calc = new DriftScoreCalculator
+        {
+            DriftSlipThreshold = driftSlipThreshold,
+            DriftTimeoutDelay = driftTimeoutDelay,
+            PointsRate = pointsRate,
+            MultiplierStepTime = multiplierStepTime,
+            MaxMultiplier = maxMultiplier,
+        };
+        _calc.Banked += OnCalcBanked;
+        _calc.Lost += OnCalcLost;
+
+        _lapTracker = new LapTracker
+        {
+            MaxLaps = maxLaps,
+            LeaveDistance = lineLeaveDistance,
+            LineHalfWidth = lineHalfWidth,
+        };
+        _lapTracker.LapCompleted += OnLapCompleted;
+        _lapTracker.RaceFinished += OnRaceFinished;
+
+        FinishLine line = FindAnyObjectByType<FinishLine>();
+        if (line != null)
+        {
+            _lapTracker.SetLine(line.transform.position, line.transform.forward);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerScore: no FinishLine in the scene, using the car's spawn as the line.");
+            _lapTracker.SetLine(transform.position, transform.forward);
+        }
+    }
+
     private void Start()
     {
         if (isLocalPlayer)
@@ -113,12 +154,14 @@ public class Score : NetworkBehaviour
 
     private void Update()
     {
+        if (isServer && _lapTracker != null && !_lapTracker.Finished)
+            _lapTracker.Tick(transform.position, Time.deltaTime);
+
         if (!NetworkClient.ready)
         {
             return;
         }
 
-        NetworkCamera camera = GetComponent<NetworkCamera>();
         if (NetworkCamera.LocalInstance != null && NetworkCamera.LocalInstance.IsPlayerActive && isLocalPlayer)
         {
             if (!_carController) return;
@@ -175,7 +218,7 @@ public class Score : NetworkBehaviour
 
         if (_syncScoreMultiplier > 1)
         {
-            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")} x{_syncScoreMultiplier:0.0}";
+            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")} x{_syncScoreMultiplier}";
         }
         else
         {
@@ -186,101 +229,82 @@ public class Score : NetworkBehaviour
     [Command]
     private void CmdUpdateDrift(float sidewaysSlip, float speed, float dt)
     {
+        if (_calc == null || _calc.Ended)
+            return;
+
         if (speed < 0)
             speed = 0;
 
-        if (_isEnd)
-        {
-            if (!_isChallengeMultiApplied)
-            {
-                _score *= _multiplier;
-                _score *= _challengeMultiplier;
-                _isChallengeMultiApplied = true;
-                Score_Manager.Instance.CmdAddScoreForCon(GetComponent<PlayerInfos>().SteamId, _score);
-                //_syncScore += _score;
-                _score = 0;
-            }
+        _calc.Tick(sidewaysSlip, speed, dt);
 
+        _syncScoreUpdate = _calc.PendingPoints;
+        _syncScoreMultiplier = _calc.Multiplier;
+    }
+
+    [Server]
+    private void PushScoreDelta()
+    {
+        float delta = _calc.Score - _pushedScore;
+        if (delta > 0f)
+        {
+            Score_Manager.Instance.CmdAddScoreForCon(GetComponent<PlayerInfos>().SteamId, delta);
+            _pushedScore = _calc.Score;
+        }
+    }
+
+    [Server]
+    private void OnCalcBanked()
+    {
+        PushScoreDelta();
+        _syncScoreUpdate = 0f;
+        _syncScoreMultiplier = 1;
+        RpcOnScoreBanked();
+    }
+
+    [Server]
+    private void OnCalcLost()
+    {
+        _syncScoreUpdate = 0f;
+        _syncScoreMultiplier = 1;
+        RpcOnScoreLost();
+    }
+
+    [Server]
+    private void OnLapCompleted()
+    {
+        _syncCurrentLap = _lapTracker.CurrentLap;
+    }
+
+    [Server]
+    private void OnRaceFinished()
+    {
+        _syncCurrentLap = _lapTracker.CurrentLap;
+        EndScoring();
+    }
+
+    [Server]
+    private void EndScoring()
+    {
+        if (_calc == null || _calc.Ended)
             return;
-        }
-        if (sidewaysSlip >= driftSlipThreshold)
-        {
-            _meters += (speed / 3.6f) * dt;
-            _timer = 0f;
-            _distDrift += _meters;
 
-            _syncScoreUpdate = (int)_distDrift * _scoreMultiplier;
-            _meters = 0f;
-        }
-        else
-        {
-            _timer += dt;
-            if (_timer >= driftTimeoutDelay)
-            {
-                bool hasPointsToBank = (int)_distDrift > 0;
-
-                _score += (int)_distDrift * _scoreMultiplier;
-                Score_Manager.Instance.CmdAddScoreForCon(GetComponent<PlayerInfos>().SteamId, _score);
-                _score = 0;
-                _syncScoreUpdate = 0f;
-
-                _distDrift = 0f;
-                _distMultiplierModifier = 0f;
-                _scoreMultiplierModifier = 0f;
-                _scoreMultiplier = 1f;
-                _syncScoreMultiplier = 1f;
-                _timer = 0f;
-
-                if (hasPointsToBank)
-                    RpcOnScoreBanked();
-            }
-        }
-        UpdateMultiplier();
-    }
-
-    [ServerCallback]
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("Finish"))
-            _isEnd = true;
-    }
-
-    [ServerCallback]
-    private void OnTriggerStay(Collider col)
-    {
-        if (col.CompareTag("Finish"))
-            _isEnd = true;
+        _calc.Finalize();
+        PushScoreDelta();
+        _syncScoreUpdate = 0f;
+        _syncScoreMultiplier = 1;
     }
 
 
     [ServerCallback]
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsInLayerMask(collision.gameObject.layer, obstacleLayer))
-            CancelDriftScore();
+        if (_calc != null && IsInLayerMask(collision.gameObject.layer, obstacleLayer))
+            _calc.RegisterCollision();
     }
 
     private bool IsInLayerMask(int layer, LayerMask mask)
     {
         return (mask.value & (1 << layer)) != 0;
-    }
-
-    private void CancelDriftScore()
-    {
-        bool hadPointsToLose = (int)_distDrift > 0;
-
-        _distDrift = 0f;
-        _meters = 0f;
-        _distMultiplierModifier = 0f;
-        _scoreMultiplierModifier = 0f;
-        _scoreMultiplier = 1f;
-        _syncScoreMultiplier = 1f;
-        _timer = 0f;
-        _syncScoreUpdate = 0f;
-
-
-        if (hadPointsToLose)
-            RpcOnScoreLost();
     }
 
 
@@ -291,80 +315,6 @@ public class Score : NetworkBehaviour
             return;
 
         StartScoreLostEffect();
-    }
-
-    [Server]
-    private void UpdateMultiplier()
-    {
-        // Score achievements
-        if (_score >= 10000 && !_scoreAchievements[0])
-        {
-            _multiplier += 3f;
-            _scoreAchievements[0] = true;
-        }
-
-        if (_score >= 5000 && !_scoreAchievements[1])
-        {
-            _multiplier += 2.5f;
-            _scoreAchievements[1] = true;
-        }
-
-        if (_score >= 1000 && !_scoreAchievements[2])
-        {
-            _multiplier += 2f;
-            _scoreAchievements[2] = true;
-        }
-
-
-        if (_distDrift >= 200 && !_distAchievements[0])
-        {
-            _multiplier += 1.8f;
-            _distAchievements[0] = true;
-        }
-
-        if (_distDrift >= 100 && !_distAchievements[1])
-        {
-            _multiplier += 1.2f;
-            _distAchievements[1] = true;
-        }
-
-        if (_distDrift >= 50 && !_distAchievements[2])
-        {
-            _multiplier += 1f;
-            _distAchievements[2] = true;
-        }
-
-
-        if (_distDrift >= 30 && !_parkingChallenge[0])
-        {
-            _challengeMultiplier *= 1.5f;
-            _parkingChallenge[0] = true;
-        }
-
-        if (_score >= 5000 && !_parkingChallenge[1])
-        {
-            _challengeMultiplier *= 2f;
-            _parkingChallenge[1] = true;
-        }
-
-
-        if (_distMultiplierModifier + 100 <= _distDrift)
-        {
-            _distMultiplierModifier += 100;
-            _multiplier += _distMultiplierModifier / 200f;
-        }
-
-
-        if (_scoreMultiplierModifier + 150 <= _distDrift)
-        {
-            _scoreMultiplierModifier += 150;
-            _scoreMultiplier = 1f + _scoreMultiplierModifier / 300f;
-            _syncScoreMultiplier = _scoreMultiplier;
-        }
-    }
-
-    private void OnScoreChanged(float _, float newScore)
-    {
     }
 
     private void OnScoreUpdateChanged(float _, float newUpdate)
