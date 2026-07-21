@@ -15,10 +15,10 @@ public class BackToMenu : MonoBehaviour
         //TODO changement classique
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
-            Debug.Log("Leave Server");
-            transitionToMenuServer();
+                Debug.Log("Leave Server");
+                transitionToMenuServer();
         }
-
+          
     }
 
     void transitionToMenuServer()

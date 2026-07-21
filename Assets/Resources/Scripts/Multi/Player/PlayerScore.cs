@@ -212,14 +212,9 @@ public class PlayerScore : NetworkBehaviour
                 rect.localScale = baseScale;
         }
 
-        if (!isCurrentlyDrifting)
-        {
-
-            if (!_localInstance._isFadingOut)
-                scoreUpdateText.gameObject.SetActive(false);
-
+        if (!isCurrentlyDrifting && !_localInstance._isFadingOut)
             return;
-        }
+
 
         if (_syncScoreMultiplier > 1)
         {
