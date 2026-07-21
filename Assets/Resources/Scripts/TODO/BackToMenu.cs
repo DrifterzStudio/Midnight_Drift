@@ -4,7 +4,7 @@ using Steamworks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BackToMenu : MonoBehaviour
+public class BackToMenu : Singleton_Obj<BackToMenu>
 {
     private bool isChangingScene = false;
     private void Update()
@@ -21,8 +21,9 @@ public class BackToMenu : MonoBehaviour
 
     }
 
-    void transitionToMenuServer()
+   public void transitionToMenuServer()
     {
+        if (isChangingScene) return;
         Debug.Log("Appel de StopClient()");
         if (NetworkServer.active)
         {
