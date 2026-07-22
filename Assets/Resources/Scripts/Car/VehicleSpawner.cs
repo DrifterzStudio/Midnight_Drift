@@ -1,9 +1,7 @@
 using UnityEngine;
 
-// spawns the car the player picked in the garage and hands it to RCCP as the player vehicle.
-// drop this in Circuit_Solo instead of placing a car by hand, so the choice actually changes what
-// you drive. the spawned prefab brings its own loaders (LoadUpgrades/LoadCarModification/LoadCustom),
-// so its tuning follows automatically.
+// spawns the car picked in the garage and gives it to RCCP. put it in Circuit_Solo instead of a
+// hand-placed car.
 public class VehicleSpawner : MonoBehaviour
 {
     [Tooltip("Where the car spawns. Empty = this object's own transform.")]
@@ -22,8 +20,7 @@ public class VehicleSpawner : MonoBehaviour
             return;
         }
 
-        // keep GameSession in sync with what we spawn - the mass upgrades read it for the prefab's
-        // stock values, and it's null when launching this scene directly
+        // the mass upgrades read GameSession for the prefab's stock values
         GameSession.SelectVehicle(vehicle);
 
         Transform where = spawnPoint != null ? spawnPoint : transform;
@@ -37,7 +34,7 @@ public class VehicleSpawner : MonoBehaviour
             return;
         }
 
-        // becomes activePlayerVehicle, which the RCCP camera, RaceManager and Score all follow
+        // becomes activePlayerVehicle (camera, RaceManager and Score follow it)
         RCCP.RegisterPlayerVehicle(controller, true, true);
     }
 }

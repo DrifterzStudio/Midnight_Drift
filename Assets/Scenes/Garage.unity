@@ -11394,6 +11394,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a9115fe60ad71842a82e018219474d0, type: 3}
+--- !u!114 &1016946008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 349204281672340541, guid: 5a9115fe60ad71842a82e018219474d0, type: 3}
+  m_PrefabInstance: {fileID: 1016946007}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2dfa8756a1fae74b9b9545c846dac61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarSelectionMenu
 --- !u!1 &1033778193
 GameObject:
   m_ObjectHideFlags: 0
@@ -12711,7 +12722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   sceneName: Circuit_Solo
-  carSelectionMenu: {fileID: 0}
+  carSelectionMenu: {fileID: 1016946008}
   targetRenderer: {fileID: 1211325065}
   highlightColor: {r: 0.3679245, g: 0, b: 0, a: 1}
   emissionIntensity: 1.5

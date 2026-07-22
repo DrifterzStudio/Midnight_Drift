@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// "choose your car" popup shown when the player hits Play. builds one button per vehicle, and the
-// pick sets GameSession + loads the circuit. works from any scene (MainMenu, Garage) since it only
-// needs the vehicle list, not the garage.
+// "choose your car" popup. one button per vehicle, the pick sets GameSession + loads the circuit.
 public class CarSelectionMenu : MonoBehaviour
 {
     [Tooltip("The popup panel, hidden until Play is pressed.")]
@@ -45,7 +43,7 @@ public class CarSelectionMenu : MonoBehaviour
         if (panel != null)
             panel.SetActive(true);
 
-        // free the cursor so the buttons are clickable, and stop the player from moving/looking
+        // free the cursor so the buttons are clickable
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SetControllers(false);

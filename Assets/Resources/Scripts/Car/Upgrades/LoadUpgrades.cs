@@ -23,6 +23,14 @@ public class LoadUpgrades : MonoBehaviour
         }
 
         SaveUpgrades data = FindFirstObjectByType<SaveUpgrades>(FindObjectsInactive.Include);
+        bool tempData = false;
+
+        // launched without the garage? load this vehicle's save straight from disk
+        if (data == null && GameSession.SelectedVehicle != null)
+        {
+            data = TuningDisk.Load<SaveUpgrades>("Upgrades", "upgrades", GameSession.SelectedVehicle.vehicleId);
+            tempData = data != null;
+        }
 
         if (data == null)
         {
@@ -97,6 +105,9 @@ public class LoadUpgrades : MonoBehaviour
                     differential.differentialType = mode;
             }
         }
+
+        if (tempData)
+            Destroy(data.gameObject);
     }
 
     static RCCP_Differential.DifferentialType DifferentialModeFor(int index)
