@@ -24,7 +24,8 @@ public class SaveCustom : MonoBehaviour, IGameData
     private void Awake()
     {
         if (saveInstance == null) saveInstance = this;
-        DataPersistenceManager.instance.objectsData.Add(saveInstance);
+        if (DataPersistenceManager.instance != null)
+            DataPersistenceManager.instance.objectsData.Add(saveInstance);
     }
 
     void IGameData.setData(IGameData data)

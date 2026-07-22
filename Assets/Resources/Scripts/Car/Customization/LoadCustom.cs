@@ -27,6 +27,14 @@ public class LoadCustom : MonoBehaviour
             controller = GetComponentInParent<RCCP_CarController>();
 
         SaveCustom data = FindFirstObjectByType<SaveCustom>(FindObjectsInactive.Include);
+        bool tempData = false;
+
+        // launched without the garage? load this vehicle's save straight from disk
+        if (data == null && GameSession.SelectedVehicle != null)
+        {
+            data = TuningDisk.Load<SaveCustom>("Customization", "custom", GameSession.SelectedVehicle.vehicleId);
+            tempData = data != null;
+        }
 
         if (data == null)
         {
@@ -37,6 +45,9 @@ public class LoadCustom : MonoBehaviour
         ApplyBodyColor(data);
         ApplySpoiler(data);
         ApplyWheelMaterial(data);
+
+        if (tempData)
+            Destroy(data.gameObject);
     }
 
     // alpha 0 means the player never picked a colour, so the prefab's own paint is left alone

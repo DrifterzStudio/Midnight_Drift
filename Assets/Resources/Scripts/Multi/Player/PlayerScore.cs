@@ -23,6 +23,8 @@ public class PlayerScore : NetworkBehaviour
 
     private TMP_Text _scoreText;
     private TMP_Text _scoreUpdateText;
+    private TMP_Text _multiplierText;
+    private TMP_Text _lapText;
 
     private RCCP_CarController _carController;
 
@@ -128,6 +130,8 @@ public class PlayerScore : NetworkBehaviour
             _localInstance = this;
             _scoreText = Game_UI_Manager.Instance.score;
             _scoreUpdateText = Game_UI_Manager.Instance.updScore;
+            _multiplierText = Game_UI_Manager.Instance.multiplier;
+            _lapText = Game_UI_Manager.Instance.lap;
             _scoreText.gameObject.SetActive(true);
             _scoreUpdateText.gameObject.SetActive(true);
             _scoreText.text = "Score: " + 0;
@@ -192,11 +196,15 @@ public class PlayerScore : NetworkBehaviour
 
         TMP_Text scoreText = _localInstance._scoreText;
         TMP_Text scoreUpdateText = _localInstance._scoreUpdateText;
+        TMP_Text multiplierText = _localInstance._multiplierText;
         CanvasGroup canvasGroup = _localInstance._scoreUpdateCanvasGroup;
         RectTransform rect = _localInstance._scoreUpdateRect;
         Vector3 baseScale = _localInstance._baseScale;
 
         scoreText.text = "Score: " + scoreValue.ToString("N0");
+
+        if (_localInstance._lapText != null)
+            _localInstance._lapText.text = "LAP " + Mathf.Min(_syncCurrentLap, maxLaps) + "/" + maxLaps;
 
         if (_localInstance._isShaking)
             return;
@@ -214,20 +222,29 @@ public class PlayerScore : NetworkBehaviour
 
         if (!isCurrentlyDrifting)
         {
-
             if (!_localInstance._isFadingOut)
+            {
                 scoreUpdateText.gameObject.SetActive(false);
+                if (multiplierText != null)
+                    multiplierText.gameObject.SetActive(false);
+            }
 
             return;
         }
 
-        if (_syncScoreMultiplier > 1)
+        scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")}";
+
+        if (multiplierText != null)
         {
-            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")} x{_syncScoreMultiplier}";
-        }
-        else
-        {
-            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")}";
+            if (_syncScoreMultiplier > 1)
+            {
+                multiplierText.gameObject.SetActive(true);
+                multiplierText.text = "x" + _syncScoreMultiplier;
+            }
+            else
+            {
+                multiplierText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -347,8 +364,12 @@ public class PlayerScore : NetworkBehaviour
     {
         _fadeTimer = 0f;
         _isFadingOut = true;
+
         if (_scoreUpdateCanvasGroup != null)
             _scoreUpdateCanvasGroup.alpha = 1f;
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false); 
     }
 
     private void UpdatePopupAnimation()
@@ -373,9 +394,14 @@ public class PlayerScore : NetworkBehaviour
     private void StartScoreLostEffect()
     {
         _scoreUpdateText.gameObject.SetActive(true);
+
         if (_scoreUpdateCanvasGroup != null)
             _scoreUpdateCanvasGroup.alpha = 1f;
+
         _scoreUpdateText.color = scoreLostColor;
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false);
 
         _shakeTimer = 0f;
         _isShaking = true;
@@ -414,6 +440,10 @@ public class PlayerScore : NetworkBehaviour
     private void HidePopupImmediately()
     {
         _scoreUpdateText.gameObject.SetActive(false);
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false);
+
         _scoreUpdateRect.anchoredPosition = _popupBasePosition;
         _scoreUpdateText.color = _baseTextColor;
     }

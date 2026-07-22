@@ -41,7 +41,8 @@ public class SaveUpgrades : MonoBehaviour, IGameData
 
     private void Awake()
     {
-        DataPersistenceManager.instance.objectsData.Add(this);
+        if (DataPersistenceManager.instance != null)
+            DataPersistenceManager.instance.objectsData.Add(this);
     }
 
     void IGameData.setData(IGameData data)
