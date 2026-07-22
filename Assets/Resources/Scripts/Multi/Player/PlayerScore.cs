@@ -259,6 +259,8 @@ public class PlayerScore : NetworkBehaviour
 
         _calc.Tick(sidewaysSlip, speed, dt);
 
+        PushScoreDelta();
+
         _syncScoreUpdate = _calc.PendingPoints;
         _syncScoreMultiplier = _calc.Multiplier;
     }
@@ -277,7 +279,6 @@ public class PlayerScore : NetworkBehaviour
     [Server]
     private void OnCalcBanked()
     {
-        PushScoreDelta();
         _syncScoreUpdate = 0f;
         _syncScoreMultiplier = 1;
         RpcOnScoreBanked();

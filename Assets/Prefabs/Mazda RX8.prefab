@@ -24038,7 +24038,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   scoreUpdateText: {fileID: 0}
   multiplierText: {fileID: 0}
-  popupFadeOutDuration: 0.5
+  popupFadeOutDuration: 1
   popupScalePunch: 3
   scoreBankSound: {fileID: 8300000, guid: 12c3a2b54a2f6de428c0668ec90a2a70, type: 3}
   scoreBankSoundVolume: 1

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// applies the garage's visual customization to the car when the scene loads. put this on the
-// vehicle root. reads the SaveCustom container (survives the scene change via DontDestroy).
+// applies the saved paint/spoiler/wheels to the car on spawn. put it on the vehicle root.
 public class LoadCustom : MonoBehaviour
 {
 
