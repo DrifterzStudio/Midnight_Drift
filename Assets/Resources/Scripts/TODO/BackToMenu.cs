@@ -49,7 +49,7 @@ public class BackToMenu : Singleton_Obj<BackToMenu>
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Scene_Controller.Instance.NewTransition()
-            .Load("Menu", "Menu", true)
+            .Load("Menu", "MainMenu", true)
             .Unload("Multi_Server")
             .Unload("Multi_Game")
             .EnableOverlay(true)
