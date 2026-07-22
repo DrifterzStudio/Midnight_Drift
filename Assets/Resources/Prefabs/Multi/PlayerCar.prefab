@@ -12944,15 +12944,15 @@ MonoBehaviour:
   maxLaps: 5
   lineLeaveDistance: 25
   lineHalfWidth: 25
-  popupFadeOutDuration: 0.5
-  popupScalePunch: 1.3
+  popupFadeOutDuration: 1
+  popupScalePunch: 3
   scoreBankSound: {fileID: 8300000, guid: 12c3a2b54a2f6de428c0668ec90a2a70, type: 3}
   scoreBankSoundVolume: 1
   scoreLostSound: {fileID: 8300000, guid: 70ed407ca49e05648b874cddfc1161be, type: 3}
   scoreLostSoundVolume: 1
   scoreLostColor: {r: 1, g: 0, b: 0, a: 1}
-  scoreLostShakeDuration: 0.3
-  scoreLostShakeStrength: 10
+  scoreLostShakeDuration: 1.5
+  scoreLostShakeStrength: 6
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -24447,8 +24447,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completeSetup: 0
   checkedSetup: 0
-  paintMaterial: {fileID: 0}
-  id: _BaseColor
+  paintMaterial: {fileID: 2100000, guid: 2074c805daf2d154e9f1387484cfd810, type: 2}
+  id: _BASE_COLOR
 --- !u!1 &7173202670895300788
 GameObject:
   m_ObjectHideFlags: 0
@@ -24515,7 +24515,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0a84f896f1ad2344886766dd5a0edf76, type: 2}
+  - {fileID: 2100000, guid: 2074c805daf2d154e9f1387484cfd810, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26377,7 +26377,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e8818c3e7b87a6246b22423ae306b522, type: 2}
+  - {fileID: 2100000, guid: 2074c805daf2d154e9f1387484cfd810, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// applies the garage settings to the car when the scene loads. put this on the vehicle root
-// (the RCCP_CarController). reads the SaveSettings container (survives the scene change via DontDestroy).
+// applies the saved settings to the car on spawn. put it on the vehicle root.
 public class LoadCarModification : MonoBehaviour
 {
 

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// applies the garage upgrades to the car when the scene loads. reads the SaveUpgrades container
-// (it survives the scene change thanks to DontDestroy). put this on the vehicle root (the RCCP_CarController).
+// applies the saved upgrades to the car on spawn. put it on the vehicle root.
 public class LoadUpgrades : MonoBehaviour
 {
     [Tooltip("Left empty, it resolves from this GameObject. Every sub-component (engine, gearbox, " +

@@ -107,7 +107,7 @@ public class LeaderBoard_script : MonoBehaviour
             }
             case SyncDictionary<ulong, float>.Operation.OP_SET:
             {
-                Debug.Log($"Modification : {key} -> {value}");
+                float current = Score_Manager.Instance.ScoreData[key];
 
                 foreach (GameObject obj in objects)
                 {
@@ -117,7 +117,7 @@ public class LeaderBoard_script : MonoBehaviour
                     if (comp.text != SteamFriends.GetFriendPersonaName(steamID))
                         continue;
                     TMP_Text score = obj.transform.GetChild(2).GetComponent<TMP_Text>();
-                    score.SetText($"score : {value}");
+                    score.SetText($"score : {current}");
                 }
                 break;
             }
