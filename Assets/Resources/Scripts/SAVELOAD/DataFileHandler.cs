@@ -5,7 +5,8 @@ using UnityEngine;
 public class DataFileHandler
 {
 
-    public void load(IGameData data, string fullPath)
+    // true if a file was actually read. false = no save yet for this key
+    public bool load(IGameData data, string fullPath)
     {
         if (File.Exists(fullPath))
         {
@@ -19,6 +20,7 @@ public class DataFileHandler
                 }
 
                 JsonUtility.FromJsonOverwrite(dataToLoad, data);
+                return true;
 
             }
             catch (Exception e)
@@ -26,39 +28,24 @@ public class DataFileHandler
                 Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
             }
         }
-        else {
-            Debug.LogError("Path not found: " + fullPath);
-        }
 
+        return false;
     }
 
-    public void save(IGameData data)
+    public void save(IGameData data, string fullPath)
     {
-        
-        string fullPath = Path.Combine(data.getDataDirPath(), data.getDataFileName());
-        if (File.Exists(fullPath))
+        try
         {
-            try
-            {
-                string dataToSave = JsonUtility.ToJson(data, data.usePrettyPrint());
+            string dataToSave = JsonUtility.ToJson(data, data.usePrettyPrint());
 
-                if (data.useEncryption())
-                {
-                    dataToSave = EncryptDecrypt(dataToSave, data.getEncryptionKey());
-                }
+            if (data.useEncryption())
+                dataToSave = EncryptDecrypt(dataToSave, data.getEncryptionKey());
 
-                File.WriteAllText(fullPath, dataToSave);
-                Debug.Log("Save successed");
-
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
-            }
+            File.WriteAllText(fullPath, dataToSave);
         }
-        else 
+        catch (Exception e)
         {
-            Debug.LogError("Path not found: " + fullPath);
+            Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
         }
     }
 
