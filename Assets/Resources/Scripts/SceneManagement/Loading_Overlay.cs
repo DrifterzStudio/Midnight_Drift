@@ -7,11 +7,13 @@ public class Loading_Overlay : MonoBehaviour
     [SerializeField] private float fadeOutTime = 0.5f;
     public IEnumerator FadeInBlack()
     {
+        canvasGroup.blocksRaycasts = true;
         yield return FadeTo(1f,fadeInTime);
     }
     public IEnumerator FadeOutBlack()
     {
         yield return FadeTo(0.0f, fadeOutTime);
+        canvasGroup.blocksRaycasts = false;
     }
     private IEnumerator FadeTo(float targetAlpha, float duration)
     {
@@ -21,9 +23,9 @@ public class Loading_Overlay : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, t, targetAlpha);
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             yield return null;
         }
-        canvasGroup.alpha = targetAlpha; 
+        canvasGroup.alpha = targetAlpha;
     }
 }

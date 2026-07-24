@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuEvents : MonoBehaviour
 {
@@ -15,5 +16,13 @@ public class MenuEvents : MonoBehaviour
             .Unload("Menu")
             .EnableOverlay(true)
             .Execute();
+    }
+
+    public void ToMainMenu()
+    {
+        if (LoadingScreenManager.Instance != null)
+            LoadingScreenManager.Instance.LoadScene("MainMenu");
+        else
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

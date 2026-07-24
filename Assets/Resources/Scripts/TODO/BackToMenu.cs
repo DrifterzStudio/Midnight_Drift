@@ -27,12 +27,10 @@ public class BackToMenu : Singleton_Obj<BackToMenu>
         Debug.Log("Appel de StopClient()");
         if (NetworkServer.active)
         {
-            // Host ou serveur dédié
             Mirror_Manager.Instance.StopHost();
         }
         else if (NetworkClient.active)
         {
-            // Client uniquement
             Mirror_Manager.Instance.StopClient();
         }
         else
