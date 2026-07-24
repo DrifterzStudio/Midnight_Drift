@@ -50,6 +50,12 @@ public class Radio : MonoBehaviour
         tracks = new AudioSource[][] { track1, track2, track3, track4 };
     }
 
+    private void Start()
+    {
+        isOn = true;
+        PlayRandomSong();
+    }
+
     private void Update()
     {
         HandleInput();

@@ -285,7 +285,8 @@ public class RaceManager : MonoBehaviour
         for (int i = 0; i < top.Count; i++)
         {
             Scoreboard.Entry e = top[i];
-            string row = (i + 1) + ".  " + e.score.ToString("N0") + "   " + SimpleUI.FormatTime(e.totalTime) + "   " + e.vehicle;
+            string medal = "<color=#" + ColorUtility.ToHtmlStringRGB(GetMedalColor(e.score)) + ">" + GetMedalName(e.score) + "</color>";
+            string row = (i + 1) + ".  " + medal + "   " + e.score.ToString("N0") + "   " + SimpleUI.FormatTime(e.totalTime) + "   " + e.vehicle;
             AddResultLine(panel.transform, row, 22, FontStyle.Normal, 30f);
         }
 
@@ -299,6 +300,16 @@ public class RaceManager : MonoBehaviour
         Text label = SimpleUI.AddText(parent, text, size, TextAnchor.MiddleCenter, style);
         AddLayoutHeight(label.gameObject, height);
         return label;
+    }
+
+    string GetMedalName(float score)
+    {
+        if (score >= diamondScore) return "DIAMOND";
+        if (score >= platinumScore) return "PLATINUM";
+        if (score >= goldScore) return "GOLD";
+        if (score >= silverScore) return "SILVER";
+        if (score >= bronzeScore) return "BRONZE";
+        return "-";
     }
 
     string GetMedalText(float score)
