@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,17 @@ public class RaceManager : MonoBehaviour
 
     [Tooltip("Half-width (m) of the auto line; crossings farther than this from the start don't count.")]
     public float lineHalfWidth = 25f;
+
+    [Header("Countdown")]
+    [Tooltip("Seconds shown per countdown number (3, 2, 1).")]
+    public float countdownStep = 1f;
+
+    [Header("Score medals")]
+    public float bronzeScore = 40000f;
+    public float silverScore = 65000f;
+    public float goldScore = 90000f;
+    public float platinumScore = 125000f;
+    public float diamondScore = 165000f;
 
     static RaceManager instance;
 
@@ -121,7 +133,37 @@ public class RaceManager : MonoBehaviour
         }
 
         BuildHUD();
+
+        playerCar.canControl = false;
+        StartCoroutine(CountdownRoutine());
+
         isSetup = true;
+    }
+
+    IEnumerator CountdownRoutine()
+    {
+        Canvas canvas = SimpleUI.CreateOverlayCanvas("Countdown", transform, 20000);
+        Text label = SimpleUI.AddText(canvas.transform, "", 160, TextAnchor.MiddleCenter, FontStyle.Bold);
+        RectTransform rt = label.GetComponent<RectTransform>();
+        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
+
+        for (int n = 3; n >= 1; n--)
+        {
+            label.text = n.ToString();
+            yield return new WaitForSeconds(countdownStep);
+        }
+
+        label.text = "GO!";
+        label.color = new Color(0.4f, 1f, 0.4f);
+
+        if (playerCar != null)
+            playerCar.canControl = true;
+
+        yield return new WaitForSeconds(0.6f);
+
+        if (canvas != null)
+            Destroy(canvas.gameObject);
     }
 
     static RCCP_CarController GetPlayerCar()
@@ -229,6 +271,7 @@ public class RaceManager : MonoBehaviour
 
         AddResultLine(panel.transform, "RACE FINISHED", 44, FontStyle.Bold, 64f);
         AddResultLine(panel.transform, "Score: " + score.ToString("N0"), 32, FontStyle.Bold, 46f);
+        AddResultLine(panel.transform, GetMedalText(score), 28, FontStyle.Bold, 42f).color = GetMedalColor(score);
         AddResultLine(panel.transform, "Total time: " + SimpleUI.FormatTime(totalTime), 26, FontStyle.Normal, 36f);
         AddResultLine(panel.transform, "Best lap: " + SimpleUI.FormatTime(bestLapTime), 26, FontStyle.Normal, 36f);
         AddResultLine(panel.transform, "Rank: #" + rank, 26, FontStyle.Normal, 36f);
@@ -251,10 +294,31 @@ public class RaceManager : MonoBehaviour
         SimpleUI.AddButton(panel.transform, "Back to Menu", () => LeaveTo("MainMenu"));
     }
 
-    static void AddResultLine(Transform parent, string text, int size, FontStyle style, float height)
+    static Text AddResultLine(Transform parent, string text, int size, FontStyle style, float height)
     {
         Text label = SimpleUI.AddText(parent, text, size, TextAnchor.MiddleCenter, style);
         AddLayoutHeight(label.gameObject, height);
+        return label;
+    }
+
+    string GetMedalText(float score)
+    {
+        if (score >= diamondScore) return "DIAMOND MEDAL";
+        if (score >= platinumScore) return "PLATINUM - DIAMOND at " + diamondScore.ToString("N0");
+        if (score >= goldScore) return "GOLD - PLATINUM at " + platinumScore.ToString("N0");
+        if (score >= silverScore) return "SILVER - GOLD at " + goldScore.ToString("N0");
+        if (score >= bronzeScore) return "BRONZE - SILVER at " + silverScore.ToString("N0");
+        return "no medal - BRONZE at " + bronzeScore.ToString("N0");
+    }
+
+    Color GetMedalColor(float score)
+    {
+        if (score >= diamondScore) return new Color(0.5f, 0.9f, 1f);      // diamond - cyan
+        if (score >= platinumScore) return new Color(0.9f, 0.93f, 0.97f); // platinum - near white
+        if (score >= goldScore) return new Color(1f, 0.84f, 0.2f);        // gold
+        if (score >= silverScore) return new Color(0.75f, 0.76f, 0.8f);   // silver
+        if (score >= bronzeScore) return new Color(0.85f, 0.55f, 0.25f);  // bronze
+        return new Color(0.7f, 0.7f, 0.7f);
     }
 
     static void AddLayoutHeight(GameObject go, float height)
