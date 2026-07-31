@@ -7,13 +7,6 @@ public class Score_Manager : Singleton_Obj_Net<Score_Manager>
 {
     public readonly SyncDictionary<ulong, float> ScoreData = new();
 
-
-    private void Update()
-    {
-      
-        
-    }
-
     [Command(requiresAuthority = false)]
     public void CmdAddPlayer(ulong steamId)
     {

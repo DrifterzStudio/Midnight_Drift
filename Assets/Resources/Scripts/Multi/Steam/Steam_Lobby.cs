@@ -36,7 +36,7 @@ public class Steam_Lobby : Singleton_Obj<Steam_Lobby>
             return;
         }
 
-        
+
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         GameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
         LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);

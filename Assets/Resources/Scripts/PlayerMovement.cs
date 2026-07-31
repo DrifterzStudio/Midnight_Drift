@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Souris")]
     public float mouseSensitivity = 2f;
 
+    [Header("Bruits de pas")]
+    public float footstepThreshold = 0.5f;
+    [Range(0f, 1f)] public float footstepVolume = 0.6f;
+
     private Rigidbody rb;
     private Camera cam;
     private float xRotation = 0f;
@@ -17,10 +21,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lookInput;
     private bool hasStarted = false;
 
+    private AudioSource footstepSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         cam = GetComponentInChildren<Camera>();
+
+        footstepSource = gameObject.AddComponent<AudioSource>();
+        footstepSource.clip = Resources.Load<AudioClip>("Musics/Effects/steps-on-the-floor-with-the-sound-of-pants");
+        footstepSource.loop = true;
+        footstepSource.playOnAwake = false;
+        footstepSource.spatialBlend = 0f;
+        footstepSource.volume = footstepVolume;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -44,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        HandleFootsteps();
+
         // don't turn the camera while paused (timeScale 0)
         if (Time.timeScale == 0f)
             return;
@@ -53,6 +68,21 @@ public class PlayerMovement : MonoBehaviour
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         transform.Rotate(Vector3.up * lookInput.x * mouseSensitivity);
+    }
+
+    void HandleFootsteps()
+    {
+        if (footstepSource == null || footstepSource.clip == null)
+            return;
+
+        Vector3 flat = rb.linearVelocity;
+        flat.y = 0f;
+        bool walking = Time.timeScale > 0f && flat.magnitude > footstepThreshold;
+
+        if (walking && !footstepSource.isPlaying)
+            footstepSource.Play();
+        else if (!walking && footstepSource.isPlaying)
+            footstepSource.Pause();
     }
 
     void FixedUpdate()

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 // solo drift score hud. reads the car's slip/speed, runs a DriftScoreCalculator, and shows the
 // score / popup / multiplier / sounds from it.
@@ -56,6 +58,16 @@ public class Score : RCCP_GenericComponent
     [Tooltip("Layer used by circuit obstacles (props, barriers, tires, etc.).")]
     public LayerMask obstacleLayer;
 
+    [Header("Near miss")]
+    [Tooltip("Radius (m) around the car that counts as grazing an obstacle.")]
+    public float nearMissRadius = 3f;
+    [Tooltip("Bonus points per near miss.")]
+    public int nearMissBonus = 500;
+    [Tooltip("Minimum time (s) between two near misses, so grazing a long wall can't stack bonuses.")]
+    public float nearMissCooldown = 0.75f;
+    public Color nearMissColor = new Color(0.4f, 1f, 0.6f);
+    public float nearMissPopupDuration = 0.8f;
+
     private AudioSource audioSource;
 
     private CanvasGroup scoreUpdateCanvasGroup;
@@ -68,6 +80,16 @@ public class Score : RCCP_GenericComponent
     private float shakeTimer = 0f;
     private bool isShaking = false;
     private Vector3 popupBasePosition;
+
+    private readonly HashSet<int> hitObstacles = new HashSet<int>();
+
+    private Text nearMissText;
+    private CanvasGroup nearMissGroup;
+    private RectTransform nearMissRect;
+    private Vector3 nearMissBaseScale;
+    private float nearMissTimer;
+    private bool nearMissActive;
+    private float lastNearMissTime = -999f;
 
     private void Start()
     {
@@ -112,6 +134,13 @@ public class Score : RCCP_GenericComponent
 
         scoreUpdateText.gameObject.SetActive(false);
         multiplierText.gameObject.SetActive(false);
+
+        BuildNearMissPopup();
+
+        // trigger zone for near-miss detection
+        SphereCollider zone = gameObject.AddComponent<SphereCollider>();
+        zone.isTrigger = true;
+        zone.radius = nearMissRadius;
     }
 
     private void Update()
@@ -128,6 +157,7 @@ public class Score : RCCP_GenericComponent
         UpdateUI();
         UpdatePopupAnimation();
         UpdateShakeEffect();
+        UpdateNearMissPopup();
     }
 
     public float ScoreTotal => calc != null ? calc.Score : 0f;
@@ -232,6 +262,24 @@ public class Score : RCCP_GenericComponent
             calc.Finalize();
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (calc == null || calc.Ended || isShaking)
+            return;
+        if (!IsInLayerMask(other.gameObject.layer, obstacleLayer))
+            return;
+
+        bool wasHit = hitObstacles.Remove(other.GetInstanceID());
+
+        if (wasHit || !calc.IsAccumulating)
+            return;
+        if (Time.time - lastNearMissTime < nearMissCooldown)
+            return;
+
+        AwardNearMiss();
+        lastNearMissTime = Time.time;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (isShaking || calc == null)
@@ -239,6 +287,7 @@ public class Score : RCCP_GenericComponent
 
         if (IsInLayerMask(collision.gameObject.layer, obstacleLayer))
         {
+            hitObstacles.Add(collision.collider.GetInstanceID());
             isFadingOut = false;
             calc.RegisterCollision();
         }
@@ -296,5 +345,57 @@ public class Score : RCCP_GenericComponent
         multiplierText.gameObject.SetActive(false);
         scoreUpdateRect.anchoredPosition = popupBasePosition;
         scoreUpdateText.color = baseTextColor;
+    }
+
+    private void BuildNearMissPopup()
+    {
+        Canvas canvas = SimpleUI.CreateOverlayCanvas("NearMissPopup", transform, 15000);
+        nearMissText = SimpleUI.AddText(canvas.transform, "", 44, TextAnchor.MiddleCenter, FontStyle.Bold);
+        nearMissText.color = nearMissColor;
+
+        nearMissRect = nearMissText.GetComponent<RectTransform>();
+        nearMissRect.anchorMin = nearMissRect.anchorMax = nearMissRect.pivot = new Vector2(0.5f, 0.32f);
+        nearMissRect.anchoredPosition = Vector2.zero;
+        nearMissBaseScale = nearMissRect.localScale;
+
+        nearMissGroup = nearMissText.gameObject.AddComponent<CanvasGroup>();
+        nearMissText.gameObject.SetActive(false);
+    }
+
+    private void AwardNearMiss()
+    {
+        calc.AddBonus(nearMissBonus);
+        ShowNearMissPopup();
+    }
+
+    private void ShowNearMissPopup()
+    {
+        if (nearMissText == null)
+            return;
+
+        nearMissText.text = "NICE!  +" + nearMissBonus;
+        nearMissText.gameObject.SetActive(true);
+        nearMissGroup.alpha = 1f;
+        nearMissRect.localScale = nearMissBaseScale * popupScalePunch;
+        nearMissTimer = 0f;
+        nearMissActive = true;
+    }
+
+    private void UpdateNearMissPopup()
+    {
+        if (!nearMissActive)
+            return;
+
+        nearMissTimer += Time.deltaTime;
+        float t = nearMissTimer / nearMissPopupDuration;
+
+        nearMissGroup.alpha = Mathf.Lerp(1f, 0f, t);
+        nearMissRect.localScale = Vector3.Lerp(nearMissBaseScale * popupScalePunch, nearMissBaseScale, t);
+
+        if (t >= 1f)
+        {
+            nearMissActive = false;
+            nearMissText.gameObject.SetActive(false);
+        }
     }
 }

@@ -20,6 +20,7 @@ public class PlayerScore : NetworkBehaviour
     private DriftScoreCalculator _calc;
     private LapTracker _lapTracker;
     private float _pushedScore = 0f;
+    private bool _raceEnded = false;
 
     private TMP_Text _scoreText;
     private TMP_Text _scoreUpdateText;
@@ -136,6 +137,16 @@ public class PlayerScore : NetworkBehaviour
             _scoreUpdateText.gameObject.SetActive(true);
             _scoreText.text = "Score: " + 0;
             _scoreUpdateText.text = " " + 0;
+
+            if (_lapText != null)
+            {
+                _lapText.gameObject.SetActive(true);
+                _lapText.text = "LAP 1/" + maxLaps;
+            }
+
+            if (Game_UI_Manager.Instance.resultPanel != null)
+                Game_UI_Manager.Instance.resultPanel.SetActive(false);
+
             _carController = GetComponent<RCCP_CarController>();
 
             audioSource = GetComponent<AudioSource>();
@@ -303,6 +314,12 @@ public class PlayerScore : NetworkBehaviour
     {
         _syncCurrentLap = _lapTracker.CurrentLap;
         EndScoring();
+
+        float finalScore = _calc != null ? _calc.Score : 0f;
+
+        ulong myId = GetComponent<PlayerInfos>().SteamId;
+        int rank = ComputeRank(myId, finalScore);
+        RpcRaceFinished(finalScore, rank);
     }
 
     [Server]
@@ -315,6 +332,58 @@ public class PlayerScore : NetworkBehaviour
         PushScoreDelta();
         _syncScoreUpdate = 0f;
         _syncScoreMultiplier = 1;
+    }
+
+    [ClientRpc]
+    private void RpcRaceFinished(float finalScore, int rank)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        EndLocalRace(finalScore, rank);
+    }
+
+    private void EndLocalRace(float finalScore, int rank)
+    {
+        if (_raceEnded)
+            return;
+        _raceEnded = true;
+
+        if (_carController != null)
+            RCCP.SetControl(_carController, false);
+
+        ShowRaceResultPanel(finalScore, rank);
+    }
+
+    private void ShowRaceResultPanel(float finalScore, int rank)
+    {
+        Game_UI_Manager ui = Game_UI_Manager.Instance;
+        if (ui == null || ui.resultPanel == null)
+            return;
+
+        if (ui.resultScore != null)
+            ui.resultScore.text = "Score: " + finalScore.ToString("N0");
+
+        if (ui.resultRank != null)
+            ui.resultRank.text = "Rank: #" + rank;
+
+        ui.resultPanel.SetActive(true);
+    }
+
+    private int ComputeRank(ulong myId, float myScore)
+    {
+        if (Score_Manager.Instance == null)
+            return 1;
+
+        int rank = 1;
+        foreach (var entry in Score_Manager.Instance.ScoreData)
+        {
+            if (entry.Key == myId)
+                continue;
+            if (entry.Value > myScore)
+                rank++;
+        }
+        return rank;
     }
 
 
