@@ -11,10 +11,4 @@ public class ChangeTarget : MonoBehaviour
         //CarInstance.instance.gameObject.SetActive(true);
         //cam.cameraTarget.playerVehicle = CarInstance.instance;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

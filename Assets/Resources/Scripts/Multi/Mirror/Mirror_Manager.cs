@@ -41,9 +41,10 @@ using UnityEngine.SceneManagement;
 
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
         {
+           
             if (conn.identity != null)
             {
-                conn.identity.GetComponent<Connect_callBack>()?.OnDisconnect?.Invoke();
+              conn.identity.gameObject.GetComponent<Connect_callBack>()?.OnDisconnect?.Invoke();
                 PlayerInfos info = conn.identity.GetComponent<PlayerInfos>();
                 if (info != null && ActivePlayer_List.Instance.Contains(info.SteamId))
                     ActivePlayer_List.Instance.CmdRemove(info.SteamId);
@@ -56,8 +57,9 @@ using UnityEngine.SceneManagement;
         {
             if (conn.identity != null)
             {
-                conn.identity.GetComponent<Connect_callBack>()?.OnConnect?.Invoke();
+                conn.identity.gameObject.GetComponent<Connect_callBack>()?.OnConnect?.Invoke();
             }
+            base.OnServerConnect(conn);
         }
 
         public override void Start()

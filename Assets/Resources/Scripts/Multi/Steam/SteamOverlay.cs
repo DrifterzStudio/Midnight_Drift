@@ -15,11 +15,6 @@ public class SteamOverlay : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-    }
-    
-
     private void OnNumberOfCurrentPlayers(NumberOfCurrentPlayers_t pCallback, bool bIOFailure)
     {
         if (pCallback.m_bSuccess != 1 || bIOFailure)

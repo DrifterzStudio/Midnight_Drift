@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// applies the garage's visual customization to the car when the scene loads. put this on the
-// vehicle root. reads the SaveCustom container (survives the scene change via DontDestroy).
+// applies the saved paint/spoiler/wheels to the car on spawn. put it on the vehicle root.
 public class LoadCustom : MonoBehaviour
 {
 
@@ -27,6 +26,14 @@ public class LoadCustom : MonoBehaviour
             controller = GetComponentInParent<RCCP_CarController>();
 
         SaveCustom data = FindFirstObjectByType<SaveCustom>(FindObjectsInactive.Include);
+        bool tempData = false;
+
+        // launched without the garage? load this vehicle's save straight from disk
+        if (data == null && GameSession.SelectedVehicle != null)
+        {
+            data = TuningDisk.Load<SaveCustom>("Customization", "custom", GameSession.SelectedVehicle.vehicleId);
+            tempData = data != null;
+        }
 
         if (data == null)
         {
@@ -37,6 +44,9 @@ public class LoadCustom : MonoBehaviour
         ApplyBodyColor(data);
         ApplySpoiler(data);
         ApplyWheelMaterial(data);
+
+        if (tempData)
+            Destroy(data.gameObject);
     }
 
     // alpha 0 means the player never picked a colour, so the prefab's own paint is left alone
