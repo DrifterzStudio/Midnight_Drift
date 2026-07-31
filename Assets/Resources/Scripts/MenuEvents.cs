@@ -10,6 +10,7 @@ public class MenuEvents : MonoBehaviour
     }
     public void ToGame()
     {
+        
         Scene_Controller.Instance.NewTransition()
             .Load("Multi_Server","MultiServerScene")
             .Load("Multi_Game", "MultiLobbyScene", true)
