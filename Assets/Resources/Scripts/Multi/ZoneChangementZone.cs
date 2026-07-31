@@ -135,14 +135,21 @@ public class ZoneChangementScene : NetworkBehaviour
 
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
 
+        // que les joueurs comptent ici, on ignore le reste (deco garage, murs, etc.)
+        if (instantiate == null)
+            return;
+
         AddPLayer(other, instantiate);
-     
+
     }
 
     [ServerCallback]
     void OnTriggerExit(Collider other)
     {
         PlayerInfos instantiate = other.gameObject.GetComponent<PlayerInfos>();
+
+        if (instantiate == null)
+            return;
 
         SetCouleur(couleurNormale);
         RemovePlayer(other, instantiate);
