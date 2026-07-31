@@ -615,7 +615,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &271629272
 Canvas:
   m_ObjectHideFlags: 0
@@ -625,7 +625,7 @@ Canvas:
   m_GameObject: {fileID: 271629269}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 961739752}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -5115,6 +5115,7 @@ GameObject:
   - component: {fileID: 1277377890}
   - component: {fileID: 1277377889}
   - component: {fileID: 1277377893}
+  - component: {fileID: 1277377894}
   m_Layer: 5
   m_Name: Multi
   m_TagString: Untagged
@@ -5208,9 +5209,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1277377893}
-        m_TargetAssemblyTypeName: LoadSceneButton, Assembly-CSharp
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1277377894}
+        m_TargetAssemblyTypeName: MenuEvents, Assembly-CSharp
+        m_MethodName: ToGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5265,7 +5266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277377887}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 040c499769c339b4895af935529e3c33, type: 3}
   m_Name: 
@@ -5274,6 +5275,18 @@ MonoBehaviour:
   sceneName: Core
   isAdditive: 0
   carSelectionMenu: {fileID: 0}
+--- !u!114 &1277377894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277377887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f82e4cfc5aab31842bd8b5db35b2b5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuEvents
 --- !u!1 &1288610384
 GameObject:
   m_ObjectHideFlags: 0
@@ -7570,7 +7583,6 @@ SceneRoots:
   - {fileID: 489953988}
   - {fileID: 1828466910}
   - {fileID: 271629273}
-  - {fileID: 9987022}
   - {fileID: 1734010304}
   - {fileID: 2100792502}
   - {fileID: 1561862853}

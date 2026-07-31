@@ -7,7 +7,7 @@ public class Scene_Manager : MonoBehaviour
     {
         Scene_Controller.Instance.NewTransition()
             .Load("Session", "Session")
-            .Load("Menu", "Menu",true)
+            .Load("Menu", "MainMenu",true)
             .EnableOverlay(true)
             .Execute();
 
