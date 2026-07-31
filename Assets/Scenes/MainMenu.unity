@@ -4257,6 +4257,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9171487385820192471, guid: 8f89eb7c76883574ba19e0ef9eb1507c, type: 3}
+      propertyPath: enterButton
+      value: 
+      objectReference: {fileID: 741667339}
+    - target: {fileID: 9171487385820192471, guid: 8f89eb7c76883574ba19e0ef9eb1507c, type: 3}
       propertyPath: SaveFileName
       value: appSettings
       objectReference: {fileID: 0}
@@ -7763,7 +7767,7 @@ MonoBehaviour:
   dataFileName: appSettings
   useEncryption: 0
   encryption: 
-  usePrettyPrint: 0
+  usePrettyPrint: 1
   resolution: 0
   fullscreen: 0
   Vsync: 0
