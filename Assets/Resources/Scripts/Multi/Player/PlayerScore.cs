@@ -241,7 +241,7 @@ public class PlayerScore : NetworkBehaviour
             }
 
             return;
-
+        }
 
         scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")}";
 
