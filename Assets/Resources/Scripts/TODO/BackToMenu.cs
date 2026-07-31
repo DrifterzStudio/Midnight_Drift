@@ -15,10 +15,10 @@ public class BackToMenu : Singleton_Obj<BackToMenu>
         //TODO changement classique
         if (Keyboard.current.mKey.wasPressedThisFrame)
         {
-            Debug.Log("Leave Server");
-            transitionToMenuServer();
+                Debug.Log("Leave Server");
+                transitionToMenuServer();
         }
-
+          
     }
 
    public void transitionToMenuServer()

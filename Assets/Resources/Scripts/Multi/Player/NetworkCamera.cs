@@ -82,12 +82,8 @@ public class NetworkCamera : NetworkBehaviour
 
     private void Update()
     {
-
         if (!isLocalPlayer)
            return;
-
-
-
         if (Keyboard.current.uKey.wasPressedThisFrame && !IsPlayerActive)
         {
             Debug.Log("changement de tutut");
@@ -109,8 +105,6 @@ public class NetworkCamera : NetworkBehaviour
         Debug.LogWarning(_vehicles.Count);
 
         RCCP_CarController targetCar = _vehicles[_currentTarget];
-        if(targetCar == null)
-            Debug.LogError("nulllll");
         LocalInstance.cam.cameraTarget.playerVehicle = targetCar;
         LocalInstance.ActiveCar = targetCar;
         Debug.Log("Caméra maintenant sur : " + targetCar.name);
@@ -126,7 +120,6 @@ public class NetworkCamera : NetworkBehaviour
     private void HandleDisconnect()
     {
         Debug.Log("disconnect");
-
 
 
         if (!ActivePlayer_List.Instance.Contains(GetComponent<PlayerInfos>().SteamId))
@@ -145,12 +138,12 @@ public class NetworkCamera : NetworkBehaviour
             LocalInstance.cam.SetTarget(LocalInstance.gameObject.GetComponent<RCCP_CarController>());
         }
 
-        if (LocalInstance.ActiveCar == car )
+        if (LocalInstance.ActiveCar == car)
         {
             LocalInstance._currentTarget = 0;
             LocalInstance.cam.SetTarget(_vehicles[0]);
             LocalInstance.ActiveCar = _vehicles[0];
         }
-
+       
     }
 }

@@ -65,7 +65,7 @@ public class PlayerInfos : NetworkBehaviour
         if (ActivePlayer_List.Instance.Contains(SteamId))
             ActivePlayer_List.Instance.CmdRemove(SteamId);
 
-        if (Score_Manager.Instance.ScoreData.ContainsKey(SteamId))
+        if(Score_Manager.Instance.ScoreData.ContainsKey(SteamId))
             Score_Manager.Instance.CmdRemovePlayer(SteamId);
 
         Debug.Log($"disconect : {SteamId}");
