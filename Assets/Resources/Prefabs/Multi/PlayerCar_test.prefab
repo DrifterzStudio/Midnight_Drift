@@ -583,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 1075933698406959760}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7260742, y: -0.24726868, z: -1.2030019}
+  m_LocalPosition: {x: 0.7260742, y: -0.24728394, z: -1.2030019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5602,7 +5602,7 @@ Transform:
   m_GameObject: {fileID: 1075933700159911276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71362305, y: -0.24726868, z: -1.2030019}
+  m_LocalPosition: {x: -0.71362305, y: -0.24728394, z: -1.2030019}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15168,7 +15168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completeSetup: 0
   checkedSetup: 0
-  audioMixer: {fileID: 24300002, guid: 1f184b80a5580734490824e8df462002, type: 2}
+  audioMixer: {fileID: 8834922813005169627, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
   engineSounds:
   - audioSourceOn: {fileID: 0}
     audioClipOn: {fileID: 8300000, guid: 05534916be09e2b448b5734102b95b0e, type: 3}
@@ -16926,11 +16926,16 @@ MonoBehaviour:
   engineRevLimiter: 1
   cutFuel: 0
   revLimiterCutFrequency: 15
-  turboCharged: 1
-  turboChargePsi: 0
-  maxTurboChargePsi: 12
-  turboChargerCoEfficient: 1.25
-  turboBlowOut: 0
+  turbo1Charged: 0
+  turbo1ChargePsi: 0
+  maxTurbo1ChargePsi: 12
+  turbo1ChargerCoEfficient: 1.25
+  turbo1BlowOut: 0
+  turbo2Charged: 0
+  turbo2ChargePsi: 0
+  maxTurbo2ChargePsi: 12
+  turbo2ChargerCoEfficient: 1.25
+  turbo2BlowOut: 0
   engineFriction: 0.2
   engineInertia: 0.15
   engineLoad: 0
@@ -22108,6 +22113,26 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  driftSlipThreshold: 0.25
+  driftTimeoutDelay: 2
+  pointsRate: 4
+  multiplierStepTime: 0.8
+  maxMultiplier: 10
+  maxLaps: 5
+  lineLeaveDistance: 25
+  lineHalfWidth: 25
+  popupFadeOutDuration: 0.5
+  popupScalePunch: 1.3
+  scoreBankSound: {fileID: 0}
+  scoreBankSoundVolume: 1
+  scoreLostSound: {fileID: 0}
+  scoreLostSoundVolume: 1
+  scoreLostColor: {r: 1, g: 0, b: 0, a: 1}
+  scoreLostShakeDuration: 0.3
+  scoreLostShakeStrength: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-1253437761399660420
 MonoBehaviour:
   m_ObjectHideFlags: 0

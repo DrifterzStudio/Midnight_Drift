@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class TextSliderManager : MonoBehaviour
 {
-    private List<TextSliderScript> textSliders;
-    private List<SliderScript> sliders;
+    [SerializeField] private List<TextSliderScript> textSliders;
+    [SerializeField] private List<SliderScript> sliders;
 
-    private void Start()
-    {
-        if(textSliders == null)
-            textSliders = new List<TextSliderScript>();
-        if(sliders == null)
-            sliders = new List<SliderScript>();
-    }
 
     public void addText(TextSliderScript newTextSlider)
     {
@@ -22,7 +15,6 @@ public class TextSliderManager : MonoBehaviour
     public void addSlider(SliderScript newSlider)
     {
         sliders.Add(newSlider);
-        textSliders[sliders.Count - 1].getText().text = sliders.Last().getSlider().value.ToString("F1");
     }
 
     private void Update()
@@ -31,7 +23,7 @@ public class TextSliderManager : MonoBehaviour
         {
             if(slider.OnvalueChange())
             {
-                textSliders[slider.transform.GetSiblingIndex()].getText().text = slider.getSlider().value.ToString("F1");
+                textSliders[slider.transform.GetSiblingIndex()].getText().text = slider.getSlider().value.ToString("F0");
             }
         }
     }

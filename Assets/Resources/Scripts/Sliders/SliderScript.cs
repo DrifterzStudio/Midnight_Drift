@@ -10,8 +10,6 @@ public class SliderScript : MonoBehaviour
     private void Start()
     {
         slider = GetComponent<Slider>();
-        previousValue = slider.minValue;
-        Manager.addSlider(this);
     }
 
     public Slider getSlider()

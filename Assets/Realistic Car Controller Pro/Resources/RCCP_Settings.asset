@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multithreading: 0
   behaviorSelectedIndex: 0
-  overrideFPS: 1
+  overrideFPS: 0
   overrideFixedTimeStep: 1
   fixedTimeStep: 0.02
   maxAngularVelocity: 6

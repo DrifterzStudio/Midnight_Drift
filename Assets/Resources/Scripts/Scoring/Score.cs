@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 
 // solo drift score hud. reads the car's slip/speed, runs a DriftScoreCalculator, and shows the
 // score / popup / multiplier / sounds from it.
@@ -37,6 +38,9 @@ public class Score : RCCP_GenericComponent
     [Header("Score Popup Animation")]
     public float popupFadeOutDuration = 0.5f;
     public float popupScalePunch = 1.3f;
+
+    [Tooltip("Audio mixer group for volume control and effects processing.")]
+    public AudioMixerGroup audioMixer;
 
     [Header("Score Banking Sound")]
     [Tooltip("Sound played when drift points are added to the total score.")]
@@ -88,6 +92,8 @@ public class Score : RCCP_GenericComponent
 
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0f;
+        audioSource.outputAudioMixerGroup = audioMixer;
+
 
         scoreUpdateCanvasGroup = scoreUpdateText.GetComponent<CanvasGroup>();
         if (!scoreUpdateCanvasGroup)

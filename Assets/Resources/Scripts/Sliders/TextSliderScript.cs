@@ -9,7 +9,6 @@ public class TextSliderScript : MonoBehaviour
     private void Start()
     {
         text = GetComponent<TMP_Text>();
-        manager.addText(this);
     }
     public TMP_Text getText()
     {

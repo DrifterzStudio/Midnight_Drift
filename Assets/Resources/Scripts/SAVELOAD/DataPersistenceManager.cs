@@ -14,21 +14,25 @@ public class DataPersistenceManager : MonoBehaviour
     public string upgradesFolder = "Upgrades";
     public string customFolder = "Custom";
     public string settingsFolder = "Settings";
+    public string appSettingsFolder = "AppSettings";
 
     [Header("Data Containers")]
     public SaveUpgrades saveUpgrades;
     public SaveCustom saveCustom;       // optional for now, can stay empty
     public SaveSettings saveSettings;   // optional for now, can stay empty
+    public SettingsData saveAppSettings; // optional for now, can stay empty
 
     // Full paths built at runtime, valid on any machine
     private string upgradesPath;
     private string customPath;
     private string settingsPath;
+    private string appSettingsPath;
 
     // factory-default snapshot of each container (json), to reset a vehicle that has no save
     private string upgradesDefaults;
     private string customDefaults;
     private string settingsDefaults;
+    private string appSettingsDefaults;
     private bool defaultsCaptured;
 
     private void Awake()
@@ -44,10 +48,12 @@ public class DataPersistenceManager : MonoBehaviour
         upgradesPath = Path.Combine(Application.persistentDataPath, upgradesFolder);
         customPath = Path.Combine(Application.persistentDataPath, customFolder);
         settingsPath = Path.Combine(Application.persistentDataPath, settingsFolder);
+        appSettingsPath = Path.Combine(Application.persistentDataPath, appSettingsFolder);
 
         Directory.CreateDirectory(upgradesPath);
         Directory.CreateDirectory(customPath);
         Directory.CreateDirectory(settingsPath);
+        Directory.CreateDirectory(appSettingsPath);
 
         dataFileHandler = new DataFileHandler();
     }
@@ -69,6 +75,7 @@ public class DataPersistenceManager : MonoBehaviour
         LoadOrReset(saveUpgrades, Path.Combine(upgradesPath, $"upgrades_{vehicleId}.json"), upgradesDefaults);
         LoadOrReset(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"), customDefaults);
         LoadOrReset(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"), settingsDefaults);
+        LoadOrReset(saveAppSettings, Path.Combine(appSettingsPath, $"{vehicleId}.json"), appSettingsDefaults);
 
         // Generic dispatch: every registered IDataPersistence receives
         // the data container matching its dataFileName
@@ -87,6 +94,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataFileHandler.save(saveCustom, Path.Combine(customPath, $"custom_{vehicleId}.json"));
         if (saveSettings != null)
             dataFileHandler.save(saveSettings, Path.Combine(settingsPath, $"settings_{vehicleId}.json"));
+        if (saveAppSettings != null)
+            dataFileHandler.save(saveAppSettings, Path.Combine(appSettingsPath, $"{vehicleId}.json"));
     }
 
     private void CaptureDefaults()
@@ -96,6 +105,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (saveUpgrades != null) upgradesDefaults = JsonUtility.ToJson(saveUpgrades);
         if (saveCustom != null) customDefaults = JsonUtility.ToJson(saveCustom);
         if (saveSettings != null) settingsDefaults = JsonUtility.ToJson(saveSettings);
+        if (saveAppSettings != null) appSettingsDefaults = JsonUtility.ToJson(saveAppSettings, saveAppSettings.usePrettyPrint);
 
         defaultsCaptured = true;
     }
@@ -116,6 +126,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (saveUpgrades != null) objectsData.Add(saveUpgrades);
         if (saveCustom != null) objectsData.Add(saveCustom);
         if (saveSettings != null) objectsData.Add(saveSettings);
+        if (saveAppSettings != null) objectsData.Add(saveAppSettings);
 
         dataPersistenceObjects = findAllDataPersistence();
     }

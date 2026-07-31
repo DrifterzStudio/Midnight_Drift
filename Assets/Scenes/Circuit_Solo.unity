@@ -714,7 +714,7 @@ AudioSource:
   m_GameObject: {fileID: 57975017}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1394826146790076314, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 90fe768c162904f4dbba09c4dddeaacb, type: 3}
   m_PlayOnAwake: 0
@@ -843,7 +843,7 @@ AudioSource:
   m_GameObject: {fileID: 68190291}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1394826146790076314, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ef5351c5e8660ca4988b8b1b21d09ff7, type: 3}
   m_PlayOnAwake: 0
@@ -9884,7 +9884,7 @@ AudioSource:
   m_GameObject: {fileID: 434332919}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1394826146790076314, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 31a7508659a4f404baa9929e269a0f7c, type: 3}
   m_PlayOnAwake: 0
@@ -17275,7 +17275,7 @@ AudioSource:
   m_GameObject: {fileID: 905721768}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1394826146790076314, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 0e44acaa0214fcf438b288b48483e816, type: 3}
   m_PlayOnAwake: 0
@@ -83992,10 +83992,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.3310839
       objectReference: {fileID: 0}
+    - target: {fileID: 1161297190445452405, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 8834922813005169627, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
     - target: {fileID: 2828143375502365415, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1168930553}
+    - target: {fileID: 2828143375502365415, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 8834922813005169627, guid: 75a68e59b9d627044821e99732bf9a34, type: 2}
     - target: {fileID: 2828143375502365415, guid: cba880283576a92439dc7f2c23dc7af9, type: 3}
       propertyPath: multiplierText
       value: 
