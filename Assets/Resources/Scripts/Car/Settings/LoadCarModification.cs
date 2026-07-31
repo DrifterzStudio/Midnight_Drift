@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// applies the garage settings to the car when the scene loads. put this on the vehicle root
-// (the RCCP_CarController). reads the SaveSettings container (survives the scene change via DontDestroy).
+// applies the saved settings to the car on spawn. put it on the vehicle root.
 public class LoadCarModification : MonoBehaviour
 {
 
@@ -24,6 +23,14 @@ public class LoadCarModification : MonoBehaviour
         }
 
         SaveSettings data = FindFirstObjectByType<SaveSettings>(FindObjectsInactive.Include);
+        bool tempData = false;
+
+        // launched without the garage? load this vehicle's save straight from disk
+        if (data == null && GameSession.SelectedVehicle != null)
+        {
+            data = TuningDisk.Load<SaveSettings>("Settings", "settings", GameSession.SelectedVehicle.vehicleId);
+            tempData = data != null;
+        }
 
         if (data == null)
         {
@@ -136,6 +143,8 @@ public class LoadCarModification : MonoBehaviour
             controller.RearAxle.isHandbrake = data.rearAxleHandbrake;
         }
 
+        if (tempData)
+            Destroy(data.gameObject);
     }
 
     RCCP_CustomizationData CustomizationData

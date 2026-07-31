@@ -45,9 +45,41 @@ public class Radio : MonoBehaviour
     private float volume = 1.0f;
     private bool isOn = false;
 
+    const string ID_POWER = "radio_power";
+    const string ID_NEXT = "radio_next";
+    const string ID_VOLUP = "radio_volup";
+    const string ID_VOLDOWN = "radio_voldown";
+
+    private Key _power, _next, _volUp, _volDown;
+
     private void Awake()
     {
         tracks = new AudioSource[][] { track1, track2, track3, track4 };
+    }
+
+    private void OnEnable()
+    {
+        KeyBindingStore.OnChanged += LoadKeys;
+        LoadKeys();
+    }
+
+    private void OnDisable()
+    {
+        KeyBindingStore.OnChanged -= LoadKeys;
+    }
+
+    private void LoadKeys()
+    {
+        _power = KeyBindingStore.Get(ID_POWER, togglePowerKey);
+        _next = KeyBindingStore.Get(ID_NEXT, nextTrackKey);
+        _volUp = KeyBindingStore.Get(ID_VOLUP, volumeUpKey);
+        _volDown = KeyBindingStore.Get(ID_VOLDOWN, volumeDownKey);
+    }
+
+    private void Start()
+    {
+        isOn = true;
+        PlayRandomSong();
     }
 
     private void Update()
@@ -65,16 +97,16 @@ public class Radio : MonoBehaviour
         if (Keyboard.current == null)
             return;
 
-        if (Keyboard.current[togglePowerKey].wasPressedThisFrame)
+        if (Keyboard.current[_power].wasPressedThisFrame)
             TogglePower();
 
-        if (Keyboard.current[volumeUpKey].wasPressedThisFrame)
+        if (Keyboard.current[_volUp].wasPressedThisFrame)
             AdjustVolume(volumeStep);
 
-        if (Keyboard.current[volumeDownKey].wasPressedThisFrame)
+        if (Keyboard.current[_volDown].wasPressedThisFrame)
             AdjustVolume(-volumeStep);
 
-        if (isOn && Keyboard.current[nextTrackKey].wasPressedThisFrame)
+        if (isOn && Keyboard.current[_next].wasPressedThisFrame)
             SwitchToNextTrack();
     }
 

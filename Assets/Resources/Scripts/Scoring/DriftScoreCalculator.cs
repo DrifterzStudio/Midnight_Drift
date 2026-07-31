@@ -42,6 +42,13 @@ public class DriftScoreCalculator
         UpdateMultiplier();
     }
 
+    // flat bonus into the banked total (near-miss)
+    public void AddBonus(int points)
+    {
+        if (Ended || points <= 0) return;
+        Score += points;
+    }
+
     // call when the car hits an obstacle (server side). loses the current drift, keeps the score
     public void RegisterCollision()
     {

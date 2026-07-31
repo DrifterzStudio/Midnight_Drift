@@ -5,6 +5,10 @@ public class SceneLoaderButton : MonoBehaviour, IInteractable
     [Header("Scene to load")]
     public string sceneName = "Circuit_Solo";
 
+    [Header("Optional - pick a car first")]
+    [Tooltip("If set, interacting opens this menu instead of loading straight away. The menu loads the scene once a car is chosen.")]
+    public CarSelectionMenu carSelectionMenu;
+
     [Header("Highlight")]
     public Renderer targetRenderer;
     public Color highlightColor = new Color(0.5f, 0f, 0f);
@@ -36,6 +40,9 @@ public class SceneLoaderButton : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        LoadingScreenManager.Instance.LoadScene(sceneName);
+        if (carSelectionMenu != null)
+            carSelectionMenu.Open();
+        else
+            LoadingScreenManager.Instance.LoadScene(sceneName);
     }
 }

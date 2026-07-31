@@ -29,6 +29,7 @@ public class LapTracker
     Vector3 lineForward;
     float prevSide;
     bool hasLeftStart;
+    bool reachedLine;
 
     // the finish line. same pose for every player (one shared FinishLine on the track)
     public void SetLine(Vector3 position, Vector3 forward)
@@ -37,6 +38,8 @@ public class LapTracker
         forward.y = 0f;
         lineForward = forward.sqrMagnitude > 0.0001f ? forward.normalized : Vector3.forward;
         prevSide = 0f;
+        reachedLine = false;
+        hasLeftStart = false;
     }
 
     // call every frame with this player's car position (server side in multi)
@@ -44,7 +47,13 @@ public class LapTracker
     {
         if (Finished) return;
 
-        if (!hasLeftStart && Vector3.Distance(carPosition, linePosition) > LeaveDistance)
+        float distToLine = Vector3.Distance(carPosition, linePosition);
+
+        // reach the line before laps can arm (multi spawns far behind it)
+        if (!reachedLine && distToLine <= LeaveDistance)
+            reachedLine = true;
+
+        if (reachedLine && !hasLeftStart && distToLine > LeaveDistance)
         {
             hasLeftStart = true;
             Started = true; // clock starts when the car first leaves the line

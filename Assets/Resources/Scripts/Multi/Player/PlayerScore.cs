@@ -20,9 +20,12 @@ public class PlayerScore : NetworkBehaviour
     private DriftScoreCalculator _calc;
     private LapTracker _lapTracker;
     private float _pushedScore = 0f;
+    private bool _raceEnded = false;
 
     private TMP_Text _scoreText;
     private TMP_Text _scoreUpdateText;
+    private TMP_Text _multiplierText;
+    private TMP_Text _lapText;
 
     private RCCP_CarController _carController;
 
@@ -128,10 +131,22 @@ public class PlayerScore : NetworkBehaviour
             _localInstance = this;
             _scoreText = Game_UI_Manager.Instance.score;
             _scoreUpdateText = Game_UI_Manager.Instance.updScore;
+            _multiplierText = Game_UI_Manager.Instance.multiplier;
+            _lapText = Game_UI_Manager.Instance.lap;
             _scoreText.gameObject.SetActive(true);
             _scoreUpdateText.gameObject.SetActive(true);
             _scoreText.text = "Score: " + 0;
             _scoreUpdateText.text = " " + 0;
+
+            if (_lapText != null)
+            {
+                _lapText.gameObject.SetActive(true);
+                _lapText.text = "LAP 1/" + maxLaps;
+            }
+
+            if (Game_UI_Manager.Instance.resultPanel != null)
+                Game_UI_Manager.Instance.resultPanel.SetActive(false);
+
             _carController = GetComponent<RCCP_CarController>();
 
             audioSource = GetComponent<AudioSource>();
@@ -192,11 +207,15 @@ public class PlayerScore : NetworkBehaviour
 
         TMP_Text scoreText = _localInstance._scoreText;
         TMP_Text scoreUpdateText = _localInstance._scoreUpdateText;
+        TMP_Text multiplierText = _localInstance._multiplierText;
         CanvasGroup canvasGroup = _localInstance._scoreUpdateCanvasGroup;
         RectTransform rect = _localInstance._scoreUpdateRect;
         Vector3 baseScale = _localInstance._baseScale;
 
         scoreText.text = "Score: " + scoreValue.ToString("N0");
+
+        if (_localInstance._lapText != null)
+            _localInstance._lapText.text = "LAP " + Mathf.Min(_syncCurrentLap, maxLaps) + "/" + maxLaps;
 
         if (_localInstance._isShaking)
             return;
@@ -212,17 +231,31 @@ public class PlayerScore : NetworkBehaviour
                 rect.localScale = baseScale;
         }
 
-        if (!isCurrentlyDrifting && !_localInstance._isFadingOut)
+        if (!isCurrentlyDrifting)
+        {
+            if (!_localInstance._isFadingOut)
+            {
+                scoreUpdateText.gameObject.SetActive(false);
+                if (multiplierText != null)
+                    multiplierText.gameObject.SetActive(false);
+            }
+
             return;
 
 
-        if (_syncScoreMultiplier > 1)
+        scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")}";
+
+        if (multiplierText != null)
         {
-            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")} x{_syncScoreMultiplier}";
-        }
-        else
-        {
-            scoreUpdateText.text = $"+{((int)_syncScoreUpdate).ToString("N0")}";
+            if (_syncScoreMultiplier > 1)
+            {
+                multiplierText.gameObject.SetActive(true);
+                multiplierText.text = "x" + _syncScoreMultiplier;
+            }
+            else
+            {
+                multiplierText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -236,6 +269,8 @@ public class PlayerScore : NetworkBehaviour
             speed = 0;
 
         _calc.Tick(sidewaysSlip, speed, dt);
+
+        PushScoreDelta();
 
         _syncScoreUpdate = _calc.PendingPoints;
         _syncScoreMultiplier = _calc.Multiplier;
@@ -255,7 +290,6 @@ public class PlayerScore : NetworkBehaviour
     [Server]
     private void OnCalcBanked()
     {
-        PushScoreDelta();
         _syncScoreUpdate = 0f;
         _syncScoreMultiplier = 1;
         RpcOnScoreBanked();
@@ -280,6 +314,12 @@ public class PlayerScore : NetworkBehaviour
     {
         _syncCurrentLap = _lapTracker.CurrentLap;
         EndScoring();
+
+        float finalScore = _calc != null ? _calc.Score : 0f;
+
+        ulong myId = GetComponent<PlayerInfos>().SteamId;
+        int rank = ComputeRank(myId, finalScore);
+        RpcRaceFinished(finalScore, rank);
     }
 
     [Server]
@@ -292,6 +332,58 @@ public class PlayerScore : NetworkBehaviour
         PushScoreDelta();
         _syncScoreUpdate = 0f;
         _syncScoreMultiplier = 1;
+    }
+
+    [ClientRpc]
+    private void RpcRaceFinished(float finalScore, int rank)
+    {
+        if (!isLocalPlayer)
+            return;
+
+        EndLocalRace(finalScore, rank);
+    }
+
+    private void EndLocalRace(float finalScore, int rank)
+    {
+        if (_raceEnded)
+            return;
+        _raceEnded = true;
+
+        if (_carController != null)
+            RCCP.SetControl(_carController, false);
+
+        ShowRaceResultPanel(finalScore, rank);
+    }
+
+    private void ShowRaceResultPanel(float finalScore, int rank)
+    {
+        Game_UI_Manager ui = Game_UI_Manager.Instance;
+        if (ui == null || ui.resultPanel == null)
+            return;
+
+        if (ui.resultScore != null)
+            ui.resultScore.text = "Score: " + finalScore.ToString("N0");
+
+        if (ui.resultRank != null)
+            ui.resultRank.text = "Rank: #" + rank;
+
+        ui.resultPanel.SetActive(true);
+    }
+
+    private int ComputeRank(ulong myId, float myScore)
+    {
+        if (Score_Manager.Instance == null)
+            return 1;
+
+        int rank = 1;
+        foreach (var entry in Score_Manager.Instance.ScoreData)
+        {
+            if (entry.Key == myId)
+                continue;
+            if (entry.Value > myScore)
+                rank++;
+        }
+        return rank;
     }
 
 
@@ -342,8 +434,12 @@ public class PlayerScore : NetworkBehaviour
     {
         _fadeTimer = 0f;
         _isFadingOut = true;
+
         if (_scoreUpdateCanvasGroup != null)
             _scoreUpdateCanvasGroup.alpha = 1f;
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false); 
     }
 
     private void UpdatePopupAnimation()
@@ -368,9 +464,14 @@ public class PlayerScore : NetworkBehaviour
     private void StartScoreLostEffect()
     {
         _scoreUpdateText.gameObject.SetActive(true);
+
         if (_scoreUpdateCanvasGroup != null)
             _scoreUpdateCanvasGroup.alpha = 1f;
+
         _scoreUpdateText.color = scoreLostColor;
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false);
 
         _shakeTimer = 0f;
         _isShaking = true;
@@ -409,6 +510,10 @@ public class PlayerScore : NetworkBehaviour
     private void HidePopupImmediately()
     {
         _scoreUpdateText.gameObject.SetActive(false);
+
+        if (_multiplierText != null)
+            _multiplierText.gameObject.SetActive(false);
+
         _scoreUpdateRect.anchoredPosition = _popupBasePosition;
         _scoreUpdateText.color = _baseTextColor;
     }

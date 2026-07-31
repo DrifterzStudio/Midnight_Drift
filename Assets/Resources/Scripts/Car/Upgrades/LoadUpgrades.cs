@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// applies the garage upgrades to the car when the scene loads. reads the SaveUpgrades container
-// (it survives the scene change thanks to DontDestroy). put this on the vehicle root (the RCCP_CarController).
+// applies the saved upgrades to the car on spawn. put it on the vehicle root.
 public class LoadUpgrades : MonoBehaviour
 {
     [Tooltip("Left empty, it resolves from this GameObject. Every sub-component (engine, gearbox, " +
@@ -23,6 +22,14 @@ public class LoadUpgrades : MonoBehaviour
         }
 
         SaveUpgrades data = FindFirstObjectByType<SaveUpgrades>(FindObjectsInactive.Include);
+        bool tempData = false;
+
+        // launched without the garage? load this vehicle's save straight from disk
+        if (data == null && GameSession.SelectedVehicle != null)
+        {
+            data = TuningDisk.Load<SaveUpgrades>("Upgrades", "upgrades", GameSession.SelectedVehicle.vehicleId);
+            tempData = data != null;
+        }
 
         if (data == null)
         {
@@ -97,6 +104,9 @@ public class LoadUpgrades : MonoBehaviour
                     differential.differentialType = mode;
             }
         }
+
+        if (tempData)
+            Destroy(data.gameObject);
     }
 
     static RCCP_Differential.DifferentialType DifferentialModeFor(int index)
