@@ -41,7 +41,7 @@ public class ZoneChangementScene : NetworkBehaviour
     {
 
 
-        if ((ActivePlayer_List.Instance.Count == 1 || Keyboard.current.tKey.IsPressed()) && !change && ActivePlayer_List.Instance.Ready)
+        if ((ActivePlayer_List.Instance.Count == 2 || Keyboard.current.tKey.IsPressed()) && !change && ActivePlayer_List.Instance.Ready)
         {
             timer += Time.deltaTime;
 
