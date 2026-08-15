@@ -1,8 +1,9 @@
-using System.Collections;
 using Mirror;
 using Steamworks;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class BackToMenu : Singleton_Obj<BackToMenu>
 {
@@ -33,10 +34,9 @@ public class BackToMenu : Singleton_Obj<BackToMenu>
         {
             Mirror_Manager.Instance.StopClient();
         }
-        else
-        {
-            transitionToMenu();
-        }
+      
+         transitionToMenu();
+
 
         isChangingScene = true;
     }
@@ -45,13 +45,11 @@ public class BackToMenu : Singleton_Obj<BackToMenu>
     void transitionToMenu()
     {
         Cursor.lockState = CursorLockMode.None;
+        if (LoadingScreenManager.Instance != null)
+            LoadingScreenManager.Instance.LoadScene("MainMenu");
+        else
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         Cursor.visible = true;
-        Scene_Controller.Instance.NewTransition()
-            .Load("Menu", "Menu", true)
-            .Unload("Multi_Server")
-            .Unload("Multi_Game")
-            .EnableOverlay(true)
-            .Execute();
     }
 
 
